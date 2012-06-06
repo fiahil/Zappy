@@ -10,6 +10,7 @@ SRC	=	src/main.c		\
 		src/get_opt_1.c		\
 		src/get_opt_2.c		\
 		src/usage.c		\
+		src/server_routine.c	\
 		src/cmd_parse.c		\
 		src/string_manager.c	\
 		src/network.c		\
@@ -24,7 +25,7 @@ CC	=	gcc
 
 CFLAGS	=	-Wall -Wextra -O3 $(INCLUDES)
 
-LDFLAGS	=
+LDFLAGS	=	-L./lists/ -lclists
 
 all:		$(NAME)
 

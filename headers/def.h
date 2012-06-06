@@ -6,6 +6,8 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
+#include "c_lists.h"
+
 /*
  * System typedef
  */
@@ -25,6 +27,8 @@ typedef struct s_clientManager*	t_clientManager;
 
 typedef struct s_sockLayer	t_u_sockLayer;
 typedef struct s_clientManager	t_u_clientManager;
+
+typedef struct s_parse_elem	t_u_parse_elem;
 
 /*
  * Ptrfunc
@@ -56,6 +60,12 @@ typedef enum
  * Struct definition
  */
 
+struct s_parse_elem
+{
+  char const	*cmd;
+  procFunc	func;
+};
+
 struct s_sockLayer
 {
   int		fd;
@@ -66,8 +76,8 @@ struct s_clientManager
 {
   char		stock[BUFFER_SIZE];
   t_sockLayer	sock;
-  //t_list	in; // queue d'entree
-  //t_list	out; // queue de sortie
+  t_list	in; // queue d'entree
+  t_list	out; // queue de sortie
   t_splitMode	mode;
   t_bool	online;
 };

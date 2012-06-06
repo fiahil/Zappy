@@ -38,19 +38,20 @@ int		initClientTab(void)
 
 int		iterClient(void)
 {
-  int		i;
+  /* int		i; */
 
-  selectManager(clientTab);
-  i = 0;
-  while (clientTab[i])
-  {
-    if (clientTab[i]->online)
-    {
-      if (selectIsset(clientTab[i]->sock->fd, READ))
-	; //SERVER_ROUTINE_INPUT(clientTab[i]); 
-      if (selectIsset(clientTab[i]->sock->fd, WRITE))
-	; //SERVER_ROUTINE_OUTPUT(clientTab[i])
-    }
-    ++i;
-  }
+  /* selectManager(clientTab); */
+  /* i = 0; */
+  /* while (clientTab[i]) */
+  /* { */
+  /*   if (clientTab[i]->online) */
+  /*   { */
+  /*     if (selectIsset(clientTab[i]->sock->fd, READ)) */
+  /* 	; //SERVER_ROUTINE_INPUT(clientTab[i]);  */
+  /*     if (selectIsset(clientTab[i]->sock->fd, WRITE)) */
+  /* 	; //SERVER_ROUTINE_OUTPUT(clientTab[i]) */
+  /*   } */
+  /*   ++i; */
+  /* } */
+  return (0);
 }

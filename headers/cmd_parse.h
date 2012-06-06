@@ -8,6 +8,6 @@
 
 #include "def.h"
 
-t_bool	cmd_parse(char const*);
+procFunc	cmd_parse(char const*);
 
 #endif /* __CMD_PARSE_H__ */

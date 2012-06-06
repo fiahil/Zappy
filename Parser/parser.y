@@ -9,21 +9,34 @@
 %{
 #include <stdio.h>
 
-#define YYSTYPE char const*
-
   int	yylex(void);
   void	yyerror(int, char const *);
 %}
 
-%token PLOP END EOL
+%union
+{
+  char*	str;
+}
+
+%token <str> WORD OBJECT SEE WALK RIGHT LEFT INVENTORY TAKE PUT KICK
+%token <str> BROADCAST INCANTATION FORK CONNECT
 
 %%
 
 input:
 /* empty */
-| PLOP	{ puts("I GET A PLOP!"); }
-| END	{ puts("I GET AN END!"); }
-| EOL
+| SEE			{ puts("see"); }
+| WALK			{ puts("walk"); }
+| RIGHT			{ puts("right"); }
+| LEFT			{ puts("left"); }
+| INVENTORY		{ puts("inventory"); }
+| TAKE OBJECT		{ printf("take %s\n", $2); }
+| PUT OBJECT		{ printf("put %s\n", $2); }
+| KICK			{ puts("kick"); }
+| BROADCAST WORD	{ printf("broadcast %s\n", $2); }
+| INCANTATION		{ puts("incantation"); }
+| FORK			{ puts("fork"); }
+| CONNECT		{ puts("connect"); }
 
 %%
 

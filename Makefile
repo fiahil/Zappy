@@ -11,7 +11,8 @@ SRC	=	src/main.c		\
 		src/get_opt_2.c		\
 		src/usage.c		\
 		src/cmd_parse.c		\
-		src/string_manager.c
+		src/string_manager.c	\
+		src/netManager.c
 
 OBJ	=	$(SRC:.c=.o)
 

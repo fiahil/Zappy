@@ -13,8 +13,8 @@ int main(int ac, char **av)
 {
   (void)ac;
 
-  YY_BUFFER_STATE	buf = yy_scan_string(av[1]);
+  //YY_BUFFER_STATE	buf = yy_scan_string(av[1]);
   yyparse(666);
-  yy_delete_buffer(buf);
+  //yy_delete_buffer(buf);
   return 0;
 }

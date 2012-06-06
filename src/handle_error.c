@@ -9,6 +9,7 @@
 
 #include	<stdio.h>
 #include	<unistd.h>
+#include	"handle_error.h"
 
 int	handleError(char *errFunc, char *errMsg, int fd)
 {

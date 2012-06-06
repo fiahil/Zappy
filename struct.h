@@ -21,8 +21,9 @@ struct s_sockLayer
 
 struct s_clientManager
 {
-  t_sockLayer * ;
-  list<char *> ; // queue d'entree
-  list<char *> ; // queue de sortie
-  splitMode ;
+  char		*current;
+  t_sockLayer	*sock;
+  t_list	in; // queue d'entree
+  t_list	out; // queue de sortie
+  t_splitMode	mode;
 };

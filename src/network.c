@@ -16,6 +16,7 @@
 #include	<errno.h>		// errno....what else ?
 #include	<stdio.h>		// fprintf
 
+#include	"error.h"
 #include	"def.h"
 
 static t_sockLayer	server;

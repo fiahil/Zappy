@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Thu Apr 19 00:25:46 2012 pierre martin
-** Last update Thu May 31 22:22:31 2012 pierre martin
+** Last update Wed Jun  6 11:55:16 2012 pierre martin
 */
 
 #include	"iter.h"
@@ -37,7 +37,7 @@ t_iter		*list_find_if(t_list *this, t_predicate p)
       it = this->head;
       while (it)
 	{
-	  if (!p(it->data))
+	  if (!p(it->data, it->len))
 	    return (it);
 	  it = it->next;
 	}

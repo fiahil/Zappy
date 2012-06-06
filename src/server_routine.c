@@ -5,10 +5,13 @@
 ** Login   <busina_b@epitech.net>
 ** 
 ** Started on Wed Jun  6 21:00:33 2012 benjamin businaro
-** Last update Wed Jun  6 21:45:06 2012 benjamin businaro
+** Last update Wed Jun  6 22:13:05 2012 benjamin businaro
 */
 
-#include "server_routine.h"
+#include <stdio.h>
+#include "cmd_parse.h"
+#include "string_manager.h"
+#include "def.h"
 
 void	server_routine_input(t_clientManager this)
 {
@@ -17,6 +20,7 @@ void	server_routine_input(t_clientManager this)
 
   ret = NULL;
   // TODO RECV -> buf
+  buf = NULL; // TODO
   get_commands(this, buf);
   while (!this->in.empty)
     {

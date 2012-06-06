@@ -13,6 +13,9 @@
 typedef struct sockaddr*	t_sockAddr;
 typedef struct sockaddr		t_u_sockAddr;
 
+typedef struct sockaddr_in*	t_sockAddrIn;
+typedef struct sockaddr_in	t_u_sockAddrIn;
+
 /*
  * Struct typedef
  */
@@ -48,7 +51,7 @@ typedef enum
 struct s_sockLayer
 {
   int		fd;
-  t_sockAddr	addr;
+  t_u_sockAddrIn	addr;
 };
 
 struct s_clientManager

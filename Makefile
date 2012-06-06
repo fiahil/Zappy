@@ -25,6 +25,8 @@ INCLUDES=	-I ./headers -I ./lists/include
 
 CC	=	gcc
 
+RM	=	rm -f
+
 CFLAGS	=	-Wall -Wextra -O3 $(INCLUDES)
 
 LDFLAGS	=	-L./lists/ -lclists
@@ -35,10 +37,10 @@ $(NAME):	$(OBJ)
 		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
-		rm -f $(OBJ)
+		@$(RM) $(OBJ)
 
 fclean:		clean
-		rm -f $(NAME)
+		@$(RM) $(NAME)
 
 re:		fclean all
 

@@ -29,6 +29,8 @@ typedef struct s_clientManager	t_u_clientManager;
  * Enum typedef
  */
 
+#define BUFFER_SIZE (4096)
+
 typedef enum
 {
   FALSE,
@@ -53,7 +55,7 @@ struct s_sockLayer
 
 struct s_clientManager
 {
-  char		*current;
+  char		stock[BUFFER_SIZE];
   t_sockLayer	sock;
   //t_list	in; // queue d'entree
   //t_list	out; // queue de sortie

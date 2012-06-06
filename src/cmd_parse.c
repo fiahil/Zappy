@@ -7,34 +7,34 @@
 #include <string.h>
 #include "cmd_parse.h"
 
-static char const	*cmd_tab[] =
+static char const	*g_cmd_tab[] =
   {
-    "avance",
-    "droite",
-    "gauche",
-    "voir",
-    "inventaire",
-    "prend xxx",
-    "pose xxx",
-    "expulse",
-    "broadcast xxx",
-    "incantation",
-    "fork",
-    "connect_nbr",
-    NULL
+    {"avance", NULL},
+    {"droite", NULL},
+    {"gauche", NULL},
+    {"voir", NULL},
+    {"inventaire", NULL},
+    {"prend xxx", NULL},
+    {"pose xxx", NULL},
+    {"expulse", NULL},
+    {"broadcast xxx", NULL},
+    {"incantation", NULL},
+    {"fork", NULL},
+    {"connect_nbr", NULL},
+    {NULL, NULL}
   };
 
-t_bool		cmd_parse(char const *input)
+procFunc	cmd_parse(char const *input)
 {
   int		i;
 
   i = 0;
-  while (cmd_tab[i])
+  while (g_cmd_tab[i].cmd)
   {
-    if (!strcmp(input, cmd_tab[i]))
-      return (TRUE);
+    if (!strcmp(input, g_cmd_tab[i].cmd))
+      return (g_cmd_tab[i].func);
     ++i;
   }
-  return (FALSE);
+  return (NULL);
 }
 

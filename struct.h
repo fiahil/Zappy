@@ -1,22 +1,22 @@
 typedef struct s_sockLayer t_sockLayer;
 typedef struct s_clientManager t_clientManager; // Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
 
-enum	bool
+typedef enum
   {
     FALSE,
     TRUE
-  }
+  } t_bool;
 
-enum	splitMode		
+typedef enum
   {
     CRLF,
     LF
-  }
+  } t_splitMode;
 
 struct s_sockLayer
 {
-  int	fd; // client
-  struct sockaddr ; // truc qu'on recoit quand on fait un accept
+  int	fd;
+  struct sockaddr ;
 };
 
 struct s_clientManager

@@ -7,7 +7,7 @@
 #include <string.h>
 #include "cmd_parse.h"
 
-static char const	*g_cmd_tab[] =
+static const t_u_parse_elem	g_cmd_tab[] =
   {
     {"avance", NULL},
     {"droite", NULL},

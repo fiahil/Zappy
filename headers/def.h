@@ -26,6 +26,12 @@ typedef struct s_clientManager*	t_clientManager;
 typedef struct s_sockLayer	t_u_sockLayer;
 typedef struct s_clientManager	t_u_clientManager;
 
+/*
+ * Ptrfunc
+ */
+
+typedef void	(*procFunc)(void);
+
 // Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
 
 /*
@@ -63,6 +69,7 @@ struct s_clientManager
   //t_list	in; // queue d'entree
   //t_list	out; // queue de sortie
   t_splitMode	mode;
+  t_bool	online;
 };
 
 #endif /* __DEF_H__ */

@@ -13,7 +13,8 @@ SRC	=	src/main.c		\
 		src/cmd_parse.c		\
 		src/string_manager.c	\
 		src/network.c		\
-		src/error.c
+		src/error.c		\
+		src/netManager.c
 
 OBJ	=	$(SRC:.c=.o)
 

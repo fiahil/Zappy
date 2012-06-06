@@ -53,7 +53,7 @@ typedef enum
 struct s_sockLayer
 {
   int		fd;
-  t_u_sockAddrIn	addr;
+  t_sockAddrIn	addr;
 };
 
 struct s_clientManager

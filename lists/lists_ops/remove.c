@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Wed Apr 18 11:27:56 2012 pierre martin
-** Last update Wed Apr 18 23:29:09 2012 pierre martin
+** Last update Thu Jun  7 17:47:45 2012 pierre martin
 */
 
 #include	"iter.h"
@@ -21,6 +21,8 @@ void		list_pop_back(t_list *this)
       if (this->tail->prev)
 	this->tail->prev->next = NULL;
       this->tail = this->tail->prev;
+      if (this->head == del)
+	this->head = this->tail;
       delete_iter(del, this->dtor);
       --this->size;
       this->empty = this->size ? 0 : 1;
@@ -37,6 +39,8 @@ void		list_pop_front(t_list *this)
       if (this->head->next)
 	this->head->next->prev = NULL;
       this->head = this->head->next;
+      if (this->tail == del)
+	this->tail = this->head;
       delete_iter(del, this->dtor);
       --this->size;
       this->empty = this->size ? 0 : 1;

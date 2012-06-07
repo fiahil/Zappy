@@ -5,14 +5,14 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Tue Apr 17 23:26:13 2012 pierre martin
-** Last update Sat Apr 21 19:28:47 2012 pierre martin
+** Last update Thu Jun  7 17:31:34 2012 pierre martin
 */
 
 #include	"c_lists.h"
 
 void		list_push_back(t_list *this, t_iter *add)
 {
-  if (this)
+  if (this && add)
     {
       add->prev = this->tail;
       if (!this->head)
@@ -28,7 +28,7 @@ void		list_push_back(t_list *this, t_iter *add)
 
 void		list_push_front(t_list *this, t_iter *add)
 {
-  if (this)
+  if (this && add)
     {
       add->next = this->head;
       if (!this->tail)

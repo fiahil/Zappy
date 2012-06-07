@@ -30,7 +30,6 @@ int		initClientTab(void)
     clientTab[i]->sock = malloc(sizeof(t_u_sockLayer));
     if (!clientTab[i]->sock)
       return (0);
-    clientTab[i]->sock->addr = NULL;
     batAlloc += sizeof(t_u_clientManager);
     ++i;
   }

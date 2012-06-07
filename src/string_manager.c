@@ -37,8 +37,6 @@ static void	treatment_get_cmd(t_clientManager this, t_bool *clear, char **buf)
       if (strlen((*buf)) < (BUFFER_SIZE / 2))
 	memcpy(this->stock + strlen(this->stock), (*buf), strlen(*buf));
       list_push_back_new(&this->in, this->stock, strlen(this->stock) + 1);
-      printf("after split and concat stock = %s\n", this->stock);
-      fflush(0); //TODO
       memset(this->stock, '\0', BUFFER_SIZE);
       *buf = tmp;
     }
@@ -51,9 +49,5 @@ void	get_commands(t_clientManager this, char *buf)
   assert(buf && this);
   clear = FALSE;
   while (buf && buf[0] && !clear)
-    {
-      puts("get command");
-      fflush(0);
-      treatment_get_cmd(this, &clear, &buf);
-    }
+    treatment_get_cmd(this, &clear, &buf);
 }

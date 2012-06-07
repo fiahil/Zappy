@@ -87,7 +87,7 @@ char*	my_receive(int fd)
 
 int	my_send(int fd, char *msg)
 {
-  if (send(fd, msg, strlen(msg), 0))
+  if (send(fd, msg, strlen(msg), 0) == -1)
     return (handleError("send", strerror(errno), -1));
   return (0);
 }

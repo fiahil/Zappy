@@ -14,6 +14,7 @@
 #include	<stdlib.h>		// atoi # to be removed
 #include	<unistd.h>
 #include	<errno.h>		// errno....what else ?
+#include	<netdb.h>
 #include	<stdio.h>		// fprintf
 
 #include	"handle_error.h"
@@ -25,7 +26,7 @@ int	set_connection(int port)
 {
   int	op;
 
-  if ((g_server = malloc(sizeof(*g_server))) == NULL || (g_server->addr = malloc(sizeof(*g_server->addr))) == NULL)
+  if ((g_server = malloc(sizeof(*g_server))) == NULL)
     return (handleError("malloc", strerror(errno), -1));
   fprintf(stdout, "INITIALIZING CONNECTION:\n%24sInitializing socket.\n", " ");
   if ((g_server->fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
@@ -35,10 +36,10 @@ int	set_connection(int port)
   if (setsockopt(g_server->fd, SOL_SOCKET, SO_REUSEADDR, &op, sizeof(op)) < 0)
     return (handleError("setsockopt", strerror(errno), g_server->fd));
   fprintf(stdout, "%24sBinding socket.\n", " ");
-  g_server->addr->sin_family = AF_INET;
-  g_server->addr->sin_port = htons(port);
-  g_server->addr->sin_addr.s_addr = htonl(INADDR_ANY);
-  if (bind(g_server->fd, (t_sockAddr)g_server->addr, sizeof(g_server->addr)) < 0)
+  g_server->addr.sin_family = AF_INET;
+  g_server->addr.sin_port = htons(port);
+  g_server->addr.sin_addr.s_addr = htonl(INADDR_ANY);
+  if (bind(g_server->fd, (t_sockAddr)&(g_server->addr), sizeof(t_u_sockAddrIn)) < 0)
     return (handleError("bind", strerror(errno), g_server->fd));
   fprintf(stdout, "%24sSetting listening state.\n", " ");
   if (listen(g_server->fd, 128) < 0)
@@ -50,8 +51,8 @@ int	accept_connection(t_sockLayer sock)
 {
   socklen_t	len;
 
-  len = sizeof(*(sock->addr));
-  if ((sock->fd = accept(g_server->fd, (t_sockAddr)sock->addr, &len)) == -1)
+  len = sizeof((sock->addr));
+  if ((sock->fd = accept(g_server->fd, (t_sockAddr)&(sock->addr), &len)) == -1)
     return (handleError("accept", strerror(errno), sock->fd));
   return (0);
 }

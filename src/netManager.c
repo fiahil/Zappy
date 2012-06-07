@@ -7,6 +7,8 @@
 #include <string.h>
 #include "def.h"
 #include "netManager.h"
+#include "server_routine.h"
+#include "select_manager.h"
 
 static t_clientManager		*clientTab = NULL;
 
@@ -16,7 +18,7 @@ int		initClientTab(void)
   void		*batAlloc;
 
   i = 0;
-  clientTab = malloc((DEFAULT_TAB * sizeof(t_clientManager)) + 1);
+  clientTab = malloc(((DEFAULT_TAB + 1) * sizeof(t_clientManager)));
   batAlloc = malloc((DEFAULT_TAB + 1) * sizeof(t_u_clientManager));
   if (!clientTab || !batAlloc)
     return (0);
@@ -28,7 +30,6 @@ int		initClientTab(void)
     clientTab[i]->sock = malloc(sizeof(t_u_sockLayer));
     if (!clientTab[i]->sock)
       return (0);
-    clientTab[i]->sock->addr = NULL;
     batAlloc += sizeof(t_u_clientManager);
     ++i;
   }
@@ -38,20 +39,20 @@ int		initClientTab(void)
 
 int		iterClient(void)
 {
-  /* int		i; */
+  int		i;
 
-  /* selectManager(clientTab); */
-  /* i = 0; */
-  /* while (clientTab[i]) */
-  /* { */
-  /*   if (clientTab[i]->online) */
-  /*   { */
-  /*     if (selectIsset(clientTab[i]->sock->fd, READ)) */
-  /* 	; //SERVER_ROUTINE_INPUT(clientTab[i]);  */
-  /*     if (selectIsset(clientTab[i]->sock->fd, WRITE)) */
-  /* 	; //SERVER_ROUTINE_OUTPUT(clientTab[i]) */
-  /*   } */
-  /*   ++i; */
-  /* } */
+  select_manager(clientTab);
+  i = 0;
+  while (clientTab[i])
+  {
+    if (clientTab[i]->online)
+    {
+      if (select_isset(clientTab[i]->sock->fd, READ))
+  	server_routine_input(clientTab[i]);
+      if (select_isset(clientTab[i]->sock->fd, WRITE))
+  	server_routine_output(clientTab[i]);
+    }
+    ++i;
+  }
   return (0);
 }

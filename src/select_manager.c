@@ -1,6 +1,7 @@
 
 #include	<stdio.h>
 #include	<stdlib.h>
+#include	<sys/time.h>
 #include	"select_manager.h"
 
 static t_select	fds;
@@ -33,6 +34,10 @@ int		select_isset(int fd, t_rw flag)
 
 void		select_manager(t_clientManager *clients)
 {
+  struct timeval tv;
+
   init_select(clients);
-  select(get_max_fd() + 1, &fds.readfds, &fds.writefds, NULL, NULL);
+  tv.tv_sec = 5;
+  tv.tv_usec = 0;
+  select(get_max_fd() + 1, &fds.readfds, &fds.writefds, NULL, &tv);
 }

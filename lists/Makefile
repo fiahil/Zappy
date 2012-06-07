@@ -5,7 +5,7 @@
 ## Login   <mart_i@epitech.net>
 ## 
 ## Started on  Wed Apr 18 00:12:20 2012 pierre martin
-## Last update Wed Apr 18 15:03:06 2012 nicolas magere
+## Last update Thu Jun  7 13:35:27 2012 ulric lefevre
 ##
 
 NAME	=	libclists.a
@@ -48,10 +48,10 @@ do_lib:
 		ranlib $(NAME)
 
 clean:
-		$(RM) $(OBJ)
-		$(RM) $(DUST)
+		@$(RM) $(OBJ)
+		@$(RM) $(DUST)
 
 fclean:		clean
-		$(RM) $(NAME)
+		@$(RM) $(NAME)
 
 re:		fclean all

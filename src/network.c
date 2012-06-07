@@ -64,7 +64,7 @@ char*	my_receive(int fd)
   char	*tmp;
   int	test;
 
-  if ((ret = malloc(sizeof(*ret))) == NULL)
+  if ((ret = malloc(1)) == NULL)
     {
       handleError("malloc", strerror(errno), -1);
       return (NULL);
@@ -78,6 +78,7 @@ char*	my_receive(int fd)
       strcpy(tmp, ret);
       strcpy(&tmp[strlen(ret)], buff);
       free(ret);
+      puts("RECV");
       ret = tmp;
     }
   if (test < 0)

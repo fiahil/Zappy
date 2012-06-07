@@ -65,10 +65,7 @@ char*	my_receive(int fd)
   int	test;
 
   if ((ret = malloc(sizeof(*ret))) == NULL)
-    {
-      handleError("malloc", strerror(errno), -1);
-      return (NULL);
-    }
+    return (NULL);
   ret[0] = '\0';
   while ((test = recv(fd, buff, BUFFER_SIZE - 1, 0)) == (BUFFER_SIZE - 1))
     {
@@ -76,13 +73,14 @@ char*	my_receive(int fd)
       if ((tmp = malloc(strlen(ret) + test + 1)) == NULL)
 	return (NULL);
       strcpy(tmp, ret);
-      strcpy(&tmp[strlen(ret)], buff);
+      strcat(tmp, buff);
       free(ret);
       ret = tmp;
     }
   if (test < 0)
     handleError("recv", strerror(errno), -1);
-  puts("test");
+  if (test == 0)
+    return ((char*)-1);
   return (ret);
 }
 

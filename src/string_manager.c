@@ -5,7 +5,7 @@
 ** Login   <busina_b@epitech.net>
 ** 
 ** Started on Wed Jun  6 11:42:13 2012 benjamin businaro
-** Last update Wed Jun  6 22:11:26 2012 benjamin businaro
+** Last update Thu Jun  7 11:53:31 2012 benjamin businaro
 */
 
 
@@ -25,7 +25,7 @@ static void	treatment_get_cmd(t_clientManager this, t_bool *clear, char **buf)
 {
   char		*tmp;
 
-      tmp = NULL;
+  tmp = NULL;
   if (!(tmp = strstr((*buf), g_separator[this->mode])) && (*buf)[0] != '\0')
     {
       if (strlen(*buf) < (BUFFER_SIZE / 2))
@@ -53,5 +53,9 @@ void	get_commands(t_clientManager this, char *buf)
   assert(buf && this);
   clear = FALSE;
   while (buf && buf[0] && !clear)
-    treatment_get_cmd(this, &clear, &buf);
+    {
+      puts("get command");
+      fflush(0);
+      treatment_get_cmd(this, &clear, &buf);
+    }
 }

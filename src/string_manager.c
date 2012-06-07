@@ -52,6 +52,10 @@ void	get_commands(t_clientManager this, char *buf)
 
   assert(buf && this);
   clear = FALSE;
+  printf("buf %p\n", buf);
+  printf("buf[0] %p\n", &buf[0]);
+  printf("&clear %p\n", &clear);
+  printf("this %p\n", this);
   while (buf && buf[0] && !clear)
     {
       puts("get command");

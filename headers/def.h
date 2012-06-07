@@ -55,7 +55,7 @@ typedef enum
  * Ptrfunc
  */
 
-typedef t_bool	(*procFunc)(void);
+typedef t_bool	(*procFunc)(t_clientManager);
 
 /*
  * Struct definition
@@ -63,6 +63,7 @@ typedef t_bool	(*procFunc)(void);
 
 struct s_parse_elem
 {
+  int		size;
   char const	*cmd;
   procFunc	func;
 };

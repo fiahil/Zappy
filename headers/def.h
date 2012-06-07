@@ -31,12 +31,6 @@ typedef struct s_clientManager	t_u_clientManager;
 
 typedef struct s_parse_elem	t_u_parse_elem;
 
-/*
- * Ptrfunc
- */
-
-typedef void	(*procFunc)(void);
-
 // Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
 
 /*
@@ -56,6 +50,12 @@ typedef enum
   CRLF,
   LF
 } t_splitMode;
+
+/*
+ * Ptrfunc
+ */
+
+typedef t_bool	(*procFunc)(void);
 
 /*
  * Struct definition

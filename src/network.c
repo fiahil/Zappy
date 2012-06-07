@@ -78,7 +78,6 @@ char*	my_receive(int fd)
       strcpy(tmp, ret);
       strcat(tmp, buff);
       free(ret);
-      puts("RECV");
       ret = tmp;
       if (test != BUFFER_SIZE - 1)
 	test = 0;
@@ -88,7 +87,7 @@ char*	my_receive(int fd)
 
 int	my_send(int fd, char *msg)
 {
-  if (send(fd, msg, strlen(msg), 0))
+  if (send(fd, msg, strlen(msg), 0) == -1)
     return (handleError("send", strerror(errno), -1));
   return (0);
 }

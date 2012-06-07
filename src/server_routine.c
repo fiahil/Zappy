@@ -3,8 +3,11 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "cmd_parse.h"
 #include "string_manager.h"
+#include "network.h"
+#include "def.h"
 #include "server_routine.h"
 
 void	server_routine_input(t_clientManager this)
@@ -13,20 +16,25 @@ void	server_routine_input(t_clientManager this)
   char		*buf;
 
   ret = NULL;
-  // TODO RECV -> buf
-  buf = NULL; // TODO
+  buf = my_receive(this->sock->fd);
   get_commands(this, buf);
   while (!this->in.empty)
     {
+      printf("Processing \"%s\" ... \n", (char*)(list_front(&this->in)));
+      fflush(0);
       if (!(ret = cmd_parse(list_front(&this->in))))
 	{
 	  puts("server_routine -> cmd_parse : Command Not Found."); // TODO
 	  fflush(0);
 	}
-      else
-	ret(); // TODO push direct dans l'ouput et return un booleen (gestion des erreur)
+      else if (ret && !ret())
+	{
+	  puts("server_routine : Command Failed."); // TODO
+	  fflush(0);
+	}
       list_pop_front(&this->in);
     }
+  free(buf);
 }
 
 
@@ -36,7 +44,7 @@ void	server_routine_output(t_clientManager this)
 {
   while (!this->out.empty)
     {
-      // TODO SEND (list_front(&this->out))
+      my_send(this->sock->fd, list_front(&this->out));
       list_pop_front(&this->out);
     }
 }

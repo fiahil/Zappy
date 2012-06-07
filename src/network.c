@@ -84,7 +84,6 @@ char*	my_receive(int fd)
   return (ret);
 }
 
-// send: tant que toujours des datas
 int	my_send(int fd, char *msg)
 {
   if (send(fd, msg, strlen(msg), 0))

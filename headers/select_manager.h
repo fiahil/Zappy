@@ -12,7 +12,7 @@ typedef struct	s_select
   fd_set	writefds;
 }		t_select;
 
-void		select_manager(t_clientManager *clients);
+void		select_manager(t_clientManager *clients, int fd);
 int		select_isset(int fd, t_rw flag);
 void		set_max_fd(int fd);
 int		get_max_fd();

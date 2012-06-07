@@ -6,7 +6,7 @@
 #ifndef __NETMANAGER_H__
 #define __NETMANAGER_H__
 
-#define DEFAULT_TAB	(4096)
+#define DEFAULT_TAB	(512)
 
 int	initClientTab(void);
 int	iterClient(void);

@@ -29,11 +29,13 @@ static void	treatment_get_cmd(t_clientManager this, t_bool *clear, char **buf)
       if (strlen(*buf) < (BUFFER_SIZE / 2))
 	memcpy(this->stock + strlen(this->stock), (*buf), strlen(*buf));
       *clear = TRUE;
+      printf("add to stock = [%s]\n", (*buf));
+      fflush(0);
     }
   else if (buf[0] != '\0')
     {
       tmp[0] = '\0';
-      tmp += (strlen(g_separator[this->mode]) * sizeof(tmp));
+      tmp += (strlen(g_separator[this->mode]));
       if (strlen((*buf)) < (BUFFER_SIZE / 2))
 	memcpy(this->stock + strlen(this->stock), (*buf), strlen(*buf));
       list_push_back_new(&this->in, this->stock, strlen(this->stock) + 1);

@@ -42,7 +42,8 @@ typedef struct s_parse_elem	t_u_parse_elem;
 typedef enum
 {
   FALSE,
-  TRUE
+  TRUE,
+  OTHER
 } t_bool;
 
 typedef enum

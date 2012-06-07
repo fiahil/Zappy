@@ -3,6 +3,7 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "cmd_parse.h"
 #include "string_manager.h"
 #include "network.h"
@@ -12,10 +13,10 @@
 void	server_routine_input(t_clientManager this)
 {
   procFunc	ret;
-  char		buf[BUFFER_SIZE];
+  char		*buf;
 
   ret = NULL;
-  my_receive(this->sock, buf);
+  buf = my_receive(this->sock->fd);
   get_commands(this, buf);
   while (!this->in.empty)
     {
@@ -33,6 +34,7 @@ void	server_routine_input(t_clientManager this)
 	}
       list_pop_front(&this->in);
     }
+  free(buf);
 }
 
 
@@ -42,7 +44,7 @@ void	server_routine_output(t_clientManager this)
 {
   while (!this->out.empty)
     {
-      my_send(this->sock, list_front(&this->out));
+      my_send(this->sock->fd, list_front(&this->out));
       list_pop_front(&this->out);
     }
 }

@@ -7,7 +7,7 @@
 #define __NETWORK_H__
 
 int	set_connection(int);
-int	my_receive(t_sockLayer, char*);
-int	my_send(t_sockLayer, char*);
+char	*my_receive(int);
+int	my_send(int, char*);
 
 #endif /* __NETWORK_H__ */

@@ -55,13 +55,18 @@ int		iterClient(void)
   i = 0;
   while (clientTab[i])
   {
-    if (clientTab[i]->online)
+    if (clientTab[i]->online == TRUE)
     {
       if (select_isset(clientTab[i]->sock->fd, READ))
   	server_routine_input(clientTab[i]);
       if (select_isset(clientTab[i]->sock->fd, WRITE))
   	server_routine_output(clientTab[i]);
     }
+    else if (clientTab[i]->online == FALSE)
+      {
+      	close(clientTab[i]->sock->fd);
+	clientTab[i]->online = OTHER;
+      }
     ++i;
   }
   return (0);

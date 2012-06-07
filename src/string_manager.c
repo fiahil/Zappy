@@ -29,6 +29,8 @@ static void	treatment_get_cmd(t_clientManager this, t_bool *clear, char **buf)
       if (strlen(*buf) < (BUFFER_SIZE / 2))
 	memcpy(this->stock + strlen(this->stock), (*buf), strlen(*buf));
       *clear = TRUE;
+      printf("add to stock = [%s]\n", (*buf));
+      fflush(0);
     }
   else if (buf[0] != '\0')
     {

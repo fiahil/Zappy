@@ -19,6 +19,8 @@ void	server_routine_input(t_clientManager this)
   if ((buf = my_receive(this->sock->fd)) == (char*)(-1))
     {
       this->online = FALSE;
+      puts(".:: Server disconnected ::.");
+      fflush(0);
       return ;
     }
   get_commands(this, buf);

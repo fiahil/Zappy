@@ -69,6 +69,7 @@ char*	my_receive(int fd)
       handleError("malloc", strerror(errno), -1);
       return (NULL);
     }
+  ret[0] = '\0';
   while ((test = recv(fd, buff, BUFFER_SIZE - 1, 0)) > 0)
     {
       buff[test] = '\0';
@@ -89,4 +90,9 @@ int	my_send(int fd, char *msg)
   if (send(fd, msg, strlen(msg), 0))
     return (handleError("send", strerror(errno), -1));
   return (0);
+}
+
+int	get_server_fd()
+{
+  return (g_server->fd);
 }

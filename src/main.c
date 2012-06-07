@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include "def.h"
 #include "get_arg.h"
+#include "network.h"
 #include "netManager.h"
 
 void		run(void)
@@ -23,7 +24,7 @@ int		main(int ac, char **av)
 
   if (get_arg(ac, av, &args) == -1)
     return (EXIT_FAILURE);
-  set_connection(42666);
+  set_connection(args.port);
   initClientTab();
   run();
   return (EXIT_SUCCESS);

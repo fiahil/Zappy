@@ -1,17 +1,11 @@
 /*
-** server_routine.c for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/src/
-** 
 ** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
-** 
-** Started on Wed Jun  6 21:00:33 2012 benjamin businaro
-** Last update Wed Jun  6 22:13:05 2012 benjamin businaro
 */
 
 #include <stdio.h>
 #include "cmd_parse.h"
 #include "string_manager.h"
-#include "def.h"
+#include "server_routine.h"
 
 void	server_routine_input(t_clientManager this)
 {

@@ -11,6 +11,7 @@
 #include "select_manager.h"
 
 static t_clientManager		*clientTab = NULL;
+static size_t			g_index = 0;
 
 int		initClientTab(void)
 {
@@ -41,7 +42,9 @@ int		iterClient(void)
 {
   int		i;
 
-  select_manager(clientTab);
+  select_manager(clientTab, get_server_fd());
+  if (select_isset(get_server_fd(), READ))
+    accept_connection(clientTab[g_index++]);
   i = 0;
   while (clientTab[i])
   {

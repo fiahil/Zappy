@@ -37,7 +37,7 @@ void		select_manager(t_clientManager *clients)
   struct timeval tv;
 
   init_select(clients);
-  tv.tv_sec = 5;
-  tv.tv_usec = 0;
+  tv.tv_sec = 0;
+  tv.tv_usec = 10;
   select(get_max_fd() + 1, &fds.readfds, &fds.writefds, NULL, &tv);
 }

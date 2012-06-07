@@ -7,18 +7,20 @@ NAME	=	zappy
 
 MAKE=           make --no-print-directory
 
-SRC	=	src/main.c		\
-		src/get_arg.c		\
-		src/get_opt_1.c		\
-		src/get_opt_2.c		\
-		src/usage.c		\
-		src/select_manager.c	\
-		src/max_fd.c		\
-		src/server_routine.c	\
-		src/cmd_parse.c		\
-		src/string_manager.c	\
-		src/network.c		\
-		src/handle_error.c	\
+SRC	=	src/main.c			\
+		src/get_arg.c			\
+		src/get_opt_1.c			\
+		src/get_opt_2.c			\
+		src/usage.c			\
+		src/select_manager.c		\
+		src/max_fd.c			\
+		src/server_routine.c		\
+		src/cmd_parse.c			\
+		src/process_function.c		\
+		src/other_process_function.c	\
+		src/string_manager.c		\
+		src/network.c			\
+		src/handle_error.c		\
 		src/netManager.c
 
 OBJ	=	$(SRC:.c=.o)

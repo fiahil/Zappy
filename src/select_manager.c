@@ -12,6 +12,7 @@ static void     init_select(t_clientManager *clients, int fd)
 
   FD_ZERO(&fds.readfds);
   FD_ZERO(&fds.writefds);
+  FD_SET(fd, &fds.readfds);
   set_max_fd(fd);
   i = 0;
   while (clients && clients[i])

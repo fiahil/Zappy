@@ -36,7 +36,7 @@ static const t_u_parse_elem	g_cmd_tab[] =
 t_bool	move_process_function(t_clientManager this)
 {
 
-  list_push_back_new(&this->out, "I move !\n", strlen("I move !\n"));
+  list_push_back_new(&this->out, "I move !\n", strlen("I move !\n") + 1);
 
   return (TRUE);
 }
@@ -44,7 +44,7 @@ t_bool	move_process_function(t_clientManager this)
 t_bool	right_process_function(t_clientManager this)
 {
 
-  list_push_back_new(&this->out, "I turn right !\n", strlen("I turn right !\n"));
+  list_push_back_new(&this->out, "I turn right !\n", strlen("I turn right !\n") + 1);
 
   return (TRUE);
 }
@@ -52,7 +52,7 @@ t_bool	right_process_function(t_clientManager this)
 t_bool	left_process_function(t_clientManager this)
 {
 
-  list_push_back_new(&this->out, "I turn left !\n", strlen("I turn left !\n"));
+  list_push_back_new(&this->out, "I turn left !\n", strlen("I turn left !\n") + 1);
 
   return (TRUE);
 }

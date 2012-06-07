@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Thu Apr 19 09:21:42 2012 pierre martin
-** Last update Thu Jun  7 12:28:04 2012 pierre martin
+** Last update Thu Jun  7 19:50:24 2012 pierre martin
 */
 
 #include	<stdlib.h>
@@ -18,6 +18,8 @@ void		delete_iter(t_iter *this, t_dtor dtor)
     {
       if (this->data && dtor)
 	dtor(this->data);
+      else if (this->data)
+	free(this->data);
       free(this);
     }
 }

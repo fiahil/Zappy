@@ -35,7 +35,7 @@ void	server_routine_input(t_clientManager this)
      	{
       	  puts("server_routine : Command Failed."); // TODO
       	  fflush(0);
-      	}
+    	}
       list_pop_front(&this->in);
     }
   free(buf);

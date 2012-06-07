@@ -6,6 +6,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
+#include	<netinet/in.h>		// IPPROTO_TCP
 #include "c_lists.h"
 
 /*
@@ -69,7 +70,7 @@ struct s_parse_elem
 struct s_sockLayer
 {
   int		fd;
-  t_sockAddrIn	addr;
+  struct sockaddr_in	addr;
 };
 
 struct s_clientManager

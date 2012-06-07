@@ -71,7 +71,7 @@ char*	my_receive(int fd)
   while (test)
     {
       if ((test = recv(fd, buff, BUFFER_SIZE - 1, 0)) == 0)
-	return ((char*)-1);
+	return (ret[0] ? ret : (char*)-1);
       buff[test] = '\0';
       if ((tmp = malloc(strlen(ret) + test + 1)) == NULL)
 	return (NULL);

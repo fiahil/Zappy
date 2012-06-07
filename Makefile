@@ -5,6 +5,8 @@
 
 NAME	=	zappy
 
+MAKE=           make --no-print-directory
+
 SRC	=	src/main.c		\
 		src/get_arg.c		\
 		src/get_opt_1.c		\
@@ -35,6 +37,10 @@ all:		$(NAME)
 
 $(NAME):	$(OBJ)
 		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
+
+list:
+		@$(MAKE) all -C ./lists
+		@$(MAKE) clean -C ./lists
 
 clean:
 		@$(RM) $(OBJ)

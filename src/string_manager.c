@@ -5,9 +5,7 @@
 ** Login   <busina_b@epitech.net>
 ** 
 ** Started on Wed Jun  6 11:42:13 2012 benjamin businaro
-** Last update Wed Jun  6 22:11:26 2012 benjamin businaro
 */
-
 
 #include <string.h>
 #include <stdio.h>
@@ -52,10 +50,6 @@ void	get_commands(t_clientManager this, char *buf)
 
   assert(buf && this);
   clear = FALSE;
-  printf("buf %p\n", buf);
-  printf("buf[0] %p\n", &buf[0]);
-  printf("&clear %p\n", &clear);
-  printf("this %p\n", this);
   while (buf && buf[0] && !clear)
     treatment_get_cmd(this, &clear, &buf);
 }

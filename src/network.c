@@ -78,7 +78,6 @@ char*	my_receive(int fd)
       strcpy(tmp, ret);
       strcat(tmp, buff);
       free(ret);
-      puts("RECV");
       ret = tmp;
       if (test != BUFFER_SIZE - 1)
 	test = 0;

@@ -70,7 +70,7 @@ char*	my_receive(int fd)
       return (NULL);
     }
   ret[0] = '\0';
-  while ((test = recv(fd, buff, BUFFER_SIZE - 1, 0)) > 0)
+  while ((test = recv(fd, buff, BUFFER_SIZE - 1, 0)) == (BUFFER_SIZE - 1))
     {
       buff[test] = '\0';
       if ((tmp = malloc(strlen(ret) + test + 1)) == NULL)
@@ -80,8 +80,9 @@ char*	my_receive(int fd)
       free(ret);
       ret = tmp;
     }
-  if (test != 0)
+  if (test < 0)
     handleError("recv", strerror(errno), -1);
+  puts("test");
   return (ret);
 }
 

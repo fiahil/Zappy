@@ -28,6 +28,9 @@ int		initClientTab(void)
   {
     clientTab[i] = batAlloc;
     clientTab[i]->online = FALSE;
+    clientTab[i]->mode = LF;
+    init_list(&clientTab[i]->in, NULL, NULL, NULL);
+    init_list(&clientTab[i]->out, NULL, NULL, NULL);
     memset(clientTab[i]->stock, '\0', sizeof(clientTab[i]->stock));
     clientTab[i]->sock = malloc(sizeof(t_u_sockLayer));
     if (!clientTab[i]->sock)

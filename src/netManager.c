@@ -49,26 +49,21 @@ int		iterClient(void)
 
   select_manager(clientTab, get_server_fd());
   if (select_isset(get_server_fd(), READ))
-  {
-    accept_connection(clientTab[g_index]->sock);
-    clientTab[g_index++]->online = TRUE;
-  }
+    {
+      accept_connection(clientTab[g_index]->sock);
+      clientTab[g_index++]->online = TRUE;
+    }
   i = 0;
   while (clientTab[i])
-  {
-    if (clientTab[i]->online)
     {
-      if (select_isset(clientTab[i]->sock->fd, READ))
-  	server_routine_input(clientTab[i]);
-      if (select_isset(clientTab[i]->sock->fd, WRITE))
-  	server_routine_output(clientTab[i]);
+      if (clientTab[i]->online)
+	{
+	  if (select_isset(clientTab[i]->sock->fd, READ))
+	    server_routine_input(clientTab[i]);
+	  if (select_isset(clientTab[i]->sock->fd, WRITE))
+	    server_routine_output(clientTab[i]);
+	}
+      ++i;
     }
-    else if (!clientTab[i]->dead)
-      {
-      	close(clientTab[i]->sock->fd);
-	clientTab[i]->dead = TRUE;
-      }
-    ++i;
-  }
   return (0);
 }

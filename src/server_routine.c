@@ -16,11 +16,15 @@ void	server_routine_input(t_clientManager this)
   char		*buf;
 
   ret = NULL;
-  buf = my_receive(this->sock->fd);
+  if ((buf = my_receive(this->sock->fd)) == (char*)(-1))
+    {
+      this->online = FALSE;
+      return ;
+    }
   get_commands(this, buf);
   while (!this->in.empty)
     {
-      printf("Processing \"%s\" ... \n", (char*)(list_front(&this->in)));
+      printf("Processing \"%s\" ... \n", (char*)(list_front(&this->in))); // TODO
       fflush(0);
       if (!(ret = cmd_parse(list_front(&this->in))))
 	{
@@ -28,10 +32,10 @@ void	server_routine_input(t_clientManager this)
 	  fflush(0);
 	}
       else if (ret && !ret())
-	{
-	  puts("server_routine : Command Failed."); // TODO
-	  fflush(0);
-	}
+      	{
+      	  puts("server_routine : Command Failed."); // TODO
+      	  fflush(0);
+      	}
       list_pop_front(&this->in);
     }
   free(buf);

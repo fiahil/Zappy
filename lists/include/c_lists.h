@@ -5,7 +5,7 @@
 ** Login   <magere_n@epitech.net>
 ** 
 ** Started on  Sun Apr 22 21:55:52 2012 nicolas magere
-** Last update Sun Apr 22 22:24:07 2012 nicolas magere
+** Last update Thu Jun  7 10:39:40 2012 pierre martin
 */
 
 #ifndef __C_LISTS_H__
@@ -37,6 +37,7 @@ typedef void	(*t_func)(void *, size_t);
 **
 **   Allocators for chained-lists
 */
+t_list		*init_list(t_list *, t_ctor, t_dtor, t_copy);
 t_list		*new_list(t_ctor, t_dtor, t_copy);
 
 /*

@@ -5,13 +5,13 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Tue Apr 17 23:13:14 2012 pierre martin
-** Last update Sun Apr 22 22:22:00 2012 nicolas magere
+** Last update Thu Jun  7 10:38:46 2012 pierre martin
 */
 
 #include <stdlib.h>
 #include "c_lists.h"
 
-static t_list	*init_list(t_list *this, t_ctor ctor, t_dtor dtor, t_copy cpy)
+t_list	*init_list(t_list *this, t_ctor ctor, t_dtor dtor, t_copy cpy)
 {
   if (this)
     {

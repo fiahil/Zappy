@@ -56,18 +56,37 @@ int	accept_connection(t_sockLayer sock)
   return (0);
 }
 
-// recv: tant que retour != 0
-int	my_receive(t_sockLayer sock, char *buff)
+char*	my_receive(int fd)
 {
-  if (recv(sock->fd, buff, BUFFER_SIZE - 1, 0) < 0)
-    return (handleError("recv", strerror(errno), -1));
-  return (0);
-}
-// send: tant que toujours des datas
+  char	buff[BUFFER_SIZE];
+  char	*ret;
+  char	*tmp;
+  int	test;
 
-int	my_send(t_sockLayer sock, char* msg)
+  if ((ret = malloc(sizeof(*ret))) == NULL)
+    {
+      handleError("malloc", strerror(errno), -1);
+      return (NULL);
+    }
+  while ((test = recv(fd, buff, BUFFER_SIZE - 1, 0)) > 0)
+    {
+      buff[test] = '\0';
+      if ((tmp = malloc(strlen(ret) + test + 1)) == NULL)
+	return (NULL);
+      strcpy(tmp, ret);
+      strcpy(&tmp[strlen(ret)], buff);
+      free(ret);
+      ret = tmp;
+    }
+  if (test != 0)
+    handleError("recv", strerror(errno), -1);
+  return (ret);
+}
+
+// send: tant que toujours des datas
+int	my_send(int fd, char *msg)
 {
-  if (send(sock->fd, msg, strlen(msg), 0))
+  if (send(fd, msg, strlen(msg), 0))
     return (handleError("send", strerror(errno), -1));
   return (0);
 }

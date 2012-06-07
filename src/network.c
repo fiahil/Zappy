@@ -19,30 +19,30 @@
 #include	"handle_error.h"
 #include	"def.h"
 
-static t_sockLayer	server;
+static t_sockLayer	g_server;
 
 int	set_connection(int port)
 {
   int	op;
 
-  if ((server = malloc(sizeof(*server))) == 0)
+  if ((g_server = malloc(sizeof(*g_server))) == NULL || (g_server->addr = malloc(sizeof(*g_server->addr))) == NULL)
     return (handleError("malloc", strerror(errno), -1));
   fprintf(stdout, "INITIALIZING CONNECTION:\n%24sInitializing socket.\n", " ");
-  if ((server->fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
-    return (handleError("socket", strerror(errno), server->fd));
+  if ((g_server->fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
+    return (handleError("socket", strerror(errno), g_server->fd));
   op = 1;
   fprintf(stdout, "%24sConfiguring socket.\n", " ");
-  if (setsockopt(server->fd, SOL_SOCKET, SO_REUSEADDR, &op, sizeof(op)) < 0)
-    return (handleError("setsockopt", strerror(errno), server->fd));
+  if (setsockopt(g_server->fd, SOL_SOCKET, SO_REUSEADDR, &op, sizeof(op)) < 0)
+    return (handleError("setsockopt", strerror(errno), g_server->fd));
   fprintf(stdout, "%24sBinding socket.\n", " ");
-  server->addr->sin_family = AF_INET;
-  server->addr->sin_port = htons(port);
-  server->addr->sin_addr.s_addr = htonl(INADDR_ANY);
-  if (bind(server->fd, (t_sockAddr)&server->addr, sizeof(server->addr)) < 0)
-    return (handleError("bind", strerror(errno), server->fd));
+  g_server->addr->sin_family = AF_INET;
+  g_server->addr->sin_port = htons(port);
+  g_server->addr->sin_addr.s_addr = htonl(INADDR_ANY);
+  if (bind(g_server->fd, (t_sockAddr)g_server->addr, sizeof(g_server->addr)) < 0)
+    return (handleError("bind", strerror(errno), g_server->fd));
   fprintf(stdout, "%24sSetting listening state.\n", " ");
-  if (listen(server->fd, 128) < 0)
-    return (handleError("listen", strerror(errno), server->fd));
+  if (listen(g_server->fd, 128) < 0)
+    return (handleError("listen", strerror(errno), g_server->fd));
   return (0);
 }
 
@@ -51,7 +51,7 @@ int	accept_connection(t_sockLayer sock)
   socklen_t	len;
 
   len = sizeof(*(sock->addr));
-  if ((sock->fd = accept(server->fd, (t_sockAddr)sock->addr, &len)) == -1)
+  if ((sock->fd = accept(g_server->fd, (t_sockAddr)sock->addr, &len)) == -1)
     return (handleError("accept", strerror(errno), sock->fd));
   return (0);
 }

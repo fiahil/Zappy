@@ -23,7 +23,7 @@ int		main(int ac, char **av)
 
   if (get_arg(ac, av, &args) == -1)
     return (EXIT_FAILURE);
-  /* setConnections(/\* port ? *\/); */
+  set_connection(42666);
   initClientTab();
   run();
   return (EXIT_SUCCESS);

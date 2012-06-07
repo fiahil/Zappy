@@ -7,6 +7,7 @@
 #include <string.h>
 #include "def.h"
 #include "netManager.h"
+#include "network.h"
 #include "server_routine.h"
 #include "select_manager.h"
 
@@ -44,7 +45,10 @@ int		iterClient(void)
 
   select_manager(clientTab, get_server_fd());
   if (select_isset(get_server_fd(), READ))
-    accept_connection(clientTab[g_index++]);
+  {
+    accept_connection(clientTab[g_index]->sock);
+    clientTab[g_index++]->online = TRUE;
+  }
   i = 0;
   while (clientTab[i])
   {

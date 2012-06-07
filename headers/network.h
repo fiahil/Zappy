@@ -7,6 +7,8 @@
 #define __NETWORK_H__
 
 int	set_connection(int);
+int	get_server_fd();
+int	accept_connection(t_sockLayer);
 char	*my_receive(int);
 int	my_send(int, char*);
 

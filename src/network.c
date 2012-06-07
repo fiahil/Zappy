@@ -66,7 +66,7 @@ int	my_receive(t_sockLayer sock, char *buff)
 }
 // send: tant que toujours des datas
 
-int	my_send(t_sockLayer sock, char* msg)
+int	my_send(t_sockLayer sock, char *msg)
 {
   if (send(sock->fd, msg, strlen(msg), 0))
     return (handleError("send", strerror(errno), -1));

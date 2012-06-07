@@ -27,7 +27,7 @@ CC	=	gcc
 
 RM	=	rm -f
 
-CFLAGS	=	-Wall -Wextra -O3 $(INCLUDES)
+CFLAGS	=	-Wall -Wextra -g $(INCLUDES)
 
 LDFLAGS	=	-L./lists/ -lclists
 

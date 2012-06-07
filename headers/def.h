@@ -42,8 +42,7 @@ typedef struct s_parse_elem	t_u_parse_elem;
 typedef enum
 {
   FALSE,
-  TRUE,
-  OTHER
+  TRUE
 } t_bool;
 
 typedef enum
@@ -83,6 +82,7 @@ struct s_clientManager
   t_list	out; // queue de sortie
   t_splitMode	mode;
   t_bool	online;
+  t_bool	dead;
 };
 
 #endif /* __DEF_H__ */

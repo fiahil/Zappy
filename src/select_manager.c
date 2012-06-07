@@ -41,6 +41,6 @@ void		select_manager(t_clientManager *clients, int fd)
 
   init_select(clients, fd);
   tv.tv_sec = 0;
-  tv.tv_usec = 1;
+  tv.tv_usec = 100;
   select(get_max_fd() + 1, &fds.readfds, &fds.writefds, NULL, &tv);
 }

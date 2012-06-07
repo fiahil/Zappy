@@ -32,7 +32,7 @@ void	server_routine_input(t_clientManager this)
 	  fflush(0);
 	}
       else if (ret && !ret())
-      	{
+     	{
       	  puts("server_routine : Command Failed."); // TODO
       	  fflush(0);
       	}

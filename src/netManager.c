@@ -58,7 +58,7 @@ int		iterClient(void)
     if (clientTab[i]->online)
     {
       if (select_isset(clientTab[i]->sock->fd, READ))
-  	server_routine_input(clientTab[i]);
+  	;//server_routine_input(clientTab[i]);
       if (select_isset(clientTab[i]->sock->fd, WRITE))
   	server_routine_output(clientTab[i]);
     }

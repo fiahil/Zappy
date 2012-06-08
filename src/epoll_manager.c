@@ -3,8 +3,9 @@
  * 07.06.2012
  */
 
+#include <stdlib.h>
 #include <sys/epoll.h>
-#include "error.h"
+#include "handle_error.h"
 #include "epoll_manager.h"
 
 static int			g_fd = 0;
@@ -21,7 +22,7 @@ void		add_monitor(int fd)
 {
   struct epoll_event	event;
 
-  event.event = EPOLLIN | EPOLLOUT;
+  event.events = EPOLLIN | EPOLLOUT;
   event.data.fd = fd;
   if (epoll_ctl(g_fd, EPOLL_CTL_ADD, fd, &event) == -1)
     handleError("epoll_ctl", "add", 0);

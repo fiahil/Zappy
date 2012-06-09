@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Thu Apr 19 00:35:24 2012 pierre martin
-** Last update Thu Apr 19 00:41:17 2012 pierre martin
+** Last update Fri Jun  8 12:19:57 2012 pierre martin
 */
 
 #include	"iter.h"
@@ -28,7 +28,7 @@ void		*list_front(t_list *this)
 void		*list_back(t_list *this)
 {
   if (this && this->tail)
-    return (this->tail->next);
+    return (this->tail->data);
   return (NULL);
 }
 

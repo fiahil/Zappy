@@ -22,7 +22,7 @@ typedef struct	s_opt
 
 int		get_arg(int, char **, t_arg *);
 void		get_opt_c(t_arg *);
-void		get_opt_n(t_arg *);
+void		get_opt_n(char **, t_arg *);
 void		get_opt_p(t_arg *);
 void		get_opt_t(t_arg *);
 void		get_opt_x(t_arg *);

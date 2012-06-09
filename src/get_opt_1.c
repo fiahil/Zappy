@@ -1,6 +1,7 @@
 
 #include	<stdio.h>
 #include	<stdlib.h>
+#include	<string.h>
 #include	<unistd.h>
 #include	"get_arg.h"
 
@@ -9,10 +10,27 @@ void		get_opt_c(t_arg *args)
   args->nbPerTeam = atoi(optarg);
 }
 
-void		get_opt_n(t_arg *args)
+void		get_opt_n(char **av, t_arg *args)
 {
-  (void)args; // faire une liste chainée
-  return ;
+  int		found;
+
+  args->namesOfTeams = new_list(NULL, NULL, NULL);
+  found = 0;
+  while (!found && av && *av)
+    {
+      if (strcmp(*av, "-n") == 0)
+	found = 1;
+      ++av;
+    }
+  if (found)
+    while (found && av && *av)
+      {
+	if (strncmp(*av, "-", 1) == 0)
+	  found = 0;
+	if (found)
+	  list_push_front_new(args->namesOfTeams, *av, strlen(*av) + 1);
+	++av;
+      }
 }
 
 void		get_opt_p(t_arg *args)

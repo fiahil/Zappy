@@ -4,10 +4,9 @@
 #include	<unistd.h>
 #include	"get_arg.h"
 
-static const	t_opt ptrtab_opt[6] =
+static const	t_opt ptrtab_opt[5] =
   {
     {'c', &get_opt_c},
-    {'n', &get_opt_n},
     {'p', &get_opt_p},
     {'t', &get_opt_t},
     {'x', &get_opt_x},
@@ -34,7 +33,7 @@ int		get_arg(int ac, char **av, t_arg *args)
   opterr = 0;
   while ((opt = getopt(ac, av, "c:n:p:t:x:y:")) != EOF)
     {
-      if (opt == '?')
+      if (opt != 'n' && opt == '?')
 	{
 	  usage();
 	  return (-1);

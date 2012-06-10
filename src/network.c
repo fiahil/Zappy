@@ -57,41 +57,6 @@ int	accept_connection(t_sockLayer sock)
   return (0);
 }
 
-char*	my_receive(int fd)
-{
-  char	buff[BUFFER_SIZE];
-  char	*ret;
-  char	*tmp;
-  int	test;
-
-  test = 1;
-  if ((ret = malloc(8)) == NULL)
-    return (NULL);
-  ret[0] = '\0';
-  while (test)
-    {
-      if ((test = recv(fd, buff, BUFFER_SIZE - 1, 0)) == 0)
-	return (ret[0] ? ret : (char*)-1);
-      buff[test] = '\0';
-      if ((tmp = malloc(strlen(ret) + test + 1)) == NULL)
-	return (NULL);
-      strcpy(tmp, ret);
-      strcat(tmp, buff);
-      free(ret);
-      ret = tmp;
-      if (test != BUFFER_SIZE - 1)
-	test = 0;
-    }
-  return (ret);
-}
-
-int	my_send(int fd, char *msg)
-{
-  if (send(fd, msg, strlen(msg), 0) == -1)
-    return (handleError("send", strerror(errno), -1));
-  return (0);
-}
-
 int	get_server_fd()
 {
   return (g_server->fd);

@@ -21,6 +21,8 @@ SRC	=	src/main.c			\
 		src/other_process_function.c	\
 		src/string_manager.c		\
 		src/network.c			\
+		src/my_send.c			\
+		src/my_receive.c		\
 		src/handle_error.c		\
 		src/netManager.c
 

@@ -6,7 +6,7 @@
 
 void		get_opt_t(t_arg *args)
 {
-  args->execTime = atoi(optarg);
+  args->exec_time = atoi(optarg);
 }
 
 void		get_opt_x(t_arg *args)

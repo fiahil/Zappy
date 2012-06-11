@@ -9,9 +9,9 @@ typedef struct	s_arg
   int		port;
   int		width;
   int		height;
-  t_list	*namesOfTeams;
-  int		nbPerTeam;
-  int		execTime;
+  t_list	*names_of_teams;
+  int		nb_per_team;
+  int		exec_time;
 }		t_arg;
 
 typedef struct	s_opt

@@ -15,8 +15,6 @@
 #include "epoll_manager.h"
 #include "handle_error.h"
 
-int		loop(t_epoll_manager);
-
 int		run(void)
 {
   t_u_epoll_manager	epoll;
@@ -39,6 +37,10 @@ int		main(int ac, char **av)
   set_connection(args.port);
   initClientTab(); // TODO camel case
   init_map(args.width, args.height);
-  run();
+  if (run() < 0)
+    {
+      close(get_server_fd());
+      return (EXIT_FAILURE);
+    }
   return (EXIT_SUCCESS);
 }

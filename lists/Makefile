@@ -5,7 +5,7 @@
 ## Login   <mart_i@epitech.net>
 ## 
 ## Started on  Wed Apr 18 00:12:20 2012 pierre martin
-## Last update Tue Jun 12 16:44:54 2012 pierre martin
+## Last update Tue Jun 12 16:52:51 2012 pierre martin
 ##
 
 NAME	=	libclists.a
@@ -25,7 +25,8 @@ SRC_LIST=	lists_ops/alloc.c	\
 		lists_algo/sort.c	\
 		lists_algo/partI.c
 
-SRC_WRAP=	wrapper/pqueue.c
+SRC_WRAP=	wrapper/pqueue.c	\
+		wrapper/pqueue_tools.c
 
 OBJ	=	$(SRC_BASE:.c=.o)	\
 		$(SRC_LIST:.c=.o)	\

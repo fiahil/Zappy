@@ -25,11 +25,11 @@ void	server_routine_input(t_clientManager this)
       return ;
     }
   get_commands(this, buf);
-  while (!this->in.empty)
+  while (!this->in->empty)
     {
-      printf("Processing \"%s\" ... \n", (char*)(list_front(&this->in))); // TODO
+      printf("Processing \"%s\" ... \n", (char*)(list_front(this->in))); // TODO
       fflush(0);
-      if (!(ret = cmd_parse(list_front(&this->in))))
+      if (!(ret = cmd_parse(list_front(this->in))))
 	{
 	  puts("server_routine -> cmd_parse : Command Not Found."); // TODO
 	  fflush(0);
@@ -39,7 +39,7 @@ void	server_routine_input(t_clientManager this)
       	  puts("server_routine : Command Failed."); // TODO
       	  fflush(0);
     	}
-      list_pop_front(&this->in);
+      list_pop_front(this->in);
     }
   free(buf);
 }
@@ -49,9 +49,9 @@ void	server_routine_input(t_clientManager this)
 
 void	server_routine_output(t_clientManager this)
 {
-  while (!this->out.empty)
+  while (!this->out->empty)
     {
-      my_send(this->sock->fd, list_front(&this->out));
-      list_pop_front(&this->out);
+      my_send(this->sock->fd, list_front(this->out));
+      list_pop_front(this->out);
     }
 }

@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Tue Apr 17 23:26:13 2012 pierre martin
-** Last update Thu Jun  7 17:31:34 2012 pierre martin
+** Last update Tue Jun 12 11:45:36 2012 pierre martin
 */
 
 #include	"c_lists.h"

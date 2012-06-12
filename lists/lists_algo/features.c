@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Thu May 31 22:23:02 2012 pierre martin
-** Last update Thu May 31 23:16:49 2012 pierre martin
+** Last update Tue Jun 12 16:41:07 2012 pierre martin
 */
 
 #include	"iter.h"
@@ -50,4 +50,3 @@ void	list_swap(t_list* this, t_list* lst)
   lst->size = stmp;
   lst->empty = etmp;
 }
-

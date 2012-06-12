@@ -5,13 +5,12 @@
 ** Login   <magere_n@epitech.net>
 ** 
 ** Started on  Sun Apr 22 21:55:52 2012 nicolas magere
-** Last update Thu Jun  7 10:39:40 2012 pierre martin
+** Last update Tue Jun 12 10:36:24 2012 pierre martin
 */
 
 #ifndef __C_LISTS_H__
 #define __C_LISTS_H__
 
-/* #include	<stdarg.h> */
 #include	"iter.h"
 
 /*

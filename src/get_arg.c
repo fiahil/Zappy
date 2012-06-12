@@ -18,9 +18,9 @@ static int	init_arg(t_arg *args)
   args->port = 4242;
   args->width = 20;
   args->height = 20;
-  args->namesOfTeams = NULL;
-  args->nbPerTeam = 1;
-  args->execTime = 100;
+  args->names_of_teams = NULL;
+  args->nb_per_team = 1;
+  args->exec_time = 100;
   return (0);
 }
 
@@ -30,6 +30,7 @@ int		get_arg(int ac, char **av, t_arg *args)
   char		opt;
 
   init_arg(args);
+  get_opt_n(av, args);
   opterr = 0;
   while ((opt = getopt(ac, av, "c:n:p:t:x:y:")) != EOF)
     {
@@ -41,7 +42,7 @@ int		get_arg(int ac, char **av, t_arg *args)
       else
 	{
 	  i = 0;
-	  while (i < 6)
+	  while (i < 5)
 	    {
 	      if (ptrtab_opt[i].opt == opt)
 		ptrtab_opt[i].ptr_func(args);

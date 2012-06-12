@@ -16,7 +16,7 @@
 #include "epoll_manager.h"
 #include "handle_error.h"
 
-static t_clientManager		*clientTab = NULL;
+static t_clientManager		*clientTab = NULL; // TODO
 static size_t			g_index = 0;
 
 int		initClientTab(void)
@@ -35,8 +35,8 @@ int		initClientTab(void)
     clientTab[i]->online = FALSE;
     clientTab[i]->mode = LF;
     clientTab[i]->dead = FALSE;
-    init_list(&clientTab[i]->in, NULL, NULL, NULL);
-    init_list(&clientTab[i]->out, NULL, NULL, NULL);
+    clientTab[i]->in = new_list(NULL, NULL, NULL);
+    clientTab[i]->out = new_list(NULL, NULL, NULL);
     memset(clientTab[i]->stock, '\0', sizeof(clientTab[i]->stock));
     clientTab[i]->sock = malloc(sizeof(t_u_sockLayer));
     if (!clientTab[i]->sock)

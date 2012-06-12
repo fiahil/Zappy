@@ -7,6 +7,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include "map.h"
 #include "def.h"
 #include "get_arg.h"
 #include "network.h"
@@ -36,7 +37,8 @@ int		main(int ac, char **av)
   if (get_arg(ac, av, &args) == -1)
     return (EXIT_FAILURE);
   set_connection(args.port);
-  initClientTab();
+  initClientTab(); // TODO camel case
+  init_map(args.width, args.height);
   run();
   return (EXIT_SUCCESS);
 }

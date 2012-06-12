@@ -31,6 +31,13 @@ typedef struct s_clientManager	t_u_clientManager;
 
 typedef struct s_parse_elem	t_u_parse_elem;
 
+typedef struct s_pos		t_u_pos;
+
+typedef struct s_player		t_u_player;
+
+typedef struct s_square		t_u_square;
+typedef struct s_square*	t_square;
+
 // Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
 
 /*
@@ -61,6 +68,28 @@ typedef t_bool	(*procFunc)(t_clientManager);
  * Struct definition
  */
 
+struct s_square
+{
+  t_list client;
+  // inventaire struct...
+};
+
+struct	s_pos
+{
+  int	x;
+  int	y;
+};
+
+struct s_player
+{
+
+  int		pv;
+  t_u_pos	pos;
+
+  // inventaire struct {list R1, list R2, list R3, ...}
+  // priority queue d'action
+};
+
 struct s_parse_elem
 {
   int		size;
@@ -78,6 +107,7 @@ struct s_clientManager
 {
   char		stock[BUFFER_SIZE];
   t_sockLayer	sock;
+  t_u_player	player;
   t_list	in; // queue d'entree
   t_list	out; // queue de sortie
   t_splitMode	mode;

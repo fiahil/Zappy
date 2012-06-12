@@ -141,8 +141,8 @@ struct s_clientManager
   char		stock[BUFFER_SIZE];
   t_sockLayer	sock;
   t_u_player	player;
-  t_list	in; // queue d'entree
-  t_list	out; // queue de sortie
+  t_list	*in; // queue d'entree
+  t_list	*out; // queue de sortie
   t_splitMode	mode;
   t_bool	online;
   t_bool	dead;

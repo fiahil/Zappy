@@ -8,6 +8,7 @@ NAME	=	zappy
 MAKE=           make --no-print-directory
 
 SRC	=	src/main.c			\
+		src/g_list.c			\
 		src/get_arg.c			\
 		src/get_opt_1.c			\
 		src/get_opt_2.c			\

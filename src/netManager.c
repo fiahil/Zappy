@@ -11,7 +11,7 @@
 #include "server_routine.h"
 #include "select_manager.h"
 
-static t_clientManager		*clientTab = NULL;
+static t_clientManager		*clientTab = NULL; // TODO
 static size_t			g_index = 0;
 
 int		initClientTab(void)

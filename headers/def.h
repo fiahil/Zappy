@@ -38,6 +38,9 @@ typedef struct s_player		t_u_player;
 typedef struct s_square		t_u_square;
 typedef struct s_square*	t_square;
 
+typedef struct s_map		t_u_map;
+typedef struct s_map*		t_map;
+
 // Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
 
 /*
@@ -67,6 +70,13 @@ typedef t_bool	(*procFunc)(t_clientManager);
 /*
  * Struct definition
  */
+
+struct s_map
+{
+  int size_x;
+  int size_y;
+  t_square **map;
+};
 
 struct s_square
 {

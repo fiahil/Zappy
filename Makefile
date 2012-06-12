@@ -17,6 +17,7 @@ SRC	=	src/main.c			\
 		src/max_fd.c			\
 		src/server_routine.c		\
 		src/cmd_parse.c			\
+		src/map.c			\
 		src/process_function.c		\
 		src/other_process_function.c	\
 		src/string_manager.c		\

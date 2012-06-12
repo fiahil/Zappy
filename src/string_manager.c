@@ -38,7 +38,7 @@ static void	treatment_get_cmd(t_clientManager this, t_bool *clear, char **buf)
       tmp += (strlen(g_separator[this->mode]));
       if (strlen((*buf)) < (BUFFER_SIZE / 2))
 	memcpy(this->stock + strlen(this->stock), (*buf), strlen(*buf));
-      list_push_back_new(&this->in, this->stock, strlen(this->stock) + 1);
+      list_push_back_new(this->in, this->stock, strlen(this->stock) + 1);
       memset(this->stock, '\0', BUFFER_SIZE);
       *buf = tmp;
     }

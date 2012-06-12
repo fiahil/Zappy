@@ -33,7 +33,14 @@ typedef struct s_parse_elem	t_u_parse_elem;
 
 typedef struct s_pos		t_u_pos;
 
+typedef struct s_inventory	t_u_inventory;
+typedef struct s_inventory*	t_inventory;
+
 typedef struct s_player		t_u_player;
+typedef struct s_player*	t_player;
+
+typedef struct s_player_action	t_u_player_action;
+typedef struct s_player_action*	t_player_action;
 
 typedef struct s_square		t_u_square;
 typedef struct s_square*	t_square;
@@ -73,15 +80,26 @@ typedef t_bool	(*procFunc)(t_clientManager);
 
 struct s_map
 {
-  int size_x;
-  int size_y;
-  t_square **map;
+  int		size_x;
+  int		size_y;
+  t_square	**map;
+};
+
+struct s_inventory
+{
+  t_list	*steak;
+  t_list	*lin;
+  t_list	*der;
+  t_list	*sib;
+  t_list	*men;
+  t_list	*phi;
+  t_list	*thy;
 };
 
 struct s_square
 {
-  t_list client;
-  // inventaire struct...
+  t_list	client;
+  t_u_inventory	inv;
 };
 
 struct	s_pos
@@ -92,12 +110,17 @@ struct	s_pos
 
 struct s_player
 {
-
-  int		pv;
+  int		lvl;
+  char		*team;
   t_u_pos	pos;
+  t_u_inventory	inv;
+};
 
-  // inventaire struct {list R1, list R2, list R3, ...}
-  // priority queue d'action
+struct s_player_action
+{
+  void		(*player_action_ptr)(void); // TODO typedef
+  //t_u_timer	time;
+  t_player	player;
 };
 
 struct s_parse_elem

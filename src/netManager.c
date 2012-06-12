@@ -3,6 +3,9 @@
  * 06.06.2012
  */
 
+#include <errno.h>
+
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "def.h"
@@ -10,6 +13,8 @@
 #include "network.h"
 #include "server_routine.h"
 #include "select_manager.h"
+#include "epoll_manager.h"
+#include "handle_error.h"
 
 static t_clientManager		*clientTab = NULL;
 static size_t			g_index = 0;
@@ -43,27 +48,22 @@ int		initClientTab(void)
   return (1);
 }
 
-int		iterClient(void)
+void	iter_client(t_epoll_manager epoll)
 {
-  int		i;
+  int			n;
+  int			i;
 
-  select_manager(clientTab, get_server_fd());
-  if (select_isset(get_server_fd(), READ))
-    {
-      accept_connection(clientTab[g_index]->sock);
-      clientTab[g_index++]->online = TRUE;
-    }
-  i = 0;
-  while (clientTab[i])
-    {
-      if (clientTab[i]->online)
-	{
-	  if (select_isset(clientTab[i]->sock->fd, READ))
-	    server_routine_input(clientTab[i]);
-	  if (select_isset(clientTab[i]->sock->fd, WRITE))
-	    server_routine_output(clientTab[i]);
-	}
-      ++i;
-    }
-  return (0);
+  i = -1;
+  n = update_monitor(epoll);
+  while (++i < n)
+    if (!epoll->ev[i].data.ptr)
+      {
+	if (accept_connection(epoll, clientTab[g_index]) > -1)
+	  clientTab[g_index++]->online = TRUE;
+      }
+    else
+      if (epoll->ev[i].events & EPOLLIN)
+	server_routine_input(epoll->ev[i].data.ptr);
+      else if (epoll->ev[i].events & EPOLLOUT)
+	server_routine_output(epoll->ev[i].data.ptr);
 }

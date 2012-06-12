@@ -8,7 +8,9 @@
 
 #define DEFAULT_TAB	(512)
 
+#include "def.h"
+
 int	initClientTab(void);
-int	iterClient(void);
+void	iter_client(t_epoll_manager);
 
 #endif /* __NETMANAGER_H__ */

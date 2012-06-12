@@ -6,9 +6,9 @@
 #ifndef __EPOLL_MANAGER_H__
 #define __EPOLL_MANAGER_H__
 
-void		init_epoll();
-void		add_monitor();
-void		del_monitor();
-void		update_monitor();
+int		init_epoll();
+int		add_monitor();
+int		del_monitor();
+int		update_monitor();
 
 #endif /* __EPOLL_MANAGER_H__ */

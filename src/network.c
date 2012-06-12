@@ -17,6 +17,8 @@
 #include	<netdb.h>
 #include	<stdio.h>		// fprintf
 
+#include	"epoll_manager.h"
+#include	"network.h"
 #include	"handle_error.h"
 #include	"def.h"
 
@@ -47,13 +49,15 @@ int	set_connection(int port)
   return (0);
 }
 
-int	accept_connection(t_sockLayer sock)
+int	accept_connection(t_epoll_manager epoll, t_clientManager client)
 {
   socklen_t	len;
 
-  len = sizeof((sock->addr));
-  if ((sock->fd = accept(g_server->fd, (t_sockAddr)&(sock->addr), &len)) == -1)
-    return (handleError("accept", strerror(errno), sock->fd));
+  len = sizeof(client->sock->addr);
+  if ((client->sock->fd = accept(get_server_fd(), (t_sockAddr)&(client->sock->addr), &len)) < 0)
+    return (handleError("accept", strerror(errno), -1));
+  if (add_monitor(epoll, client->sock->fd, client) < 0)
+    return (handleError("", "", client->sock->fd));
   return (0);
 }
 

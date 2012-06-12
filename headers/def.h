@@ -6,8 +6,9 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
+#include	<sys/epoll.h>
 #include	<netinet/in.h>		// IPPROTO_TCP
-#include "c_lists.h"
+#include	"c_lists.h"
 
 /*
  * System typedef
@@ -23,9 +24,11 @@ typedef struct sockaddr_in	t_u_sockAddrIn;
  * Struct typedef
  */
 
+typedef struct s_epoll_manager*	t_epoll_manager;
 typedef struct s_sockLayer*	t_sockLayer;
 typedef struct s_clientManager*	t_clientManager;
 
+typedef struct s_epoll_manager	t_u_epoll_manager;
 typedef struct s_sockLayer	t_u_sockLayer;
 typedef struct s_clientManager	t_u_clientManager;
 
@@ -146,6 +149,13 @@ struct s_clientManager
   t_splitMode	mode;
   t_bool	online;
   t_bool	dead;
+};
+
+struct s_epoll_manager
+{
+  int			efd;
+  struct epoll_event	event;
+  struct epoll_event	*ev;
 };
 
 #endif /* __DEF_H__ */

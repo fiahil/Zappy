@@ -5,7 +5,7 @@
 ## Login   <mart_i@epitech.net>
 ## 
 ## Started on  Wed Apr 18 00:12:20 2012 pierre martin
-## Last update Thu Jun  7 13:35:27 2012 ulric lefevre
+## Last update Tue Jun 12 11:08:27 2012 pierre martin
 ##
 
 NAME	=	libclists.a
@@ -23,8 +23,11 @@ SRC_LIST=	lists_ops/alloc.c	\
 		lists_ops/getor.c	\
 		lists_algo/partI.c
 
+SRC_WRAP=	wrapper/pqueue.c
+
 OBJ	=	$(SRC_BASE:.c=.o)	\
-		$(SRC_LIST:.c=.o)
+		$(SRC_LIST:.c=.o)	\
+		$(SRC_WRAP:.c=.o)
 
 CFLAGS	=	-Wall -Wextra -Werror -O3 -I ./include
 

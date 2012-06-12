@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Tue Jun 12 10:31:25 2012 pierre martin
-** Last update Tue Jun 12 11:15:41 2012 pierre martin
+** Last update Tue Jun 12 11:50:50 2012 pierre martin
 */
 
 #include	<assert.h>
@@ -38,7 +38,7 @@ void		pqueue_push(t_pqueue *this, void *data, size_t len)
   t_iter	*it;
 
   it = list_begin(&(this->queue));
-  while (it != NULL && this->cmp(data, len, it->data, it->len) > 0)
+  while (it && this->cmp(data, len, it->data, it->len) > 0)
     it = it->next;
   list_insert_new(&(this->queue), it, data, len);
 }

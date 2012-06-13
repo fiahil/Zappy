@@ -8,6 +8,7 @@
 
 #include	<sys/epoll.h>
 #include	<netinet/in.h>		// IPPROTO_TCP
+#include	<sys/time.h>
 #include	"c_lists.h"
 
 /*
@@ -50,6 +51,10 @@ typedef struct s_square*	t_square;
 
 typedef struct s_map		t_u_map;
 typedef struct s_map*		t_map;
+
+typedef struct timeval		t_u_timeval;
+typedef struct timeval*		t_timeval;
+
 
 // Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
 

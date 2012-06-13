@@ -14,6 +14,7 @@
 #include "netManager.h"
 #include "epoll_manager.h"
 #include "handle_error.h"
+#include "clock.h"
 
 int		run(void)
 {
@@ -37,6 +38,7 @@ int		main(int ac, char **av)
   set_connection(args.port);
   initClientTab(); // TODO camel case
   init_map(args.width, args.height);
+  unitest_clock();
   if (run() < 0)
     {
       close(get_server_fd());

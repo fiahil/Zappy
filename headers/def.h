@@ -149,6 +149,7 @@ struct s_clientManager
   t_splitMode	mode;
   t_bool	online;
   t_bool	dead;
+  t_bool	is_processing;
 };
 
 struct s_epoll_manager

@@ -73,7 +73,8 @@ typedef enum
 typedef enum
 {
   CRLF,
-  LF
+  LF,
+  UNKNOW
 } t_splitMode;
 
 /*

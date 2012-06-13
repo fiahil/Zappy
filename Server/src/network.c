@@ -53,7 +53,6 @@ int	accept_connection(t_epoll_manager epoll, t_clientManager client)
 {
   socklen_t	len;
 
-  client->mode = UNKNOW;
   len = sizeof(client->sock->addr);
   if ((client->sock->fd = accept(get_server_fd(), (t_sockAddr)&(client->sock->addr), &len)) < 0)
     return (handleError("accept", strerror(errno), -1));

@@ -35,6 +35,7 @@ int		initClientTab(void)
     clientTab[i]->online = FALSE;
     clientTab[i]->mode = LF;
     clientTab[i]->dead = FALSE;
+    clientTab[i]->is_processing = FALSE;
     clientTab[i]->in = new_list(NULL, NULL, NULL);
     clientTab[i]->out = new_list(NULL, NULL, NULL);
     memset(clientTab[i]->stock, '\0', sizeof(clientTab[i]->stock));

@@ -10,7 +10,7 @@
 #include "def.h"
 #include "server_routine.h"
 
-void	server_routine_input(t_clientManager this)
+void		server_routine_input(t_data_serv ds, t_player this)
 {
   procFunc	ret;
   int		off;
@@ -46,7 +46,7 @@ void	server_routine_input(t_clientManager this)
   free(buf);
 }
 
-void	server_routine_output(t_clientManager this)
+void		server_routine_output(t_data_serv ds, t_player this)
 {
   while (!this->out->empty)
     {

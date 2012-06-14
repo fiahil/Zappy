@@ -45,15 +45,15 @@ int	set_connection(t_data_serv data_serv, int port)
   return (0);
 }
 
-int	accept_connection(t_epoll_manager epoll, t_data_serv data_serv, t_clientManager client)
+int	accept_connection(t_epoll_manager epoll, t_data_serv data_serv, t_player p)
 {
   socklen_t	len;
 
-  len = sizeof(client->sock.addr);
-  if ((client->sock.fd = accept(data_serv->sock.fd, (t_sockAddr)&(client->sock.addr), &len)) < 0)
+  len = sizeof(p->cm.sock.addr);
+  if ((p->cm.sock.fd = accept(data_serv->sock.fd, (t_sockAddr)&(p->cm.sock.addr), &len)) < 0)
     return (handleError("accept", strerror(errno), -1));
-  if (add_monitor(epoll, client->sock.fd, client) < 0)
-    return (handleError("add_monitor", "", client->sock.fd));
+  if (add_monitor(epoll, p->cm.sock.fd, p) < 0)
+    return (handleError("add_monitor", "", p->cm.sock.fd));
   return (0);
 }
 

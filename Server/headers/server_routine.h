@@ -8,7 +8,7 @@
 
 #include "def.h"
 
-void	server_routine_input(t_clientManager);
-void	server_routine_output(t_clientManager);
+void	server_routine_input(t_data_serv, t_clientManager);
+void	server_routine_output(t_data_serv, t_clientManager);
 
 #endif /* __SERVER_ROUTINE_H__ */

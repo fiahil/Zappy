@@ -173,7 +173,6 @@ struct s_data_serv
   t_list	*player;
   t_list	*action;
   t_list	*send_q;
-  t_map		map;
 };
 
 struct s_epoll_manager

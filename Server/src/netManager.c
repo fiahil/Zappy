@@ -54,33 +54,33 @@ void		iter_client(t_epoll_manager epoll, t_data_serv data_serv)
 {
   int		n;
   int		i;
-  t_player	client;
+  t_player	player;
 
   i = -1;
   n = update_monitor(epoll);
   while (++i < n)
     if (!epoll->ev[i].data.ptr)
       { //TODO WIP Fonction create_player
-	if (!(client = malloc(sizeof(t_u_player))))
+	if (!(player = malloc(sizeof(t_u_player))))
 	  handleError("malloc", strerror(errno), -1);
-	client->lvl = 1;
-	client->team = "poney";
-	client->pos.x = 0;
-	client->pos.y = 0;
-	client->dead = FALSE;
-	client->welcome = FALSE;
-	memset(client->cm.stock, '\0', sizeof(client->cm.stock));
-	client->cm.in = new_list(NULL, NULL, NULL);
-	client->cm.out = new_list(NULL, NULL, NULL);
-	client->cm.mode = UNKNOW;
-	client->cm.is_processing = FALSE;
-	client->cm.online = FALSE;
-	if (accept_connection(epoll, data_serv, &(client->cm)) < 0)
-	  free(client);
+	player->lvl = 1;
+	player->team = "poney";
+	player->pos.x = 0;
+	player->pos.y = 0;
+	player->dead = FALSE;
+	player->welcome = FALSE;
+	memset(player->cm.stock, '\0', sizeof(player->cm.stock));
+	player->cm.in = new_list(NULL, NULL, NULL);
+	player->cm.out = new_list(NULL, NULL, NULL);
+	player->cm.mode = UNKNOW;
+	player->cm.is_processing = FALSE;
+	player->cm.online = FALSE;
+	if (accept_connection(epoll, data_serv, player) < 0)
+	  free(player);
       }
     else
       if (epoll->ev[i].events & EPOLLIN)
-	server_routine_input(epoll->ev[i].data.ptr);
+	server_routine_input(data_serv, epoll->ev[i].data.ptr);
       else if (epoll->ev[i].events & EPOLLOUT)
-	server_routine_output(epoll->ev[i].data.ptr);
+	server_routine_output(data_serv, epoll->ev[i].data.ptr);
 }

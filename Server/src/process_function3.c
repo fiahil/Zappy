@@ -49,7 +49,7 @@ t_bool  move_process_function(t_player this, char *data)
   // TODO tmp/
   list_push_back_new(this->cm.out, str, strlen(str) + 1);
   free(str); // TODO
-
+  
   return (TRUE);
 }
 

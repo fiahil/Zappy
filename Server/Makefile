@@ -27,7 +27,8 @@ SRC	=	src/main.c			\
 		src/my_receive.c		\
 		src/handle_error.c		\
 		src/protocol.c			\
-		src/netManager.c
+		src/netManager.c		\
+		src/fill_map.c
 
 OBJ	=	$(SRC:.c=.o)
 

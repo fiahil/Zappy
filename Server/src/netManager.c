@@ -67,6 +67,7 @@ void		iter_client(t_epoll_manager epoll, t_data_serv data_serv)
 	player->team = "poney";
 	player->pos.x = 0;
 	player->pos.y = 0;
+	player->dir = NORTH;
 	player->dead = FALSE;
 	player->welcome = FALSE;
 	memset(player->cm.stock, '\0', sizeof(player->cm.stock));

@@ -91,6 +91,14 @@ typedef enum
   UNKNOW
 } t_splitMode;
 
+typedef enum
+  {
+    NORTH,
+    EAST,
+    SOUTH,
+    WEST
+  } t_dir;
+
 /*
  * Ptrfunc
  */
@@ -168,6 +176,7 @@ struct s_player
   int		lvl;
   char		*team;
   t_u_pos	pos;
+  t_dir		dir;
   t_u_inventory	inv;
   t_bool	dead;
   t_bool	welcome;

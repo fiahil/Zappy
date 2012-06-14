@@ -55,9 +55,6 @@ typedef struct s_map*		t_map;
 typedef struct timeval		t_u_timeval;
 typedef struct timeval*		t_timeval;
 
-
-// Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
-
 /*
  * Enum typedef
  */
@@ -73,14 +70,15 @@ typedef enum
 typedef enum
 {
   CRLF,
-  LF
+  LF,
+  UNKNOW
 } t_splitMode;
 
 /*
  * Ptrfunc
  */
 
-typedef t_bool	(*procFunc)(t_clientManager);
+typedef t_bool	(*procFunc)(t_clientManager, char *);
 
 /*
  * Struct definition
@@ -154,6 +152,7 @@ struct s_clientManager
   t_splitMode	mode;
   t_bool	online;
   t_bool	dead;
+  t_bool	is_processing;
 };
 
 struct s_epoll_manager

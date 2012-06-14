@@ -55,6 +55,8 @@ typedef struct s_map*		t_map;
 typedef struct timeval		t_u_timeval;
 typedef struct timeval*		t_timeval;
 
+typedef struct time_attrib	t_u_time_attrib;
+
 
 // Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
 
@@ -137,6 +139,12 @@ struct s_parse_elem
   int		size;
   char const	*cmd;
   procFunc	func;
+};
+
+struct s_time_attrib
+{
+  procFunc	func;
+  double	timer;
 };
 
 struct s_sockLayer

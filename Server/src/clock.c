@@ -13,6 +13,24 @@
 #include <stdio.h>
 #include "handle_error.h"
 #include "clock.h"
+#include "process_function.h"
+
+static const t_u_time_attrib g_time_attrib [] =
+  {
+    {&move_process_function, 7.0},
+    {&right_process_function, 7.0},
+    {&left_process_function, 7.0},
+    {&look_process_function, 7.0},
+    {&inventory_process_function, 7.0},
+    {&take_process_function, 7.0},
+    {&drop_process_function, 7.0},
+    {&expulse_process_function, 7.0},
+    {&broadcast_process_function, 7.0},
+    {&incantation_process_function, 300.0},
+    {&fork_process_function, 42.0},
+    {&connect_nbr_process_function, 0.0},
+    {NULL, 0}
+  };
 
 void	get_current_time(t_timeval time)
 {
@@ -36,9 +54,23 @@ char	cmp_time(t_timeval fst, t_timeval scd)
   return (0);
 }
 
+void	get_time_per_function(t_timeval time, procFunc f, double t)
+{
+  int	i;
+
+  i = 0;
+  while (g_time_attrib[i].func)
+    {
+      if (g_time_attrib[i].func == f)
+	add_time(time, g_time_attrib[i].timer, t);
+      ++i;
+    }
+}
+
 void	add_time(t_timeval time, double maj, double t)
 {
-  maj /= t;
+  if (t)
+    maj /= t;
   maj *= 1000000;
   time->tv_sec += (int)(maj) / 1000000;
   time->tv_usec += (int)(maj) % 1000000;
@@ -61,6 +93,9 @@ void	unitest_clock()
   printf("# cmp t1 and t2 : %d, expected : -1\n", (int)cmp_time(&time, &time2));
   printf("# cmp t2 and t1 : %d, expected : 1\n", (int)cmp_time(&time2, &time));
   printf("# cmp t1 and t1 : %d, expected : 0\n", (int)cmp_time(&time, &time));
+  puts(".:: get_time_per_function ::.");
+  get_time_per_function(time2, &move_process_function, 300);
+  printf("# get t2 move [300] : sec = %d, usec = %d\n",  (int)time.tv_sec, (int)time.tv_usec);
   puts(".:: add_time ::.");
   add_time(&time, 7, 300);
   printf("# add t1 [7] [300] : sec = %d, usec = %d\n", (int)time.tv_sec, (int)time.tv_usec);

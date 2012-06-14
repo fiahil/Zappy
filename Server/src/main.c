@@ -38,7 +38,7 @@ int		main(int ac, char **av)
   set_connection(args.port);
   initClientTab(); // TODO camel case
   init_map(args.width, args.height);
-  unitest_clock();
+  unitest_clock(); // TODO unitest
   if (run() < 0)
     {
       close(get_server_fd());

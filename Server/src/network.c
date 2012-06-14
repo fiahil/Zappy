@@ -7,61 +7,53 @@
 ** Started on Wed Jun  6 20:41:43 2012 pierre martin
 */
 
-#include	<netinet/in.h>		// IPPROTO_TCP
-#include	<sys/socket.h>		// socket
-#include	<sys/types.h>		// socket
-#include	<string.h>		// strerror
-#include	<stdlib.h>		// atoi # to be removed
+#include	<netinet/in.h>
+#include	<sys/socket.h>
+#include	<sys/types.h>
+#include	<string.h>
+#include	<stdlib.h>
 #include	<unistd.h>
-#include	<errno.h>		// errno....what else ?
+#include	<errno.h>
 #include	<netdb.h>
-#include	<stdio.h>		// fprintf
+#include	<stdio.h>
 
 #include	"epoll_manager.h"
 #include	"network.h"
 #include	"handle_error.h"
 #include	"def.h"
 
-static t_sockLayer	g_server;
-
-int	set_connection(int port)
+int	set_connection(t_data_serv data_serv, int port)
 {
   int	op;
 
-  if ((g_server = malloc(sizeof(*g_server))) == NULL)
-    return (handleError("malloc", strerror(errno), -1));
   fprintf(stdout, "INITIALIZING CONNECTION:\n%24sInitializing socket.\n", " ");
-  if ((g_server->fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
-    return (handleError("socket", strerror(errno), g_server->fd));
+  if ((data_serv->sock.fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
+    return (handleError("socket", strerror(errno), data_serv->sock.fd));
   op = 1;
   fprintf(stdout, "%24sConfiguring socket.\n", " ");
-  if (setsockopt(g_server->fd, SOL_SOCKET, SO_REUSEADDR, &op, sizeof(op)) < 0)
-    return (handleError("setsockopt", strerror(errno), g_server->fd));
+  if (setsockopt(data_serv->sock.fd, SOL_SOCKET, SO_REUSEADDR, &op, sizeof(op)) < 0)
+    return (handleError("setsockopt", strerror(errno), data_serv->sock.fd));
   fprintf(stdout, "%24sBinding socket.\n", " ");
-  g_server->addr.sin_family = AF_INET;
-  g_server->addr.sin_port = htons(port);
-  g_server->addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  if (bind(g_server->fd, (t_sockAddr)&(g_server->addr), sizeof(t_u_sockAddrIn)) < 0)
-    return (handleError("bind", strerror(errno), g_server->fd));
+  data_serv->sock.addr.sin_family = AF_INET;
+  data_serv->sock.addr.sin_port = htons(port);
+  data_serv->sock.addr.sin_addr.s_addr = htonl(INADDR_ANY);
+  if (bind(data_serv->sock.fd, (t_sockAddr)&(data_serv->sock.addr), sizeof(t_u_sockAddrIn)) < 0)
+    return (handleError("bind", strerror(errno), data_serv->sock.fd));
   fprintf(stdout, "%24sSetting listening state.\n", " ");
-  if (listen(g_server->fd, 128) < 0)
-    return (handleError("listen", strerror(errno), g_server->fd));
+  if (listen(data_serv->sock.fd, 128) < 0)
+    return (handleError("listen", strerror(errno), data_serv->sock.fd));
   return (0);
 }
 
-int	accept_connection(t_epoll_manager epoll, t_clientManager client)
+int	accept_connection(t_epoll_manager epoll, t_data_serv data_serv, t_clientManager client)
 {
   socklen_t	len;
 
-  len = sizeof(client->sock->addr);
-  if ((client->sock->fd = accept(get_server_fd(), (t_sockAddr)&(client->sock->addr), &len)) < 0)
+  len = sizeof(client->sock.addr);
+  if ((client->sock.fd = accept(data_serv->sock.fd, (t_sockAddr)&(client->sock.addr), &len)) < 0)
     return (handleError("accept", strerror(errno), -1));
-  if (add_monitor(epoll, client->sock->fd, client) < 0)
-    return (handleError("", "", client->sock->fd));
+  if (add_monitor(epoll, client->sock.fd, client) < 0)
+    return (handleError("add_monitor", "", client->sock.fd));
   return (0);
 }
 
-int	get_server_fd()
-{
-  return (g_server->fd);
-}

@@ -18,8 +18,10 @@ SRC	=	src/main.c			\
 		src/server_routine.c		\
 		src/cmd_parse.c			\
 		src/map.c			\
+		src/clock.c			\
 		src/process_function.c		\
-		src/other_process_function.c	\
+		src/process_function2.c		\
+		src/process_function3.c		\
 		src/string_manager.c		\
 		src/network.c			\
 		src/my_send.c			\

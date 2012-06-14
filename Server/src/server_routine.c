@@ -13,13 +13,15 @@
 void	server_routine_input(t_clientManager this)
 {
   procFunc	ret;
+  int		off;
   char		*buf;
 
   ret = NULL;
-  if ((buf = my_receive(this->sock->fd)) == (char*)(-1))
+  off = -1;
+  if ((buf = my_receive(this->sock.fd)) == (char*)(-1))
     {
       this->online = FALSE;
-      close(this->sock->fd);
+      close(this->sock.fd);
       puts(".:: Client disconnected ::.");
       fflush(0);
       return ;
@@ -29,12 +31,12 @@ void	server_routine_input(t_clientManager this)
     {
       printf("Processing \"%s\" ... \n", (char*)(list_front(this->in))); // TODO
       fflush(0);
-      if (!(ret = cmd_parse(list_front(this->in))))
+      if (!(ret = cmd_parse(list_front(this->in), &off)))
 	{
 	  puts("server_routine -> cmd_parse : Command Not Found."); // TODO
 	  fflush(0);
 	}
-      else if (ret && !ret(this))
+      else if (ret && !ret(this, (off != -1 ? list_front(this->in) + off : NULL)))
      	{
       	  puts("server_routine : Command Failed."); // TODO
       	  fflush(0);
@@ -44,14 +46,11 @@ void	server_routine_input(t_clientManager this)
   free(buf);
 }
 
-
-
-
 void	server_routine_output(t_clientManager this)
 {
   while (!this->out->empty)
     {
-      my_send(this->sock->fd, list_front(this->out));
+      my_send(this->sock.fd, list_front(this->out));
       list_pop_front(this->out);
     }
 }

@@ -8,6 +8,7 @@
 
 #include	<sys/epoll.h>
 #include	<netinet/in.h>		// IPPROTO_TCP
+#include	<sys/time.h>
 #include	"c_lists.h"
 
 /*
@@ -51,7 +52,13 @@ typedef struct s_square*	t_square;
 typedef struct s_map		t_u_map;
 typedef struct s_map*		t_map;
 
-// Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
+typedef struct timeval		t_u_timeval;
+typedef struct timeval*		t_timeval;
+
+typedef struct s_data_serv	t_u_data_serv;
+typedef struct s_data_serv*	t_data_serv;
+
+typedef struct s_time_attrib	t_u_time_attrib;
 
 /*
  * Enum typedef
@@ -80,14 +87,15 @@ typedef enum
 typedef enum
 {
   CRLF,
-  LF
+  LF,
+  UNKNOW
 } t_splitMode;
 
 /*
  * Ptrfunc
  */
 
-typedef t_bool	(*procFunc)(t_clientManager);
+typedef t_bool	(*procFunc)(t_clientManager, char *);
 
 /*
  * Struct definition
@@ -118,18 +126,10 @@ struct	s_pos
   int	y;
 };
 
-struct s_player
-{
-  int		lvl;
-  char		*team;
-  t_u_pos	pos;
-  t_u_inventory	inv;
-};
-
 struct s_player_action
 {
-  void		(*player_action_ptr)(void); // TODO typedef
-  //t_u_timer	time;
+  procFunc	action;
+  t_u_timeval	time;
   t_player	player;
 };
 
@@ -138,6 +138,12 @@ struct s_parse_elem
   int		size;
   char const	*cmd;
   procFunc	func;
+};
+
+struct s_time_attrib
+{
+  procFunc	func;
+  double	timer;
 };
 
 struct s_sockLayer
@@ -149,13 +155,32 @@ struct s_sockLayer
 struct s_clientManager
 {
   char		stock[BUFFER_SIZE];
-  t_sockLayer	sock;
-  t_u_player	player;
-  t_list	*in; // queue d'entree
-  t_list	*out; // queue de sortie
+  t_u_sockLayer	sock;
+  t_list	*in;
+  t_list	*out;
   t_splitMode	mode;
   t_bool	online;
+  t_bool	is_processing;
+};
+
+struct s_player
+{
+  int		lvl;
+  char		*team;
+  t_u_pos	pos;
+  t_u_inventory	inv;
   t_bool	dead;
+  t_bool	welcome;
+  t_u_clientManager	cm;
+};
+
+struct s_data_serv
+{
+  t_u_sockLayer	sock;
+  t_list	*player;
+  t_list	*action;
+  t_list	*send_q;
+  t_map		map;
 };
 
 struct s_epoll_manager

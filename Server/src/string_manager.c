@@ -16,7 +16,8 @@
 static const char *g_separator [] =
   {
     "\r\n",
-    "\n"
+    "\n",
+    "\0128"
   };
 
 static void	treatment_get_cmd(t_clientManager this, t_bool *clear, char **buf)
@@ -32,7 +33,7 @@ static void	treatment_get_cmd(t_clientManager this, t_bool *clear, char **buf)
       printf("add to stock = [%s]\n", (*buf));
       fflush(0);
     }
-  else if (buf[0] != '\0')
+  else if ((*buf)[0] != '\0')
     {
       tmp[0] = '\0';
       tmp += (strlen(g_separator[this->mode]));
@@ -44,12 +45,32 @@ static void	treatment_get_cmd(t_clientManager this, t_bool *clear, char **buf)
     }
 }
 
+static void	treatment_first_cmd(t_clientManager this, char *buf)
+{
+  char *tmp;
+
+  tmp = NULL;
+
+  if ((tmp = strstr(buf, "\n")) && buf[0] != '\0')
+    {
+      if (tmp != buf)
+	{
+	  if (tmp[-1] == '\r')
+	    this->mode = CRLF;
+	  else
+	    this->mode = LF;
+	}
+    }
+}
+
 void	get_commands(t_clientManager this, char *buf)
 {
   t_bool	clear;
 
   assert(buf && this);
   clear = FALSE;
+  if (this->mode == UNKNOW)
+    treatment_first_cmd(this, buf);
   while (buf && buf[0] && !clear)
     treatment_get_cmd(this, &clear, &buf);
 }

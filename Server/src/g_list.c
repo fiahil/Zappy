@@ -4,6 +4,7 @@
  */
 
 #include <stdlib.h>
+#include "server_routine.h"
 #include "def.h"
 
 static t_list	*g_action_list = 0;

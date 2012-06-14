@@ -36,7 +36,7 @@ procFunc	cmd_parse(char const *input, int *off)
     {
       *off = strlen(input + g_cmd_tab[i].size);
       return (g_cmd_tab[i].func);
-    } 
+    }
     ++i;
   }
   return (NULL);

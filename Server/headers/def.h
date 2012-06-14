@@ -95,7 +95,7 @@ typedef enum
  * Ptrfunc
  */
 
-typedef t_bool	(*procFunc)(t_clientManager, char *);
+typedef t_bool	(*procFunc)(t_player, char *);
 
 /*
  * Struct definition

@@ -44,7 +44,7 @@ t_bool  move_process_function(t_player this, char *data)
 
   char *str = malloc(sizeof(*str) * (strlen("I move in        :        !\n") + 1));
   memset(str, 0, strlen("I move in        :        !\n"));
-  strcat(strcat(strcat(strcat(strcat(str, "I move in "), my_itoa(this->pos.x)), " : "), my_itoa(this->pos.y)), " !\n");
+  strcat(strcat(strcat(strcat(strcat(str, "I move in "), my_itoa(this->pos.x)), " : "), my_itoa(this->pos.y)), " !\n"); // voir asprintf , enculé
 
   // TODO tmp/
   list_push_back_new(this->cm.out, str, strlen(str) + 1);

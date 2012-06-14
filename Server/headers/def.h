@@ -55,9 +55,6 @@ typedef struct s_map*		t_map;
 typedef struct timeval		t_u_timeval;
 typedef struct timeval*		t_timeval;
 
-
-// Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
-
 /*
  * Enum typedef
  */
@@ -81,7 +78,7 @@ typedef enum
  * Ptrfunc
  */
 
-typedef t_bool	(*procFunc)(t_clientManager);
+typedef t_bool	(*procFunc)(t_clientManager, char *);
 
 /*
  * Struct definition

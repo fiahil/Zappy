@@ -8,7 +8,6 @@ NAME	=	zappy
 MAKE=           make --no-print-directory
 
 SRC	=	src/main.c			\
-		src/g_list.c			\
 		src/get_arg.c			\
 		src/get_opt_1.c			\
 		src/get_opt_2.c			\
@@ -17,6 +16,7 @@ SRC	=	src/main.c			\
 		src/max_fd.c			\
 		src/server_routine.c		\
 		src/cmd_parse.c			\
+		src/my_itoa.c			\
 		src/map.c			\
 		src/clock.c			\
 		src/process_function.c		\
@@ -28,7 +28,8 @@ SRC	=	src/main.c			\
 		src/my_receive.c		\
 		src/handle_error.c		\
 		src/protocol.c			\
-		src/netManager.c
+		src/netManager.c		\
+		src/fill_map.c
 
 OBJ	=	$(SRC:.c=.o)
 

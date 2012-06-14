@@ -5,9 +5,10 @@
 ** Login   <busina_b@epitech.net>
 ** 
 ** Started on Tue Jun 12 11:00:09 2012 benjamin businaro
-** Last update Tue Jun 12 11:50:59 2012 benjamin businaro
+8** Last update Tue Jun 12 11:50:59 2012 benjamin businaro
 */
 
+#include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -32,7 +33,7 @@ static void	malloc_error()
   exit(1);
 }
 
-void	init_map(int szx, int szy)
+void	init_map(int szx, int szy, int nb_play)
 {
   t_map this;
   void	*pool;
@@ -56,11 +57,14 @@ void	init_map(int szx, int szy)
       while (x < szx)
 	{
 	  this->map[y][x] = pool;
+	  this->map[y][x]->inv.status = FALSE;
+	  memset(this->map[y][x]->inv.resources, 0, 8);
 	  init_list(&(this->map[y][x]->client), NULL, NULL, NULL);
 	  pool += sizeof(t_u_square);
 	  ++x;
 	}
       ++y;
     }
+  fill_map(this, (this->size_x * this->size_y), nb_play);
   get_map(this);
 }

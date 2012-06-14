@@ -10,7 +10,6 @@
 
 #include "def.h"
 
-int	initClientTab(void);
-void	iter_client(t_epoll_manager);
+void	iter_client(t_epoll_manager, t_data_serv);
 
 #endif /* __NETMANAGER_H__ */

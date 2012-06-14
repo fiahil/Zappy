@@ -10,34 +10,34 @@
 #include <string.h>
 #include "process_function.h"
 
-t_bool		broadcast_process_function(t_clientManager this, char *data)
+t_bool		broadcast_process_function(t_player this, char *data)
 {
   (void)data;
-  list_push_back_new(this->out, "I launch a broadcast !\n", strlen("I launch a broadcast !\n") + 1);
+  list_push_back_new(this->cm.out, "I launch a broadcast !\n", strlen("I launch a broadcast !\n") + 1);
 
   return (TRUE);
 }
 
-t_bool		incantation_process_function(t_clientManager this, char *data)
+t_bool		incantation_process_function(t_player this, char *data)
 {
   (void)data;
-  list_push_back_new(this->out, "Incantation starting !\n", strlen("Incantation starting !\n") + 1);
+  list_push_back_new(this->cm.out, "Incantation starting !\n", strlen("Incantation starting !\n") + 1);
 
   return (TRUE);
 }
 
-t_bool		fork_process_function(t_clientManager this, char *data)
+t_bool		fork_process_function(t_player this, char *data)
 {
   (void)data;
-  list_push_back_new(this->out, "I fork !\n", strlen("I fork !\n") + 1);
+  list_push_back_new(this->cm.out, "I fork !\n", strlen("I fork !\n") + 1);
 
   return (TRUE);
 }
 
-t_bool		connect_nbr_process_function(t_clientManager this, char *data)
+t_bool		connect_nbr_process_function(t_player this, char *data)
 {
   (void)data;
-  list_push_back_new(this->out, "I ask for thr connect number !\n", strlen("I ask for the connect number !\n") + 1);
+  list_push_back_new(this->cm.out, "I ask for thr connect number !\n", strlen("I ask for the connect number !\n") + 1);
 
   return (TRUE);
 }

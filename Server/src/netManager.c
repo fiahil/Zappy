@@ -16,9 +16,10 @@
 #include "epoll_manager.h"
 #include "handle_error.h"
 
-static t_clientManager		*clientTab = NULL; // TODO
-static size_t			g_index = 0;
+//static t_clientManager		*clientTab = NULL; // TODO
+//static size_t			g_index = 0;
 
+/*
 int		initClientTab(void)
 {
   int		i;
@@ -34,7 +35,6 @@ int		initClientTab(void)
     clientTab[i] = batAlloc;
     clientTab[i]->online = FALSE;
     clientTab[i]->mode = UNKNOW;
-    clientTab[i]->dead = FALSE;
     clientTab[i]->is_processing = FALSE;
     clientTab[i]->in = new_list(NULL, NULL, NULL);
     clientTab[i]->out = new_list(NULL, NULL, NULL);
@@ -48,19 +48,35 @@ int		initClientTab(void)
   clientTab[i] = NULL;
   return (1);
 }
+*/
 
-void	iter_client(t_epoll_manager epoll)
+void		iter_client(t_epoll_manager epoll, t_data_serv data_serv)
 {
-  int			n;
-  int			i;
+  int		n;
+  int		i;
+  t_player	client;
 
   i = -1;
   n = update_monitor(epoll);
   while (++i < n)
     if (!epoll->ev[i].data.ptr)
-      {
-	if (accept_connection(epoll, clientTab[g_index]) > -1)
-	  clientTab[g_index++]->online = TRUE;
+      { //TODO WIP Fonction create_player
+	if (!(client = malloc(sizeof(t_u_player))))
+	  handleError("malloc", strerror(errno), -1);
+	client->lvl = 1;
+	client->team = "poney";
+	client->pos.x = 0;
+	client->pos.y = 0;
+	client->dead = FALSE;
+	client->welcome = FALSE;
+	memset(client->cm.stock, '\0', sizeof(client->cm.stock));
+	client->cm.in = new_list(NULL, NULL, NULL);
+	client->cm.out = new_list(NULL, NULL, NULL);
+	client->cm.mode = UNKNOW;
+	client->cm.is_processing = FALSE;
+	client->cm.online = FALSE;
+	if (accept_connection(epoll, data_serv, &(client->cm)) < 0)
+	  free(client);
       }
     else
       if (epoll->ev[i].events & EPOLLIN)

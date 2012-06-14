@@ -55,10 +55,10 @@ typedef struct s_map*		t_map;
 typedef struct timeval		t_u_timeval;
 typedef struct timeval*		t_timeval;
 
+typedef struct s_data_serv	t_u_data_serv;
+typedef struct s_data_serv*	t_data_serv;
+
 typedef struct s_time_attrib	t_u_time_attrib;
-
-
-// Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
 
 /*
  * Enum typedef
@@ -119,14 +119,6 @@ struct	s_pos
   int	y;
 };
 
-struct s_player
-{
-  int		lvl;
-  char		*team;
-  t_u_pos	pos;
-  t_u_inventory	inv;
-};
-
 struct s_player_action
 {
   procFunc	action;
@@ -156,14 +148,32 @@ struct s_sockLayer
 struct s_clientManager
 {
   char		stock[BUFFER_SIZE];
-  t_sockLayer	sock;
-  t_u_player	player;
-  t_list	*in; // queue d'entree
-  t_list	*out; // queue de sortie
+  t_u_sockLayer	sock;
+  t_list	*in;
+  t_list	*out;
   t_splitMode	mode;
   t_bool	online;
-  t_bool	dead;
   t_bool	is_processing;
+};
+
+struct s_player
+{
+  int		lvl;
+  char		*team;
+  t_u_pos	pos;
+  t_u_inventory	inv;
+  t_bool	dead;
+  t_bool	welcome;
+  t_u_clientManager	cm;
+};
+
+struct s_data_serv
+{
+  t_u_sockLayer	sock;
+  t_list	*player;
+  t_list	*action;
+  t_list	*send_q;
+  t_map		map;
 };
 
 struct s_epoll_manager

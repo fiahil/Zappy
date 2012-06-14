@@ -16,33 +16,34 @@
 #include "handle_error.h"
 #include "clock.h"
 
-int		run(void)
+int		run(t_data_serv data_serv)
 {
   t_u_epoll_manager	epoll;
 
   if (init_epoll(&epoll) < 0)
     return (handleError("Aborting", "", -1));
-  if (add_monitor(&epoll, get_server_fd(), NULL) < 0)
+  if (add_monitor(&epoll, data_serv->sock.fd, NULL) < 0)
     return (handleError("Aborting", "", epoll.efd));
   epoll.ev = calloc(64, sizeof(epoll.event));
   while (666)
-    iter_client(&epoll);
+    iter_client(&epoll, data_serv);
+  return (0);
 }
 
 int		main(int ac, char **av)
 {
   t_arg		args;
+  t_u_data_serv	data_serv;
 
   if (get_arg(ac, av, &args) == -1)
     return (EXIT_FAILURE);
-  set_connection(args.port);
-  initClientTab(); // TODO camel case
+  data_serv.player = new_list(NULL, NULL, NULL);
+  data_serv.action = new_list(NULL, NULL, NULL);
+  data_serv.send_q = new_list(NULL, NULL, NULL);
+  set_connection(&data_serv, args.port);
   init_map(args.width, args.height);
   unitest_clock(); // TODO unitest
-  if (run() < 0)
-    {
-      close(get_server_fd());
-      return (EXIT_FAILURE);
-    }
+  if (run(&data_serv) < 0)
+    return (EXIT_FAILURE);
   return (EXIT_SUCCESS);
 }

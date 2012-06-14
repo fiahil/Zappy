@@ -18,10 +18,10 @@ void	server_routine_input(t_clientManager this)
 
   ret = NULL;
   off = -1;
-  if ((buf = my_receive(this->sock->fd)) == (char*)(-1))
+  if ((buf = my_receive(this->sock.fd)) == (char*)(-1))
     {
       this->online = FALSE;
-      close(this->sock->fd);
+      close(this->sock.fd);
       puts(".:: Client disconnected ::.");
       fflush(0);
       return ;
@@ -50,7 +50,7 @@ void	server_routine_output(t_clientManager this)
 {
   while (!this->out->empty)
     {
-      my_send(this->sock->fd, list_front(this->out));
+      my_send(this->sock.fd, list_front(this->out));
       list_pop_front(this->out);
     }
 }

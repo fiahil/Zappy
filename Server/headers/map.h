@@ -13,8 +13,9 @@
 
 #include "def.h"
 
+void	fill_map(t_map, int, int);
 t_map	get_map(t_map);
-void	init_map(int, int);
+void	init_map(int, int, int);
 
 #endif /* __MAP_H__ */
 

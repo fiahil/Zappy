@@ -60,6 +60,18 @@ typedef struct s_map*		t_map;
 #define BUFFER_SIZE (4096)
 
 typedef enum
+  {
+    FOOD,
+    LINEMATE,
+    DERAUMERE,
+    SIBUR,
+    MENDIANE,
+    PHIRAS,
+    THYSTAME,
+    LAST
+  } t_resource;
+
+typedef enum
 {
   FALSE,
   TRUE
@@ -90,13 +102,8 @@ struct s_map
 
 struct s_inventory
 {
-  t_list	*steak;
-  t_list	*lin;
-  t_list	*der;
-  t_list	*sib;
-  t_list	*men;
-  t_list	*phi;
-  t_list	*thy;
+  t_bool	status;
+  int		resources[LAST];
 };
 
 struct s_square

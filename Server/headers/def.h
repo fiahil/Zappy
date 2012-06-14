@@ -55,7 +55,7 @@ typedef struct s_map*		t_map;
 typedef struct timeval		t_u_timeval;
 typedef struct timeval*		t_timeval;
 
-typedef struct time_attrib	t_u_time_attrib;
+typedef struct s_time_attrib	t_u_time_attrib;
 
 
 // Pointeur sur sockLayer + queue pour contenir des buffer (string) + bool pour le parsing sur /r /n
@@ -83,7 +83,7 @@ typedef enum
  * Ptrfunc
  */
 
-typedef t_bool	(*procFunc)(t_clientManager);
+typedef t_bool	(*procFunc)(t_clientManager, char *);
 
 /*
  * Struct definition
@@ -129,8 +129,8 @@ struct s_player
 
 struct s_player_action
 {
-  void		(*player_action_ptr)(void); // TODO typedef
-  //t_u_timer	time;
+  procFunc	action;
+  t_u_timeval	time;
   t_player	player;
 };
 

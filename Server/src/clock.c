@@ -15,7 +15,7 @@
 #include "clock.h"
 #include "process_function.h"
 
-static const t_u_time_attrib g_time_attrib [] =
+static const t_u_time_attrib g_time_attrib[] =
   {
     {&move_process_function, 7.0},
     {&right_process_function, 7.0},
@@ -94,8 +94,8 @@ void	unitest_clock()
   printf("# cmp t2 and t1 : %d, expected : 1\n", (int)cmp_time(&time2, &time));
   printf("# cmp t1 and t1 : %d, expected : 0\n", (int)cmp_time(&time, &time));
   puts(".:: get_time_per_function ::.");
-  get_time_per_function(time2, &move_process_function, 300);
-  printf("# get t2 move [300] : sec = %d, usec = %d\n",  (int)time.tv_sec, (int)time.tv_usec);
+  get_time_per_function(&time2, &move_process_function, 300);
+  printf("# get t2 move [300] : sec = %d, usec = %d\n",  (int)time2.tv_sec, (int)time2.tv_usec);
   puts(".:: add_time ::.");
   add_time(&time, 7, 300);
   printf("# add t1 [7] [300] : sec = %d, usec = %d\n", (int)time.tv_sec, (int)time.tv_usec);

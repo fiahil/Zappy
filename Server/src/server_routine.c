@@ -32,6 +32,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
     {
       printf("Processing \"%s\" ... \n", (char*)(list_front(this->cm.in))); // TODO
       fflush(0);
+      // push de la command avec son timer dans le list action
       if (!(ret = cmd_parse(list_front(this->cm.in), &off)))
 	{
 	  puts("server_routine -> cmd_parse : Command Not Found."); // TODO

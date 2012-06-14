@@ -45,7 +45,7 @@ int		main(int ac, char **av)
   data_serv.send_q = new_list(NULL, NULL, NULL);
   set_connection(&data_serv, args.port);
   init_map(args.width, args.height, (args.names_of_teams->size * args.nb_per_team));
-  unitest_clock(); // TODO unitest
+  //  unitest_clock(); // TODO unitest
   if (run(&data_serv) < 0)
     return (EXIT_FAILURE);
   return (EXIT_SUCCESS);

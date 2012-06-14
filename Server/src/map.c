@@ -58,7 +58,7 @@ void	init_map(int szx, int szy, int nb_play)
 	{
 	  this->map[y][x] = pool;
 	  this->map[y][x]->inv.status = FALSE;
-	  memset(this->map[y][x]->inv.resources, 0, 8);
+	  memset(this->map[y][x]->inv.resources, 0, sizeof(this->map[y][x]->inv.resources));
 	  init_list(&(this->map[y][x]->client), NULL, NULL, NULL);
 	  pool += sizeof(t_u_square);
 	  ++x;

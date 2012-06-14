@@ -1,10 +1,10 @@
 Modules Couche Réseau
 
 	- init_serv		(initialisation du serveur)
-	  -> socket		()
-	  -> bind		()
-	  -> listen		()
-	  -> init_data_serv	()
+	  -> set_socket		(appel à socket)
+	  -> set_bind		(appel à bind)
+	  -> set_listen		(appel à listen)
+	  -> init_data_serv	(initialisation de toute les données de la structure du serveur)
 
 	- welcome_prot		(protocole du bienvenue)
 	  -> welcome_player	(graphique ou IA et verif du nombre de client (/!\ del_player))

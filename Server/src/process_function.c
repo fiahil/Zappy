@@ -49,4 +49,3 @@ t_bool		expulse_process_function(t_clientManager this, char *data)
 
   return (TRUE);
 }
-

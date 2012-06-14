@@ -58,6 +58,7 @@ int	accept_connection(t_epoll_manager epoll, t_clientManager client)
     return (handleError("accept", strerror(errno), -1));
   if (add_monitor(epoll, client->sock->fd, client) < 0)
     return (handleError("", "", client->sock->fd));
+  list_push_back_new(client->out, "BIENVENUE\n", strlen("BIENVENUE\n") + 1);
   return (0);
 }
 

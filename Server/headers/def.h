@@ -74,7 +74,8 @@ typedef enum
     SIBUR,
     MENDIANE,
     PHIRAS,
-    THYSTAME
+    THYSTAME,
+    LAST
   } t_resource;
 
 typedef enum
@@ -110,7 +111,7 @@ struct s_map
 struct s_inventory
 {
   t_bool	status;
-  int		resources[7];
+  int		resources[LAST];
 };
 
 struct s_square

@@ -124,7 +124,7 @@ struct s_inventory
 
 struct s_square
 {
-  t_list	client;
+  t_list	players;
   t_u_inventory	inv;
 };
 

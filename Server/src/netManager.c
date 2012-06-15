@@ -67,6 +67,8 @@ void		iter_client(t_epoll_manager epoll, t_data_serv data_serv)
 	player->team = "poney";
 	player->pos.x = 0;
 	player->pos.y = 0;
+	get_map(NULL)->map[0][0]->players;
+	// TODO : placer le joueur dans la map
 	player->dir = NORTH;
 	player->dead = FALSE;
 	player->welcome = FALSE;

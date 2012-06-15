@@ -5,7 +5,7 @@
 ** Login   <busina_b@epitech.net>
 ** 
 ** Started on Tue Jun 12 11:00:09 2012 benjamin businaro
-8** Last update Tue Jun 12 11:50:59 2012 benjamin businaro
+** Last update Fri Jun 15 14:18:02 2012 benjamin businaro
 */
 
 #include <time.h>
@@ -59,7 +59,7 @@ void	init_map(int szx, int szy, int nb_play)
 	  this->map[y][x] = pool;
 	  this->map[y][x]->inv.status = FALSE;
 	  memset(this->map[y][x]->inv.resources, 0, sizeof(this->map[y][x]->inv.resources));
-	  init_list(&(this->map[y][x]->client), NULL, NULL, NULL);
+	  init_list(&(this->map[y][x]->players), NULL, NULL, NULL);
 	  pool += sizeof(t_u_square);
 	  ++x;
 	}

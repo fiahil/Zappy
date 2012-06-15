@@ -3,7 +3,19 @@
 #include	<stdlib.h>
 #include	"def.h"
 
-static const	t_u_pos g_vision_tab[4][81] =
+static const	char *g_resources[8] =
+  {
+    "nourriture",
+    "linemate",
+    "deraumere",
+    "sibur",
+    "mendiane",
+    "phiras",
+    "thystame",
+    NULL
+  };
+
+static const	t_u_pos g_vtab[4][81] =
   {
     {
       {0, 0},
@@ -339,20 +351,43 @@ static const	t_u_pos g_vision_tab[4][81] =
     },
   };
 
-void		print_tab()
+static int	calc_nbcases(int lvl)
+{
+  int		i;
+  int		nbcases;
+
+  nbcases = 0;
+  i = 0;
+  while (i <= lvl)
+    {
+      nbcases += 1 + (i * 2);
+      ++i;
+    }
+  return (nbcases - 1);
+}
+
+char		*get_look(t_player this, t_map map)
 {
   int		i;
   int		j;
+  int		nbcases;
+  t_square	cur;
 
+  nbcases = calc_nbcases(this->lvl);
+  printf("{");
   i = 0;
-  while (i < 4)
+  while (i < nbcases)
     {
-      j = 0;
-      while (j < 81)
-	{
-	  printf("x = %d ; y = %d\n", g_vision_tab[i][j].x, g_vision_tab[i][j].y);
-	  ++j;
-	}
+      cur = map->map[g_vtab[this->dir][i].y][g_vtab[this->dir][i].x]; // map[y][x] ??
+      if (cur->players && cur->players->size)
+	printf(" joueur");
+      j = FOOD;
+      while (j < LAST)
+	if (cur->inv.resources[j])
+	  printf(" %s", g_resources[j]);
+      printf(",");
       ++i;
     }
+  printf("}\n");
+  return (NULL);
 }

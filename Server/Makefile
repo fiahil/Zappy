@@ -31,6 +31,7 @@ SRC	=	src/main.c			\
 		src/my_receive.c		\
 		src/handle_error.c		\
 		src/protocol.c			\
+		src/vision_tab.c		\
 		src/iter.c			\
 		src/fill_map.c
 

@@ -24,6 +24,7 @@ t_bool	broadcast_process_function(t_player, char *);
 t_bool	incantation_process_function(t_player, char *);
 t_bool	fork_process_function(t_player, char *);
 t_bool	connect_nbr_process_function(t_player, char *);
+char	*get_look(t_player, t_map);
 
 #endif /* __PROCESS_FUNCTION_H__ */
 

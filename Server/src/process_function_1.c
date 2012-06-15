@@ -31,9 +31,15 @@ static char	*g_resources[] =
 
 t_bool		look_process_function(t_player this, char *data)
 {
+  char		*look;
+  t_map		map;
+
   (void)data;
   list_push_back_new(this->cm.out, "I look at this !\n", strlen("I look at this !\n") + 1);
-  
+  map = get_map(NULL);
+  look = get_look(this, map);
+  msgout_voir(this->cm.out, look);
+  free(look);
   return (TRUE);
 }
 

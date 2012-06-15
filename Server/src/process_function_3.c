@@ -49,7 +49,7 @@ t_bool  move_process_function(t_player this, char *data)
   // TODO tmp/
   list_push_back_new(this->cm.out, str, strlen(str) + 1);
   free(str); // TODO
-  
+  msgout_avance(this->cm.out);
   return (TRUE);
 }
 
@@ -61,6 +61,7 @@ t_bool  right_process_function(t_player this, char *data)
   else
     this->dir += 1;
   list_push_back_new(this->cm.out, "I turn right !\n", strlen("I turn right !\n") + 1);
+  msgout_droite(this->cm.out);
   return (TRUE);
 }
 
@@ -72,6 +73,7 @@ t_bool  left_process_function(t_player this, char *data)
   else
     this->dir -= 1;
   list_push_back_new(this->cm.out, "I turn left !\n", strlen("I turn left !\n") + 1);
+  msgout_gauche(this->cm.out);
   return (TRUE);
 }
 

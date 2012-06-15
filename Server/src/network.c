@@ -17,7 +17,7 @@
 #include	<netdb.h>
 #include	<stdio.h>
 
-#include	"epoll_manager.h"
+#include	"select_manager.h"
 #include	"network.h"
 #include	"handle_error.h"
 #include	"def.h"
@@ -45,15 +45,15 @@ int	set_connection(t_data_serv data_serv, int port)
   return (0);
 }
 
-int	accept_connection(t_epoll_manager epoll, t_data_serv data_serv, t_player p)
+int	accept_connection(t_select_manager sm, t_data_serv data_serv, t_player p)
 {
   socklen_t	len;
 
   len = sizeof(p->cm.sock.addr);
   if ((p->cm.sock.fd = accept(data_serv->sock.fd, (t_sockAddr)&(p->cm.sock.addr), &len)) < 0)
     return (handleError("accept", strerror(errno), -1));
-  if (add_monitor(epoll, p->cm.sock.fd, p) < 0)
-    return (handleError("add_monitor", "", p->cm.sock.fd));
+  select_add(sm, p->cm.sock.fd);
+  p->cm.online = TRUE;
   list_push_back_new(p->cm.out, "BIENVENUE\n", strlen("BIENVENUE\n") + 1);
   return (0);
 }

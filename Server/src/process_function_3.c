@@ -16,11 +16,11 @@
 static void	do_move_process(t_player this, int coef_x, int coef_y)
 {
   t_map		map;
-  t_u_pos	prec;
-  t_iter	*tmp;
+  /* t_u_pos	prec; */
+  /* t_iter	*tmp; */
 
-  prec.x = this->pos.x;
-  prec.y = this->pos.y;
+  /* prec.x = this->pos.x; */
+  /* prec.y = this->pos.y; */
   map = get_map(NULL);
   this->pos.x += coef_x;
   this->pos.y += coef_y;

@@ -5,7 +5,7 @@
 ** Login   <magere_n@epitech.net>
 ** 
 ** Started on  Sun Apr 22 21:55:52 2012 nicolas magere
-** Last update Fri Jun 15 15:58:16 2012 benjamin businaro
+** Last update Fri Jun 15 17:14:34 2012 benjamin businaro
 */
 
 #ifndef __C_LISTS_H__
@@ -65,6 +65,7 @@ void		list_pop_back(t_list *this);
 void		list_pop_front(t_list *this);
 void		list_remove(t_list *this, void *param);
 void		list_remove_if(t_list *this, t_predicate pred);
+t_iter		*list_extract(t_list *this, t_iter *it);
 
 /*
 **   Functions to get elements

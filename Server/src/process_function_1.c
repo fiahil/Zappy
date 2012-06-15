@@ -53,7 +53,7 @@ t_bool		take_process_function(t_player this, char *data)
 
   i = -1;
   while (g_resources[++i] && strcmp(data, g_resources[i]));
-  system("clear"); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
+  //system("clear"); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   if (g_resources[i] && (map = get_map(NULL))->map[this->pos.y][this->pos.x]->inv.resources[i])
     {
       --map->map[this->pos.y][this->pos.x]->inv.resources[i];
@@ -63,7 +63,7 @@ t_bool		take_process_function(t_player this, char *data)
   else
     asprintf(&log, "No %s on this square !\n", data);
   list_push_back_new(this->cm.out, log, strlen(log));
-  display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
+  //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   return (TRUE);
 }
 
@@ -75,7 +75,7 @@ t_bool		drop_process_function(t_player this, char *data)
 
   i = -1;
   while (g_resources[++i] && strcmp(data, g_resources[i]));
-  system("clear"); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
+  //system("clear"); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   if (g_resources[i] && this->inv.resources[i])
     {
       ++(map = get_map(NULL))->map[this->pos.y][this->pos.x]->inv.resources[i];
@@ -86,7 +86,7 @@ t_bool		drop_process_function(t_player this, char *data)
   else
     asprintf(&log, "No %s in inventory !\n", data);
   list_push_back_new(this->cm.out, log, strlen(log));
-  display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
+  //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   return (TRUE);
 }
 

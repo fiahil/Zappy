@@ -4,12 +4,11 @@
  */
 
 #include <errno.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "def.h"
-#include "netManager.h"
+#include "iter.h"
 #include "network.h"
 #include "server_routine.h"
 #include "select_manager.h"
@@ -23,6 +22,18 @@ static void	iter_rds(void *ptr, size_t s)
   (void)s;
   if (select_isset(g_sm, (*(t_player*)ptr)->cm.sock.fd) && (*(t_player*)ptr)->cm.online)
     server_routine_input(g_ds, *(t_player*)ptr);
+}
+
+static void	iter_out(void *ptr, size_t s)
+{
+  (void)s;
+  server_routine_output(g_ds, *(t_player*)ptr);
+}
+
+static void	iter_action(void *ptr, size_t s)
+{
+  (void)s;
+  (void)ptr;
 }
 
 void		iter_client(t_select_manager sm, t_data_serv ds)
@@ -55,4 +66,6 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
       list_push_back_new(ds->player, &player, sizeof(&player));
   }
   list_for_each(ds->player, &iter_rds);
+  list_for_each(ds->action, &iter_action);
+  list_for_each(ds->player, &iter_out);
 }

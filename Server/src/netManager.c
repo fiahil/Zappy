@@ -15,6 +15,7 @@
 #include "select_manager.h"
 #include "epoll_manager.h"
 #include "handle_error.h"
+#include "map.h"
 
 //static t_clientManager		*clientTab = NULL; // TODO
 //static size_t			g_index = 0;
@@ -54,32 +55,33 @@ void		iter_client(t_epoll_manager epoll, t_data_serv data_serv)
 {
   int		n;
   int		i;
-  t_player	player;
+  t_player	p;
 
   i = -1;
   n = update_monitor(epoll);
   while (++i < n)
     if (!epoll->ev[i].data.ptr)
       { //TODO WIP Fonction create_player
-	if (!(player = malloc(sizeof(t_u_player))))
+	if (!(p = malloc(sizeof(t_u_player))))
 	  handleError("malloc", strerror(errno), -1);
-	player->lvl = 1;
-	player->team = "poney";
-	player->pos.x = 0;
-	player->pos.y = 0;
-	get_map(NULL)->map[0][0]->players;
+	p->lvl = 1;
+	p->team = "poney";
+	p->pos.x = 0;
+	p->pos.y = 0;
+	list_push_back_new(&(get_map(NULL)->map[p->pos.y][p->pos.x]->players),
+			   &p, sizeof(&p));
 	// TODO : placer le joueur dans la map
-	player->dir = NORTH;
-	player->dead = FALSE;
-	player->welcome = FALSE;
-	memset(player->cm.stock, '\0', sizeof(player->cm.stock));
-	player->cm.in = new_list(NULL, NULL, NULL);
-	player->cm.out = new_list(NULL, NULL, NULL);
-	player->cm.mode = UNKNOW;
-	player->cm.is_processing = FALSE;
-	player->cm.online = FALSE;
-	if (accept_connection(epoll, data_serv, player) < 0)
-	  free(player);
+	p->dir = NORTH;
+	p->dead = FALSE;
+	p->welcome = FALSE;
+	memset(p->cm.stock, '\0', sizeof(p->cm.stock));
+	p->cm.in = new_list(NULL, NULL, NULL);
+	p->cm.out = new_list(NULL, NULL, NULL);
+	p->cm.mode = UNKNOW;
+	p->cm.is_processing = FALSE;
+	p->cm.online = FALSE;
+	if (accept_connection(epoll, data_serv, p) < 0)
+	  free(p);
       }
     else
       if (epoll->ev[i].events & EPOLLIN)

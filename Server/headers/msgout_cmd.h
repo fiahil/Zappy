@@ -17,5 +17,6 @@ void		msgout_incantation(t_list*);
 void		msgout_fork(t_list*);
 void		msgout_connect_nbr(t_list*);
 void		msgout_mort(t_list*);
+void		msgout_fail(t_list *);
 
 #endif		/* !__MSGOUT_CMD_H__ */

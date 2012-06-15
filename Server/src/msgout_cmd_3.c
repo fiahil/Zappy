@@ -18,3 +18,8 @@ void		msgout_gauche(t_list *out)
 {
   list_push_back_new(out, "ok\n", 4);
 }
+
+void		msgout_fail(t_list *out)
+{
+  list_push_back_new(out, "ko\n", 4);
+}

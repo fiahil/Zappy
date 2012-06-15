@@ -5,7 +5,7 @@
 ** Login   <magere_n@epitech.net>
 ** 
 ** Started on  Sun Apr 22 21:55:52 2012 nicolas magere
-** Last update Tue Jun 12 10:36:24 2012 pierre martin
+** Last update Fri Jun 15 15:58:16 2012 benjamin businaro
 */
 
 #ifndef __C_LISTS_H__

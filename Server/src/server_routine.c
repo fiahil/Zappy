@@ -8,13 +8,16 @@
 #include "string_manager.h"
 #include "network.h"
 #include "def.h"
+#include "clock.h"
 #include "server_routine.h"
+#include "msgout_cmd.h"
 
 void		server_routine_input(t_data_serv ds, t_player this)
 {
-  procFunc	ret;
-  int		off;
-  char		*buf;
+  procFunc		ret;
+  int			off;
+  char			*buf;
+  t_player_action	act;
 
   ret = NULL;
   off = -1;
@@ -29,20 +32,24 @@ void		server_routine_input(t_data_serv ds, t_player this)
     }
   get_commands(this, buf);
   // appel à welcome_player(t_data_serv server, t_player player, char *data) (data -> nom de l'equipe)
-  while (!this->cm.in->empty)
+
+  // TODO move into iter player
+
+  if (!this->cm.in->empty && !this->cm.is_processing) // TODO replace by process or not
     {
       printf("Processing \"%s\" ... \n", (char*)(list_front(this->cm.in))); // TODO
       fflush(0);
-      // push de la command avec son timer dans le list action
       if (!(ret = cmd_parse(list_front(this->cm.in), &off)))
-	{
-	  puts("server_routine -> cmd_parse : Command Not Found."); // TODO
-	  fflush(0);
-	}
-      else if (ret && !ret(this, (off != -1 ? list_front(this->cm.in) + off : NULL)))
+	msgout_fail(this->cm.out);
+      else
      	{
-      	  puts("server_routine : Command Failed."); // TODO
-      	  fflush(0);
+	  if (!(act = malloc(sizeof(*act))))
+	    exit(1); // TODO
+	  act->action = ret;
+	  get_time_per_function(&(act->time), ret, ds->t);
+	  act->player = this;
+	  pqueue_push(ds->action, &(act), sizeof(&act));
+	  this->cm.is_processing = TRUE;
     	}
       list_pop_front(this->cm.in);
     }

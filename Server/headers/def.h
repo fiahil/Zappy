@@ -10,6 +10,7 @@
 #include	<netinet/in.h>		// IPPROTO_TCP
 #include	<sys/time.h>
 #include	"c_lists.h"
+#include	"pqueue.h"
 
 /*
  * System typedef
@@ -186,8 +187,9 @@ struct s_player
 struct s_data_serv
 {
   t_u_sockLayer	sock;
+  int		t;
   t_list	*player;
-  t_list	*action;
+  t_pqueue	*action;
   t_list	*send_q;
 };
 

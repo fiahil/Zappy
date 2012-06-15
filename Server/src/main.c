@@ -34,6 +34,13 @@ void		print_list(void *data, size_t size)
   printf("name : %s\n", (char*)data);
 }
 
+int	cmp_action(void *e1, size_t s1, void *e2, size_t s2)
+{
+  (void)s1;
+  (void)s2;
+  return (cmp_time(&((*((t_player_action*)e1))->time), &((*((t_player_action*)e2))->time)));
+}
+
 int		main(int ac, char **av)
 {
   time_t	now;
@@ -51,8 +58,9 @@ int		main(int ac, char **av)
   printf("nb clients per team : %d\n", args.nb_per_team);
   printf("execution time : %d\n", args.exec_time);
   data_serv.player = new_list(NULL, NULL, NULL);
-  data_serv.action = new_list(NULL, NULL, NULL);
+  data_serv.action = new_pqueue(&cmp_action);
   data_serv.send_q = new_list(NULL, NULL, NULL);
+  data_serv.t = args.exec_time;
   set_connection(&data_serv, args.port);
   init_map(args.width, args.height, (args.names_of_teams->size * args.nb_per_team));
   //  unitest_clock(); // TODO unitest

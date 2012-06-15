@@ -10,6 +10,7 @@
 #include	<netinet/in.h>
 #include	<sys/time.h>
 #include	"c_lists.h"
+#include	"pqueue.h"
 
 /*
  * System typedef
@@ -124,7 +125,7 @@ struct s_inventory
 
 struct s_square
 {
-  t_list	client;
+  t_list	players;
   t_u_inventory	inv;
 };
 
@@ -139,6 +140,7 @@ struct s_player_action
   procFunc	action;
   t_u_timeval	time;
   t_player	player;
+  t_bool	done;
 };
 
 struct s_parse_elem
@@ -186,8 +188,9 @@ struct s_player
 struct s_data_serv
 {
   t_u_sockLayer	sock;
+  int		t;
   t_list	*player;
-  t_list	*action;
+  t_pqueue	*action;
   t_list	*send_q;
 };
 

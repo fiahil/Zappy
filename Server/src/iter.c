@@ -7,9 +7,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "clock.h"
 #include "def.h"
 #include "iter.h"
 #include "network.h"
+#include "cmd_parse.h"
+#include "msgout_cmd.h"
 #include "server_routine.h"
 #include "select_manager.h"
 #include "handle_error.h"
@@ -34,6 +37,42 @@ static void	iter_action(void *ptr, size_t s)
 {
   (void)s;
   (void)ptr;
+  t_u_timeval current;
+  procFunc		ret;
+  int			off;
+  t_player_action	act;
+
+  off = -1;
+  get_current_time(&current);
+  if ((*((t_player_action*)ptr))->player->cm.is_processing
+      && !((*((t_player_action*)ptr))->done)
+      && cmp_time(&((*(t_player_action*)ptr)->time), &current) == 1)
+    {
+      ((*(t_player_action*)ptr)->action)((*(t_player_action*)ptr)->player, ""); // TODO
+      (*(t_player_action*)ptr)->done = TRUE;
+      (*(t_player_action*)ptr)->player->cm.is_processing = FALSE;
+    }
+  if (!(*(t_player_action*)ptr)->player->cm.in->empty
+      && !((*(t_player_action*)ptr)->player->cm.is_processing))
+    {
+      printf("Processing \"%s\" ... \n",
+	     (char*)(list_front((*(t_player_action*)ptr)->player->cm.in))); // TODO
+      fflush(0);
+      if (!(ret = cmd_parse(list_front((*(t_player_action*)ptr)->player->cm.in), &off)))
+	  msgout_fail((*(t_player_action*)ptr)->player->cm.out);
+      else
+     	{
+	  if (!(act = malloc(sizeof(*act))))
+	    exit(1); // TODO
+	  act->action = ret;
+	  act->done = FALSE;
+	  get_time_per_function(&(act->time), ret, 1); // TODO 1 par t
+	  act->player = ((*(t_player_action*)ptr))->player;
+       	  //pqueue_push(ds->action, &(act), sizeof(&act)); // TODO peu pas push dans la queue
+	  (*(t_player_action*)ptr)->player->cm.is_processing = TRUE;
+    	}
+      list_pop_front((*(t_player_action*)ptr)->player->cm.in);
+    }
 }
 
 void		iter_client(t_select_manager sm, t_data_serv ds)
@@ -66,6 +105,6 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
       list_push_back_new(ds->player, &player, sizeof(&player));
   }
   list_for_each(ds->player, &iter_rds);
-  list_for_each(ds->action, &iter_action);
+  list_for_each(&(ds->action->queue), &iter_action);
   list_for_each(ds->player, &iter_out);
 }

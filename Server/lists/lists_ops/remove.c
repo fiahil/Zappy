@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Wed Apr 18 11:27:56 2012 pierre martin
-** Last update Fri Jun 15 14:15:14 2012 pierre martin
+** Last update Fri Jun 15 14:34:12 2012 pierre martin
 */
 
 #include	"iter.h"
@@ -96,7 +96,7 @@ void		list_remove_if(t_list *this, t_predicate pred)
       while (it && it->next)
 	{
 	  if (pred(it->next->data, it->next->len))
-	    delete_iter(extract(it), this->dtor);
+	    delete_iter(list_extract(this, it->next), this->dtor);
 	  else if (it)
 	    it = it->next;
 	}

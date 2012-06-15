@@ -3,16 +3,23 @@
  * 06.06.2012
  */
 
+#define _GNU_SOURCE
+
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "process_function.h"
+#include "msgout_cmd.h"
 #include "map.h"
 #include "my_itoa.h"
 
 static void	do_move_process(t_player this, int coef_x, int coef_y)
 {
-  t_map	map;
+  t_map		map;
+  t_u_pos	prec;
 
+  prec.x = this->pos.x;
+  prec.y = this->pos.y;
   map = get_map(NULL);
   this->pos.x += coef_x;
   this->pos.y += coef_y;
@@ -24,9 +31,9 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
     this->pos.y = 0;
   if (this->pos.y < 0)
     this->pos.y = map->size_y - 1;
-  // TODO : deplacement du joueur ok,
-  //   mais pas de deplacement dans la map
-  //   (dans la listes des joueurs sur la map)
+  // TODO : suppr et recup du plyer a la pos prec
+  // push dasn la list a la new pos
+  // map->map
 }
 
 t_bool  move_process_function(t_player this, char *data)
@@ -40,16 +47,14 @@ t_bool  move_process_function(t_player this, char *data)
     do_move_process(this, 0, 1);
   else
     do_move_process(this, -1, 0);
-  // TODO tmp
 
-  char *str = malloc(sizeof(*str) * (strlen("I move in        :        !\n") + 1));
-  memset(str, 0, strlen("I move in        :        !\n"));
-  strcat(strcat(strcat(strcat(strcat(str, "I move in "), my_itoa(this->pos.x)), " : "), my_itoa(this->pos.y)), " !\n"); // voir asprintf , enculé
+  /* char *str; */
+  /* str = NULL; */
+  /* asprintf(&str, "I move in %d : %d !\n", this->pos.x, this->pos.y); // TODO */
+  /* list_push_back_new(this->cm.out, str, strlen(str) + 1); */
+  /* free(str); // TODO */
 
-  // TODO tmp/
-  list_push_back_new(this->cm.out, str, strlen(str) + 1);
-  free(str); // TODO
-  
+  msgout_avance(this->cm.out);
   return (TRUE);
 }
 
@@ -61,6 +66,7 @@ t_bool  right_process_function(t_player this, char *data)
   else
     this->dir += 1;
   list_push_back_new(this->cm.out, "I turn right !\n", strlen("I turn right !\n") + 1);
+  msgout_droite(this->cm.out);
   return (TRUE);
 }
 
@@ -72,6 +78,7 @@ t_bool  left_process_function(t_player this, char *data)
   else
     this->dir -= 1;
   list_push_back_new(this->cm.out, "I turn left !\n", strlen("I turn left !\n") + 1);
+  msgout_gauche(this->cm.out);
   return (TRUE);
 }
 

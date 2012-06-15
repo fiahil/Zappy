@@ -21,6 +21,7 @@ int		run(t_data_serv data_serv)
 {
   t_u_select_manager	sm;
 
+  memset(&sm, '\0', sizeof(t_u_select_manager));
   select_add(&sm, data_serv->sock.fd);
   while (666)
     iter_client(&sm, data_serv);

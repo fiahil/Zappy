@@ -53,6 +53,7 @@ int	accept_connection(t_select_manager sm, t_data_serv data_serv, t_player p)
   if ((p->cm.sock.fd = accept(data_serv->sock.fd, (t_sockAddr)&(p->cm.sock.addr), &len)) < 0)
     return (handleError("accept", strerror(errno), -1));
   select_add(sm, p->cm.sock.fd);
+  p->cm.online = TRUE;
   list_push_back_new(p->cm.out, "BIENVENUE\n", strlen("BIENVENUE\n") + 1);
   return (0);
 }

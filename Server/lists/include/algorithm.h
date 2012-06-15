@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on  Tue Jun 12 16:39:41 2012 pierre martin
-** Last update Tue Jun 12 16:42:10 2012 pierre martin
+** Last update Fri Jun 15 11:14:06 2012 pierre martin
 */
 
 #ifndef __ALGORITHM_H__
@@ -14,6 +14,7 @@
 void	list_sort(t_list *this, t_cmp cmp);
 t_iter	*list_find(t_list *this, void *param);
 t_iter	*list_find_if(t_list *this, t_predicate p);
+t_iter	*list_find_cmp(t_list *this, t_cmp p, void *ref, size_t reflen);
 void	list_for_each(t_list *this, t_func f);
 size_t	list_count(t_list *this, void *value);
 size_t	list_count_if(t_list *this, t_predicate p);

@@ -49,4 +49,3 @@ t_bool		expulse_process_function(t_player this, char *data)
 
   return (TRUE);
 }
-

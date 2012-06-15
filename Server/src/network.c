@@ -54,6 +54,7 @@ int	accept_connection(t_epoll_manager epoll, t_data_serv data_serv, t_player p)
     return (handleError("accept", strerror(errno), -1));
   if (add_monitor(epoll, p->cm.sock.fd, p) < 0)
     return (handleError("add_monitor", "", p->cm.sock.fd));
+  list_push_back_new(p->cm.out, "BIENVENUE\n", strlen("BIENVENUE\n") + 1);
   return (0);
 }
 

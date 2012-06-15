@@ -6,6 +6,7 @@
 #include <errno.h>
 #include <time.h>
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include "map.h"
 #include "def.h"
@@ -30,6 +31,12 @@ int		run(t_data_serv data_serv)
   return (0);
 }
 
+void		print_list(void *data, size_t size)
+{
+  (void)size;
+  printf("name : %s\n", (char*)data);
+}
+
 int		main(int ac, char **av)
 {
   time_t	now;
@@ -40,6 +47,12 @@ int		main(int ac, char **av)
   srandom(now);
   if (get_arg(ac, av, &args) == -1)
     return (EXIT_FAILURE);
+  printf("port : %d\n", args.port);
+  printf("width : %d\n", args.width);
+  printf("height : %d\n", args.height);
+  list_for_each(args.names_of_teams, &print_list);
+  printf("nb clients per team : %d\n", args.nb_per_team);
+  printf("execution time : %d\n", args.exec_time);
   data_serv.player = new_list(NULL, NULL, NULL);
   data_serv.action = new_list(NULL, NULL, NULL);
   data_serv.send_q = new_list(NULL, NULL, NULL);

@@ -28,6 +28,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
       return ;
     }
   get_commands(this, buf);
+  // appel à welcome_player(t_data_serv server, t_player player, char *data) (data -> nom de l'equipe)
   while (!this->cm.in->empty)
     {
       printf("Processing \"%s\" ... \n", (char*)(list_front(this->cm.in))); // TODO

@@ -6,8 +6,8 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#include	<sys/epoll.h>
-#include	<netinet/in.h>		// IPPROTO_TCP
+#include	<sys/select.h>
+#include	<netinet/in.h>
 #include	<sys/time.h>
 #include	"c_lists.h"
 
@@ -25,11 +25,11 @@ typedef struct sockaddr_in	t_u_sockAddrIn;
  * Struct typedef
  */
 
-typedef struct s_epoll_manager*	t_epoll_manager;
+typedef struct s_select_manager* t_select_manager;
 typedef struct s_sockLayer*	t_sockLayer;
 typedef struct s_clientManager*	t_clientManager;
 
-typedef struct s_epoll_manager	t_u_epoll_manager;
+typedef struct s_select_manager	t_u_select_manager;
 typedef struct s_sockLayer	t_u_sockLayer;
 typedef struct s_clientManager	t_u_clientManager;
 
@@ -67,16 +67,16 @@ typedef struct s_time_attrib	t_u_time_attrib;
 #define BUFFER_SIZE (4096)
 
 typedef enum
-  {
-    FOOD,
-    LINEMATE,
-    DERAUMERE,
-    SIBUR,
-    MENDIANE,
-    PHIRAS,
-    THYSTAME,
-    LAST
-  } t_resource;
+{
+  FOOD,
+  LINEMATE,
+  DERAUMERE,
+  SIBUR,
+  MENDIANE,
+  PHIRAS,
+  THYSTAME,
+  LAST
+} t_resource;
 
 typedef enum
 {
@@ -92,12 +92,12 @@ typedef enum
 } t_splitMode;
 
 typedef enum
-  {
-    NORTH,
-    EAST,
-    SOUTH,
-    WEST
-  } t_dir;
+{
+  NORTH,
+  EAST,
+  SOUTH,
+  WEST
+} t_dir;
 
 /*
  * Ptrfunc
@@ -128,10 +128,10 @@ struct s_square
   t_u_inventory	inv;
 };
 
-struct	s_pos
+struct s_pos
 {
-  int	x;
-  int	y;
+  int		x;
+  int		y;
 };
 
 struct s_player_action
@@ -191,11 +191,11 @@ struct s_data_serv
   t_list	*send_q;
 };
 
-struct s_epoll_manager
+struct s_select_manager
 {
-  int			efd;
-  struct epoll_event	event;
-  struct epoll_event	*ev;
+  int		max_fd;
+  fd_set	rds;
+  t_u_timeval	timeout;
 };
 
 #endif /* __DEF_H__ */

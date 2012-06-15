@@ -12,7 +12,7 @@ SRC	=	src/main.c			\
 		src/get_opt_1.c			\
 		src/get_opt_2.c			\
 		src/usage.c			\
-		src/epoll_manager.c		\
+		src/select_manager.c		\
 		src/max_fd.c			\
 		src/server_routine.c		\
 		src/cmd_parse.c			\

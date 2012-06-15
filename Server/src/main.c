@@ -13,21 +13,17 @@
 #include "get_arg.h"
 #include "network.h"
 #include "netManager.h"
-#include "epoll_manager.h"
+#include "select_manager.h"
 #include "handle_error.h"
 #include "clock.h"
 
 int		run(t_data_serv data_serv)
 {
-  t_u_epoll_manager	epoll;
+  t_u_select_manager	sm;
 
-  if (init_epoll(&epoll) < 0)
-    return (handleError("Aborting", "", -1));
-  if (add_monitor(&epoll, data_serv->sock.fd, NULL) < 0)
-    return (handleError("Aborting", "", epoll.efd));
-  epoll.ev = calloc(64, sizeof(epoll.event));
+  select_add(&sm, data_serv->sock.fd);
   while (666)
-    iter_client(&epoll, data_serv);
+    iter_client(&sm, data_serv);
   return (0);
 }
 

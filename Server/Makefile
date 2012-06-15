@@ -12,23 +12,26 @@ SRC	=	src/main.c			\
 		src/get_opt_1.c			\
 		src/get_opt_2.c			\
 		src/usage.c			\
-		src/epoll_manager.c		\
+		src/select_manager.c		\
 		src/max_fd.c			\
 		src/server_routine.c		\
 		src/cmd_parse.c			\
 		src/my_itoa.c			\
 		src/map.c			\
 		src/clock.c			\
-		src/process_function.c		\
-		src/process_function2.c		\
-		src/process_function3.c		\
+		src/process_function_1.c	\
+		src/process_function_2.c	\
+		src/process_function_3.c	\
+		src/msgout_cmd_1.c		\
+		src/msgout_cmd_2.c		\
+		src/msgout_cmd_3.c		\
 		src/string_manager.c		\
 		src/network.c			\
 		src/my_send.c			\
 		src/my_receive.c		\
 		src/handle_error.c		\
 		src/protocol.c			\
-		src/netManager.c		\
+		src/iter.c			\
 		src/fill_map.c
 
 OBJ	=	$(SRC:.c=.o)

@@ -15,7 +15,7 @@ t_bool		look_process_function(t_player this, char *data)
 {
   (void)data;
   list_push_back_new(this->cm.out, "I look at this !\n", strlen("I look at this !\n") + 1);
-
+  
   return (TRUE);
 }
 

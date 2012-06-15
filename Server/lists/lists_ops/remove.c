@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Wed Apr 18 11:27:56 2012 pierre martin
-** Last update Tue Jun 12 14:52:13 2012 pierre martin
+** Last update Fri Jun 15 14:34:12 2012 pierre martin
 */
 
 #include	"iter.h"
@@ -47,15 +47,22 @@ void		list_pop_front(t_list *this)
     }
 }
 
-static t_iter	*extract(t_iter *it)
+t_iter	*list_extract(t_list *this, t_iter *it)
 {
-  t_iter	*e;
-
-  e = it->next;
-  it->next = e->next;
-  if (e->next)
-    e->next->prev = it;
-  return (e);
+  if (it)
+    {
+      if (it == this->head)
+	this->head = it->next;
+      if (it == this->tail)
+	this->tail = it->prev;
+      if (it->prev)
+	it->prev->next = it->next;
+      if (it->next)
+	it->next->prev = it->prev;
+      it->next = NULL;
+      it->prev = NULL;
+    }
+  return (it);
 }
 
 void		list_remove(t_list *this, void *param)
@@ -70,7 +77,7 @@ void		list_remove(t_list *this, void *param)
       while (it && it->next)
 	{
 	  if (it->next->data == param)
-	    delete_iter(extract(it), this->dtor);
+	    delete_iter(list_extract(this, it->next), this->dtor);
 	  else if (it)
 	    it = it->next;
 	}
@@ -89,7 +96,7 @@ void		list_remove_if(t_list *this, t_predicate pred)
       while (it && it->next)
 	{
 	  if (pred(it->next->data, it->next->len))
-	    delete_iter(extract(it), this->dtor);
+	    delete_iter(list_extract(this, it->next), this->dtor);
 	  else if (it)
 	    it = it->next;
 	}

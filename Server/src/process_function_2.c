@@ -9,6 +9,7 @@
 
 #include <string.h>
 #include "process_function.h"
+#include "msgout_cmd.h"
 
 t_bool		broadcast_process_function(t_player this, char *data)
 {

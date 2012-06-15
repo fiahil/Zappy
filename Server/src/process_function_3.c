@@ -3,12 +3,13 @@
  * 06.06.2012
  */
 
-#define _GNU_SOURCE 
+#define _GNU_SOURCE
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "process_function.h"
+#include "msgout_cmd.h"
 #include "map.h"
 #include "my_itoa.h"
 

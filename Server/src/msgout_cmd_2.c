@@ -19,7 +19,7 @@ void		msgout_inventaire(t_list *out, t_u_inventory inv)
 	   "mendiane %d,phiras %d,thystame %d\n", inv.resources[FOOD],
 	   inv.resources[LINEMATE], inv.resources[DERAUMERE],
 	   inv.resources[SIBUR], inv.resources[MENDIANE],
-	   inv.resources[PHIRAS], inv.resources[THYSTAME])
+	   inv.resources[PHIRAS], inv.resources[THYSTAME]);
   list_push_back_new(out, str, strlen(str));
   free(str);
 }

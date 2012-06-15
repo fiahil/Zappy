@@ -376,7 +376,7 @@ char		*get_look(t_player this, t_map map)
   nbcases = calc_nbcases(this->lvl);
   printf("{");
   i = 0;
-  while (i < nbcases)
+  while (i <= nbcases)
     {
       cur = map->map[g_vtab[this->dir][i].y][g_vtab[this->dir][i].x]; // map[y][x] ??
       if (cur->players && cur->players->size)

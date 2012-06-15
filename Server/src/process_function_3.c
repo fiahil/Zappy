@@ -18,7 +18,7 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
   t_u_pos	prec;
 
   prec.x = this->pos.x;
-  prec.y = this->pos.y;\
+  prec.y = this->pos.y;
   map = get_map(NULL);
   this->pos.x += coef_x;
   this->pos.y += coef_y;
@@ -47,15 +47,13 @@ t_bool  move_process_function(t_player this, char *data)
   else
     do_move_process(this, -1, 0);
 
-  char *str;
+  /* char *str; */
+  /* str = NULL; */
+  /* asprintf(&str, "I move in %d : %d !\n", this->pos.x, this->pos.y); // TODO */
+  /* list_push_back_new(this->cm.out, str, strlen(str) + 1); */
+  /* free(str); // TODO */
 
-  str = NULL;
-  asprintf(&str, "I move in %d : %d !\n", this->pos.x, this->pos.y); // TODO
-
-  list_push_back_new(this->cm.out, str, strlen(str) + 1);
-
-  free(str); // TODO
-
+  msgout_avance(this->cm.out);
   return (TRUE);
 }
 
@@ -67,6 +65,7 @@ t_bool  right_process_function(t_player this, char *data)
   else
     this->dir += 1;
   list_push_back_new(this->cm.out, "I turn right !\n", strlen("I turn right !\n") + 1);
+  msgout_droite(this->cm.out);
   return (TRUE);
 }
 
@@ -78,6 +77,7 @@ t_bool  left_process_function(t_player this, char *data)
   else
     this->dir -= 1;
   list_push_back_new(this->cm.out, "I turn left !\n", strlen("I turn left !\n") + 1);
+  msgout_gauche(this->cm.out);
   return (TRUE);
 }
 

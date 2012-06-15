@@ -22,7 +22,7 @@ t_bool		inventory_process_function(t_player this, char *data)
 {
   (void)data;
   list_push_back_new(this->cm.out, "I check my inventory !\n", strlen("I check my inventory !\n") + 1);
-
+  msgout_inventaire(this->cm.out, this->inv);
   return (TRUE);
 }
 

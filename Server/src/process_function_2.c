@@ -14,7 +14,7 @@ t_bool		broadcast_process_function(t_player this, char *data)
 {
   (void)data;
   list_push_back_new(this->cm.out, "I launch a broadcast !\n", strlen("I launch a broadcast !\n") + 1);
-
+  msgout_broadcast(this->cm.out);
   return (TRUE);
 }
 
@@ -30,7 +30,7 @@ t_bool		fork_process_function(t_player this, char *data)
 {
   (void)data;
   list_push_back_new(this->cm.out, "I fork !\n", strlen("I fork !\n") + 1);
-
+  msgout_fork(this->cm.out);
   return (TRUE);
 }
 

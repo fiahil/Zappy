@@ -12,7 +12,7 @@ SRC	=	src/main.c			\
 		src/get_opt_1.c			\
 		src/get_opt_2.c			\
 		src/usage.c			\
-		src/epoll_manager.c		\
+		src/select_manager.c		\
 		src/max_fd.c			\
 		src/server_routine.c		\
 		src/cmd_parse.c			\
@@ -31,7 +31,7 @@ SRC	=	src/main.c			\
 		src/my_receive.c		\
 		src/handle_error.c		\
 		src/protocol.c			\
-		src/netManager.c		\
+		src/iter.c			\
 		src/fill_map.c
 
 OBJ	=	$(SRC:.c=.o)

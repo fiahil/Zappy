@@ -59,6 +59,7 @@ void	get_time_per_function(t_timeval time, procFunc f, double t)
   int	i;
 
   i = 0;
+  get_current_time(time);
   while (g_time_attrib[i].func)
     {
       if (g_time_attrib[i].func == f)

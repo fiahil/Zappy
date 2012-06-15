@@ -8,11 +8,13 @@
 
 void		msgout_voir(t_list *out)
 {
+  (void)out;
   // TODO
 }
 
 void		msgout_inventaire(t_list *out, t_u_inventory inv)
 {
+  (void)out;
   char		*str;
 
   asprintf(&str, "nourriture %d,linemate %d,deraumere %d,sibur %d," \
@@ -26,6 +28,7 @@ void		msgout_inventaire(t_list *out, t_u_inventory inv)
 
 void		msgout_prend_objet(t_list *out, t_bool is_done)
 {
+  (void)out;
   if (is_done)
     list_push_back_new(out, "ok\n", 4);
   else
@@ -34,6 +37,7 @@ void		msgout_prend_objet(t_list *out, t_bool is_done)
 
 void		msgout_pose_objet(t_list *out, t_bool is_done)
 {
+  (void)out;
   if (is_done)
     list_push_back_new(out, "ok\n", 4);
   else
@@ -42,6 +46,7 @@ void		msgout_pose_objet(t_list *out, t_bool is_done)
 
 void		msgout_expulse(t_list *out, t_bool is_done)
 {
+  (void)out;
   if (is_done)
     list_push_back_new(out, "ok\n", 4);
   else

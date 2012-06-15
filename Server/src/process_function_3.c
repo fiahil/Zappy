@@ -16,10 +16,11 @@
 static void	do_move_process(t_player this, int coef_x, int coef_y)
 {
   t_map		map;
-  t_u_pos	prec;
+  /* t_u_pos	prec; */
+  /* t_iter	*tmp; */
 
-  prec.x = this->pos.x;
-  prec.y = this->pos.y;
+  /* prec.x = this->pos.x; */
+  /* prec.y = this->pos.y; */
   map = get_map(NULL);
   this->pos.x += coef_x;
   this->pos.y += coef_y;
@@ -31,6 +32,8 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
     this->pos.y = 0;
   if (this->pos.y < 0)
     this->pos.y = map->size_y - 1;
+  //  get_map(NULL)->map[prec.y][prec.x]->players);
+  //  get_map(NULL)->map[this->pos.y][this->pos.x]->players;
   // TODO : suppr et recup du plyer a la pos prec
   // push dasn la list a la new pos
   // map->map

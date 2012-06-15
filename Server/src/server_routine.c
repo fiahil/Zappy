@@ -4,20 +4,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "cmd_parse.h"
 #include "string_manager.h"
 #include "network.h"
 #include "def.h"
+#include "clock.h"
 #include "server_routine.h"
 
 void		server_routine_input(t_data_serv ds, t_player this)
 {
-  procFunc	ret;
-  int		off;
-  char		*buf;
+  char			*buf;
 
-  ret = NULL;
-  off = -1;
   (void)ds; // TODO tmp
   if ((buf = my_receive(this->cm.sock.fd)) == (char*)(-1))
     {
@@ -28,24 +24,6 @@ void		server_routine_input(t_data_serv ds, t_player this)
       return ;
     }
   get_commands(this, buf);
-  // appel à welcome_player(t_data_serv server, t_player player, char *data) (data -> nom de l'equipe)
-  while (!this->cm.in->empty)
-    {
-      printf("Processing \"%s\" ... \n", (char*)(list_front(this->cm.in))); // TODO
-      fflush(0);
-      // push de la command avec son timer dans le list action
-      if (!(ret = cmd_parse(list_front(this->cm.in), &off)))
-	{
-	  puts("server_routine -> cmd_parse : Command Not Found."); // TODO
-	  fflush(0);
-	}
-      else if (ret && !ret(this, (off != -1 ? list_front(this->cm.in) + off : NULL)))
-     	{
-      	  puts("server_routine : Command Failed."); // TODO
-      	  fflush(0);
-    	}
-      list_pop_front(this->cm.in);
-    }
   free(buf);
 }
 

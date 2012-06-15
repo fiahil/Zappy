@@ -12,22 +12,19 @@
 #include "def.h"
 #include "get_arg.h"
 #include "network.h"
-#include "netManager.h"
-#include "epoll_manager.h"
+#include "iter.h"
+#include "select_manager.h"
 #include "handle_error.h"
 #include "clock.h"
 
 int		run(t_data_serv data_serv)
 {
-  t_u_epoll_manager	epoll;
+  t_u_select_manager	sm;
 
-  if (init_epoll(&epoll) < 0)
-    return (handleError("Aborting", "", -1));
-  if (add_monitor(&epoll, data_serv->sock.fd, NULL) < 0)
-    return (handleError("Aborting", "", epoll.efd));
-  epoll.ev = calloc(64, sizeof(epoll.event));
+  memset(&sm, '\0', sizeof(t_u_select_manager));
+  select_add(&sm, data_serv->sock.fd);
   while (666)
-    iter_client(&epoll, data_serv);
+    iter_client(&sm, data_serv);
   return (0);
 }
 
@@ -35,6 +32,13 @@ void		print_list(void *data, size_t size)
 {
   (void)size;
   printf("name : %s\n", (char*)data);
+}
+
+int	cmp_action(void *e1, size_t s1, void *e2, size_t s2)
+{
+  (void)s1;
+  (void)s2;
+  return (cmp_time(&((*((t_player_action*)e1))->time), &((*((t_player_action*)e2))->time)));
 }
 
 int		main(int ac, char **av)
@@ -54,8 +58,9 @@ int		main(int ac, char **av)
   printf("nb clients per team : %d\n", args.nb_per_team);
   printf("execution time : %d\n", args.exec_time);
   data_serv.player = new_list(NULL, NULL, NULL);
-  data_serv.action = new_list(NULL, NULL, NULL);
+  data_serv.action = new_pqueue(&cmp_action);
   data_serv.send_q = new_list(NULL, NULL, NULL);
+  data_serv.t = args.exec_time;
   set_connection(&data_serv, args.port);
   init_map(args.width, args.height, (args.names_of_teams->size * args.nb_per_team));
   //  unitest_clock(); // TODO unitest

@@ -66,7 +66,7 @@ void	display(t_map map)
   y = -1;
   x = -1;
   while (++x < map->size_x)
-    printf("----");
+    printf("------");
   printf("-");
   printf("\n");
   while (++y < map->size_y)
@@ -75,13 +75,13 @@ void	display(t_map map)
       printf("|");
       while (++x < map->size_x)
 	if (count_res(map->map[y][x]->inv.resources))
-	  printf(" \033[1;32m%d\033[0m |", count_res(map->map[y][x]->inv.resources));
+	  printf(" \033[1;32m%.3d\033[0m |", count_res(map->map[y][x]->inv.resources));
 	else
-	  printf(" \033[1;31m%d\033[0m |", count_res(map->map[y][x]->inv.resources));
+	  printf(" \033[1;31m%.3d\033[0m |", count_res(map->map[y][x]->inv.resources));
       printf("\n");
-      printf("---");
+      printf("-----");
       while (--x)
-	printf("----");
+	printf("------");
       printf("--");
       printf("\n");
     }

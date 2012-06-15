@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Thu Apr 19 00:25:46 2012 pierre martin
-** Last update Tue Jun 12 16:40:50 2012 pierre martin
+** Last update Fri Jun 15 11:12:54 2012 pierre martin
 */
 
 #include	"iter.h"
@@ -45,7 +45,7 @@ t_iter		*list_find_if(t_list *this, t_predicate p)
   return (NULL);
 }
 
-void		list_for_each(t_list *this, t_func f)
+t_iter		*list_find_cmp(t_list *this, t_cmp p, void *ref, size_t reflen)
 {
   t_iter	*it;
 
@@ -54,10 +54,12 @@ void		list_for_each(t_list *this, t_func f)
       it = this->head;
       while (it)
 	{
-	  f(it->data, it->len);
+	  if (!p(it->data, it->len, ref, reflen))
+	    return (it);
 	  it = it->next;
 	}
     }
+  return (NULL);
 }
 
 size_t		list_count(t_list *this, void *value)

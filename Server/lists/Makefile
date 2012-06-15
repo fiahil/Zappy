@@ -5,7 +5,7 @@
 ## Login   <mart_i@epitech.net>
 ## 
 ## Started on  Wed Apr 18 00:12:20 2012 pierre martin
-## Last update Tue Jun 12 16:52:51 2012 pierre martin
+## Last update Fri Jun 15 11:15:39 2012 pierre martin
 ##
 
 NAME	=	libclists.a
@@ -23,7 +23,8 @@ SRC_LIST=	lists_ops/alloc.c	\
 		lists_ops/getor.c	\
 		lists_algo/features.c	\
 		lists_algo/sort.c	\
-		lists_algo/partI.c
+		lists_algo/partI.c	\
+		lists_algo/partII.c
 
 SRC_WRAP=	wrapper/pqueue.c	\
 		wrapper/pqueue_tools.c

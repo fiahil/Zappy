@@ -33,6 +33,7 @@ SRC	=	src/main.c			\
 		src/protocol.c			\
 		src/vision_tab.c		\
 		src/iter.c			\
+		src/iter_function.c		\
 		src/fill_map.c
 
 OBJ	=	$(SRC:.c=.o)

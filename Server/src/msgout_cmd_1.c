@@ -1,7 +1,3 @@
-
-#include	<stdio.h>
-#include	<stdlib.h>
-#include	<string.h>
 #include	"msgout_cmd.h"
 
 void		msgout_broadcast(t_list *out)

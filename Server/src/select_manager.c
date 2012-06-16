@@ -3,11 +3,12 @@
  * 15.06.2012
  */
 
-#include	<stdio.h>
 #include	<errno.h>
-#include	<string.h>
+#include	<stdio.h>
 #include	<stdlib.h>
+#include	<string.h>
 #include	<sys/time.h>
+
 #include	"def.h"
 #include	"handle_error.h"
 #include	"select_manager.h"
@@ -28,20 +29,6 @@ static void	select_cmp(void *ptr, size_t s)
     g_sm->max_fd = (*(t_player*)ptr)->cm.sock.fd;
 }
 
-static void     select_init(t_data_serv ds, t_select_manager sm)
-{
-  g_sm = sm;
-  FD_ZERO(&sm->rds);
-  FD_SET(ds->sock.fd, &sm->rds);
-  list_for_each(ds->player, &select_set);
-}
-
-void		select_add(t_select_manager sm, int fd)
-{
-  if (fd > sm->max_fd)
-    sm->max_fd = fd;
-}
-
 void		select_del(t_data_serv ds, t_select_manager sm, int fd)
 {
   g_sm = sm;
@@ -49,14 +36,12 @@ void		select_del(t_data_serv ds, t_select_manager sm, int fd)
     list_for_each(ds->player, &select_cmp);
 }
 
-t_bool		select_isset(t_select_manager sm, int fd)
-{
-  return (FD_ISSET(fd, &sm->rds) ? TRUE : FALSE);
-}
-
 void		select_manager(t_data_serv ds, t_select_manager sm)
 {
-  select_init(ds, sm);
+  g_sm = sm;
+  FD_ZERO(&sm->rds);
+  FD_SET(ds->sock.fd, &sm->rds);
+  list_for_each(ds->player, &select_set);
   if (select(sm->max_fd + 1, &sm->rds, NULL, NULL, &sm->timeout) < 0)
     handleError("select", strerror(errno), -1);
 }

@@ -1,6 +1,7 @@
 
 #include	<stdio.h>
 #include	<stdlib.h>
+
 #include	"def.h"
 
 static const	char *g_resources[8] =

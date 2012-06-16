@@ -11,11 +11,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
-#include "process_function.h"
+
 #include "map.h"
 #include "msgout_cmd.h"
+#include "process_function.h"
 
 static char	*g_resources[] =
   {
@@ -35,7 +35,8 @@ t_bool		look_process_function(t_player this, char *data)
   t_map		map;
 
   (void)data;
-  list_push_back_new(this->cm.out, "I look at this !\n", strlen("I look at this !\n") + 1);
+  list_push_back_new(this->cm.out, "I look at this !\n",
+		     strlen("I look at this !\n") + 1);
   map = get_map(NULL);
   look = get_look(this, map);
   msgout_voir(this->cm.out, look);
@@ -46,7 +47,8 @@ t_bool		look_process_function(t_player this, char *data)
 t_bool		inventory_process_function(t_player this, char *data)
 {
   (void)data;
-  list_push_back_new(this->cm.out, "I check my inventory !\n", strlen("I check my inventory !\n") + 1);
+  list_push_back_new(this->cm.out, "I check my inventory !\n",
+		     strlen("I check my inventory !\n") + 1);
   msgout_inventaire(this->cm.out, this->inv);
   return (TRUE);
 }
@@ -62,7 +64,8 @@ t_bool		take_process_function(t_player this, char *data)
   is_done = FALSE;
   while (g_resources[++i] && strcmp(data, g_resources[i]));
   //system("clear"); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
-  if (g_resources[i] && (map = get_map(NULL))->map[this->pos.y][this->pos.x]->inv.resources[i])
+  if (g_resources[i] &&
+      (map = get_map(NULL))->map[this->pos.y][this->pos.x]->inv.resources[i])
     {
       --map->map[this->pos.y][this->pos.x]->inv.resources[i];
       ++this->inv.resources[i];
@@ -106,7 +109,8 @@ t_bool		drop_process_function(t_player this, char *data)
 t_bool		expulse_process_function(t_player this, char *data)
 {
   (void)data;
-  list_push_back_new(this->cm.out, "I expulse !\n", strlen("I expulse !\n") + 1);
+  list_push_back_new(this->cm.out, "I expulse !\n",
+		     strlen("I expulse !\n") + 1);
 
   return (TRUE);
 }

@@ -28,7 +28,7 @@ int		run(t_data_serv data_serv)
   return (0);
 }
 
-void		print_list(void *data, size_t size)
+void		print_list(void *data, size_t size) // TODO affichage tmp
 {
   (void)size;
   printf("name : %s\n", (char*)data);
@@ -38,7 +38,8 @@ int	cmp_action(void *e1, size_t s1, void *e2, size_t s2)
 {
   (void)s1;
   (void)s2;
-  return (cmp_time(&((*((t_player_action*)e1))->time), &((*((t_player_action*)e2))->time)));
+  return (cmp_time(&((*((t_player_action*)e1))->time),
+		   &((*((t_player_action*)e2))->time)));
 }
 
 int		main(int ac, char **av)
@@ -51,18 +52,20 @@ int		main(int ac, char **av)
   srandom(now);
   if (get_arg(ac, av, &args) == -1)
     return (EXIT_FAILURE);
-  printf("port : %d\n", args.port);
-  printf("width : %d\n", args.width);
-  printf("height : %d\n", args.height);
-  list_for_each(args.names_of_teams, &print_list);
-  printf("nb clients per team : %d\n", args.nb_per_team);
-  printf("execution time : %d\n", args.exec_time);
+  printf("port : %d\n", args.port); // TODO affichage tmp
+  printf("width : %d\n", args.width); // TODO affichage tmp
+  printf("height : %d\n", args.height); // TODO affichage tmp
+  list_for_each(args.names_of_teams, &print_list); // TODO affichage tmp
+  printf("nb clients per team : %d\n", args.nb_per_team); // TODO affichage tmp
+  printf("execution time : %d\n", args.exec_time); // TODO affichage tmp
   data_serv.player = new_list(NULL, NULL, NULL);
   data_serv.action = new_pqueue(&cmp_action);
   data_serv.send_q = new_list(NULL, NULL, NULL);
   data_serv.t = args.exec_time;
   set_connection(&data_serv, args.port);
-  init_map(args.width, args.height, (args.names_of_teams->size * args.nb_per_team));
+  init_map(args.width,
+	   args.height,
+	   (args.names_of_teams->size * args.nb_per_team));
   //  unitest_clock(); // TODO unitest
   if (run(&data_serv) < 0)
     return (EXIT_FAILURE);

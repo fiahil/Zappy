@@ -56,7 +56,7 @@ char	*my_itoa(size_t nb)
   else
     size = itoa_size(nb, 0) + 1;
   if (!(ret = malloc(sizeof(*ret) * size)))
-      exit (1); // TODO
+      exit (1); // TODO retour d'erreur
   ret = memset(ret, 0, size);
   if (nb == 0)
     {

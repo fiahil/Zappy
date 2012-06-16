@@ -8,11 +8,12 @@
 */
 
 #include <errno.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include "handle_error.h"
+
 #include "clock.h"
+#include "handle_error.h"
 #include "process_function.h"
 
 static const t_u_time_attrib g_time_attrib[] =
@@ -54,7 +55,7 @@ char	cmp_time(t_timeval fst, t_timeval scd)
   return (0);
 }
 
-void	get_time_per_function(t_timeval time, procFunc f, double t)
+void	get_time_per_function(t_timeval time, t_proc_func f, double t)
 {
   int	i;
 
@@ -77,8 +78,7 @@ void	add_time(t_timeval time, double maj, double t)
   time->tv_usec += (int)(maj) % 1000000;
 }
 
-
-void	unitest_clock()
+void	unitest_clock() // TODO tmp
 {
   t_u_timeval time;
   t_u_timeval time2;

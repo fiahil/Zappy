@@ -1,7 +1,4 @@
 
-#include	<stdio.h>
-#include	<stdlib.h>
-#include	<string.h>
 #include	"msgout_cmd.h"
 
 void		msgout_avance(t_list *out)

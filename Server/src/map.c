@@ -5,7 +5,7 @@
 ** Login   <busina_b@epitech.net>
 ** 
 ** Started on Tue Jun 12 11:00:09 2012 benjamin businaro
-** Last update Fri Jun 15 14:18:02 2012 benjamin businaro
+** Last update Sat Jun 16 16:34:14 2012 benjamin businaro
 */
 
 #include <time.h>
@@ -33,14 +33,37 @@ static void	malloc_error()
   exit(1);
 }
 
-void	init_map(int szx, int szy, int nb_play)
+static void	alloc_map(t_map this, void *pool)
 {
-  t_map this;
-  void	*pool;
   int	y;
   int	x;
 
   y = 0;
+  while (y < this->size_y)
+    {
+      x = 0;
+      if (!(this->map[y] = malloc(sizeof(*(this->map)) * this->size_x)))
+	malloc_error();
+      while (x < this->size_x)
+	{
+	  this->map[y][x] = pool;
+	  this->map[y][x]->inv.status = FALSE;
+	  memset(this->map[y][x]->inv.resources,
+		 0,
+		 sizeof(this->map[y][x]->inv.resources));
+	  this->map[y][x]->players = new_list(NULL, NULL, NULL);
+	  pool += sizeof(t_u_square);
+	  ++x;
+	}
+      ++y;
+    }
+}
+
+void	init_map(int szx, int szy, int nb_play)
+{
+  t_map this;
+  void	*pool;
+
   if (!(this = malloc(sizeof(*this))))
     malloc_error();
   this->size_x = szx;
@@ -49,22 +72,7 @@ void	init_map(int szx, int szy, int nb_play)
     malloc_error();
   if (!(this->map = malloc(sizeof(**(this->map)) * szy)))
     malloc_error();
-  while (y < szy)
-    {
-      x = 0;
-      if (!(this->map[y] = malloc(sizeof(*(this->map)) * szx)))
-	malloc_error();
-      while (x < szx)
-	{
-	  this->map[y][x] = pool;
-	  this->map[y][x]->inv.status = FALSE;
-	  memset(this->map[y][x]->inv.resources, 0, sizeof(this->map[y][x]->inv.resources));
-	  init_list(&(this->map[y][x]->players), NULL, NULL, NULL);
-	  pool += sizeof(t_u_square);
-	  ++x;
-	}
-      ++y;
-    }
+  alloc_map(this, pool);
   fill_map(this, (this->size_x * this->size_y), nb_play);
   get_map(this);
 }

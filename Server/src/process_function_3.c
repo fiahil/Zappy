@@ -34,13 +34,15 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
     this->pos.y = map->size_y - 1;
   //  get_map(NULL)->map[prec.y][prec.x]->players);
   //  get_map(NULL)->map[this->pos.y][this->pos.x]->players;
-  // TODO : suppr et recup du plyer a la pos prec
-  // push dasn la list a la new pos
+  // TODO : suppr et recup du player a la pos prec
+  // push dans la list a la new pos
   // map->map
 }
 
 t_bool  move_process_function(t_player this, char *data)
 {
+  char *str;
+
   (void)data;
   if (this->dir == NORTH)
     do_move_process(this, 0, -1);
@@ -50,12 +52,10 @@ t_bool  move_process_function(t_player this, char *data)
     do_move_process(this, 0, 1);
   else
     do_move_process(this, -1, 0);
-
-  /* char *str; */
-  /* str = NULL; */
-  /* asprintf(&str, "I move in %d : %d !\n", this->pos.x, this->pos.y); // TODO */
-  /* list_push_back_new(this->cm.out, str, strlen(str) + 1); */
-  /* free(str); // TODO */
+  str = NULL;
+  asprintf(&str, "I move in %d : %d !\n", this->pos.x, this->pos.y); // TODO:TMP
+  list_push_back_new(this->cm.out, str, strlen(str) + 1);
+  free(str); // TODO:TMP
 
   msgout_avance(this->cm.out);
   return (TRUE);
@@ -68,7 +68,8 @@ t_bool  right_process_function(t_player this, char *data)
     this->dir = NORTH;
   else
     this->dir += 1;
-  list_push_back_new(this->cm.out, "I turn right !\n", strlen("I turn right !\n") + 1);
+  list_push_back_new(this->cm.out, "I turn right !\n",
+		     strlen("I turn right !\n") + 1);
   msgout_droite(this->cm.out);
   return (TRUE);
 }
@@ -80,7 +81,8 @@ t_bool  left_process_function(t_player this, char *data)
     this->dir = WEST;
   else
     this->dir -= 1;
-  list_push_back_new(this->cm.out, "I turn left !\n", strlen("I turn left !\n") + 1);
+  list_push_back_new(this->cm.out, "I turn left !\n",
+		     strlen("I turn left !\n") + 1);
   msgout_gauche(this->cm.out);
   return (TRUE);
 }

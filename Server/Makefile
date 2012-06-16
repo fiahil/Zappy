@@ -13,6 +13,7 @@ SRC	=	src/main.c			\
 		src/get_opt_2.c			\
 		src/usage.c			\
 		src/select_manager.c		\
+		src/select_tools.c		\
 		src/max_fd.c			\
 		src/server_routine.c		\
 		src/cmd_parse.c			\
@@ -33,6 +34,7 @@ SRC	=	src/main.c			\
 		src/protocol.c			\
 		src/vision_tab.c		\
 		src/iter.c			\
+		src/iter_function.c		\
 		src/fill_map.c
 
 OBJ	=	$(SRC:.c=.o)

@@ -5,8 +5,9 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "process_function.h"
+
 #include "cmd_parse.h"
+#include "process_function.h"
 
 static const t_u_parse_elem	g_cmd_tab[] =
   {
@@ -51,7 +52,7 @@ t_bool		match_ressource(char const *str)
   return (FALSE);
 }
 
-procFunc	cmd_parse(char const *input, int *off)
+t_proc_func	cmd_parse(char const *input, int *off)
 {
   int		i;
 
@@ -61,7 +62,7 @@ procFunc	cmd_parse(char const *input, int *off)
     if (!strncmp(input, g_cmd_tab[i].cmd, g_cmd_tab[i].size))
     {
       *off = g_cmd_tab[i].size;
-      if ((i == 5 && !match_ressource(input + g_cmd_tab[i].size)) ||	
+      if ((i == 5 && !match_ressource(input + g_cmd_tab[i].size)) ||
 	  (i == 6 && !match_ressource(input + g_cmd_tab[i].size)) ||
 	  (i != 8 && i != 5 && i != 6 && input[g_cmd_tab[i].size] != '\0'))
 	return (NULL);

@@ -7,10 +7,11 @@
 ** Started on Wed Jun  6 11:42:13 2012 benjamin businaro
 */
 
-#include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "def.h"
 
 static const char *g_separator [] =
@@ -39,7 +40,8 @@ static void	treatment_get_cmd(t_player this, t_bool *clear, char **buf)
       tmp += (strlen(g_separator[this->cm.mode]));
       if (strlen((*buf)) < (BUFFER_SIZE / 2))
 	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
-      list_push_back_new(this->cm.in, this->cm.stock, strlen(this->cm.stock) + 1);
+      list_push_back_new(this->cm.in, this->cm.stock,
+			 strlen(this->cm.stock) + 1);
       memset(this->cm.stock, '\0', BUFFER_SIZE);
       *buf = tmp;
     }

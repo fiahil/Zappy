@@ -51,7 +51,7 @@ t_bool		match_ressource(char const *str)
   return (FALSE);
 }
 
-procFunc	cmd_parse(char const *input, int *off)
+t_proc_func	cmd_parse(char const *input, int *off)
 {
   int		i;
 

@@ -15,7 +15,7 @@
 void		server_routine_input(t_data_serv ds, t_player this)
 {
   char			*buf;
-  procFunc		ret;
+  t_proc_func		ret;
   int			off;
   t_player_action	act;
 

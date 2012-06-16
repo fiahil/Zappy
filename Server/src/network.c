@@ -37,7 +37,7 @@ int	set_connection(t_data_serv data_serv, int port)
   data_serv->sock.addr.sin_family = AF_INET;
   data_serv->sock.addr.sin_port = htons(port);
   data_serv->sock.addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  if (bind(data_serv->sock.fd, (t_sockAddr)&(data_serv->sock.addr), sizeof(t_u_sockAddrIn)) < 0)
+  if (bind(data_serv->sock.fd, (t_sock_addr)&(data_serv->sock.addr), sizeof(t_u_sock_addr_in)) < 0)
     return (handleError("bind", strerror(errno), data_serv->sock.fd));
   fprintf(stdout, "%24sSetting listening state.\n", " ");
   if (listen(data_serv->sock.fd, 128) < 0)
@@ -50,7 +50,7 @@ int	accept_connection(t_select_manager sm, t_data_serv data_serv, t_player p)
   socklen_t	len;
 
   len = sizeof(p->cm.sock.addr);
-  if ((p->cm.sock.fd = accept(data_serv->sock.fd, (t_sockAddr)&(p->cm.sock.addr), &len)) < 0)
+  if ((p->cm.sock.fd = accept(data_serv->sock.fd, (t_sock_addr)&(p->cm.sock.addr), &len)) < 0)
     return (handleError("accept", strerror(errno), -1));
   select_add(sm, p->cm.sock.fd);
   p->cm.online = TRUE;

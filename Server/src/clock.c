@@ -54,7 +54,7 @@ char	cmp_time(t_timeval fst, t_timeval scd)
   return (0);
 }
 
-void	get_time_per_function(t_timeval time, procFunc f, double t)
+void	get_time_per_function(t_timeval time, t_proc_func f, double t)
 {
   int	i;
 

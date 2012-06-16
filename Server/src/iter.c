@@ -46,7 +46,7 @@ static void	iter_action(void *ptr, size_t s)
   (void)s;
   (void)ptr;
   t_u_timeval current;
-  procFunc		ret;
+  t_proc_func		ret;
   int			off;
   t_player_action	act;
 

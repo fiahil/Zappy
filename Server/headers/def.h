@@ -16,23 +16,23 @@
  * System typedef
  */
 
-typedef struct sockaddr*	t_sockAddr;
-typedef struct sockaddr		t_u_sockAddr;
+typedef struct sockaddr*	t_sock_addr;
+typedef struct sockaddr		t_u_sock_addr;
 
-typedef struct sockaddr_in*	t_sockAddrIn;
-typedef struct sockaddr_in	t_u_sockAddrIn;
+typedef struct sockaddr_in*	t_sock_addr_in;
+typedef struct sockaddr_in	t_u_sock_addr_in;
 
 /*
  * Struct typedef
  */
 
 typedef struct s_select_manager* t_select_manager;
-typedef struct s_sockLayer*	t_sockLayer;
-typedef struct s_clientManager*	t_clientManager;
+typedef struct s_sock_layer*	t_sock_layer;
+typedef struct s_client_manager*	t_client_manager;
 
 typedef struct s_select_manager	t_u_select_manager;
-typedef struct s_sockLayer	t_u_sockLayer;
-typedef struct s_clientManager	t_u_clientManager;
+typedef struct s_sock_layer	t_u_sock_layer;
+typedef struct s_client_manager	t_u_client_manager;
 
 typedef struct s_parse_elem	t_u_parse_elem;
 
@@ -104,7 +104,7 @@ typedef enum
  * Ptrfunc
  */
 
-typedef t_bool	(*procFunc)(t_player, char *);
+typedef t_bool	(*t_proc_func)(t_player, char *);
 
 /*
  * Struct definition
@@ -137,7 +137,7 @@ struct s_pos
 
 struct s_player_action
 {
-  procFunc	action;
+  t_proc_func	action;
   t_u_timeval	time;
   t_player	player;
   t_bool	done;
@@ -147,51 +147,51 @@ struct s_parse_elem
 {
   int		size;
   char const	*cmd;
-  procFunc	func;
+  t_proc_func	func;
 };
 
 struct s_time_attrib
 {
-  procFunc	func;
+  t_proc_func	func;
   double	timer;
 };
 
-struct s_sockLayer
+struct s_sock_layer
 {
-  int		fd;
-  struct sockaddr_in	addr;
+  int			fd;
+  t_u_sock_addr_in	addr;
 };
 
-struct s_clientManager
+struct s_client_manager
 {
-  char		stock[BUFFER_SIZE];
-  t_u_sockLayer	sock;
-  t_list	*in;
-  t_list	*out;
-  t_splitMode	mode;
-  t_bool	online;
-  t_bool	is_processing;
+  char			stock[BUFFER_SIZE];
+  t_u_sock_layer	sock;
+  t_list		*in;
+  t_list		*out;
+  t_splitMode		mode;
+  t_bool		online;
+  t_bool		is_processing;
 };
 
 struct s_player
 {
-  int		lvl;
-  char		*team;
-  t_u_pos	pos;
-  t_dir		dir;
-  t_u_inventory	inv;
-  t_bool	dead;
-  t_bool	welcome;
-  t_u_clientManager	cm;
+  int			lvl;
+  char			*team;
+  t_u_pos		pos;
+  t_dir			dir;
+  t_u_inventory		inv;
+  t_bool		dead;
+  t_bool		welcome;
+  t_u_client_manager	cm;
 };
 
 struct s_data_serv
 {
-  t_u_sockLayer	sock;
-  int		t;
-  t_list	*player;
-  t_pqueue	*action;
-  t_list	*send_q;
+  t_u_sock_layer	sock;
+  int			t;
+  t_list		*player;
+  t_pqueue		*action;
+  t_list		*send_q;
 };
 
 struct s_select_manager

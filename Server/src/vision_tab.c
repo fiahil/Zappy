@@ -1,6 +1,7 @@
 
 #include	<stdio.h>
 #include	<stdlib.h>
+#include	<string.h>
 #include	"def.h"
 
 static const	char *g_resources[8] =
@@ -366,28 +367,43 @@ static int	calc_nbcases(int lvl)
   return (nbcases - 1);
 }
 
+void		add_to_str(char **dest, const char *src)
+{
+  char		*tmp;
+
+  if (dest && *dest)
+    {
+      if ((*dest = realloc(*dest, strlen(*dest) + strlen(src))) == NULL)
+	return ;
+      tmp = strdup(strcat(*dest, src));
+      free(*dest);
+      *dest = tmp;
+    }
+}
+
 char		*get_look(t_player this, t_map map)
 {
+  char		*look;
   int		i;
   int		j;
   int		nbcases;
   t_square	cur;
 
   nbcases = calc_nbcases(this->lvl);
-  printf("{");
+  look = strdup("{");
   i = 0;
   while (i <= nbcases)
     {
       cur = map->map[g_vtab[this->dir][i].y][g_vtab[this->dir][i].x]; // map[y][x] ??
       if (cur->players && cur->players->size)
-	printf(" joueur");
+	add_to_str(&look, " joueur");
       j = FOOD;
       while (j < LAST)
 	if (cur->inv.resources[j])
-	  printf(" %s", g_resources[j]);
-      printf(",");
+	  add_to_str(&look, g_resources[j]);
+      add_to_str(&look, ",");
       ++i;
     }
-  printf("}\n");
-  return (NULL);
+  add_to_str(&look, "}\n");
+  return (look);
 }

@@ -373,7 +373,7 @@ void		add_to_str(char **dest, const char *src)
 
   if (dest && *dest)
     {
-      if ((*dest = realloc(*dest, strlen(*dest) + strlen(src))) == NULL)
+      if ((*dest = realloc(*dest, strlen(*dest) + strlen(src) + 1)) == NULL)
 	return ;
       tmp = strdup(strcat(*dest, src));
       free(*dest);

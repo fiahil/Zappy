@@ -1,12 +1,3 @@
-/*
-** item.h for c_list in /home/magere_n/work/Assembla/irc-mart_i-magere_n
-** 
-** Made by nicolas magere
-** Login   <magere_n@epitech.net>
-** 
-** Started on  Wed Apr 18 17:13:06 2012 nicolas magere
-** Last update Wed Apr 18 17:13:11 2012 nicolas magere
-*/
 
 #ifndef __ITEM_H__
 #define __ITEM_H__

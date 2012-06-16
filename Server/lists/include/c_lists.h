@@ -1,12 +1,3 @@
-/*
-** c_lists.h for c_list in /home/magere_n/work/projets_tek2/irc/myirc-2015-2014s-magere_n
-** 
-** Made by nicolas magere
-** Login   <magere_n@epitech.net>
-** 
-** Started on  Sun Apr 22 21:55:52 2012 nicolas magere
-** Last update Fri Jun 15 17:14:34 2012 benjamin businaro
-*/
 
 #ifndef __C_LISTS_H__
 #define __C_LISTS_H__

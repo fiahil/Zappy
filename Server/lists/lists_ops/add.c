@@ -1,12 +1,3 @@
-/*
-** add.c for c_lists in /home/mart_i/Work/unix/irc-mart_i-magere_n/c_lists/include/
-** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
-** 
-** Started on Tue Apr 17 23:26:13 2012 pierre martin
-** Last update Tue Jun 12 11:45:36 2012 pierre martin
-*/
 
 #include	"c_lists.h"
 

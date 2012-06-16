@@ -1,12 +1,3 @@
-/*
-** alloc_iter.c for c_lists in /home/mart_i/Work/unix/irc-mart_i-magere_n/c_lists/
-** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
-** 
-** Started on Tue Apr 17 18:03:16 2012 pierre martin
-** Last update Thu Apr 19 09:22:28 2012 pierre martin
-*/
 
 #include	<stdlib.h>
 

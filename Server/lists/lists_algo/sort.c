@@ -1,12 +1,3 @@
-/*
-** sort.c for c_list in /home/mart_i/Work/unix/Zappy/lists/lists_algo/
-** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
-** 
-** Started on Tue Jun 12 14:52:43 2012 pierre martin
-** Last update Tue Jun 12 16:41:36 2012 pierre martin
-*/
 
 #include	"c_lists.h"
 #include	"algorithm.h"
@@ -47,7 +38,8 @@ static void	merge(t_list *l1, t_list *l2, t_cmp cmp)
     list_swap(l1, l2);
   else if (l2->size != 0)
     {
-      if (cmp(l1->head->data, l1->head->len, l2->head->data, l2->head->len) <= 0)
+      if (cmp(l1->head->data, l1->head->len,
+	      l2->head->data, l2->head->len) <= 0)
 	it = get_head(l1);
       else
 	it = get_head(l2);

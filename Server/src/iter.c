@@ -20,6 +20,14 @@
 static t_select_manager		g_sm = 0;
 static t_data_serv		g_ds = 0;
 
+static int	action_cleaner(void *ptr, size_t size)
+{
+  (void)size;
+  if ((*(t_player_action*)ptr)->done == TRUE)
+    return (1);
+  return (0);
+}
+
 static void	iter_rds(void *ptr, size_t s)
 {
   (void)s;
@@ -44,9 +52,11 @@ static void	iter_action(void *ptr, size_t s)
 
   off = -1;
   get_current_time(&current);
+  ret = NULL;
+
   if ((*((t_player_action*)ptr))->player->cm.is_processing
       && !((*((t_player_action*)ptr))->done)
-      && cmp_time(&((*(t_player_action*)ptr)->time), &current) == 1)
+      && cmp_time(&current, &((*(t_player_action*)ptr)->time)) == 1)
     {
       ((*(t_player_action*)ptr)->action)((*(t_player_action*)ptr)->player, ""); // TODO
       (*(t_player_action*)ptr)->done = TRUE;
@@ -58,27 +68,30 @@ static void	iter_action(void *ptr, size_t s)
       printf("Processing \"%s\" ... \n",
 	     (char*)(list_front((*(t_player_action*)ptr)->player->cm.in))); // TODO
       fflush(0);
-      if (!(ret = cmd_parse(list_front((*(t_player_action*)ptr)->player->cm.in), &off)))
-	  msgout_fail((*(t_player_action*)ptr)->player->cm.out);
-      else
-     	{
-	  if (!(act = malloc(sizeof(*act))))
-	    exit(1); // TODO
-	  act->action = ret;
-	  act->done = FALSE;
-	  get_time_per_function(&(act->time), ret, 1); // TODO 1 par t
-	  act->player = ((*(t_player_action*)ptr))->player;
-       	  //pqueue_push(ds->action, &(act), sizeof(&act)); // TODO peu pas push dans la queue
-	  (*(t_player_action*)ptr)->player->cm.is_processing = TRUE;
-    	}
-      list_pop_front((*(t_player_action*)ptr)->player->cm.in);
+      while (!((*(t_player_action*)ptr)->player->cm.in->empty) && !ret)
+	{
+	  if (!(ret = cmd_parse(list_front((*(t_player_action*)ptr)->player->cm.in), &off)))
+	    msgout_fail((*(t_player_action*)ptr)->player->cm.out);
+	  else
+	    {
+	      if (!(act = malloc(sizeof(*act))))
+		exit(1); // TODO
+	      act->action = ret;
+	      act->done = FALSE;
+	      get_time_per_function(&(act->time), ret, g_ds->t);
+	      act->player = ((*(t_player_action*)ptr))->player;
+	      pqueue_push(g_ds->action, &(act), sizeof(&act));
+	      (*(t_player_action*)ptr)->player->cm.is_processing = TRUE;
+	    }
+	  list_pop_front((*(t_player_action*)ptr)->player->cm.in);
+	}
     }
 }
 
 void		iter_client(t_select_manager sm, t_data_serv ds)
 {
   t_player	player;
-  
+
   g_sm = sm;
   g_ds = ds;
   select_manager(ds, sm);
@@ -87,7 +100,7 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
     if (!(player = malloc(sizeof(t_u_player))))
       handleError("malloc", strerror(errno), -1);
     player->lvl = 1;
-    player->team = "poney";
+    player->team = "poney"; // TODO
     player->pos.x = 0;
     player->pos.y = 0;
     player->dir = NORTH;
@@ -106,5 +119,6 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
   }
   list_for_each(ds->player, &iter_rds);
   list_for_each(&(ds->action->queue), &iter_action);
+  list_remove_if(&(ds->action->queue), &action_cleaner);
   list_for_each(ds->player, &iter_out);
 }

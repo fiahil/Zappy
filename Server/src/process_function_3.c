@@ -51,11 +51,11 @@ t_bool  move_process_function(t_player this, char *data)
   else
     do_move_process(this, -1, 0);
 
-  /* char *str; */
-  /* str = NULL; */
-  /* asprintf(&str, "I move in %d : %d !\n", this->pos.x, this->pos.y); // TODO */
-  /* list_push_back_new(this->cm.out, str, strlen(str) + 1); */
-  /* free(str); // TODO */
+  char *str;
+  str = NULL;
+  asprintf(&str, "I move in %d : %d !\n", this->pos.x, this->pos.y); // TODO
+  list_push_back_new(this->cm.out, str, strlen(str) + 1);
+  free(str); // TODO
 
   msgout_avance(this->cm.out);
   return (TRUE);

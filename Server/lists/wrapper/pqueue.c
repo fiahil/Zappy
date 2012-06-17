@@ -1,12 +1,3 @@
-/*
-** pqueue.c for c_lists in /home/mart_i/Work/unix/Zappy/lists/wrapper/
-** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
-** 
-** Started on Tue Jun 12 10:31:25 2012 pierre martin
-** Last update Tue Jun 12 11:50:50 2012 pierre martin
-*/
 
 #include	<assert.h>
 #include	<stdlib.h>

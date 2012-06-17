@@ -1,12 +1,3 @@
-/*
-** iter.c for c_lists in /home/mart_i/Work/unix/irc-mart_i-magere_n/c_lists/
-** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
-** 
-** Started on Tue Apr 17 13:32:25 2012 pierre martin
-** Last update Wed Apr 18 23:18:02 2012 pierre martin
-*/
 
 #include	<string.h>
 #include	<stdlib.h>

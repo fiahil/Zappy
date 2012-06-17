@@ -1,12 +1,3 @@
-/*
-** algo_st.c for c_lists in /home/mart_i/Work/unix/irc-mart_i-magere_n/c_lists/lists_ops/
-** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
-** 
-** Started on Thu Apr 19 00:25:46 2012 pierre martin
-** Last update Fri Jun 15 11:12:54 2012 pierre martin
-*/
 
 #include	"iter.h"
 #include	"c_lists.h"

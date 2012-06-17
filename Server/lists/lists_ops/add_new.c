@@ -1,12 +1,3 @@
-/*
-** add_new.c for c_lists in /home/mart_i/Work/unix/irc-mart_i-magere_n/c_lists/lists_ops/
-** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
-** 
-** Started on Wed Apr 18 00:00:25 2012 pierre martin
-** Last update Wed Apr 18 15:06:08 2012 pierre martin
-*/
 
 #include	"iter.h"
 #include	"c_lists.h"

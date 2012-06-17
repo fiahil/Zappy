@@ -1,12 +1,3 @@
-/*
-** algorithm.h for lists_algos in /home/mart_i/Work/unix/Zappy/lists/include/
-** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
-** 
-** Started on  Tue Jun 12 16:39:41 2012 pierre martin
-** Last update Fri Jun 15 11:14:06 2012 pierre martin
-*/
 
 #ifndef __ALGORITHM_H__
 #define __ALGORITHM_H__

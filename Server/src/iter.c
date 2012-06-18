@@ -56,6 +56,7 @@ static void	push_new_action(t_player_action pa)
 	  act->done = FALSE;
 	  get_time_per_function(&(act->time), ret, g_ds->t);
 	  act->player = pa->player;
+	  act->param = strdup(list_front(pa->player->cm.in) + off);
 	  pqueue_push(g_ds->action, &(act), sizeof(&act));
 	  pa->player->cm.is_processing = TRUE;
 	}
@@ -74,7 +75,7 @@ static void	iter_action(void *ptr, size_t s)
       && cmp_time(&current, &((*((t_player_action*)ptr))->time)) == 1)
     {
       ((*((t_player_action*)ptr))->action)
-	((*((t_player_action*)ptr))->player, ""); // TODO comment recuperer le parametre ?
+	((*((t_player_action*)ptr))->player, (*((t_player_action*)ptr))->param);
       (*((t_player_action*)ptr))->done = TRUE;
       (*((t_player_action*)ptr))->player->cm.is_processing = FALSE;
     }
@@ -84,7 +85,7 @@ static void	iter_action(void *ptr, size_t s)
       printf("Processing \"%s\" ... \n",
 	     (char*)(list_front((*((t_player_action*)ptr))->player->cm.in))); // TODO affichage tmp
       fflush(0);
-      push_new_action(*((t_player_action*)ptr));
+      push_new_action(*((t_player_action*)ptr)); // TODO PARAMETRE
     }
 }
 

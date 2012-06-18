@@ -142,6 +142,7 @@ struct s_player_action
   t_proc_func	action;
   t_u_timeval	time;
   t_player	player;
+  char		*param;
   t_bool	done;
 };
 

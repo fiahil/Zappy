@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "def.h"
 #include "clock.h"
@@ -13,10 +14,12 @@
 #include "server_routine.h"
 #include "string_manager.h"
 
-static void	init_act(t_data_serv ds, t_player this, t_proc_func ret, int off)
+static void		init_act(t_data_serv ds, t_player this, t_proc_func ret)
 {
   t_player_action	act;
+  int			off;
 
+  off = -1;
   while (!(this->cm.in->empty) && !ret)
     {
       if (!(ret = cmd_parse(list_front(this->cm.in), &off)))
@@ -29,6 +32,7 @@ static void	init_act(t_data_serv ds, t_player this, t_proc_func ret, int off)
 	  act->done = FALSE;
 	  get_time_per_function(&(act->time), ret, ds->t);
 	  act->player = this;
+	  act->param = strdup(list_front(this->cm.in) + off);
 	  pqueue_push(ds->action, &(act), sizeof(&act));
 	  this->cm.is_processing = TRUE;
 	}
@@ -40,11 +44,8 @@ void		server_routine_input(t_data_serv ds, t_player this)
 {
   char			*buf;
   t_proc_func		ret;
-  int			off;
 
-  off = -1;
   ret = NULL;
-  //  (void)ds; // TODO tmp
   if ((buf = my_receive(this->cm.sock.fd)) == (char*)(-1))
     {
       this->cm.online = FALSE;
@@ -59,7 +60,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
     {
       printf("Processing \"%s\" ... \n",
 	     (char*)(list_front(this->cm.in))); // TODO
-      init_act(ds, this, ret, off);
+      init_act(ds, this, ret);
       fflush(0);
     }
   free(buf);

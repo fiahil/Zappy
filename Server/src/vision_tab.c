@@ -6,13 +6,13 @@
 
 static const	char *g_resources[8] =
   {
-    " nourriture",
-    " linemate",
-    " deraumere",
-    " sibur",
-    " mendiane",
-    " phiras",
-    " thystame",
+    "nourriture",
+    "linemate",
+    "deraumere",
+    "sibur",
+    "mendiane",
+    "phiras",
+    "thystame",
     NULL
   };
 
@@ -381,11 +381,50 @@ void		add_to_str(char **dest, const char *src)
     }
 }
 
+void		add_players(t_square s, char **look)
+{
+  size_t	i;
+
+  if (s->players && s->players->size)
+    {
+      i = 0;
+      while (i < s->players->size)
+	{
+	  add_to_str(look, "joueur");
+	  ++i;
+	  if (i != s->players->size)
+	    add_to_str(look, " ");
+	}
+      add_to_str(look, " ");
+    }
+}
+
+void		add_resources(t_square s, char **look)
+{
+  int		i;
+  int		j;
+
+  i = FOOD;
+  while (i < LAST)
+    {
+      j = 0;
+      while (j < s->inv.resources[i])
+	{
+	  add_to_str(look, g_resources[i]);
+	  ++j;
+	  if (j != s->inv.resources[i])
+	    add_to_str(look, " ");
+	}
+      ++i;
+      if (i != LAST && s->inv.resources[i])
+	add_to_str(look, " ");
+    }
+}
+
 char		*get_look(t_player this, t_map map)
 {
   char		*look;
   int		i;
-  int		j;
   int		nbcases;
   t_square	cur;
 
@@ -398,15 +437,8 @@ char		*get_look(t_player this, t_map map)
 		      + map->size_y) % map->size_y]
 	[(this->pos.x + g_vtab[this->dir][i].x
 	  + map->size_x) % map->size_x];
-      if (cur->players && cur->players->size)
-	add_to_str(&look, " joueur");
-      j = FOOD;
-      while (j < LAST)
-	{
-	  if (cur->inv.resources[j])
-	    add_to_str(&look, g_resources[j]);
-	  ++j;
-	}
+      add_players(cur, &look);
+      add_resources(cur, &look);
       add_to_str(&look, ",");
       ++i;
     }

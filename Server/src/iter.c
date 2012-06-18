@@ -84,7 +84,7 @@ static void	iter_action(void *ptr, size_t s)
       printf("Processing \"%s\" ... \n",
 	     (char*)(list_front((*((t_player_action*)ptr))->player->cm.in))); // TODO affichage tmp
       fflush(0);
-      push_new_action(*((t_player_action*)ptr));
+      push_new_action(*((t_player_action*)ptr)); // TODO PARAMETRE
     }
 }
 

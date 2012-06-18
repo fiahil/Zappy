@@ -13,10 +13,12 @@
 #include "server_routine.h"
 #include "string_manager.h"
 
-static void	init_act(t_data_serv ds, t_player this, t_proc_func ret, int off)
+static void		init_act(t_data_serv ds, t_player this, t_proc_func ret)
 {
   t_player_action	act;
+  int			off;
 
+  off = -1;
   while (!(this->cm.in->empty) && !ret)
     {
       if (!(ret = cmd_parse(list_front(this->cm.in), &off)))
@@ -29,6 +31,7 @@ static void	init_act(t_data_serv ds, t_player this, t_proc_func ret, int off)
 	  act->done = FALSE;
 	  get_time_per_function(&(act->time), ret, ds->t);
 	  act->player = this;
+	  act->param = list_front(this->cm.in) + off;
 	  pqueue_push(ds->action, &(act), sizeof(&act));
 	  this->cm.is_processing = TRUE;
 	}
@@ -40,18 +43,15 @@ void		server_routine_input(t_data_serv ds, t_player this)
 {
   char			*buf;
   t_proc_func		ret;
-  int			off;
 
-  off = -1;
   ret = NULL;
-  //  (void)ds; // TODO tmp
   if ((buf = my_receive(this->cm.sock.fd)) == (char*)(-1))
     {
       this->cm.online = FALSE;
       close(this->cm.sock.fd);
       puts(".:: Client disconnected ::.");
       fflush(0);
-      init_act(ds, this, ret, off);
+      init_act(ds, this, ret);
       return ;
     }
   get_commands(this, buf);

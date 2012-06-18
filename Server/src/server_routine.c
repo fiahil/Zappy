@@ -51,7 +51,6 @@ void		server_routine_input(t_data_serv ds, t_player this)
       close(this->cm.sock.fd);
       puts(".:: Client disconnected ::.");
       fflush(0);
-      init_act(ds, this, ret);
       return ;
     }
   get_commands(this, buf);
@@ -60,6 +59,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
     {
       printf("Processing \"%s\" ... \n",
 	     (char*)(list_front(this->cm.in))); // TODO
+      init_act(ds, this, ret);
       fflush(0);
     }
   free(buf);

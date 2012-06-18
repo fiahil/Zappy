@@ -74,7 +74,7 @@ static void	iter_action(void *ptr, size_t s)
       && cmp_time(&current, &((*((t_player_action*)ptr))->time)) == 1)
     {
       ((*((t_player_action*)ptr))->action)
-	((*((t_player_action*)ptr))->player, ""); // TODO comment recuperer le parametre ?
+	((*((t_player_action*)ptr))->player, (*((t_player_action*)ptr))->param);
       (*((t_player_action*)ptr))->done = TRUE;
       (*((t_player_action*)ptr))->player->cm.is_processing = FALSE;
     }

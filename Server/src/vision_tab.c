@@ -394,9 +394,10 @@ char		*get_look(t_player this, t_map map)
   i = 0;
   while (i <= nbcases)
     {
-      printf("Square : x = %d, y = %d\n", CIRC_X(this->pos.x + g_vtab[this->dir][i].x), CIRC_Y(this->pos.y + g_vtab[this->dir][i].y));
-      cur = map->map[CIRC_Y(this->pos.y + g_vtab[this->dir][i].y)]
-	[CIRC_X(this->pos.x + g_vtab[this->dir][i].x)]; // position du joueur et map circulaire
+      cur = map->map[(this->pos.y + g_vtab[this->dir][i].y
+		      + map->size_y) % map->size_y]
+	[(this->pos.x + g_vtab[this->dir][i].x
+	  + map->size_x) % map->size_x];
       if (cur->players && cur->players->size)
 	add_to_str(&look, " joueur");
       j = FOOD;

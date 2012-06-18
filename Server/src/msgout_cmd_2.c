@@ -15,8 +15,9 @@ void		msgout_inventaire(t_list *out, t_u_inventory inv)
 {
   char		*str;
 
-  asprintf(&str, "nourriture %d,linemate %d,deraumere %d,sibur %d," \
-	   "mendiane %d,phiras %d,thystame %d\n", inv.resources[FOOD],
+  str = NULL;
+  asprintf(&str, "{nourriture %d,linemate %d,deraumere %d,sibur %d," \
+	   "mendiane %d,phiras %d,thystame %d}\n", inv.resources[FOOD],
 	   inv.resources[LINEMATE], inv.resources[DERAUMERE],
 	   inv.resources[SIBUR], inv.resources[MENDIANE],
 	   inv.resources[PHIRAS], inv.resources[THYSTAME]);

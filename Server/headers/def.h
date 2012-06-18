@@ -65,7 +65,9 @@ typedef struct s_time_attrib	t_u_time_attrib;
  * Enum typedef
  */
 
-#define BUFFER_SIZE (4096)
+#define BUFFER_SIZE	(4096)
+#define	CIRC_X(x)		(x < 0) ? (x + map->size_x) : (x % map->size_x)
+#define	CIRC_Y(y)		(y < 0) ? (y + map->size_y) : (y % map->size_y)
 
 typedef enum
 {

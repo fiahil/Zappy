@@ -21,11 +21,9 @@ t_bool		broadcast_process_function(t_player this, char *data, t_data_serv info)
   list_push_back_new(this->cm.out, "I launch a broadcast !\n",
 		     strlen("I launch a broadcast !\n") + 1);
   it = list_begin(info->player);
-  printf("list.size = %ld\n", info->player->size);
   while (it != list_end(info->player))
     {
       message(this, *((t_player*)it->data), data);
-      printf("Sending %s...\n", data);
       it = it->next;
     }
   msgout_broadcast(this->cm.out);

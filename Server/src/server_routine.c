@@ -32,6 +32,7 @@ static void		init_act(t_data_serv ds, t_player this, t_proc_func ret)
 	  get_time_per_function(&(act->time), ret, ds->t);
 	  act->player = this;
 	  act->param = list_front(this->cm.in) + off;
+	  printf("server_routine = %s\n", act->param);
 	  pqueue_push(ds->action, &(act), sizeof(&act));
 	  this->cm.is_processing = TRUE;
 	}

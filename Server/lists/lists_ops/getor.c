@@ -32,7 +32,6 @@ t_iter		*list_begin(t_list *this)
 
 t_iter		*list_end(t_list *this)
 {
-  if (this)
-    return (this->tail);
+  (void)this;
   return (NULL);
 }

@@ -1,12 +1,3 @@
-/*
-** iter.h for c_list in /home/magere_n/work/projets_tek2/irc/myirc-2015-2014s-magere_n
-** 
-** Made by nicolas magere
-** Login   <magere_n@epitech.net>
-** 
-** Started on  Sun Apr 22 21:57:32 2012 nicolas magere
-** Last update Sun Apr 22 21:58:06 2012 nicolas magere
-*/
 
 #ifndef __ITER_H__
 #define __ITER_H__
@@ -59,4 +50,3 @@ void		delete_iter(t_iter *, t_dtor);
 void		delete_iters(t_iter *, t_dtor);
 
 #endif /* __ITER_H__ */
-

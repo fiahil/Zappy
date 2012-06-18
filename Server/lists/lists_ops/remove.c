@@ -1,12 +1,3 @@
-/*
-** remove.c for c_lists in /home/mart_i/Work/unix/irc-mart_i-magere_n/c_lists/lists_ops/
-** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
-** 
-** Started on Wed Apr 18 11:27:56 2012 pierre martin
-** Last update Sat Jun 16 14:41:12 2012 pierre martin
-*/
 
 #include	"iter.h"
 #include	"c_lists.h"

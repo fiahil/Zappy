@@ -1,12 +1,3 @@
-/*
-** pqueue_tools.c for pqueue in /home/mart_i/Work/unix/Zappy/lists/wrapper/
-** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
-** 
-** Started on Tue Jun 12 13:24:35 2012 pierre martin
-** Last update Tue Jun 12 16:54:08 2012 pierre martin
-*/
 
 #include	<stdlib.h>
 

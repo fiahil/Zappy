@@ -35,7 +35,8 @@ SRC	=	src/main.c			\
 		src/vision_tab.c		\
 		src/iter.c			\
 		src/iter_function.c		\
-		src/fill_map.c
+		src/fill_map.c			\
+		src/broadcast.c
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -47,7 +48,7 @@ RM	=	rm -f
 
 CFLAGS	=	-Wall -Wextra -g $(INCLUDES)
 
-LDFLAGS	=	-L./lists/ -lclists
+LDFLAGS	=	-L./lists/ -lclists -lm
 
 all:		$(NAME)
 

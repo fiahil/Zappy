@@ -29,12 +29,13 @@ static char	*g_resources[] =
     NULL
   };
 
-t_bool		look_process_function(t_player this, char *data)
+t_bool		look_process_function(t_player this, char *data, t_data_serv info)
 {
   char		*look;
   t_map		map;
 
   (void)data;
+  (void)info;
   list_push_back_new(this->cm.out, "I look at this !\n",
 		     strlen("I look at this !\n") + 1);
   map = get_map(NULL);
@@ -44,22 +45,24 @@ t_bool		look_process_function(t_player this, char *data)
   return (TRUE);
 }
 
-t_bool		inventory_process_function(t_player this, char *data)
+t_bool		inventory_process_function(t_player this, char *data, t_data_serv info)
 {
   (void)data;
+  (void)info;
   list_push_back_new(this->cm.out, "I check my inventory !\n",
 		     strlen("I check my inventory !\n") + 1);
   msgout_inventaire(this->cm.out, this->inv);
   return (TRUE);
 }
 
-t_bool		take_process_function(t_player this, char *data)
+t_bool		take_process_function(t_player this, char *data, t_data_serv info)
 {
   t_map		map;
   char		*log;
   int		i;
   t_bool	is_done;
 
+  (void)info;
   i = -1;
   is_done = FALSE;
   while (g_resources[++i] && strcmp(data, g_resources[i]));
@@ -80,13 +83,14 @@ t_bool		take_process_function(t_player this, char *data)
   return (TRUE);
 }
 
-t_bool		drop_process_function(t_player this, char *data)
+t_bool		drop_process_function(t_player this, char *data, t_data_serv info)
 {
   t_map		map;
   char		*log;
   int		i;
   t_bool	is_done;
 
+  (void)info;
   i = -1;
   is_done = FALSE;
   while (g_resources[++i] && strcmp(data, g_resources[i]));
@@ -106,9 +110,10 @@ t_bool		drop_process_function(t_player this, char *data)
   return (TRUE);
 }
 
-t_bool		expulse_process_function(t_player this, char *data)
+t_bool		expulse_process_function(t_player this, char *data, t_data_serv info)
 {
   (void)data;
+  (void)info;
   list_push_back_new(this->cm.out, "I expulse !\n",
 		     strlen("I expulse !\n") + 1);
 

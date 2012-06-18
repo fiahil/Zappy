@@ -56,7 +56,7 @@ static void	push_new_action(t_player_action pa)
 	  act->done = FALSE;
 	  get_time_per_function(&(act->time), ret, g_ds->t);
 	  act->player = pa->player;
-	  act->param = list_front(pa->player->cm.in) + off;
+	  act->param = strdup(list_front(pa->player->cm.in) + off);
 	  printf("iter = %s\n", act->param);
 	  pqueue_push(g_ds->action, &(act), sizeof(&act));
 	  pa->player->cm.is_processing = TRUE;

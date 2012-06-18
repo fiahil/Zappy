@@ -74,7 +74,7 @@ t_bool		take_process_function(t_player this, char *data)
     }
   else
     asprintf(&log, "No %s on this square !\n", data);
-  list_push_back_new(this->cm.out, log, strlen(log));
+  list_push_back_new(this->cm.out, log, strlen(log) + 1);
   msgout_prend_objet(this->cm.out, is_done);
   //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   return (TRUE);

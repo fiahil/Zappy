@@ -8,7 +8,7 @@
 
 void		msgout_voir(t_list *out, char *look)
 {
-  list_push_back_new(out, look, strlen(look));
+  list_push_back_new(out, look, strlen(look) + 1);
 }
 
 void		msgout_inventaire(t_list *out, t_u_inventory inv)
@@ -20,7 +20,7 @@ void		msgout_inventaire(t_list *out, t_u_inventory inv)
 	   inv.resources[LINEMATE], inv.resources[DERAUMERE],
 	   inv.resources[SIBUR], inv.resources[MENDIANE],
 	   inv.resources[PHIRAS], inv.resources[THYSTAME]);
-  list_push_back_new(out, str, strlen(str));
+  list_push_back_new(out, str, strlen(str) + 1);
   free(str);
 }
 

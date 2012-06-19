@@ -66,8 +66,6 @@ typedef struct s_time_attrib	t_u_time_attrib;
  */
 
 #define BUFFER_SIZE	(4096)
-#define	CIRC_X(x)		(x < 0) ? (x + map->size_x) : (x % map->size_x)
-#define	CIRC_Y(y)		(y < 0) ? (y + map->size_y) : (y % map->size_y)
 
 typedef enum
 {
@@ -197,6 +195,12 @@ struct s_data_serv
   t_list		*teams;
   t_pqueue		*action;
   t_list		*send_q;
+};
+
+struct s_team
+{
+  char			*name;
+  int			remaining;
 };
 
 struct s_select_manager

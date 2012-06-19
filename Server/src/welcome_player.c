@@ -21,7 +21,8 @@ static int	chk_team(t_data_serv server, char *data)
 
   if ((it = list_find_cmp(server->teams, &func_cmp, data, 0)) == NULL)
     return (-1);
-  printf("chk_team : %s\n", (char*)it->data);
+  printf("Demande de connexion a l'equipe : %s\n", (char*)it->data);
+  
   return (0);
 }
 

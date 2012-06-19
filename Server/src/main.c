@@ -34,12 +34,18 @@ void		print_list(void *data, size_t size) // TODO affichage tmp
   printf("name : %s\n", (char*)data);
 }
 
-int	cmp_action(void *e1, size_t s1, void *e2, size_t s2)
+int		cmp_action(void *e1, size_t s1, void *e2, size_t s2)
 {
   (void)s1;
   (void)s2;
   return (cmp_time(&((*((t_player_action*)e1))->time),
 		   &((*((t_player_action*)e2))->time)));
+}
+
+static void	init_teams(t_data_serv data_serv, t_arg *args)
+{
+  (void)data_serv;
+  (void)args;
 }
 
 int		main(int ac, char **av)
@@ -63,6 +69,7 @@ int		main(int ac, char **av)
 	   (args.names_of_teams->size * args.nb_per_team));
   data_serv.player = new_list(NULL, NULL, NULL);
   data_serv.nb_per_team = args.nb_per_team;
+  init_teams(&data_serv, &args);
   data_serv.teams = args.names_of_teams;
   args.names_of_teams = NULL;
   data_serv.action = new_pqueue(&cmp_action);

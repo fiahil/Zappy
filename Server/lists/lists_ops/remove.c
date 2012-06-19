@@ -52,6 +52,8 @@ t_iter	*list_extract(t_list *this, t_iter *it)
 	it->next->prev = it->prev;
       it->next = NULL;
       it->prev = NULL;
+      --this->size;
+      this->empty = this->size ? 0 : 1;
     }
   return (it);
 }
@@ -68,11 +70,7 @@ void		list_remove(t_list *this, void *param)
       while (it && it->next)
 	{
 	  if (it->next->data == param)
-	    {
-	      delete_iter(list_extract(this, it->next), this->dtor);
-	      --this->size;
-	      this->empty = this->size ? 0 : 1;
-	    }
+	    delete_iter(list_extract(this, it->next), this->dtor);
 	  else if (it)
 	    it = it->next;
 	}
@@ -91,11 +89,7 @@ void		list_remove_if(t_list *this, t_predicate pred)
       while (it && it->next)
 	{
 	  if (pred(it->next->data, it->next->len))
-	    {
-	      delete_iter(list_extract(this, it->next), this->dtor);
-	      --this->size;
-	      this->empty = this->size ? 0 : 1;
-	    }
+	    delete_iter(list_extract(this, it->next), this->dtor);
 	  else if (it)
 	    it = it->next;
 	}

@@ -123,6 +123,7 @@ struct s_map
 struct s_inventory
 {
   t_bool	status;
+  int		cur_life;
   int		resources[LAST];
 };
 

@@ -43,6 +43,7 @@ t_player	init_player()
   player->inv.status = FALSE;
   memset(player->inv.resources, '\0', sizeof(int) * LAST);
   player->inv.resources[FOOD] = 10;
+  player->inv.cur_life = 127;
   memset(player->cm.stock, '\0', sizeof(player->cm.stock));
   player->cm.in = new_list(NULL, NULL, NULL);
   player->cm.out = new_list(NULL, NULL, NULL);
@@ -54,14 +55,38 @@ t_player	init_player()
   return (player);
 }
 
-void	set_timeout_select(t_player_action *ptr, t_timeval time)
+int	sort_player_life(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
+{
+  int	val1;
+  int	val2;
+
+  (void)sz1;
+  (void)sz2;
+  val1 = 0;
+  val2 = 0;
+  if ((*((t_player*)(ptr1)))->inv.resources[FOOD] <= 0)
+    val1 = ((*((t_player*)(ptr1)))->inv.resources[FOOD] - 1)
+      * 127 + (*((t_player*)(ptr1)))->inv.cur_life;
+  if ((*((t_player*)(ptr2)))->inv.resources[FOOD] <= 0)
+    val2 = ((*((t_player*)(ptr2)))->inv.resources[FOOD] - 1)
+      * 127 + (*((t_player*)(ptr2)))->inv.cur_life;
+  if (val1 > val2)
+    return (1);
+  if (val1 < val2)
+    return (-1);
+  return (0);
+}
+
+
+
+static void	set_timeout_action(t_player_action *ptr, t_timeval time)
 {
   t_u_timeval	current;
 
   if (!ptr)
     {
-      time->tv_usec = 100;
-      time->tv_sec = 100;
+      time->tv_usec = 1000;
+      time->tv_sec = 1000;
       return ;
     }
   get_current_time(&current);
@@ -73,4 +98,49 @@ void	set_timeout_select(t_player_action *ptr, t_timeval time)
     time->tv_sec = 0;
   else
     time->tv_sec = (*ptr)->time.tv_sec - current.tv_sec;
+  // or first finish incant or first player dead (with a sort)
+}
+
+static void set_timeout_death(t_data_serv ds, t_timeval time)
+{
+  double tot;
+  t_player *ptr = list_front(ds->player);
+
+  if (!ptr)
+    {
+      time->tv_usec = 1000;
+      time->tv_sec = 1000;
+      return ;
+    }
+  if ((*ptr)->inv.resources[FOOD] <= 0)
+    {
+      time->tv_usec = 0;
+      time->tv_sec = 0;
+      return ;
+    }
+  tot = ((*ptr)->inv.resources[FOOD] - 1) * 127;
+  tot += (*ptr)->inv.cur_life;
+  tot *= 1 / ds->t;
+  tot *= 1000000;
+  time->tv_usec = (int)tot / 1000000;
+  time->tv_sec = (int)tot % 1000000;
+}
+
+static void set_timeout_incant(t_player *ptr, t_timeval time)
+{
+  (void)ptr;
+  (void)time;
+}
+
+void	set_timeout_select(t_data_serv ds, t_timeval time)
+{
+  t_u_timeval death;
+
+  set_timeout_action(list_front(&(ds->action->queue)), time);
+  set_timeout_death(ds, &death);
+  if (cmp_time(time, &death) > 0)
+    {
+      time->tv_usec = death.tv_usec;
+      time->tv_sec = death.tv_sec;
+    }
 }

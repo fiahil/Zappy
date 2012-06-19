@@ -18,6 +18,7 @@
 #include "iter_function.h"
 #include "select_manager.h"
 #include "server_routine.h"
+#include "algorithm.h"
 
 static t_select_manager		g_sm = 0;
 static t_data_serv		g_ds = 0;
@@ -108,5 +109,6 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
   list_for_each(&(ds->action->queue), &iter_action);
   list_remove_if(&(ds->action->queue), &action_cleaner);
   list_for_each(ds->player, &iter_out);
-  set_timeout_select(list_front(&(ds->action->queue)), &(sm->timeout));
+  list_sort(ds->player, &sort_player_life);
+  set_timeout_select(ds, &(sm->timeout));
 }

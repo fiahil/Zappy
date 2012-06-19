@@ -31,7 +31,7 @@ int		run(t_data_serv data_serv)
 void		print_list(void *data, size_t size) // TODO affichage tmp
 {
   (void)size;
-  printf("name : %s\n", (char*)data);
+  printf("name : %s -> size : %d\n", ((t_team)data)->name, ((t_team)data)->remaining);
 }
 
 int		cmp_action(void *e1, size_t s1, void *e2, size_t s2)
@@ -44,11 +44,9 @@ int		cmp_action(void *e1, size_t s1, void *e2, size_t s2)
 
 static void	init_teams(t_data_serv data_serv, t_arg *args)
 {
-  (void)data_serv;
-  (void)args;
   data_serv->nb_per_team = args->nb_per_team;
-  data_serv->teams = args->names_of_teams;
-  args->names_of_teams = NULL;
+  data_serv->teams = args->teams;
+  args->teams = NULL;
 }
 
 int		main(int ac, char **av)
@@ -66,12 +64,12 @@ int		main(int ac, char **av)
   printf("port : %d\n", args.port); // TODO affichage tmp
   printf("width : %d\n", args.width); // TODO affichage tmp
   printf("height : %d\n", args.height); // TODO affichage tmp
-  list_for_each(args.names_of_teams, &print_list); // TODO affichage tmp
+  list_for_each(args.teams, &print_list); // TODO affichage tmp
   printf("nb clients per team : %d\n", args.nb_per_team); // TODO affichage tmp
   printf("execution time : %d\n", args.exec_time); // TODO affichage tmp
   init_map(args.width,
 	   args.height,
-	   (args.names_of_teams->size * args.nb_per_team));
+	   (args.teams->size * args.nb_per_team));
   data_serv.player = new_list(NULL, NULL, NULL);
   init_teams(&data_serv, &args);
   data_serv.action = new_pqueue(&cmp_action);

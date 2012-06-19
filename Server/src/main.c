@@ -46,6 +46,9 @@ static void	init_teams(t_data_serv data_serv, t_arg *args)
 {
   (void)data_serv;
   (void)args;
+  data_serv->nb_per_team = args->nb_per_team;
+  data_serv->teams = args->names_of_teams;
+  args->names_of_teams = NULL;
 }
 
 int		main(int ac, char **av)
@@ -58,6 +61,8 @@ int		main(int ac, char **av)
   srandom(now);
   if (get_arg(ac, av, &args) == -1)
     return (EXIT_FAILURE);
+  if (parse_arg(&args) == -1)
+    return (EXIT_FAILURE);
   printf("port : %d\n", args.port); // TODO affichage tmp
   printf("width : %d\n", args.width); // TODO affichage tmp
   printf("height : %d\n", args.height); // TODO affichage tmp
@@ -68,10 +73,7 @@ int		main(int ac, char **av)
 	   args.height,
 	   (args.names_of_teams->size * args.nb_per_team));
   data_serv.player = new_list(NULL, NULL, NULL);
-  data_serv.nb_per_team = args.nb_per_team;
   init_teams(&data_serv, &args);
-  data_serv.teams = args.names_of_teams;
-  args.names_of_teams = NULL;
   data_serv.action = new_pqueue(&cmp_action);
   data_serv.send_q = new_list(NULL, NULL, NULL);
   data_serv.t = args.exec_time;

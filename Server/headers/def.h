@@ -193,6 +193,8 @@ struct s_data_serv
   t_u_sock_layer	sock;
   int			t;
   t_list		*player;
+  int			nb_per_team;
+  t_list		*teams;
   t_pqueue		*action;
   t_list		*send_q;
 };

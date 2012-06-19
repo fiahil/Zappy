@@ -12,6 +12,7 @@ SRC	=	src/main.c			\
 		src/get_opt_1.c			\
 		src/get_opt_2.c			\
 		src/usage.c			\
+		src/parse_arg.c			\
 		src/select_manager.c		\
 		src/select_tools.c		\
 		src/max_fd.c			\

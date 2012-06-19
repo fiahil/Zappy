@@ -28,5 +28,6 @@ void		get_opt_t(t_arg *);
 void		get_opt_x(t_arg *);
 void		get_opt_y(t_arg *);
 void		usage();
+int		parse_arg(t_arg *);
 
 #endif		/* !__GET_ARG_H__ */

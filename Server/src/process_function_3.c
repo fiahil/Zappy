@@ -105,12 +105,12 @@ t_bool		expulse_process_function(t_player this, char *data, t_data_serv info)
   while (players->size)
     {
       p = list_front(players);
-      do_move_process(*p, g_dir[(*(t_player*)ti->data)->dir][0],
-		      g_dir[(*(t_player*)ti->data)->dir][1]);
+      do_move_process(*p, g_dir[this->dir][0],
+		      g_dir[this->dir][1]);
       msg = NULL;
       asprintf(&msg, "deplacement: %d\n",
-	       g_src[this->dir][(*(t_player*)ti->data)->dir]);
-      list_push_back_new((*(t_player*)ti->data)->cm.out, msg, strlen(msg) + 1);
+	       g_src[this->dir][(*p)->dir]);
+      list_push_back_new((*p)->cm.out, msg, strlen(msg) + 1);
       free(msg);
     }
   list_push_back(players, ti);

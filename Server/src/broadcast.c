@@ -53,10 +53,10 @@ static void	get_closest_pos(t_u_pos *src, t_u_pos *dest, t_u_pos *close)
   close->y = src->y;
   while (i < 8)
     {
-      x = dest->x - src->x + g_out_pos[i].x * map->size_x;
-      y = dest->y - src->y + g_out_pos[i].y * map->size_y;
-      tmp1 = sqrt(pow(dest->x - close->x, 2.0) + pow(dest->y - close->y, 2.0));
-      tmp2 = sqrt(pow(x, 2.0) + pow(y, 2.0));
+      x = src->x + g_out_pos[i].x * map->size_x;
+      y = src->y + g_out_pos[i].y * map->size_y;
+      tmp1 = sqrt(pow(close->x - dest->x, 2.0) + pow(close->y - dest->y, 2.0));
+      tmp2 = sqrt(pow(x - dest->x, 2.0) + pow(y - dest->y, 2.0));
       if (tmp2 < tmp1)
 	{
 	  close->x = x;
@@ -66,7 +66,7 @@ static void	get_closest_pos(t_u_pos *src, t_u_pos *dest, t_u_pos *close)
     }
 }
 
-static int	where_does_it_come_from(t_u_pos *src, t_u_pos *dest)
+static int	where_does_it_come_from(t_u_pos *dest, t_u_pos *src)
 {
   int		x;
   int		y;
@@ -74,24 +74,23 @@ static int	where_does_it_come_from(t_u_pos *src, t_u_pos *dest)
   int		ret;
   double	p;
 
-  x = dest->x - src->x;
-  y = dest->y - src->y;
+  x = src->x - dest->x;
+  y = src->y - dest->y;
   i = (x > 0 ? 0 : 1) + 2 * (y > 0 ? 0 : 1);
   if (!x && !y)
     return (-1);
-  printf("WTF!!\n");
   if (x != 0)
     {
-      p = ABS(y) / ABS(x);
-      if (p <= 0.5)
+      p = (double)ABS(y) / (double)ABS(x);
+      if (p < 0.5)
 	ret = g_quarter[i][0];
-      else if (p > 0.5 && p < 2)
+      else if (p >= 0.5 && p <= 2.0)
 	ret = g_quarter[i][1];
       else
 	ret = g_quarter[i][2];
     }
   else
-    ret = y > 0 ? 7 : 3;
+    ret = y > 0 ? 4 : 0;
   return ret;
 }
 
@@ -104,13 +103,12 @@ void	message(t_player src, t_player dest, char *txt)
   if (src != dest)
     {
       get_closest_pos((&src->pos), &(dest->pos), &tmp);
-      printf("tmp_pos = (%d, %d)\n", tmp.x, tmp.y);
-      dir = where_does_it_come_from(&(src->pos), &tmp);
-      dir = ((dir + (dest->dir * 2)) % 8) + 1;
+      dir = where_does_it_come_from(&(dest->pos), &tmp);
+      if (dir >= 0)
+	dir = ((dir + (dest->dir * 2)) % 8);
+      ++dir;
       asprintf(&msg, "message %d, %s\n", dir, txt);
       list_push_back_new(dest->cm.out, msg, strlen(msg) + 1);
       free(msg);
-      printf("source = (%d, %d)\ndest = (%d, %d)\ndirection = %d\n",
-	     src->pos.x, src->pos.y, dest->pos.x, dest->pos.y, dir);
     }
 }

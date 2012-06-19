@@ -13,12 +13,16 @@
 
 #include "handle_error.h"
 #include "iter_function.h"
+#include "map.h"
 
 int	action_cleaner(void *ptr, size_t s)
 {
   (void)s;
   if ((*(t_player_action*)ptr)->done == TRUE)
-    return (1);
+    {
+      free((*(t_player_action*)ptr)->param);
+      return (1);
+    }
   return (0);
 }
 
@@ -30,17 +34,22 @@ t_player	init_player()
     handleError("malloc", strerror(errno), -1); // TODO retour erreur
   player->lvl = 1;
   player->team = "poney"; // TODO team selectionnee
-  player->pos.x = 0;
-  player->pos.y = 0;
-  player->dir = NORTH;
+  player->pos.x = random() % get_map(NULL)->size_x;
+  player->pos.y = random() % get_map(NULL)->size_y;
+  player->dir = random() % 4;
   player->dead = FALSE;
   player->welcome = FALSE;
+  player->inv.status = FALSE;
+  memset(player->inv.resources, '\0', sizeof(int) * LAST);
+  player->inv.resources[FOOD] = 10;
   memset(player->cm.stock, '\0', sizeof(player->cm.stock));
   player->cm.in = new_list(NULL, NULL, NULL);
   player->cm.out = new_list(NULL, NULL, NULL);
   player->cm.mode = UNKNOW;
   player->cm.is_processing = FALSE;
   player->cm.online = FALSE;
+  list_push_back_new(get_map(NULL)->map[player->pos.y][player->pos.x]->players,
+		     &player, sizeof(&player));
   return (player);
 }
 

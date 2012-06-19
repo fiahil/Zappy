@@ -6,13 +6,13 @@
 
 static const	char *g_resources[8] =
   {
-    "nourriture",
-    "linemate",
-    "deraumere",
-    "sibur",
-    "mendiane",
-    "phiras",
-    "thystame",
+    " nourriture",
+    " linemate",
+    " deraumere",
+    " sibur",
+    " mendiane",
+    " phiras",
+    " thystame",
     NULL
   };
 
@@ -390,12 +390,9 @@ void		add_players(t_square s, char **look)
       i = 0;
       while (i < s->players->size)
 	{
-	  add_to_str(look, "joueur");
+	  add_to_str(look, " joueur");
 	  ++i;
-	  if (i != s->players->size)
-	    add_to_str(look, " ");
 	}
-      add_to_str(look, " ");
     }
 }
 
@@ -412,12 +409,8 @@ void		add_resources(t_square s, char **look)
 	{
 	  add_to_str(look, g_resources[i]);
 	  ++j;
-	  if (j != s->inv.resources[i])
-	    add_to_str(look, " ");
 	}
       ++i;
-      if (i != LAST && s->inv.resources[i])
-	add_to_str(look, " ");
     }
 }
 
@@ -439,8 +432,9 @@ char		*get_look(t_player this, t_map map)
 	  + map->size_x) % map->size_x];
       add_players(cur, &look);
       add_resources(cur, &look);
-      add_to_str(&look, ",");
       ++i;
+      if (i <= nbcases)
+	add_to_str(&look, ",");
     }
   add_to_str(&look, "}\n");
   return (look);

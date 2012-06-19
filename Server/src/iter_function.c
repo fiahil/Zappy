@@ -14,6 +14,7 @@
 #include "handle_error.h"
 #include "iter_function.h"
 #include "map.h"
+#include "clock.h"
 
 int	action_cleaner(void *ptr, size_t s)
 {
@@ -53,3 +54,23 @@ t_player	init_player()
   return (player);
 }
 
+void	set_timeout_select(t_player_action *ptr, t_timeval time)
+{
+  t_u_timeval	current;
+
+  if (!ptr)
+    {
+      time->tv_usec = 100;
+      time->tv_sec = 100;
+      return ;
+    }
+  get_current_time(&current);
+  if ((*ptr)->time.tv_usec - current.tv_usec < 0)
+    time->tv_usec = 0;
+  else
+    time->tv_usec = (*ptr)->time.tv_usec - current.tv_usec;
+  if ((*ptr)->time.tv_sec - current.tv_sec < 0)
+    time->tv_sec = 0;
+  else
+    time->tv_sec = (*ptr)->time.tv_sec - current.tv_sec;
+}

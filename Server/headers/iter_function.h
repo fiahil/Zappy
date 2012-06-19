@@ -5,7 +5,7 @@
 ** Login   <busina_b@epitech.net>
 ** 
 ** Started on  Sat Jun 16 16:16:43 2012 benjamin businaro
-** Last update Sat Jun 16 16:20:50 2012 benjamin businaro
+** Last update Tue Jun 19 13:38:37 2012 pierre martin
 */
 
 #ifndef __ITER_FUNCTION_H__
@@ -15,6 +15,7 @@
 
 int		action_cleaner(void *, size_t );
 t_player	init_player();
+void	set_timeout_select(t_player_action *, t_timeval);
 
 #endif /* __ITER_FUNCTION_H__ */
 

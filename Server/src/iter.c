@@ -108,4 +108,5 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
   list_for_each(&(ds->action->queue), &iter_action);
   list_remove_if(&(ds->action->queue), &action_cleaner);
   list_for_each(ds->player, &iter_out);
+  set_timeout_select(list_front(&(ds->action->queue)), &(sm->timeout));
 }

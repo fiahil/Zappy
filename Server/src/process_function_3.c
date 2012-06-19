@@ -51,11 +51,12 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
   list_push_back(get_map(NULL)->map[this->pos.y][this->pos.x]->players, tmp);
 }
 
-t_bool  move_process_function(t_player this, char *data)
+t_bool  move_process_function(t_player this, char *data, t_data_serv info)
 {
   char *str;
 
   (void)data;
+  (void)info;
   if (this->dir == NORTH)
     do_move_process(this, 0, -1);
   else if (this->dir == EAST)
@@ -73,9 +74,10 @@ t_bool  move_process_function(t_player this, char *data)
   return (TRUE);
 }
 
-t_bool  right_process_function(t_player this, char *data)
+t_bool  right_process_function(t_player this, char *data, t_data_serv info)
 {
   (void)data;
+  (void)info;
   if (this->dir == WEST)
     this->dir = NORTH;
   else
@@ -86,9 +88,10 @@ t_bool  right_process_function(t_player this, char *data)
   return (TRUE);
 }
 
-t_bool  left_process_function(t_player this, char *data)
+t_bool  left_process_function(t_player this, char *data, t_data_serv info)
 {
   (void)data;
+  (void)info;
   if (this->dir == NORTH)
     this->dir = WEST;
   else

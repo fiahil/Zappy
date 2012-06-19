@@ -18,7 +18,7 @@ static int	init_arg(t_arg *args)
   args->port = 4242;
   args->width = 20;
   args->height = 20;
-  args->names_of_teams = NULL;
+  args->teams = NULL;
   args->nb_per_team = 1;
   args->exec_time = 100;
   return (0);

@@ -56,6 +56,9 @@ typedef struct s_map*		t_map;
 typedef struct timeval		t_u_timeval;
 typedef struct timeval*		t_timeval;
 
+typedef struct s_team		t_u_team;
+typedef struct s_team*		t_team;
+
 typedef struct s_data_serv	t_u_data_serv;
 typedef struct s_data_serv*	t_data_serv;
 

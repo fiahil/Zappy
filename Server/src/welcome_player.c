@@ -10,7 +10,7 @@ static int	func_cmp(void *s1, size_t s1len, void *s2, size_t s2len)
 {
   (void)s1len;
   (void)s2len;
-  return (strcmp(((t_team)s1)->name, ((t_team)s2)->name));
+  return (strcmp(((t_team)s1)->name, (char*)s2));
 }
 
 static int	chk_team(t_data_serv server, char *data)

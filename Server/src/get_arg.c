@@ -30,7 +30,6 @@ int		get_arg(int ac, char **av, t_arg *args)
   char		opt;
 
   init_arg(args);
-  get_opt_n(av, args);
   opterr = 0;
   while ((opt = getopt(ac, av, "c:n:p:t:x:y:")) != EOF)
     if (opt != 'n' && opt == '?')
@@ -48,5 +47,6 @@ int		get_arg(int ac, char **av, t_arg *args)
 	    ++i;
 	  }
       }
-   return (0);
+  get_opt_n(av, args);
+  return (0);
 }

@@ -31,7 +31,7 @@ int		run(t_data_serv data_serv)
 void		print_list(void *data, size_t size) // TODO affichage tmp
 {
   (void)size;
-  printf("name : %s\n", ((t_team)data)->name);
+  printf("name : %s -> size : %d\n", ((t_team)data)->name, ((t_team)data)->remaining);
 }
 
 int		cmp_action(void *e1, size_t s1, void *e2, size_t s2)

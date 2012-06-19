@@ -34,11 +34,14 @@ t_player	init_player()
     handleError("malloc", strerror(errno), -1); // TODO retour erreur
   player->lvl = 1;
   player->team = "poney"; // TODO team selectionnee
-  player->pos.x = 0;
-  player->pos.y = 0;
-  player->dir = NORTH;
+  player->pos.x = random() % get_map(NULL)->size_x;
+  player->pos.y = random() % get_map(NULL)->size_y;
+  player->dir = random() % 4;
   player->dead = FALSE;
   player->welcome = FALSE;
+  player->inv.status = FALSE;
+  memset(player->inv.resources, '\0', sizeof(int) * LAST);
+  player->inv.resources[FOOD] = 10;
   memset(player->cm.stock, '\0', sizeof(player->cm.stock));
   player->cm.in = new_list(NULL, NULL, NULL);
   player->cm.out = new_list(NULL, NULL, NULL);

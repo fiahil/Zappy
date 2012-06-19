@@ -45,14 +45,12 @@ DUST	=	./*~ lists_ops/*~ base/*~ include/*~
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ) do_lib
-
-debug:		CFLAGS = -Wall -Werror -g -I./include
-debug:		fclean $(OBJ) do_lib
-
-do_lib:
+$(NAME):	$(OBJ)
 		ar rc $(NAME) $(OBJ)
 		ranlib $(NAME)
+
+debug:		CFLAGS = -Wall -Werror -g -I./include
+debug:		fclean $(OBJ) $(NAME)
 
 clean:
 		@$(RM) $(OBJ)

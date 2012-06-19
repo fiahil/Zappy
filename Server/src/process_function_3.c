@@ -5,22 +5,35 @@
 
 #define _GNU_SOURCE
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include "process_function.h"
-#include "msgout_cmd.h"
+
 #include "map.h"
 #include "my_itoa.h"
+#include "msgout_cmd.h"
+#include "process_function.h"
+#include "algorithm.h"
+
+static int	cmp_player_list(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
+{
+  (void)sz1;
+  (void)sz2;
+  if ((*((t_player*)ptr1)) == ((t_player)(ptr2)))
+    return (0);
+  else
+    return (1);
+}
 
 static void	do_move_process(t_player this, int coef_x, int coef_y)
 {
   t_map		map;
-  /* t_u_pos	prec; */
-  /* t_iter	*tmp; */
+  t_u_pos	prec;
+  t_iter	*tmp;
 
-  /* prec.x = this->pos.x; */
-  /* prec.y = this->pos.y; */
+  tmp = NULL;
+  prec.x = this->pos.x;
+  prec.y = this->pos.y;
   map = get_map(NULL);
   this->pos.x += coef_x;
   this->pos.y += coef_y;
@@ -32,11 +45,10 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
     this->pos.y = 0;
   if (this->pos.y < 0)
     this->pos.y = map->size_y - 1;
-  //  get_map(NULL)->map[prec.y][prec.x]->players);
-  //  get_map(NULL)->map[this->pos.y][this->pos.x]->players;
-  // TODO : suppr et recup du player a la pos prec
-  // push dans la list a la new pos
-  // map->map
+  tmp = list_find_cmp(get_map(NULL)->map[prec.y][prec.x]->players,
+		      &cmp_player_list, this, sizeof(*this));
+  list_extract(get_map(NULL)->map[prec.y][prec.x]->players, tmp);
+  list_push_back(get_map(NULL)->map[this->pos.y][this->pos.x]->players, tmp);
 }
 
 t_bool  move_process_function(t_player this, char *data)

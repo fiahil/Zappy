@@ -13,12 +13,16 @@
 
 #include "handle_error.h"
 #include "iter_function.h"
+#include "map.h"
 
 int	action_cleaner(void *ptr, size_t s)
 {
   (void)s;
   if ((*(t_player_action*)ptr)->done == TRUE)
-    return (1);
+    {
+      free((*(t_player_action*)ptr)->param);
+      return (1);
+    }
   return (0);
 }
 
@@ -41,6 +45,8 @@ t_player	init_player()
   player->cm.mode = UNKNOW;
   player->cm.is_processing = FALSE;
   player->cm.online = FALSE;
+  list_push_back_new(get_map(NULL)->map[player->pos.y][player->pos.x]->players,
+		     &player, sizeof(&player));
   return (player);
 }
 

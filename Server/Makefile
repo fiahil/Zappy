@@ -32,6 +32,7 @@ SRC	=	src/main.c			\
 		src/my_receive.c		\
 		src/handle_error.c		\
 		src/vision_tab.c		\
+		src/welcome_player.c		\
 		src/iter.c			\
 		src/iter_function.c		\
 		src/fill_map.c			\

@@ -58,14 +58,17 @@ int		main(int ac, char **av)
   list_for_each(args.names_of_teams, &print_list); // TODO affichage tmp
   printf("nb clients per team : %d\n", args.nb_per_team); // TODO affichage tmp
   printf("execution time : %d\n", args.exec_time); // TODO affichage tmp
+  init_map(args.width,
+	   args.height,
+	   (args.names_of_teams->size * args.nb_per_team));
   data_serv.player = new_list(NULL, NULL, NULL);
+  data_serv.nb_per_team = args.nb_per_team;
+  data_serv.teams = args.names_of_teams;
+  args.names_of_teams = NULL;
   data_serv.action = new_pqueue(&cmp_action);
   data_serv.send_q = new_list(NULL, NULL, NULL);
   data_serv.t = args.exec_time;
   set_connection(&data_serv, args.port);
-  init_map(args.width,
-	   args.height,
-	   (args.names_of_teams->size * args.nb_per_team));
   //  unitest_clock(); // TODO unitest
   if (run(&data_serv) < 0)
     return (EXIT_FAILURE);

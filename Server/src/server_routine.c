@@ -55,6 +55,8 @@ void		server_routine_input(t_data_serv ds, t_player this)
       return ;
     }
   get_commands(this, buf);
+  /* if (!this->welcome && !welcome_player(ds, this, buf)) */
+  /*   free(this); */
   if (!(this->cm.in->empty)
       && !(this->cm.is_processing))
     {

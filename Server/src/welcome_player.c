@@ -10,7 +10,7 @@ static int	func_cmp(void *s1, size_t s1len, void *s2, size_t s2len)
 {
   (void)s1len;
   (void)s2len;
-  return (strcmp((char*)s1, (char*)s2));
+  return (strcmp(((t_team)s1)->name, ((t_team)s2)->name));
 }
 
 static int	chk_team(t_data_serv server, char *data)
@@ -21,9 +21,9 @@ static int	chk_team(t_data_serv server, char *data)
 
   if ((it = list_find_cmp(server->teams, &func_cmp, data, 0)) == NULL)
     return (-1);
-  printf("Demande de connexion a l'equipe : %s\n", (char*)it->data);
-  
-  return (0);
+  printf("Demande de connexion a l'equipe : %s\n", ((t_team)it->data)->name);
+  ((t_team)it->data)->remaining -= 1;
+  return (((t_team)it->data)->remaining);
 }
 
 t_bool		welcome_player(t_data_serv server, t_player player, char *data)
@@ -36,6 +36,7 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
     {
       if ((nb_client = chk_team(server, data)) == -1)
 	return (FALSE);
+      printf("test nb_client : %d\n", nb_client); // TODO affichage tmp
       //envoi du nombre de client restant
       list_push_back_new(player->cm.out, "\n", strlen("\n") + 1);
       //envoi de la taille du monde

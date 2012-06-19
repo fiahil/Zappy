@@ -45,8 +45,6 @@ int		cmp_action(void *e1, size_t s1, void *e2, size_t s2)
 static void	init_teams(t_data_serv data_serv, t_arg *args)
 {
   data_serv->nb_per_team = args->nb_per_team;
-
-  data_serv->teams = new_list(NULL, NULL, NULL);
   data_serv->teams = args->teams;
   args->teams = NULL;
 }

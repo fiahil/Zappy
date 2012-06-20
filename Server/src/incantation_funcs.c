@@ -68,13 +68,6 @@ t_bool	incant_is_ok(t_incant incant)
   if (memcmp(&incant->hashcode, &hashcode, sizeof(hashcode)))
     incant->status = FALSE;
   return (incant->status);
-  /* while (++i < 7 && memcmp(&incant->hashcode, &hashcode, sizeof(hashcode))); */
-  /* if (i == 7) */
-  /*   { */
-  /*     incant->status = FALSE; */
-  /*     return (FALSE); */
-  /*   } */
-  /* return (TRUE); */
 }
 
 t_bool	init_incant(t_incant incant, t_player play, t_square cell)
@@ -86,6 +79,7 @@ t_bool	init_incant(t_incant incant, t_player play, t_square cell)
   incant->status = TRUE;
   if (check_players(cell->players, play->lvl) != cell->players->size)
     {
+      // TEST DISPLAY
       printf("Players not good\n");
       incant->status = FALSE;
     }
@@ -97,6 +91,7 @@ t_bool	init_incant(t_incant incant, t_player play, t_square cell)
   while (++i < 7 && memcmp(&incant->hashcode, &g_hash_cmp[i], sizeof(g_hash_cmp[i])));
   if (i == 7)
     {
+      // TEST DISPLAY
       printf("Resources not good\n");
       incant->status = FALSE;
     }

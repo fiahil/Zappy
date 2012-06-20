@@ -49,7 +49,8 @@ t_bool		incantation_process_function(t_player this, char *data, t_data_serv info
     printf("Incant is Ok\n");
   else
     printf("Incant ain't Ok\n");
-  asprintf("elevation en cours\nniveau actuel: %d\n", this->lvl);
+  asprintf(&log, "elevation en cours\nniveau actuel: %d\n", this->lvl);
+  printf("%s\n", log);
   list_push_back_new(info->incant, &incant, sizeof(incant));
   list_push_back_new(this->cm.out, log, strlen(log) + 1);
   free(log);

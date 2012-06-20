@@ -94,8 +94,8 @@ static void	set_timeout_action(t_player_action ptr, t_timeval time)
     }
   get_current_time(&current);
   d_current = convert_to_u(&current);
-  d_act = convert_to_u(time);
-  if (d_act - d_current)
+  d_act = convert_to_u(&(ptr->time));
+  if (d_act - d_current <= 0)
     {
       time->tv_usec = 0;
       time->tv_sec = 0;

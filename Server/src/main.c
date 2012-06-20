@@ -73,7 +73,7 @@ int		main(int ac, char **av)
   init_map(args.width,
 	   args.height,
 	   (args.teams->size * args.nb_per_team));
-  init_teams(&data_serv, args.teams);
+  init_teams(&data_serv, &args);
   data_serv.player = new_list(NULL, NULL, NULL);
   data_serv.action = new_pqueue(&cmp_action);
   data_serv.send_q = new_list(NULL, NULL, NULL);

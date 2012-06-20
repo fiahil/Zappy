@@ -16,8 +16,12 @@ void		select_add(t_select_manager sm, int fd)
     sm->max_fd = fd;
 }
 
-t_bool		select_isset(t_select_manager sm, int fd)
+t_bool		select_r_isset(t_select_manager sm, int fd)
 {
   return (FD_ISSET(fd, &sm->rds) ? TRUE : FALSE);
 }
 
+t_bool          select_w_isset(t_select_manager sm, int fd)
+{ 
+  return (FD_ISSET(fd, &sm->wds) ? TRUE : FALSE);
+} 

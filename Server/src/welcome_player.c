@@ -46,6 +46,7 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
       list_push_back_new(player->cm.out, str, strlen(str) + 1);
       free(str);
       player->welcome = TRUE;
+      list_pop_front(player->cm.in);
     }
   return (TRUE);
 }

@@ -7,9 +7,15 @@
 ** Started on Thu Jun  7 14:22:28 2012 benjamin businaro
 */
 
+#define _GNU_SOURCE
+
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "msgout_cmd.h"
+#include "algorithm.h"
+#include "team_manager.h"
 #include "process_function.h"
 
 t_bool		broadcast_process_function(t_player this, char *data, t_data_serv info)
@@ -61,10 +67,16 @@ t_bool		fork_process_function(t_player this, char *data, t_data_serv info)
 
 t_bool		connect_nbr_process_function(t_player this, char *data, t_data_serv info)
 {
+  t_iter	*it;
+  char		*str;
+
   (void)data;
-  (void)info;
   list_push_back_new(this->cm.out, "I ask for thr connect number !\n",
 		     strlen("I ask for the connect number !\n") + 1);
-
+  if ((it = list_find_cmp(info->teams, &func_cmp_team, this->team, 0)) == NULL)
+    return (FALSE);
+  asprintf(&str, "%d\n", ((t_team)it->data)->remaining);
+  msgout_connect_nbr(this->cm.out, str);
+  free(str);
   return (TRUE);
 }

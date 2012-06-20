@@ -62,6 +62,9 @@ typedef struct s_map*		t_map;
 typedef struct timeval		t_u_timeval;
 typedef struct timeval*		t_timeval;
 
+typedef struct s_team		t_u_team;
+typedef struct s_team*		t_team;
+
 typedef struct s_data_serv	t_u_data_serv;
 typedef struct s_data_serv*	t_data_serv;
 
@@ -72,8 +75,6 @@ typedef struct s_time_attrib	t_u_time_attrib;
  */
 
 #define BUFFER_SIZE	(4096)
-#define	CIRC_X(x)		(x < 0) ? (x + map->size_x) : (x % map->size_x)
-#define	CIRC_Y(y)		(y < 0) ? (y + map->size_y) : (y % map->size_y)
 
 typedef enum
 {
@@ -128,6 +129,7 @@ struct s_map
 struct s_inventory
 {
   t_bool	status;
+  int		cur_life;
   int		resources[LAST];
 };
 
@@ -219,15 +221,24 @@ struct s_data_serv
   t_u_sock_layer	sock;
   int			t;
   t_list		*player;
+  int			nb_per_team;
+  t_list		*teams;
   t_pqueue		*action;
   t_list		*send_q;
   t_list		*incant;
+};
+
+struct s_team
+{
+  char			*name;
+  int			remaining;
 };
 
 struct s_select_manager
 {
   int		max_fd;
   fd_set	rds;
+  fd_set	wds;
   t_u_timeval	timeout;
 };
 

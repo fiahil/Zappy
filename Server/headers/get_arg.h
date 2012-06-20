@@ -9,7 +9,7 @@ typedef struct	s_arg
   int		port;
   int		width;
   int		height;
-  t_list	*names_of_teams;
+  t_list	*teams;
   int		nb_per_team;
   int		exec_time;
 }		t_arg;
@@ -28,5 +28,6 @@ void		get_opt_t(t_arg *);
 void		get_opt_x(t_arg *);
 void		get_opt_y(t_arg *);
 void		usage();
+int		parse_arg(t_arg *);
 
 #endif		/* !__GET_ARG_H__ */

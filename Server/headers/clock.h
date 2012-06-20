@@ -5,7 +5,7 @@
 ** Login   <busina_b@epitech.net>
 ** 
 ** Started on  Wed Jun 13 11:39:01 2012 benjamin businaro
-** Last update Sat Jun 16 15:30:34 2012 pierre martin
+** Last update Wed Jun 20 18:52:07 2012 benjamin businaro
 */
 
 #ifndef __CLOCK_H__
@@ -18,6 +18,7 @@ char	cmp_time(t_timeval, t_timeval);
 void	get_time_per_function(t_timeval, t_proc_func, double);
 void	add_time(t_timeval, double, double);
 void	unitest_clock();
+double convert_to_u(t_timeval);
 
 #endif /* __CLOCK_H__ */
 

@@ -74,8 +74,17 @@ void	add_time(t_timeval time, double maj, double t)
   if (t)
     maj /= t;
   maj *= 1000000;
-  time->tv_sec += (int)(maj) / 1000000;
-  time->tv_usec += (int)(maj) % 1000000;
+  time->tv_sec += (int)maj / 1000000;
+  time->tv_usec += (int)maj % 1000000;
+}
+
+double convert_to_u(t_timeval time)
+{
+  double ret;
+
+  ret = time->tv_sec * 1000000;
+  ret += time->tv_usec;
+  return (ret);
 }
 
 void	unitest_clock() // TODO tmp

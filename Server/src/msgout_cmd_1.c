@@ -1,3 +1,4 @@
+#include	<string.h>
 #include	"msgout_cmd.h"
 
 void		msgout_broadcast(t_list *out)
@@ -16,10 +17,9 @@ void		msgout_fork(t_list *out)
   list_push_back_new(out, "ok\n", 4);
 }
 
-void		msgout_connect_nbr(t_list *out)
+void		msgout_connect_nbr(t_list *out, char *str)
 {
-  (void)out;
-  // TODO
+  list_push_back_new(out, str, strlen(str) + 1);
 }
 
 void		msgout_mort(t_list *out)

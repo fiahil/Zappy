@@ -45,16 +45,6 @@ t_bool		look_process_function(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool		inventory_process_function(t_player this, char *data, t_data_serv info)
-{
-  (void)data;
-  (void)info;
-  list_push_back_new(this->cm.out, "I check my inventory !\n",
-		     strlen("I check my inventory !\n") + 1);
-  msgout_inventaire(this->cm.out, this->inv);
-  return (TRUE);
-}
-
 t_bool		take_process_function(t_player this, char *data, t_data_serv info)
 {
   t_map		map;
@@ -78,6 +68,7 @@ t_bool		take_process_function(t_player this, char *data, t_data_serv info)
   else
     asprintf(&log, "No %s on this square !\n", data);
   list_push_back_new(this->cm.out, log, strlen(log) + 1);
+  free(log);
   msgout_prend_objet(this->cm.out, is_done);
   //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   return (TRUE);
@@ -106,16 +97,36 @@ t_bool		drop_process_function(t_player this, char *data, t_data_serv info)
     asprintf(&log, "No %s in inventory !\n", data);
   list_push_back_new(this->cm.out, log, strlen(log) + 1);
   msgout_pose_objet(this->cm.out, is_done);
+  free(log);
   //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   return (TRUE);
 }
 
-t_bool		expulse_process_function(t_player this, char *data, t_data_serv info)
+t_bool  right_process_function(t_player this, char *data, t_data_serv info)
 {
   (void)data;
   (void)info;
-  list_push_back_new(this->cm.out, "I expulse !\n",
-		     strlen("I expulse !\n") + 1);
-
+  if (this->dir == WEST)
+    this->dir = NORTH;
+  else
+    this->dir += 1;
+  list_push_back_new(this->cm.out, "I turn right !\n",
+		     strlen("I turn right !\n") + 1);
+  msgout_droite(this->cm.out);
   return (TRUE);
 }
+
+t_bool  left_process_function(t_player this, char *data, t_data_serv info)
+{
+  (void)data;
+  (void)info;
+  if (this->dir == NORTH)
+    this->dir = WEST;
+  else
+    this->dir -= 1;
+  list_push_back_new(this->cm.out, "I turn left !\n",
+		     strlen("I turn left !\n") + 1);
+  msgout_gauche(this->cm.out);
+  return (TRUE);
+}
+

@@ -1,40 +1,51 @@
 
+#define		_GNU_SOURCE
+
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<string.h>
 
 #include	"def.h"
-
-static int	func_cmp(char *s1, size_t s1len, char *s2, size_t s2len)
-{
-  (void)s1len;
-  (void)s2len;
-  return (strcmp(s1, s2));
-}
+#include	"map.h"
+#include	"algorithm.h"
+#include	"team_manager.h"
 
 static int	chk_team(t_data_serv server, char *data)
 {
-  // chk s'il reste de la place dans l'equipe
-  // return le nombre de client restant
-  if (!list_find_cmp(server->team, &func_cmp, data, 0))
+  t_iter	*it;
+
+  if ((it = list_find_cmp(server->teams, &func_cmp_team, data, 0)) == NULL)
     return (-1);
-  return (0);
+  printf("Connection query to : %s\n", ((t_team)it->data)->name);
+  if (((t_team)it->data)->remaining > 0)
+    ((t_team)it->data)->remaining -= 1;
+  else
+    return (-1);
+  return (((t_team)it->data)->remaining);
 }
 
 t_bool		welcome_player(t_data_serv server, t_player player, char *data)
 {
-  // return false s'il faut delete le player
-  // passer en accueilli le player -> et welcomed a true
   int		nb_client;
+  char		*str;
+  t_map		map;
 
   if (data)
     {
-      if ((nb_client = chk_team(server->team, data)) == -1)
-	return (FALSE);
-      //envoi du nombre de client restant
-      list_push_back_new(player->cm.out, "\n", strlen("\n") + 1);
-      //envoi de la taille du monde
-      list_push_back_new(player->cm.out, "\n", strlen("\n") + 1);
+      if ((nb_client = chk_team(server, data)) < 0)
+	{
+	  printf("Not enough slot in the team or team unknown\n"); // TODO affichage tmp
+	  list_push_back_new(player->cm.out, "ko\n", 4);
+	  return (FALSE);
+	}
+      printf("test nb_client : %d\n", nb_client); // TODO affichage tmp
+      map = get_map(NULL);
+      asprintf(&str, "%d\n%d %d\n", nb_client, map->size_x, map->size_y);
+      list_push_back_new(player->cm.out, str, strlen(str) + 1);
+      free(str);
+      player->welcome = TRUE;
+      player->team = strdup(data);
+      list_pop_front(player->cm.in);
     }
   return (TRUE);
 }

@@ -41,7 +41,6 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
       if ((nb_client = chk_team(server, data)) < 0)
 	{
 	  printf("Pas assez de place dans l'équipe ou équipe inconnue\n"); // TODO affichage tmp
-	  player->team = strdup("");
 	  list_push_back_new(player->cm.out, "ko\n", 4);
 	  return (FALSE);
 	}

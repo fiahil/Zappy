@@ -65,12 +65,12 @@ void		server_routine_input(t_data_serv ds, t_player this)
   if ((buf = my_receive(this->cm.sock.fd)) == (char*)(-1))
     {
       this->cm.online = FALSE;
-      if (strcmp(this->team, ""))
+      if (this->team)
 	{
 	  assert((it = list_find_cmp(ds->teams, &func_cmp, this->team, 0)) != NULL);
 	  ((t_team)it->data)->remaining += 1;
+	  free(this->team);
 	}
-      free(this->team);
       close(this->cm.sock.fd);
       puts(".:: Client disconnected ::.");
       fflush(0);

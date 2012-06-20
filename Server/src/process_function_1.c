@@ -68,6 +68,7 @@ t_bool		take_process_function(t_player this, char *data, t_data_serv info)
   else
     asprintf(&log, "No %s on this square !\n", data);
   list_push_back_new(this->cm.out, log, strlen(log) + 1);
+  free(log);
   msgout_prend_objet(this->cm.out, is_done);
   //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   return (TRUE);
@@ -96,6 +97,7 @@ t_bool		drop_process_function(t_player this, char *data, t_data_serv info)
     asprintf(&log, "No %s in inventory !\n", data);
   list_push_back_new(this->cm.out, log, strlen(log) + 1);
   msgout_pose_objet(this->cm.out, is_done);
+  free(log);
   //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   return (TRUE);
 }

@@ -35,7 +35,7 @@ t_player	init_player()
   if (!(player = malloc(sizeof(t_u_player))))
     handleError("malloc", strerror(errno), -1); // TODO retour erreur
   player->lvl = 1;
-  player->team = "poney"; // TODO team selectionnee
+  player->team = NULL;
   player->pos.x = random() % get_map(NULL)->size_x;
   player->pos.y = random() % get_map(NULL)->size_y;
   player->dir = random() % 4;

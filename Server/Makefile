@@ -11,6 +11,7 @@ SRC	=	src/main.c			\
 		src/get_arg.c			\
 		src/get_opt_1.c			\
 		src/get_opt_2.c			\
+		src/get_opt_3.c			\
 		src/usage.c			\
 		src/parse_arg.c			\
 		src/select_manager.c		\
@@ -27,6 +28,7 @@ SRC	=	src/main.c			\
 		src/msgout_cmd_1.c		\
 		src/msgout_cmd_2.c		\
 		src/msgout_cmd_3.c		\
+		src/team_manager.c		\
 		src/string_manager.c		\
 		src/network.c			\
 		src/my_send.c			\

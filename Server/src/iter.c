@@ -73,22 +73,22 @@ static void	iter_action(void *ptr, size_t s)
   t_u_timeval current;
 
   get_current_time(&current);
-  if ((*((t_player_action*)ptr))->player->cm.is_processing
-      && !((*((t_player_action*)ptr))->done)
-      && cmp_time(&current, &((*((t_player_action*)ptr))->time)) == 1)
+  if (((t_player_action)ptr)->player->cm.is_processing
+      && !(((t_player_action)ptr)->done)
+      && cmp_time(&current, &(((t_player_action)ptr)->time)) == 1)
     {
-      ((*((t_player_action*)ptr))->action)
-	((*((t_player_action*)ptr))->player, (*((t_player_action*)ptr))->param, g_ds);
-      (*((t_player_action*)ptr))->done = TRUE;
-      (*((t_player_action*)ptr))->player->cm.is_processing = FALSE;
+      (((t_player_action)ptr)->action)
+	(((t_player_action)ptr)->player, ((t_player_action)ptr)->param, g_ds);
+      ((t_player_action)ptr)->done = TRUE;
+      ((t_player_action)ptr)->player->cm.is_processing = FALSE;
     }
-	if (!(*((t_player_action*)ptr))->player->cm.in->empty
-	    && !((*((t_player_action*)ptr))->player->cm.is_processing))
+	if (!((t_player_action)ptr)->player->cm.in->empty
+	    && !(((t_player_action)ptr)->player->cm.is_processing))
     {
       printf("Processing \"%s\" ... \n",
-	     (char*)(list_front((*((t_player_action*)ptr))->player->cm.in))); // TODO affichage tmp
+	     (char*)(list_front(((t_player_action)ptr)->player->cm.in))); // TODO affichage tmp
       fflush(0);
-      push_new_action(*((t_player_action*)ptr));
+      push_new_action((t_player_action)ptr); // TODO PARAMETRE
     }
 }
 

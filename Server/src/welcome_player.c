@@ -23,7 +23,10 @@ static int	chk_team(t_data_serv server, char *data)
   if ((it = list_find_cmp(server->teams, &func_cmp, data, 0)) == NULL)
     return (-1);
   printf("Demande de connexion a l'equipe : %s\n", ((t_team)it->data)->name);
-  ((t_team)it->data)->remaining -= 1;
+  if (((t_team)it->data)->remaining > 0)
+    ((t_team)it->data)->remaining -= 1;
+  else
+    return (-1);
   return (((t_team)it->data)->remaining);
 }
 
@@ -35,8 +38,13 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
 
   if (data)
     {
-      if ((nb_client = chk_team(server, data)) == -1)
-	return (FALSE);
+      if ((nb_client = chk_team(server, data)) < 0)
+	{
+	  printf("Pas assez de place dans l'équipe ou équipe inconnue\n"); // TODO affichage tmp
+	  player->team = strdup("");
+	  list_push_back_new(player->cm.out, "ko\n", 4);
+	  return (FALSE);
+	}
       printf("test nb_client : %d\n", nb_client); // TODO affichage tmp
       asprintf(&str, "%d\n", nb_client);
       list_push_back_new(player->cm.out, str, strlen(str) + 1);
@@ -46,6 +54,7 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
       list_push_back_new(player->cm.out, str, strlen(str) + 1);
       free(str);
       player->welcome = TRUE;
+      player->team = strdup(data);
       list_pop_front(player->cm.in);
     }
   return (TRUE);

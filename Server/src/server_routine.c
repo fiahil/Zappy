@@ -2,6 +2,7 @@
 ** Made by benjamin businaro
 */
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,6 +10,7 @@
 #include "def.h"
 #include "clock.h"
 #include "network.h"
+#include "algorithm.h"
 #include "cmd_parse.h"
 #include "msgout_cmd.h"
 #include "server_routine.h"
@@ -46,15 +48,29 @@ static void	welcome_new_player(t_data_serv ds, t_player this, char *buf)
     this->dead = TRUE;
 }
 
+static int      func_cmp(void *s1, size_t s1len, void *s2, size_t s2len)
+{
+  (void)s1len;
+  (void)s2len;
+  return (strcmp(((t_team)s1)->name, (char*)s2));
+}
+
 void		server_routine_input(t_data_serv ds, t_player this)
 {
   char			*buf;
   t_proc_func		ret;
+  t_iter		*it;
 
   ret = NULL;
   if ((buf = my_receive(this->cm.sock.fd)) == (char*)(-1))
     {
       this->cm.online = FALSE;
+      if (strcmp(this->team, ""))
+	{
+	  assert((it = list_find_cmp(ds->teams, &func_cmp, this->team, 0)) != NULL);
+	  ((t_team)it->data)->remaining += 1;
+	}
+      free(this->team);
       close(this->cm.sock.fd);
       puts(".:: Client disconnected ::.");
       fflush(0);

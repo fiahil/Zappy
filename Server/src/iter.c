@@ -60,7 +60,7 @@ static void	push_new_action(t_player_action pa)
 	  get_time_per_function(&(act->time), ret, g_ds->t);
 	  act->player = pa->player;
 	  act->param = strdup(list_front(pa->player->cm.in) + off);
-	  pqueue_push(g_ds->action, &(act), sizeof(&act));
+	  pqueue_push(g_ds->action, act, sizeof(*act));
 	  pa->player->cm.is_processing = TRUE;
 	}
       list_pop_front(pa->player->cm.in);

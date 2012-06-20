@@ -80,7 +80,7 @@ int	sort_player_life(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
 
 
 
-static void	set_timeout_action(t_player_action *ptr, t_timeval time)
+static void	set_timeout_action(t_player_action ptr, t_timeval time)
 {
   t_u_timeval	current;
 
@@ -91,14 +91,14 @@ static void	set_timeout_action(t_player_action *ptr, t_timeval time)
       return ;
     }
   get_current_time(&current);
-  if ((*ptr)->time.tv_usec - current.tv_usec < 0)
+  if (ptr->time.tv_usec - current.tv_usec < 0)
     time->tv_usec = 0;
   else
-    time->tv_usec = (*ptr)->time.tv_usec - current.tv_usec;
-  if ((*ptr)->time.tv_sec - current.tv_sec < 0)
+    time->tv_usec = ptr->time.tv_usec - current.tv_usec;
+  if (ptr->time.tv_sec - current.tv_sec < 0)
     time->tv_sec = 0;
   else
-    time->tv_sec = (*ptr)->time.tv_sec - current.tv_sec;
+    time->tv_sec = ptr->time.tv_sec - current.tv_sec;
   // or first finish incant or first player dead (with a sort)
 }
 

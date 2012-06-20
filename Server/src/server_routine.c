@@ -13,6 +13,7 @@
 #include "algorithm.h"
 #include "cmd_parse.h"
 #include "msgout_cmd.h"
+#include "team_manager.h"
 #include "server_routine.h"
 #include "string_manager.h"
 
@@ -48,13 +49,6 @@ static void	welcome_new_player(t_data_serv ds, t_player this, char *buf)
     this->dead = TRUE;
 }
 
-static int      func_cmp(void *s1, size_t s1len, void *s2, size_t s2len)
-{
-  (void)s1len;
-  (void)s2len;
-  return (strcmp(((t_team)s1)->name, (char*)s2));
-}
-
 void		server_routine_input(t_data_serv ds, t_player this)
 {
   char			*buf;
@@ -67,7 +61,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
       this->cm.online = FALSE;
       if (this->team)
 	{
-	  assert((it = list_find_cmp(ds->teams, &func_cmp, this->team, 0)) != NULL);
+	  assert((it = list_find_cmp(ds->teams, &func_cmp_team, this->team, 0)) != NULL);
 	  ((t_team)it->data)->remaining += 1;
 	  free(this->team);
 	}

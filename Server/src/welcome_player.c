@@ -8,19 +8,13 @@
 #include	"def.h"
 #include	"map.h"
 #include	"algorithm.h"
-
-static int	func_cmp(void *s1, size_t s1len, void *s2, size_t s2len)
-{
-  (void)s1len;
-  (void)s2len;
-  return (strcmp(((t_team)s1)->name, (char*)s2));
-}
+#include	"team_manager.h"
 
 static int	chk_team(t_data_serv server, char *data)
 {
   t_iter	*it;
 
-  if ((it = list_find_cmp(server->teams, &func_cmp, data, 0)) == NULL)
+  if ((it = list_find_cmp(server->teams, &func_cmp_team, data, 0)) == NULL)
     return (-1);
   printf("Demande de connexion a l'equipe : %s\n", ((t_team)it->data)->name);
   if (((t_team)it->data)->remaining > 0)

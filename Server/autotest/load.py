@@ -55,9 +55,8 @@ while 1:
   time.sleep(2)
   print "- Send", j, rd
   while i < len(clients):
-    clients[i].send("broadcast Je suis un gentil poney!\n")
+    clients[i].send(rd + "\n")
     i += 1
-
 
 p.communicate()
 time.sleep(20)

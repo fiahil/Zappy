@@ -16,7 +16,7 @@
 
 static void		init_act(t_data_serv ds, t_player this, t_proc_func ret)
 {
-  t_player_action	act;
+  t_u_player_action	act;
   int			off;
 
   off = -1;
@@ -26,14 +26,14 @@ static void		init_act(t_data_serv ds, t_player this, t_proc_func ret)
 	msgout_fail(this->cm.out);
       else
 	{
-	  if (!(act = malloc(sizeof(*act))))
-	    exit(1); // TODO
-	  act->action = ret;
-	  act->done = FALSE;
-	  get_time_per_function(&(act->time), ret, ds->t);
-	  act->player = this;
-	  act->param = strdup(list_front(this->cm.in) + off);
-	  pqueue_push(ds->action, &(act), sizeof(&act));
+	  /* if (!(act = malloc(sizeof(*act)))) */
+	  /*   exit(1); // TODO */
+	  act.action = ret;
+	  act.done = FALSE;
+	  get_time_per_function(&(act.time), ret, ds->t);
+	  act.player = this;
+	  act.param = strdup(list_front(this->cm.in) + off);
+	  pqueue_push(ds->action, &(act), sizeof(act));
 	  this->cm.is_processing = TRUE;
 	}
       list_pop_front(this->cm.in);

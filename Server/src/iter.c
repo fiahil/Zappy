@@ -99,26 +99,29 @@ static void		iter_lose_life(void *ptr, size_t s)
   int		i;
 
   (void)s;
-  i = 0;
-  val = g_current.tv_usec - g_last.tv_usec;
-  val += ((g_current.tv_sec - g_last.tv_sec) * 1000000.0);
-  val /= 1000000.0;
-  val /= (1.0 / g_ds->t);
-  dmg = val;
-  while (!i)
-    if (dmg < (*(t_player*)ptr)->inv.cur_life)
-      {
-	(*(t_player*)ptr)->inv.cur_life -= dmg;
-	i = 1;
-      }
-    else
-      {
-	dmg -= (*(t_player*)ptr)->inv.cur_life;
-	(*(t_player*)ptr)->inv.cur_life = 127;
-	(*(t_player*)ptr)->inv.resources[FOOD] -= 1;
-      }
-  if ((*(t_player*)ptr)->inv.resources[FOOD] <= 0)
-    (*(t_player*)ptr)->dead = TRUE;
+  if ((*(t_player*)ptr)->welcome)
+    {
+      i = 0;
+      val = g_current.tv_usec - g_last.tv_usec;
+      val += ((g_current.tv_sec - g_last.tv_sec) * 1000000.0);
+      val /= 1000000.0;
+      val /= (1.0 / g_ds->t);
+      dmg = val;
+      while (!i)
+	if (dmg < (*(t_player*)ptr)->inv.cur_life)
+	  {
+	    (*(t_player*)ptr)->inv.cur_life -= dmg;
+	    i = 1;
+	  }
+	else
+	  {
+	    dmg -= (*(t_player*)ptr)->inv.cur_life;
+	    (*(t_player*)ptr)->inv.cur_life = 127;
+	    (*(t_player*)ptr)->inv.resources[FOOD] -= 1;
+	  }
+      if ((*(t_player*)ptr)->inv.resources[FOOD] <= 0)
+	(*(t_player*)ptr)->dead = TRUE;
+    }
 }
 
 void		iter_client(t_select_manager sm, t_data_serv ds)

@@ -86,8 +86,8 @@ static void	set_timeout_action(t_player_action *ptr, t_timeval time)
 
   if (!ptr)
     {
-      time->tv_usec = 1000;
-      time->tv_sec = 1000;
+      time->tv_usec = 10000;
+      time->tv_sec = 10000;
       return ;
     }
   get_current_time(&current);
@@ -109,8 +109,8 @@ static void set_timeout_death(t_data_serv ds, t_timeval time)
 
   if (!ptr)
     {
-      time->tv_usec = 1000;
-      time->tv_sec = 1000;
+      time->tv_usec = 10000;
+      time->tv_sec = 10000;
       return ;
     }
   if ((*ptr)->inv.resources[FOOD] <= 0)

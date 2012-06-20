@@ -22,6 +22,8 @@
 
 static t_select_manager		g_sm = 0;
 static t_data_serv		g_ds = 0;
+static t_u_timeval		g_last = {0, 0};
+static t_u_timeval		g_current = {0, 0};
 
 static void	iter_rds(void *ptr, size_t s)
 {
@@ -86,8 +88,37 @@ static void	iter_action(void *ptr, size_t s)
       printf("Processing \"%s\" ... \n",
 	     (char*)(list_front((*((t_player_action*)ptr))->player->cm.in))); // TODO affichage tmp
       fflush(0);
-      push_new_action(*((t_player_action*)ptr)); // TODO PARAMETRE
+      push_new_action(*((t_player_action*)ptr));
     }
+}
+
+static void		iter_lose_life(void *ptr, size_t s)
+{
+  double	val;
+  int		dmg;
+  int		i;
+
+  (void)s;
+  i = 0;
+  val = g_current.tv_usec - g_last.tv_usec;
+  val += ((g_current.tv_sec - g_last.tv_sec) * 1000000.0);
+  val /= 1000000.0;
+  val /= (1.0 / g_ds->t);
+  dmg = val;
+  while (!i)
+    if (dmg < (*(t_player*)ptr)->inv.cur_life)
+      {
+	(*(t_player*)ptr)->inv.cur_life -= dmg;
+	i = 1;
+      }
+    else
+      {
+	dmg -= (*(t_player*)ptr)->inv.cur_life;
+	(*(t_player*)ptr)->inv.cur_life = 127;
+	(*(t_player*)ptr)->inv.resources[FOOD] -= 1;
+      }
+  if ((*(t_player*)ptr)->inv.resources[FOOD] <= 0)
+    (*(t_player*)ptr)->dead = TRUE;
 }
 
 void		iter_client(t_select_manager sm, t_data_serv ds)
@@ -97,6 +128,9 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
   g_sm = sm;
   g_ds = ds;
   select_manager(ds, sm);
+  get_current_time(&g_current);
+  if ((g_last.tv_sec) || (g_last.tv_usec))
+    list_for_each(ds->player, &iter_lose_life);
   if (select_isset(sm, ds->sock.fd))
     {
       player = init_player();
@@ -110,5 +144,7 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
   list_remove_if(&(ds->action->queue), &action_cleaner);
   list_for_each(ds->player, &iter_out);
   list_sort(ds->player, &sort_player_life);
+  g_last.tv_sec = g_current.tv_sec;
+  g_last.tv_usec = g_current.tv_usec;
   set_timeout_select(ds, &(sm->timeout));
 }

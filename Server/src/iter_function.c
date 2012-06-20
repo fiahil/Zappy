@@ -10,6 +10,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "handle_error.h"
 #include "iter_function.h"
@@ -120,17 +121,17 @@ static void set_timeout_death(t_data_serv ds, t_timeval time)
     }
   tot = ((*ptr)->inv.resources[FOOD] - 1) * 127;
   tot += (*ptr)->inv.cur_life;
-  tot *= 1 / ds->t;
-  tot *= 1000000;
-  time->tv_usec = (int)tot / 1000000;
-  time->tv_sec = (int)tot % 1000000;
+  tot *= 1.0 / ds->t;
+  tot *= 1000000.0;
+  time->tv_sec = (int)tot / 1000000;
+  time->tv_usec = (int)tot % 1000000;
 }
 
-static void set_timeout_incant(t_player *ptr, t_timeval time)
-{
-  (void)ptr;
-  (void)time;
-}
+/* static void set_timeout_incant(t_player *ptr, t_timeval time) */
+/* { */
+/*   (void)ptr; */
+/*   (void)time; */
+/* } */
 
 void	set_timeout_select(t_data_serv ds, t_timeval time)
 {

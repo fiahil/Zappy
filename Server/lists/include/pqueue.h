@@ -15,6 +15,7 @@ void		init_pqueue(t_pqueue *this, t_cmp cmp);
 void		pqueue_push(t_pqueue *this, void *data, size_t len);
 void		*pqueue_next(t_pqueue *this);
 void		pqueue_pop(t_pqueue *this);
+void		delete_pqueue(t_pqueue *this);
 
 #endif /* __PQUEUE_H__ */
 

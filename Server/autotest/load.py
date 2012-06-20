@@ -9,7 +9,7 @@ import random
 
 print " - Launching Server"
 
-command = "../zappy -c 1000 -x 100 -y 100 -t 1"
+command = "../zappy -c 1000 -x 100 -y 100"
 f = open("./log_server", "w")
 p = subprocess.Popen(shlex.split(command), stdout=f)
 
@@ -30,15 +30,14 @@ while i < 1000:
     print "- Socket {0} error({1}): {2}".format(i, e.errno, e.strerror)
     clients.pop()
   clients[i].send("Poney\n")
-  i += 1
-
-# "broadcast Je suis un gentil poney!",
+  i += 1 
 
 cmd = ["voir",
        "avance",
        "gauche",
        "droite",
        "inventaire",
+       "broadcast Je suis un gentil poney!",
        "prend nourriture",
        "prend linemate",
        "prend deraumere",

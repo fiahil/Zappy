@@ -9,7 +9,7 @@ import random
 
 print " - Launching Server"
 
-command = "../zappy -c 1000 -x 100 -y 100"
+command = "../zappy -c 1000 -x 100 -y 100 -t 1"
 f = open("./log_server", "w")
 p = subprocess.Popen(shlex.split(command), stdout=f)
 
@@ -53,7 +53,7 @@ while 1:
   j += 1
   i = 0
   rd = random.choice(cmd)
-  time.sleep(5)
+  time.sleep(2)
   print "- Send", j, rd
   while i < len(clients):
     clients[i].send("broadcast Je suis un gentil poney!\n")

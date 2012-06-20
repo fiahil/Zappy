@@ -28,15 +28,12 @@ static t_u_timeval		g_current = {0, 0};
 static void	iter_rds(void *ptr, size_t s)
 {
   (void)s;
-  if (select_isset(g_sm, (*(t_player*)ptr)->cm.sock.fd)
-      && (*(t_player*)ptr)->cm.online)
+  if (select_r_isset(g_sm, (*(t_player*)ptr)->cm.sock.fd) &&
+      (*(t_player*)ptr)->cm.online)
     server_routine_input(g_ds, *(t_player*)ptr);
-}
-
-static void	iter_out(void *ptr, size_t s)
-{
-  (void)s;
-  server_routine_output(g_ds, *(t_player*)ptr);
+  if (select_w_isset(g_sm, (*(t_player*)ptr)->cm.sock.fd) &&
+      (*(t_player*)ptr)->cm.online)
+    server_routine_output(g_ds, *(t_player*)ptr);
 }
 
 static void	push_new_action(t_player_action pa)
@@ -131,7 +128,7 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
   get_current_time(&g_current);
   if ((g_last.tv_sec) || (g_last.tv_usec))
     list_for_each(ds->player, &iter_lose_life);
-  if (select_isset(sm, ds->sock.fd))
+  if (select_r_isset(sm, ds->sock.fd))
     {
       player = init_player();
       if (accept_connection(sm, ds, player) < 0)
@@ -142,7 +139,6 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
   list_for_each(ds->player, &iter_rds);
   list_for_each(&(ds->action->queue), &iter_action);
   list_remove_if(&(ds->action->queue), &action_cleaner);
-  list_for_each(ds->player, &iter_out);
   list_sort(ds->player, &sort_player_life);
   g_last.tv_sec = g_current.tv_sec;
   g_last.tv_usec = g_current.tv_usec;

@@ -90,10 +90,8 @@ void		server_routine_input(t_data_serv ds, t_player this)
 
 void		server_routine_output(t_data_serv ds, t_player this)
 {
-  (void)ds; // TODO tmp
-  while (!this->cm.out->empty)
-    {
-      my_send(this->cm.sock.fd, list_front(this->cm.out));
-      list_pop_front(this->cm.out);
-    }
+  (void)ds;
+  assert(!this->cm.out->empty);
+  my_send(this->cm.sock.fd, list_front(this->cm.out));
+  list_pop_front(this->cm.out);
 }

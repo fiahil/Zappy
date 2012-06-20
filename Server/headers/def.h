@@ -211,6 +211,7 @@ struct s_select_manager
 {
   int		max_fd;
   fd_set	rds;
+  fd_set	wds;
   t_u_timeval	timeout;
 };
 

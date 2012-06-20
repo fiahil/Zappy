@@ -58,7 +58,7 @@ all:		$(NAME)
 $(NAME):	$(OBJ)
 		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
-libclists:
+liblist:
 		@$(MAKE) all -C ./lists
 		@$(MAKE) clean -C ./lists
 

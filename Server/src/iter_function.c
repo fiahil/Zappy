@@ -20,9 +20,9 @@
 int	action_cleaner(void *ptr, size_t s)
 {
   (void)s;
-  if ((*(t_player_action*)ptr)->done == TRUE)
+  if (((t_player_action)ptr)->done == TRUE)
     {
-      free((*(t_player_action*)ptr)->param);
+      free(((t_player_action)ptr)->param);
       return (1);
     }
   return (0);

@@ -63,7 +63,6 @@ void		server_routine_input(t_data_serv ds, t_player this)
 	{
 	  assert((it = list_find_cmp(ds->teams, &func_cmp_team, this->team, 0)) != NULL);
 	  ((t_team)it->data)->remaining += 1;
-	  free(this->team);
 	}
       close(this->cm.sock.fd);
       puts(".:: Client disconnected ::.");

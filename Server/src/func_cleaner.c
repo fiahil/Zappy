@@ -3,14 +3,15 @@
 #include	<stdlib.h>
 
 #include	"def.h"
+#include	"player.h"
 
 int		player_cleaner(void *ptr, size_t s)
 {
   (void)s;
-  if (((t_player)ptr)->dead == TRUE)
+  if ((*(t_player*)ptr)->deleted == TRUE)
     {
-      printf("Suppression du joueur %d\n", ((t_player)ptr)->id); // TODO affichage tmp
-      free(((t_player)ptr)->team);
+      printf("Suppression du joueur %d\n", (*(t_player*)ptr)->id); // TODO affichage 
+      delete_player(*(t_player*)ptr);
       return (1);
     }
   return (0);

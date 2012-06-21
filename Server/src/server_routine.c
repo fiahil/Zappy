@@ -96,4 +96,12 @@ void		server_routine_output(t_data_serv ds, t_player this)
   assert(!this->cm.out->empty);
   my_send(this->cm.sock.fd, list_front(this->cm.out));
   list_pop_front(this->cm.out);
+  if (this->dead == TRUE && this->deleted == FALSE)
+  {
+    this->deleted = TRUE;
+    close(this->cm.sock.fd);
+    this->cm.online = FALSE;
+    assert(!strcmp(list_front(this->cm.out), "mort\n") ||
+	!strcmp(list_front(this->cm.out), "ko\n"));
+  }
 }

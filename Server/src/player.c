@@ -32,6 +32,7 @@ t_player	create_player()
   player->pos.y = random() % get_map(NULL)->size_y;
   player->dir = random() % 4;
   player->dead = FALSE;
+  player->deleted = FALSE;
   player->welcome = FALSE;
   player->inv.status = FALSE;
   memset(player->inv.resources, '\0', sizeof(int) * LAST);

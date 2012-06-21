@@ -40,8 +40,6 @@ int	sort_player_life(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
   return (0);
 }
 
-
-
 static void	set_timeout_action(t_player_action ptr, t_timeval time)
 {
   t_u_timeval	current;

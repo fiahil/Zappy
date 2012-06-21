@@ -32,30 +32,14 @@ while i < 1000:
   clients[i].send("Poney\n")
   i += 1 
 
-cmd = ["voir",
-       "avance",
-       "gauche",
-       "droite",
-       "inventaire",
-       "broadcast Je suis un gentil poney!",
-       "prend nourriture",
-       "prend linemate",
-       "prend deraumere",
-       "pose deraumere",
-       "incantation",
-       "connect_nbr",
-       "fork",
-       "expulse"]
-
 j = 0
 while 1:
   j += 1
   i = 0
-  rd = random.choice(cmd)
   time.sleep(2)
-  print "- Send", j, rd
+  print "- Send", j, "broadcast JE SUIS UN PONEY FRINGUANT!"
   while i < len(clients):
-    clients[i].send(rd + "\n")
+    clients[i].send("broadcast JE SUIS UN PONEY FRINGUANT!\n")
     i += 1
 
 p.communicate()

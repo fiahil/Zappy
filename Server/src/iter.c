@@ -33,10 +33,10 @@ static void	iter_rds(void *ptr, size_t s)
 {
   (void)s;
   if (select_r_isset(g_sm, (*(t_player*)ptr)->cm.sock.fd) &&
-      (*(t_player*)ptr)->cm.online)
+      (*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->dead == FALSE)
     server_routine_input(g_ds, *(t_player*)ptr);
   if (select_w_isset(g_sm, (*(t_player*)ptr)->cm.sock.fd) &&
-      (*(t_player*)ptr)->cm.online)
+      (*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->deleted == FALSE)
     server_routine_output(g_ds, *(t_player*)ptr);
 }
 
@@ -54,8 +54,6 @@ static void	push_new_action(t_player_action pa)
 	msgout_fail(pa->player->cm.out);
       else
 	{
-	  //if (!(act = malloc(sizeof(*act))))
-	  //exit(1); // TODO retour d'erreur
 	  act.action = ret;
 	  act.done = FALSE;
 	  get_time_per_function(&(act.time), ret, g_ds->t);
@@ -78,8 +76,9 @@ static void	iter_action(void *ptr, size_t s)
       && !(((t_player_action)ptr)->done)
       && cmp_time(&current, &(((t_player_action)ptr)->time)) == 1)
     {
-      (((t_player_action)ptr)->action)
-	(((t_player_action)ptr)->player, ((t_player_action)ptr)->param, g_ds);
+      if (((t_player_action)ptr)->player->dead == FALSE)
+	(((t_player_action)ptr)->action)
+	  (((t_player_action)ptr)->player, ((t_player_action)ptr)->param, g_ds);
       ((t_player_action)ptr)->done = TRUE;
       ((t_player_action)ptr)->player->cm.is_processing = FALSE;
     }
@@ -144,11 +143,12 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
 	list_push_back_new(ds->player, &player, sizeof(&player));
     }
   list_for_each(ds->player, &iter_rds);
-  list_for_each(&(ds->action->queue), &iter_action); //TODO WHAT?
+  list_for_each(&(ds->action->queue), &iter_action);
   list_remove_if(&(ds->action->queue), &action_cleaner);
   list_for_each(ds->incant, &iter_incant);
   list_remove_if(ds->incant, &incant_cleaner);
   list_sort(ds->player, &sort_player_life);
+  list_remove_if(ds->player, &player_cleaner);
   g_last.tv_sec = g_current.tv_sec;
   g_last.tv_usec = g_current.tv_usec;
   set_timeout_select(ds, &(sm->timeout));

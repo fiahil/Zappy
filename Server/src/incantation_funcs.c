@@ -40,6 +40,7 @@ void	level_up(t_incant incant)
 {
   t_iter	*it;
   t_map		map;
+  int		i;
 
   map = get_map(NULL);
   it = map->map[incant->pos.y][incant->pos.x]->players->head;
@@ -48,8 +49,10 @@ void	level_up(t_incant incant)
       ++(*(t_player *)(it->data))->lvl;
       it = it->next;
     }
+  i = 0;
+  while (++i < LAST)
+    map->map[incant->pos.y][incant->pos.x]->inv.resources[i] = 0;
   printf("Level up\n");
-  // Remove used resources
 }
 
 void	fill_hashcode(t_hash hashcode, t_square cell)

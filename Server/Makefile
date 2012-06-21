@@ -22,6 +22,7 @@ SRC	=	src/main.c			\
 		src/my_itoa.c			\
 		src/map.c			\
 		src/clock.c			\
+		src/func_cleaner.c		\
 		src/process_function_1.c	\
 		src/process_function_2.c	\
 		src/process_function_3.c	\

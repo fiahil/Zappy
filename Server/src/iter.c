@@ -16,6 +16,7 @@
 #include "algorithm.h"
 #include "cmd_parse.h"
 #include "msgout_cmd.h"
+#include "func_cleaner.h"
 #include "handle_error.h"
 #include "iter_function.h"
 #include "select_manager.h"
@@ -141,7 +142,7 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
 	list_push_back_new(ds->player, &player, sizeof(&player));
     }
   list_for_each(ds->player, &iter_rds);
-  list_for_each(&(ds->action->queue), &iter_action);
+  list_for_each(&(ds->action->queue), &iter_action); //TODO WHAT?
   list_remove_if(&(ds->action->queue), &action_cleaner);
   // Incantation loop here
   list_sort(ds->player, &sort_player_life);

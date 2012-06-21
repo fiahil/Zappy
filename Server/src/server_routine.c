@@ -13,6 +13,7 @@
 #include "algorithm.h"
 #include "cmd_parse.h"
 #include "msgout_cmd.h"
+#include "func_cleaner.h"
 #include "team_manager.h"
 #include "server_routine.h"
 #include "string_manager.h"
@@ -46,7 +47,7 @@ static void	welcome_new_player(t_data_serv ds, t_player this, char *buf)
   if (!welcome_player(ds, this, buf))
     {
       this->dead = TRUE;
-      msgout_mort(this->cm.out);
+      msgout_fail(this->cm.out);
     }
 }
 

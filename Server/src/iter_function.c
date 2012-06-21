@@ -18,17 +18,6 @@
 #include "clock.h"
 #include "player.h"
 
-int		action_cleaner(void *ptr, size_t s)
-{
-  (void)s;
-  if (((t_player_action)ptr)->done == TRUE)
-    {
-      free(((t_player_action)ptr)->param);
-      return (1);
-    }
-  return (0);
-}
-
 int	sort_player_life(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
 {
   int	val1;

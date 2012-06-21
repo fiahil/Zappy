@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "def.h"
+#include "map.h"
 
 static t_u_hash	g_hash_cmp[] = 
   {

@@ -40,7 +40,8 @@ SRC	=	src/main.c			\
 		src/iter_function.c		\
 		src/fill_map.c			\
 		src/broadcast.c			\
-		src/incantation_funcs.c
+		src/incantation_funcs.c		\
+		src/player.c
 
 OBJ	=	$(SRC:.c=.o)
 

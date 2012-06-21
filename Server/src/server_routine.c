@@ -44,7 +44,10 @@ static void		init_act(t_data_serv ds, t_player this, t_proc_func ret)
 static void	welcome_new_player(t_data_serv ds, t_player this, char *buf)
 {
   if (!welcome_player(ds, this, buf))
-    this->dead = TRUE;
+    {
+      this->dead = TRUE;
+      msgout_mort(this->cm.out);
+    }
 }
 
 void		server_routine_input(t_data_serv ds, t_player this)

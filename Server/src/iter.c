@@ -116,7 +116,10 @@ static void		iter_lose_life(void *ptr, size_t s)
 	(*(t_player*)ptr)->inv.resources[FOOD] -= 1;
       }
   if ((*(t_player*)ptr)->inv.resources[FOOD] <= 0)
-    (*(t_player*)ptr)->dead = TRUE;
+    {
+      (*(t_player*)ptr)->dead = TRUE;
+      msgout_mort((*(t_player*)ptr)->cm.out);
+    }
 }
 
 void		iter_client(t_select_manager sm, t_data_serv ds)

@@ -11,7 +11,9 @@
 #include "def.h"
 #include "iter.h"
 #include "clock.h"
+#include "player.h"
 #include "network.h"
+#include "algorithm.h"
 #include "cmd_parse.h"
 #include "msgout_cmd.h"
 #include "handle_error.h"
@@ -116,7 +118,10 @@ static void		iter_lose_life(void *ptr, size_t s)
 	(*(t_player*)ptr)->inv.resources[FOOD] -= 1;
       }
   if ((*(t_player*)ptr)->inv.resources[FOOD] <= 0)
-    (*(t_player*)ptr)->dead = TRUE;
+    {
+      (*(t_player*)ptr)->dead = TRUE;
+      msgout_mort((*(t_player*)ptr)->cm.out);
+    }
 }
 
 void		iter_client(t_select_manager sm, t_data_serv ds)
@@ -131,9 +136,9 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
     list_for_each(ds->player, &iter_lose_life);
   if (select_r_isset(sm, ds->sock.fd))
     {
-      player = init_player();
+      player = create_player();
       if (accept_connection(sm, ds, player) < 0)
-	free(player);
+	delete_player(player);
       else
 	list_push_back_new(ds->player, &player, sizeof(&player));
     }

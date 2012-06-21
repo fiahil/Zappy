@@ -32,6 +32,9 @@ typedef struct s_hash		t_u_hash;
 typedef struct s_incant*	t_incant;
 typedef struct s_incant		t_u_incant;
 
+typedef struct s_egg*		t_egg;
+typedef struct s_egg		t_u_egg;
+
 typedef struct s_select_manager* t_select_manager;
 typedef struct s_sock_layer*	t_sock_layer;
 typedef struct s_client_manager*	t_client_manager;
@@ -201,12 +204,11 @@ struct			s_egg
 {
   t_bool		status;
   int			id;
-  char			*team;
-  t_u_pos		pos;
+  t_player		fetus;
   t_u_timeval		timeout;
 };
 
-struct	s_hash
+struct			s_hash
 {
   int			nb_play;
   int			linemate;
@@ -217,7 +219,7 @@ struct	s_hash
   int			thystame;
 };
 
-struct s_incant
+struct			s_incant
 {
   t_u_hash		hashcode;
   t_u_pos		pos;
@@ -236,6 +238,7 @@ struct			s_data_serv
   t_pqueue		*action;
   t_list		*send_q;
   t_list		*incant;
+  t_list		*egg;
 };
 
 struct			s_team

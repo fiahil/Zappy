@@ -52,6 +52,33 @@ static void	init_teams(t_data_serv data_serv, t_arg *args)
   args->teams = NULL;
 }
 
+void		clean_all(t_data_serv ds)
+{
+  t_map	map;
+  int	x;
+  int	y;
+
+  delete_list(ds->player);
+  delete_list(ds->teams);
+  delete_pqueue(ds->action);
+  delete_list(ds->send_q);
+  map = get_map(NULL);
+  y = 0;
+  while (y < map->size_y)
+    {
+      x = 0;
+      while (x < map->size_x)
+	delete_list(map->map[y][x++]->players);
+      ++y;
+    }
+  free(map->map[0][0]);
+  x = 0;
+  while (x < map->size_y)
+    free(map->map[x++]);
+  free(map->map);
+  free(map);
+}
+
 int		main(int ac, char **av)
 {
   time_t	now;
@@ -78,10 +105,15 @@ int		main(int ac, char **av)
   data_serv.action = new_pqueue(&cmp_action);
   data_serv.send_q = new_list(NULL, NULL, NULL);
   data_serv.incant = new_list(NULL, NULL, NULL);
+  data_serv.egg = new_list(NULL, NULL, NULL);
   data_serv.t = args.exec_time;
   set_connection(&data_serv, args.port);
   //  unitest_clock(); // TODO unitest
   if (run(&data_serv) < 0)
-    return (EXIT_FAILURE);
+    {
+      clean_all(&data_serv);
+      return (EXIT_FAILURE);
+    }
+  clean_all(&data_serv);
   return (EXIT_SUCCESS);
 }

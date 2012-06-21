@@ -13,8 +13,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "msgout_cmd.h"
+#include "def.h"
 #include "algorithm.h"
+#include "msgout_cmd.h"
+#include "egg_manager.h"
 #include "team_manager.h"
 #include "process_function.h"
 #include "incant.h"
@@ -61,9 +63,12 @@ t_bool		incantation_process_function(t_player this, char *data, t_data_serv info
 
 t_bool		fork_process_function(t_player this, char *data, t_data_serv info)
 {
+  t_u_egg	egg;
+
   (void)data;
-  (void)info;
   list_push_back_new(this->cm.out, "I fork !\n", strlen("I fork !\n") + 1);
+  init_egg(&egg);
+  list_push_front_new(info->egg, &egg, sizeof(egg));
   msgout_fork(this->cm.out);
   return (TRUE);
 }

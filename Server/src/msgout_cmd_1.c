@@ -1,3 +1,8 @@
+
+#define		_GNU_SOURCE
+
+#include	<stdio.h>
+#include	<stdlib.h>
 #include	<string.h>
 #include	"msgout_cmd.h"
 
@@ -6,10 +11,13 @@ void		msgout_broadcast(t_list *out)
   list_push_back_new(out, "ok\n", 4);
 }
 
-void		msgout_incantation(t_list *out)
+void		msgout_incantation(t_list *out, int lvl)
 {
-  (void)out;
-  // TODO
+  char		*str;
+
+  asprintf(&str, "elevation en cours\nniveau actuel: %d\n", lvl);
+  list_push_back_new(out, str, strlen(str) + 1);
+  free(str);
 }
 
 void		msgout_fork(t_list *out)

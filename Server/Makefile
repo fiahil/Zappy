@@ -30,6 +30,7 @@ SRC	=	src/main.c			\
 		src/msgout_cmd_3.c		\
 		src/team_manager.c		\
 		src/string_manager.c		\
+		src/egg_manager.c		\
 		src/network.c			\
 		src/my_send.c			\
 		src/my_receive.c		\
@@ -40,7 +41,8 @@ SRC	=	src/main.c			\
 		src/iter_function.c		\
 		src/fill_map.c			\
 		src/broadcast.c			\
-		src/incantation_funcs.c
+		src/incantation_funcs.c		\
+		src/player.c
 
 OBJ	=	$(SRC:.c=.o)
 

@@ -16,8 +16,7 @@
 #include "iter_function.h"
 #include "map.h"
 #include "clock.h"
-
-static int	g_id_player = 0;
+#include "player.h"
 
 int		action_cleaner(void *ptr, size_t s)
 {
@@ -28,35 +27,6 @@ int		action_cleaner(void *ptr, size_t s)
       return (1);
     }
   return (0);
-}
-
-t_player	init_player()
-{
-  t_player player;
-
-  if (!(player = malloc(sizeof(t_u_player))))
-    handleError("malloc", strerror(errno), -1); // TODO retour erreur
-  player->id = g_id_player++;
-  player->lvl = 1;
-  player->team = NULL;
-  player->pos.x = random() % get_map(NULL)->size_x;
-  player->pos.y = random() % get_map(NULL)->size_y;
-  player->dir = random() % 4;
-  player->dead = FALSE;
-  player->welcome = FALSE;
-  player->inv.status = FALSE;
-  memset(player->inv.resources, '\0', sizeof(int) * LAST);
-  player->inv.resources[FOOD] = 10;
-  player->inv.cur_life = 127;
-  memset(player->cm.stock, '\0', sizeof(player->cm.stock));
-  player->cm.in = new_list(NULL, NULL, NULL);
-  player->cm.out = new_list(NULL, NULL, NULL);
-  player->cm.mode = UNKNOW;
-  player->cm.is_processing = FALSE;
-  player->cm.online = FALSE;
-  list_push_back_new(get_map(NULL)->map[player->pos.y][player->pos.x]->players,
-		     &player, sizeof(&player));
-  return (player);
 }
 
 int	sort_player_life(void *ptr1, size_t sz1, void *ptr2, size_t sz2)

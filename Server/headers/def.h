@@ -119,61 +119,61 @@ typedef t_bool	(*t_proc_func)(t_player, char *, t_data_serv);
  * Struct definition
  */
 
-struct s_map
+struct			s_map
 {
-  int		size_x;
-  int		size_y;
-  t_square	**map;
+  int			size_x;
+  int			size_y;
+  t_square		**map;
 };
 
-struct s_inventory
+struct			s_inventory
 {
-  t_bool	status;
-  int		cur_life;
-  int		resources[LAST];
+  t_bool		status;
+  int			cur_life;
+  int			resources[LAST];
 };
 
-struct s_square
+struct			s_square
 {
-  t_list	*players;
-  t_u_inventory	inv;
+  t_list		*players;
+  t_u_inventory		inv;
 };
 
-struct s_pos
+struct			s_pos
 {
-  int		x;
-  int		y;
+  int			x;
+  int			y;
 };
 
-struct s_player_action
+struct			s_player_action
 {
-  t_proc_func	action;
-  t_u_timeval	time;
-  t_player	player;
-  char		*param;
-  t_bool	done;
+  t_proc_func		action;
+  t_u_timeval		time;
+  t_player		player;
+  char			*param;
+  t_bool		done;
 };
 
-struct s_parse_elem
+struct			s_parse_elem
 {
-  int		size;
-  char const	*cmd;
-  t_proc_func	func;
+  int			size;
+  char const		*cmd;
+  t_proc_func		func;
 };
 
-struct s_time_attrib
+struct			s_time_attrib
 {
-  t_proc_func	func;
-  double	timer;
+  t_proc_func		func;
+  double		timer;
 };
 
-struct s_sock_layer
+struct			s_sock_layer
 {
   int			fd;
   t_u_sock_addr_in	addr;
 };
 
-struct s_client_manager
+struct			s_client_manager
 {
   char			stock[BUFFER_SIZE];
   t_u_sock_layer	sock;
@@ -184,8 +184,9 @@ struct s_client_manager
   t_bool		is_processing;
 };
 
-struct s_player
+struct			s_player
 {
+  int			id;
   int			lvl;
   char			*team;
   t_u_pos		pos;
@@ -196,27 +197,36 @@ struct s_player
   t_u_client_manager	cm;
 };
 
+struct			s_egg
+{
+  t_bool		status;
+  int			id;
+  char			*team;
+  t_u_pos		pos;
+  t_u_timeval		timeout;
+};
+
 struct	s_hash
 {
-  int	nb_play;
-  int	linemate;
-  int	deraumere;
-  int	sibur;
-  int	mendiane;
-  int	phiras;
-  int	thystame;
+  int			nb_play;
+  int			linemate;
+  int			deraumere;
+  int			sibur;
+  int			mendiane;
+  int			phiras;
+  int			thystame;
 };
 
 struct s_incant
 {
-  t_u_hash	hashcode;
-  t_u_pos	pos;
-  t_player	incantor;
-  t_bool	status;
-  t_u_timeval	timeout;
+  t_u_hash		hashcode;
+  t_u_pos		pos;
+  t_player		incantor;
+  t_bool		status;
+  t_u_timeval		timeout;
 };
 
-struct s_data_serv
+struct			s_data_serv
 {
   t_u_sock_layer	sock;
   int			t;
@@ -228,18 +238,18 @@ struct s_data_serv
   t_list		*incant;
 };
 
-struct s_team
+struct			s_team
 {
   char			*name;
   int			remaining;
 };
 
-struct s_select_manager
+struct			s_select_manager
 {
-  int		max_fd;
-  fd_set	rds;
-  fd_set	wds;
-  t_u_timeval	timeout;
+  int			max_fd;
+  fd_set		rds;
+  fd_set		wds;
+  t_u_timeval		timeout;
 };
 
 #endif /* __DEF_H__ */

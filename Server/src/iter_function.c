@@ -17,7 +17,9 @@
 #include "map.h"
 #include "clock.h"
 
-int	action_cleaner(void *ptr, size_t s)
+static int	g_id_player = 0;
+
+int		action_cleaner(void *ptr, size_t s)
 {
   (void)s;
   if (((t_player_action)ptr)->done == TRUE)
@@ -34,6 +36,7 @@ t_player	init_player()
 
   if (!(player = malloc(sizeof(t_u_player))))
     handleError("malloc", strerror(errno), -1); // TODO retour erreur
+  player->id = g_id_player++;
   player->lvl = 1;
   player->team = NULL;
   player->pos.x = random() % get_map(NULL)->size_x;

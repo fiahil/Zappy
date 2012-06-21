@@ -21,6 +21,8 @@
 #include "iter_function.h"
 #include "select_manager.h"
 #include "server_routine.h"
+#include "algorithm.h"
+#include "incant.h"
 
 static t_select_manager		g_sm = 0;
 static t_data_serv		g_ds = 0;
@@ -144,7 +146,8 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
   list_for_each(ds->player, &iter_rds);
   list_for_each(&(ds->action->queue), &iter_action); //TODO WHAT?
   list_remove_if(&(ds->action->queue), &action_cleaner);
-  // Incantation loop here
+  list_for_each(ds->incant, &iter_incant);
+  list_remove_if(ds->incant, &incant_cleaner);
   list_sort(ds->player, &sort_player_life);
   g_last.tv_sec = g_current.tv_sec;
   g_last.tv_usec = g_current.tv_usec;

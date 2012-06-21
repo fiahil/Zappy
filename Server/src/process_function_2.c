@@ -48,7 +48,7 @@ t_bool		incantation_process_function(t_player this, char *data, t_data_serv info
 
   (void)data;
   map = get_map(NULL);
-  init_incant(&incant, this, map->map[this->pos.y][this->pos.x]);
+  init_incant(&incant, this, map->map[this->pos.y][this->pos.x], info->t);
   if (incant_is_ok(&incant))
     printf("Incant is Ok\n");
   else

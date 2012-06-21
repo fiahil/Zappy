@@ -13,7 +13,7 @@ void		msgout_prend_objet(t_list*, t_bool);
 void		msgout_pose_objet(t_list*, t_bool);
 void		msgout_expulse(t_list*, t_bool);
 void		msgout_broadcast(t_list*);
-void		msgout_incantation(t_list*);
+void		msgout_incantation(t_list*, int);
 void		msgout_fork(t_list*);
 void		msgout_connect_nbr(t_list*, char*);
 void		msgout_mort(t_list*);

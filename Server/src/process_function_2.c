@@ -38,11 +38,22 @@ t_bool		broadcast_process_function(t_player this, char *data, t_data_serv info)
 
 t_bool		incantation_process_function(t_player this, char *data, t_data_serv info)
 {
-  (void)data;
-  (void)info;
-  list_push_back_new(this->cm.out, "Incantation starting !\n",
-		     strlen("Incantation starting !\n") + 1);
+  t_u_incant	incant;
+  t_map		map;
+  char		*log;
 
+  (void)data;
+  map = get_map(NULL);
+  init_incant(&incant, this, map->map[this->pos.y][this->pos.x]);
+  if (incant_is_ok(&incant))
+    printf("Incant is Ok\n");
+  else
+    printf("Incant ain't Ok\n");
+  asprintf(&log, "elevation en cours\nniveau actuel: %d\n", this->lvl);
+  printf("%s\n", log);
+  list_push_back_new(info->incant, &incant, sizeof(incant));
+  list_push_back_new(this->cm.out, log, strlen(log) + 1);
+  free(log);
   return (TRUE);
 }
 

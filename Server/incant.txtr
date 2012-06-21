@@ -27,3 +27,5 @@ Boucle de jeu
 	  | Fail	-> envoie `ko' à l'incanteur
 	  | Success	-> rien
 
+Comparaison ressources: OK
+Comparaison joueurs: ~OK (tests required)

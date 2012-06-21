@@ -26,6 +26,12 @@ typedef struct sockaddr_in	t_u_sock_addr_in;
  * Struct typedef
  */
 
+typedef struct s_hash*		t_hash;
+typedef struct s_hash		t_u_hash;
+
+typedef struct s_incant*	t_incant;
+typedef struct s_incant		t_u_incant;
+
 typedef struct s_select_manager* t_select_manager;
 typedef struct s_sock_layer*	t_sock_layer;
 typedef struct s_client_manager*	t_client_manager;
@@ -200,6 +206,26 @@ struct			s_egg
   t_u_timeval		timeout;
 };
 
+struct	s_hash
+{
+  int			nb_play;
+  int			linemate;
+  int			deraumere;
+  int			sibur;
+  int			mendiane;
+  int			phiras;
+  int			thystame;
+};
+
+struct s_incant
+{
+  t_u_hash		hashcode;
+  t_u_pos		pos;
+  t_player		incantor;
+  t_bool		status;
+  t_u_timeval		timeout;
+};
+
 struct			s_data_serv
 {
   t_u_sock_layer	sock;
@@ -209,6 +235,7 @@ struct			s_data_serv
   t_list		*teams;
   t_pqueue		*action;
   t_list		*send_q;
+  t_list		*incant;
 };
 
 struct			s_team

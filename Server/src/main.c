@@ -77,6 +77,7 @@ int		main(int ac, char **av)
   data_serv.player = new_list(NULL, NULL, NULL);
   data_serv.action = new_pqueue(&cmp_action);
   data_serv.send_q = new_list(NULL, NULL, NULL);
+  data_serv.incant = new_list(NULL, NULL, NULL);
   data_serv.t = args.exec_time;
   set_connection(&data_serv, args.port);
   //  unitest_clock(); // TODO unitest

@@ -11,14 +11,15 @@
 #include "def.h"
 #include "iter.h"
 #include "clock.h"
+#include "player.h"
 #include "network.h"
+#include "algorithm.h"
 #include "cmd_parse.h"
 #include "msgout_cmd.h"
 #include "handle_error.h"
 #include "iter_function.h"
 #include "select_manager.h"
 #include "server_routine.h"
-#include "algorithm.h"
 
 static t_select_manager		g_sm = 0;
 static t_data_serv		g_ds = 0;
@@ -130,9 +131,9 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
     list_for_each(ds->player, &iter_lose_life);
   if (select_r_isset(sm, ds->sock.fd))
     {
-      player = init_player();
+      player = create_player();
       if (accept_connection(sm, ds, player) < 0)
-	free(player);
+	delete_player(player);
       else
 	list_push_back_new(ds->player, &player, sizeof(&player));
     }

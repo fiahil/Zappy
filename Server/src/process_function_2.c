@@ -19,6 +19,8 @@
 #include "egg_manager.h"
 #include "team_manager.h"
 #include "process_function.h"
+#include "incant.h"
+#include "map.h"
 
 t_bool		broadcast_process_function(t_player this, char *data, t_data_serv info)
 {

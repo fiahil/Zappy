@@ -29,8 +29,6 @@ static void		init_act(t_data_serv ds, t_player this, t_proc_func ret)
 	msgout_fail(this->cm.out);
       else
 	{
-	  /* if (!(act = malloc(sizeof(*act)))) */
-	  /*   exit(1); // TODO */
 	  act.action = ret;
 	  act.done = FALSE;
 	  get_time_per_function(&(act.time), ret, ds->t);
@@ -61,9 +59,9 @@ void		server_routine_input(t_data_serv ds, t_player this)
       this->cm.online = FALSE;
       if (this->team)
 	{
-	  assert((it = list_find_cmp(ds->teams, &func_cmp_team, this->team, 0)) != NULL);
+	  it = list_find_cmp(ds->teams, &func_cmp_team, this->team, 0);
+	  assert(it != NULL);
 	  ((t_team)it->data)->remaining += 1;
-	  free(this->team);
 	}
       close(this->cm.sock.fd);
       puts(".:: Client disconnected ::.");

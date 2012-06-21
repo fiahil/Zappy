@@ -24,14 +24,30 @@ static int	chk_team(t_data_serv server, char *data)
   return (((t_team)it->data)->remaining);
 }
 
+static int	team_ghost(void *this, size_t len, void *cmp, size_t l2)
+{
+  (void)len;
+  (void)l2;
+  if (cmp && (*(t_player*)this)->team &&
+      !strcmp((*(t_player*)this)->team, (char*)cmp) &&
+      !(*(t_player*)this)->cm.online)
+    return (0);
+  return (-1);
+}
+
 t_bool		welcome_player(t_data_serv server, t_player player, char *data)
 {
   int		nb_client;
   char		*str;
   t_map		map;
+  t_iter	*ghost;
 
   if (data)
     {
+      if ((ghost = list_find_cmp(server->player, &team_ghost, data, 0)))
+	{
+	  puts("Ghost find.");
+	}
       if ((nb_client = chk_team(server, data)) < 0)
 	{
 	  printf("Not enough slot in the team or team unknown\n"); // TODO affichage tmp

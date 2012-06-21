@@ -13,6 +13,7 @@
 #include <string.h>
 
 #include "def.h"
+#include "msgout_cmd.h"
 
 static const char *g_separator [] =
   {
@@ -40,8 +41,10 @@ static void	treatment_get_cmd(t_player this, t_bool *clear, char **buf)
       tmp += (strlen(g_separator[this->cm.mode]));
       if (strlen((*buf)) < (BUFFER_SIZE / 2))
 	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
-      list_push_back_new(this->cm.in, this->cm.stock,
-			 strlen(this->cm.stock) + 1);
+      if (this->cm.in->size <= 10)
+	list_push_back_new(this->cm.in, this->cm.stock, strlen(this->cm.stock) + 1);
+      else
+	msgout_fail(this->cm.out);
       memset(this->cm.stock, '\0', BUFFER_SIZE);
       *buf = tmp;
     }

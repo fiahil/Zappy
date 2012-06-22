@@ -2,15 +2,17 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "process_function.h"
 #include "def.h"
 #include "map.h"
 #include "clock.h"
+#include "msgout_cmd.h"
 
 /*
 /!\ PLUS DE 5 FONCTIONS !!! /!\
 */
 
-static t_u_hash	g_hash_cmp[] = 
+static t_u_hash	g_hash_cmp[] =
   {
     {1, 1, 0, 0, 0, 0, 0},
     {2, 1, 1, 1, 0, 0, 0},
@@ -74,7 +76,7 @@ t_bool	incant_is_ok(t_incant incant)
   if (incant->status == FALSE)
     return (FALSE);
   map = get_map(NULL);
-  if (check_players(map->map[incant->pos.y][incant->pos.x]->players, incant->incantor->lvl) != map->map[incant->pos.y][incant->pos.x]->players->size)
+  if (check_players(map->map[incant->pos.y][incant->pos.x]->players, incant->incantor->lvl) != map->map[incant->pos.y][incant->pos.x]->players->size) // || player is dead
     {
       incant->status = FALSE;
       return (FALSE);
@@ -98,8 +100,7 @@ t_bool	init_incant(t_incant incant, t_player play, t_square cell, int t)
   incant->pos.x = play->pos.x;
   incant->pos.y = play->pos.y;
   incant->incantor = play;
-  get_current_time(&incant->timeout);
-  incant->timeout.tv_sec += 300 / t;
+  get_time_per_function(&incant->timeout, &incantation_process_function, t);
   fill_hashcode(&incant->hashcode, cell);
   if (memcmp(&incant->hashcode, &g_hash_cmp[play->lvl - 1], sizeof(incant->hashcode)))
     {
@@ -128,13 +129,14 @@ void		iter_incant(void *ptr, size_t s)
 
   (void)s;
   get_current_time(&current);
-  if (!(((t_incant)ptr)->timeout.tv_sec ^ current.tv_sec))
+  if (cmp_time(&((t_incant)ptr)->timeout, &current) <= 0)
     {
       if (incant_is_ok((t_incant)ptr))
 	level_up((t_incant)ptr);
       else
 	printf("Incant couldn't be performed\n");
-      ((t_incant)ptr)->timeout.tv_sec = 0;    
+      //msgout_incantation(((t_incant)ptr)->incantor->cm.out, ((t_incant)ptr)->incantor->lvl);
+      ((t_incant)ptr)->timeout.tv_sec = 0;
     }
 }
 

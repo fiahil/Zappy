@@ -37,6 +37,14 @@ void		print_list(void *data, size_t size) // TODO affichage tmp
   printf("name : %s -> size : %d\n", ((t_team)data)->name, ((t_team)data)->remaining);
 }
 
+int		cmp_incant(void *e1, size_t s1, void *e2, size_t s2)
+{
+  (void)s1;
+  (void)s2;
+  return (cmp_time(&((*((t_incant*)e1))->timeout),
+		   &((*((t_incant*)e2))->timeout)));
+}
+
 int		cmp_action(void *e1, size_t s1, void *e2, size_t s2)
 {
   (void)s1;
@@ -62,6 +70,7 @@ void		clean_all(t_data_serv ds)
   delete_list(ds->teams);
   delete_pqueue(ds->action);
   delete_list(ds->send_q);
+  delete_pqueue(ds->incant);
   map = get_map(NULL);
   y = 0;
   while (y < map->size_y)
@@ -104,7 +113,7 @@ int		main(int ac, char **av)
   data_serv.player = new_list(NULL, NULL, NULL);
   data_serv.action = new_pqueue(&cmp_action);
   data_serv.send_q = new_list(NULL, NULL, NULL);
-  data_serv.incant = new_list(NULL, NULL, NULL);
+  data_serv.incant = new_pqueue(&cmp_incant);
   data_serv.egg = new_list(NULL, NULL, NULL);
   data_serv.t = args.exec_time;
   set_connection(&data_serv, args.port);

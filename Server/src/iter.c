@@ -145,8 +145,8 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
   list_for_each(ds->player, &iter_rds);
   list_for_each(&(ds->action->queue), &iter_action);
   list_remove_if(&(ds->action->queue), &action_cleaner);
-  list_for_each(ds->incant, &iter_incant);
-  list_remove_if(ds->incant, &incant_cleaner);
+  list_for_each(&(ds->incant->queue), &iter_incant);
+  list_remove_if(&(ds->incant->queue), &incant_cleaner);
   list_sort(ds->player, &sort_player_life);
   list_remove_if(ds->player, &player_cleaner);
   g_last.tv_sec = g_current.tv_sec;

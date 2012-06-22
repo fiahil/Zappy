@@ -20,7 +20,7 @@ static void	split(t_list *l1, t_list *l2, t_cmp cmp)
   t_iter	*e1;
   t_iter	*e2;
 
-  if (l1->size > 1)
+  if (l1 && l1->size > 1)
     {
       e1 = get_head(l1);
       e2 = get_head(l1);

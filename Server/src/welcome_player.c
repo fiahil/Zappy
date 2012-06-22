@@ -44,15 +44,30 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
 
   if (data)
     {
-      if ((ghost = list_find_cmp(server->player, &team_ghost, data, 0)))
-	{
-	  puts("Ghost find.");
-	}
       if ((nb_client = chk_team(server, data)) < 0)
 	{
 	  printf("Not enough slot in the team or team unknown\n"); // TODO affichage tmp
 	  list_push_back_new(player->cm.out, "ko\n", 4);
 	  return (FALSE);
+	}
+      if ((ghost = list_find_cmp(server->player, &team_ghost, data, 0)))
+	{
+	  (*(t_player*)ghost->data)->cm.in = player->cm.in;
+
+	  (*(t_player*)ghost->data)->cm.out = player->cm.out;
+
+	  memcpy(&((*(t_player*)ghost->data)->cm), &player->cm, sizeof(player->cm));
+	  (*(t_player*)ghost->data)->welcome = TRUE;
+	  map = get_map(NULL);
+	  asprintf(&str, "%d\n%d %d\n", nb_client, map->size_x, map->size_y);
+	  list_push_back_new((*(t_player*)ghost->data)->cm.out, str, strlen(str) + 1);
+	  free(str);
+	  player->dead = TRUE;
+	  player->deleted = TRUE;
+	  player->cm.online = FALSE;
+	  player->cm.out = NULL;
+	  player->cm.in = NULL;
+	  return(TRUE);
 	}
       printf("test nb_client : %d\n", nb_client); // TODO affichage tmp
       map = get_map(NULL);

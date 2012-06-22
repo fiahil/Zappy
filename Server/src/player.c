@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Thu Jun 21 15:45:16 2012 pierre martin
-** Last update Thu Jun 21 15:56:21 2012 pierre martin
+** Last update Fri Jun 22 16:42:54 2012 pierre martin
 */
 
 #include	<errno.h>
@@ -57,6 +57,8 @@ void	delete_player(t_player this)
 	delete_list(this->cm.in);
       if (this->cm.out)
 	delete_list(this->cm.out);
+      if (this->team)
+	free(this->team);
       free(this);
     }
 }

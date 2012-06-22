@@ -10,7 +10,7 @@
 /!\ PLUS DE 5 FONCTIONS !!! /!\
 */
 
-static t_u_hash	g_hash_cmp[] = 
+static t_u_hash	g_hash_cmp[] =
   {
     {1, 1, 0, 0, 0, 0, 0},
     {2, 1, 1, 1, 0, 0, 0},
@@ -134,7 +134,7 @@ void		iter_incant(void *ptr, size_t s)
 	level_up((t_incant)ptr);
       else
 	printf("Incant couldn't be performed\n");
-      ((t_incant)ptr)->timeout.tv_sec = 0;    
+      ((t_incant)ptr)->timeout.tv_sec = 0;
     }
 }
 

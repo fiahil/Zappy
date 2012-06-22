@@ -4,6 +4,6 @@
 
 #include	"def.h"
 
-void		init_egg(t_egg egg);
+void		init_egg(t_egg, int);
 
 #endif		/* !__EGG_MANAGER_H__ */

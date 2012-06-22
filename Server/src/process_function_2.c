@@ -67,7 +67,7 @@ t_bool		fork_process_function(t_player this, char *data, t_data_serv info)
 
   (void)data;
   list_push_back_new(this->cm.out, "I fork !\n", strlen("I fork !\n") + 1);
-  init_egg(&egg);
+  init_egg(&egg, info->t);
   list_push_front_new(info->egg, &egg, sizeof(egg));
   msgout_fork(this->cm.out);
   return (TRUE);

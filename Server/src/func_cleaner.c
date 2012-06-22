@@ -10,7 +10,7 @@ int		player_cleaner(void *ptr, size_t s)
   (void)s;
   if ((*(t_player*)ptr)->deleted == TRUE)
     {
-      printf("Suppression du joueur %d\n", (*(t_player*)ptr)->id); // TODO affichage 
+      printf("Suppression du joueur %d\n", (*(t_player*)ptr)->id); // TODO affichage
       delete_player(*(t_player*)ptr);
       return (1);
     }
@@ -25,5 +25,13 @@ int		action_cleaner(void *ptr, size_t s)
       free(((t_player_action)ptr)->param);
       return (1);
     }
+  return (0);
+}
+
+int		egg_cleaner(void *ptr, size_t s)
+{
+  (void)s;
+  if (!((t_egg)ptr)->timeout.tv_sec)
+    return (1);
   return (0);
 }

@@ -11,6 +11,7 @@
 #include "def.h"
 #include "iter.h"
 #include "clock.h"
+#include "incant.h"
 #include "player.h"
 #include "network.h"
 #include "algorithm.h"
@@ -18,11 +19,10 @@
 #include "msgout_cmd.h"
 #include "func_cleaner.h"
 #include "handle_error.h"
+#include "team_manager.h"
 #include "iter_function.h"
 #include "select_manager.h"
 #include "server_routine.h"
-#include "algorithm.h"
-#include "incant.h"
 
 static t_select_manager		g_sm = 0;
 static t_data_serv		g_ds = 0;
@@ -32,11 +32,11 @@ static t_u_timeval		g_current = {0, 0};
 static void	iter_rds(void *ptr, size_t s)
 {
   (void)s;
-  if (select_r_isset(g_sm, (*(t_player*)ptr)->cm.sock.fd) &&
-      (*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->dead == FALSE)
+  if ((*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->dead == FALSE
+      && select_r_isset(g_sm, (*(t_player*)ptr)->cm.sock.fd))
     server_routine_input(g_ds, *(t_player*)ptr);
-  if (select_w_isset(g_sm, (*(t_player*)ptr)->cm.sock.fd) &&
-      (*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->deleted == FALSE)
+  if ((*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->deleted == FALSE
+      && select_w_isset(g_sm, (*(t_player*)ptr)->cm.sock.fd))
     server_routine_output(g_ds, *(t_player*)ptr);
 }
 
@@ -68,9 +68,9 @@ static void	push_new_action(t_player_action pa)
 
 static void	iter_action(void *ptr, size_t s)
 {
-  (void)s;
   t_u_timeval current;
 
+  (void)s;
   get_current_time(&current);
   if (((t_player_action)ptr)->player->cm.is_processing
       && !(((t_player_action)ptr)->done)
@@ -124,6 +124,25 @@ static void		iter_lose_life(void *ptr, size_t s)
     }
 }
 
+static void	iter_egg(void *ptr, size_t s)
+{
+  t_iter	*it;
+  t_u_timeval	current;
+
+  (void)s;
+  get_current_time(&current);
+  if (cmp_time(&current, &(((t_egg)ptr)->timeout)) >= 0)
+    {
+      // il ne rentre pas ici ??
+      printf("New player !\n");
+      it = list_find_cmp(g_ds->teams, &func_cmp_team, ((t_egg)ptr)->fetus->team, 0);
+      ((t_team)it->data)->remaining += 1;
+      list_push_back_new(g_ds->player, &((t_egg)ptr)->fetus,
+			 sizeof(((t_egg)ptr)->fetus));
+      ((t_egg)ptr)->timeout.tv_sec = 0;
+    }
+}
+
 void		iter_client(t_select_manager sm, t_data_serv ds)
 {
   t_player	player;
@@ -140,13 +159,15 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
       if (accept_connection(sm, ds, player) < 0)
 	delete_player(player);
       else
-	list_push_back_new(ds->player, &player, sizeof(&player));
+	list_push_back_new(ds->player, &player, sizeof(player));
     }
   list_for_each(ds->player, &iter_rds);
   list_for_each(&(ds->action->queue), &iter_action);
   list_remove_if(&(ds->action->queue), &action_cleaner);
   list_for_each(ds->incant, &iter_incant);
   list_remove_if(ds->incant, &incant_cleaner);
+  list_for_each(ds->egg, &iter_egg);
+  list_remove_if(ds->egg, &egg_cleaner);
   list_sort(ds->player, &sort_player_life);
   list_remove_if(ds->player, &player_cleaner);
   g_last.tv_sec = g_current.tv_sec;

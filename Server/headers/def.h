@@ -3,8 +3,8 @@
  * 05.06.2012
  */
 
-#ifndef __DEF_H__
-#define __DEF_H__
+#ifndef		__DEF_H__
+# define	__DEF_H__
 
 #include	<sys/select.h>
 #include	<netinet/in.h>
@@ -203,7 +203,6 @@ struct			s_player
 
 struct			s_egg
 {
-  t_bool		status;
   int			id;
   t_player		fetus;
   t_u_timeval		timeout;

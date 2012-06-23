@@ -53,6 +53,9 @@ typedef struct s_inventory*	t_inventory;
 typedef struct s_player		t_u_player;
 typedef struct s_player*	t_player;
 
+typedef struct s_graphic	t_u_graphic;
+typedef struct s_graphic*	t_graphic;
+
 typedef struct s_player_action	t_u_player_action;
 typedef struct s_player_action*	t_player_action;
 
@@ -201,6 +204,12 @@ struct			s_player
   t_u_client_manager	cm;
 };
 
+struct			s_graphic
+{
+  t_bool		welcome;
+  t_u_client_manager	cm;
+};
+
 struct			s_egg
 {
   int			id;
@@ -232,6 +241,7 @@ struct			s_data_serv
 {
   t_u_sock_layer	sock;
   int			t;
+  t_list		*monitor;
   t_list		*player;
   int			nb_per_team;
   t_list		*teams;

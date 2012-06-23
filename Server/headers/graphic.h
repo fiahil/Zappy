@@ -6,8 +6,14 @@
 void	sbp(t_list*);
 void	suc(t_list*);
 void	smg(t_list*, char const*);
+void	seg(t_list*, int);
+void	edi(t_list*, int);
+void	ebo(t_list*, int);
+void	eht(t_list*, int);
+void	enw(t_list*, int, int, t_pos);
 
 void	mn_push(t_list*, char*);
 void	mn_out(t_list *);
+void	mn_rep(t_graphic, char*);
 
 #endif /* __GRAPHIC_H__ */

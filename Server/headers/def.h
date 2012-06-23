@@ -46,6 +46,7 @@ typedef struct s_client_manager	t_u_client_manager;
 typedef struct s_parse_elem	t_u_parse_elem;
 
 typedef struct s_pos		t_u_pos;
+typedef struct s_pos*		t_pos;
 
 typedef struct s_inventory	t_u_inventory;
 typedef struct s_inventory*	t_inventory;

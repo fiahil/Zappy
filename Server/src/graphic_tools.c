@@ -39,3 +39,8 @@ void		mn_out(t_list *mn)
 {
   list_for_each(mn, &iter_monitor);
 }
+
+void		mn_rep(t_graphic mn, char *msg)
+{
+  list_push_back_new(mn->cm.out, msg, strlen(msg) + 1);
+}

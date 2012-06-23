@@ -30,3 +30,14 @@ void		smg(t_list *mn, char const *msg)
   mn_push(mn, str);
   free(str);
 }
+
+void		seg(t_list *mn, int team)
+{
+  char		*str;
+
+  str = NULL;
+  asprintf(&str, "seg %d\n", team);
+  mn_push(mn, str);
+  free(str);
+}
+

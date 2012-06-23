@@ -161,6 +161,7 @@ void		iter_client(t_select_manager sm, t_data_serv ds)
       else
 	list_push_back_new(ds->player, &player, sizeof(player));
     }
+  set_cleaner(ds);
   list_for_each(ds->player, &iter_rds);
   list_for_each(&(ds->action->queue), &iter_action);
   list_remove_if(&(ds->action->queue), &action_cleaner);

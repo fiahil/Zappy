@@ -422,7 +422,8 @@ char		*get_look(t_player this, t_map map)
   t_square	cur;
 
   // test pour quentin -> level passé en dur pour voir si le voir marche
-  nbcases = calc_nbcases(8); // nbcases = calc_nbcases(this->lvl);
+  printf("[Voir] Niveau du joueur : %d\n", this->lvl);
+  nbcases = calc_nbcases(this->lvl);
   look = strdup("{");
   i = 0;
   while (i <= nbcases)

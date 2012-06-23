@@ -1,16 +1,12 @@
 #include <time.h>
-
 #include <stdio.h>
 #include <string.h>
+
 #include "process_function.h"
 #include "def.h"
 #include "map.h"
 #include "clock.h"
 #include "msgout_cmd.h"
-
-/*
-/!\ PLUS DE 5 FONCTIONS !!! /!\
-*/
 
 static t_u_hash	g_hash_cmp[] =
   {
@@ -71,17 +67,21 @@ void	fill_hashcode(t_hash hashcode, t_square cell)
 t_bool	incant_is_ok(t_incant incant)
 {
   t_u_hash	hashcode;
+  t_u_pos	pos;
   t_map		map;
 
   if (incant->status == FALSE)
     return (FALSE);
   map = get_map(NULL);
-  if (check_players(map->map[incant->pos.y][incant->pos.x]->players, incant->incantor->lvl) != map->map[incant->pos.y][incant->pos.x]->players->size) // || player is dead
+  pos.x = incant->pos.x;
+  pos.y = incant->pos.y;
+  if (check_players(map->map[pos.y][pos.x]->players, incant->incantor->lvl) !=
+      map->map[pos.y][pos.x]->players->size) // || player is dead
     {
       incant->status = FALSE;
       return (FALSE);
     }
-  fill_hashcode(&hashcode, map->map[incant->pos.y][incant->pos.x]);
+  fill_hashcode(&hashcode, map->map[pos.y][pos.x]);
   if (memcmp(&incant->hashcode, &hashcode, sizeof(hashcode)))
     incant->status = FALSE;
   return (incant->status);
@@ -108,8 +108,8 @@ t_bool	init_incant(t_incant incant, t_player play, t_square cell, int t)
       printf("Resources not good\n");
       incant->status = FALSE;
     }
-  printf("Incantation set\n");
   // TEST DISPLAY
+  printf("Incantation set\n");
   printf("nb_play = %d\nlinemate = %d\nderaumere = %d\nsibur = %d\nmendiane = %d\nphiras = %d\nthystame = %d\nx = %d - y = %d\n",
 	 incant->hashcode.nb_play,
 	 incant->hashcode.linemate,
@@ -121,21 +121,4 @@ t_bool	init_incant(t_incant incant, t_player play, t_square cell, int t)
 	 incant->pos.x,
 	 incant->pos.y);
   return (TRUE);
-}
-
-void		iter_incant(void *ptr, size_t s)
-{
-  t_u_timeval	current;
-
-  (void)s;
-  get_current_time(&current);
-  if (cmp_time(&((t_incant)ptr)->timeout, &current) <= 0)
-    {
-      if (incant_is_ok((t_incant)ptr))
-	level_up((t_incant)ptr);
-      else
-	printf("Incant couldn't be performed\n");
-      //msgout_incantation(((t_incant)ptr)->incantor->cm.out, ((t_incant)ptr)->incantor->lvl);
-      ((t_incant)ptr)->timeout.tv_sec = 0;
-    }
 }

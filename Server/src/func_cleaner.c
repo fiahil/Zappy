@@ -20,7 +20,8 @@ int		player_cleaner(void *ptr, size_t s)
       printf("Suppression du joueur %d\n", (*(t_player*)ptr)->id); // TODO affichage
       if ((*(t_player*)ptr)->team)
         {
-          it = list_find_cmp(g_ds->teams, &func_cmp_team, (*(t_player*)ptr)->team, 0);
+          it = list_find_cmp(g_ds->teams, &func_cmp_team,
+			     (*(t_player*)ptr)->team, 0);
           assert(it != NULL);
           ((t_team)it->data)->remaining += 1;
         }

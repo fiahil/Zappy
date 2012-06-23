@@ -1,7 +1,12 @@
 /*
- * Fiahil
- * 07.06.2012
- */
+** server_routine.h for zappy_bibicy* in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:19:10 2012 ulric lefevre
+** Last update Sat Jun 23 20:19:12 2012 ulric lefevre
+*/
 
 #ifndef __SERVER_ROUTINE_H__
 #define __SERVER_ROUTINE_H__

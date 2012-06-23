@@ -1,7 +1,12 @@
 /*
- * Fiahil
- * 06.06.2012
- */
+** iter.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:19:57 2012 ulric lefevre
+** Last update Sat Jun 23 20:20:10 2012 ulric lefevre
+*/
 
 #ifndef __NETMANAGER_H__
 #define __NETMANAGER_H__

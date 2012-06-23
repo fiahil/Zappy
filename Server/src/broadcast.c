@@ -1,10 +1,11 @@
 /*
-** broadcast.c for zappy in /home/mart_i/Work/unix/Zappy/Server/
+** broadcast.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on Thu Jun 14 15:51:35 2012 pierre martin
+** Started on  Sat Jun 23 20:17:20 2012 ulric lefevre
+** Last update Sat Jun 23 20:17:20 2012 ulric lefevre
 */
 
 #define _GNU_SOURCE

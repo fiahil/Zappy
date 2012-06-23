@@ -1,3 +1,12 @@
+/*
+** iter.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:24:47 2012 ulric lefevre
+** Last update Sat Jun 23 20:24:47 2012 ulric lefevre
+*/
 
 #ifndef __ITER_H__
 #define __ITER_H__

@@ -1,10 +1,11 @@
 /*
-** clock.c for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/src/
+** clock.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on Tue Jun 12 16:11:14 2012 benjamin businaro
+** Started on  Sat Jun 23 20:17:14 2012 ulric lefevre
+** Last update Sat Jun 23 20:52:17 2012 ulric lefevre
 */
 
 #include <errno.h>
@@ -40,19 +41,6 @@ void	get_current_time(t_timeval time)
   zone.tz_minuteswest = 0;
   zone.tz_dsttime = 0;
   gettimeofday(time, &zone);
-}
-
-char	cmp_time(t_timeval fst, t_timeval scd)
-{
-  if (fst->tv_sec > scd->tv_sec)
-    return (1);
-  if (fst->tv_sec < scd->tv_sec)
-    return (-1);
-  if (fst->tv_usec > scd->tv_usec)
-    return (1);
-  if (fst->tv_usec < scd->tv_usec)
-    return (-1);
-  return (0);
 }
 
 void	get_time_per_function(t_timeval time, t_proc_func f, double t)

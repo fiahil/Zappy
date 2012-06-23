@@ -1,3 +1,12 @@
+/*
+** iter_function.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
+** Last update Sat Jun 23 20:15:45 2012 ulric lefevre
+*/
 
 #include	<stdio.h>
 #include	<stdlib.h>
@@ -69,7 +78,8 @@ void		iter_egg(void *ptr, size_t s)
     {
       // il ne rentre pas ici ??
       printf("New player !\n");
-      it = list_find_cmp(ds->teams, &func_cmp_team, ((t_egg)ptr)->fetus->team, 0);
+      it = list_find_cmp(ds->teams, &func_cmp_team,
+			 ((t_egg)ptr)->fetus->team, 0);
       ((t_team)it->data)->remaining += 1;
       list_push_back_new(ds->player, &((t_egg)ptr)->fetus,
 			 sizeof(((t_egg)ptr)->fetus));
@@ -89,7 +99,7 @@ void		iter_incant(void *ptr, size_t s)
 	level_up((t_incant)ptr);
       else
 	printf("Incant couldn't be performed\n");
-      //msgout_incantation(((t_incant)ptr)->incantor->cm.out, ((t_incant)ptr)->incantor->lvl);
+      // msgout_incantation(((t_incant)ptr)->incantor->cm.out, ((t_incant)ptr)->incantor->lvl);
       ((t_incant)ptr)->timeout.tv_sec = 0;
     }
 }

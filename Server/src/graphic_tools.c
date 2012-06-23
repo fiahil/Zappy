@@ -1,10 +1,15 @@
 /*
- *  * Fiahil
- *   * 23/06/2012
- *    */
-  
+** graphic_tools.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:16:08 2012 ulric lefevre
+** Last update Sat Jun 23 20:16:11 2012 ulric lefevre
+*/
+
 #define _GNU_SOURCE
-  
+
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>

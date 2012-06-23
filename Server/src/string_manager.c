@@ -1,10 +1,11 @@
 /*
-** string_manager.c for zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/
+** string_manager.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on Wed Jun  6 11:42:13 2012 benjamin businaro
+** Started on  Sat Jun 23 20:13:51 2012 ulric lefevre
+** Last update Sat Jun 23 20:17:24 2012 ulric lefevre
 */
 
 #include <stdio.h>

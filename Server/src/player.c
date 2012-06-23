@@ -1,11 +1,11 @@
 /*
-** player.c for zappy in /home/mart_i/Work/unix/Zappy/Server/src/
+** player.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on Thu Jun 21 15:45:16 2012 pierre martin
-** Last update Fri Jun 22 16:42:54 2012 pierre martin
+** Started on  Sat Jun 23 20:14:47 2012 ulric lefevre
+** Last update Sat Jun 23 20:14:48 2012 ulric lefevre
 */
 
 #include	<errno.h>

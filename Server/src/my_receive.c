@@ -1,3 +1,12 @@
+/*
+** my_receive.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:15:02 2012 ulric lefevre
+** Last update Sat Jun 23 20:15:03 2012 ulric lefevre
+*/
 
 #include	<stdlib.h>
 #include	<string.h>

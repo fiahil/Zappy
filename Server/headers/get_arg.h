@@ -1,3 +1,12 @@
+/*
+** get_arg.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:20:28 2012 ulric lefevre
+** Last update Sat Jun 23 20:21:56 2012 ulric lefevre
+*/
 
 #ifndef		__GET_ARG_H__
 # define	__GET_ARG_H__

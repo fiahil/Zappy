@@ -1,10 +1,11 @@
 /*
-** select_tools.c for zappy in /home/mart_i/Work/unix/Zappy/Server/src/
+** select_tools.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on Sat Jun 16 16:45:56 2012 pierre martin
+** Started on  Sat Jun 23 20:14:08 2012 ulric lefevre
+** Last update Sat Jun 23 20:14:08 2012 ulric lefevre
 */
 
 #include	"def.h"

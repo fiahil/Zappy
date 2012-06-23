@@ -1,3 +1,13 @@
+/*
+** graphic.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:20:25 2012 ulric lefevre
+** Last update Sat Jun 23 20:21:56 2012 ulric lefevre
+*/
+
 #ifndef __GRAPHIC_H__
 #define __GRAPHIC_H__
 

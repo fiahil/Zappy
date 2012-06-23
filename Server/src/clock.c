@@ -18,18 +18,18 @@
 
 static const t_u_time_attrib g_time_attrib[] =
   {
-    {&move_process_function, 7.0},
-    {&right_process_function, 7.0},
-    {&left_process_function, 7.0},
-    {&look_process_function, 7.0},
-    {&inventory_process_function, 7.0},
-    {&take_process_function, 7.0},
-    {&drop_process_function, 7.0},
-    {&expulse_process_function, 7.0},
-    {&broadcast_process_function, 7.0},
-    {&incantation_process_function, 300.0},
-    {&fork_process_function, 42.0},
-    {&connect_nbr_process_function, 0.0},
+    {&move_process, 7.0},
+    {&right_process, 7.0},
+    {&left_process, 7.0},
+    {&look_process, 7.0},
+    {&inventory_process, 7.0},
+    {&take_process, 7.0},
+    {&drop_process, 7.0},
+    {&expulse_process, 7.0},
+    {&broadcast_process, 7.0},
+    {&incantation_process, 300.0},
+    {&fork_process, 42.0},
+    {&connect_nbr_process, 0.0},
     {NULL, 0}
   };
 
@@ -104,7 +104,7 @@ void	unitest_clock() // TODO tmp
   printf("# cmp t2 and t1 : %d, expected : 1\n", (int)cmp_time(&time2, &time));
   printf("# cmp t1 and t1 : %d, expected : 0\n", (int)cmp_time(&time, &time));
   puts(".:: get_time_per_function ::.");
-  get_time_per_function(&time2, &move_process_function, 300);
+  get_time_per_function(&time2, &move_process, 300);
   printf("# get t2 move [300] : sec = %d, usec = %d\n",  (int)time2.tv_sec, (int)time2.tv_usec);
   puts(".:: add_time ::.");
   add_time(&time, 7, 300);

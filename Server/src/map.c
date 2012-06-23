@@ -29,7 +29,7 @@ t_map	get_map(t_map param)
 static void	malloc_error()
 {
   // TODO error
-  handleError("malloc", strerror(errno), -1);
+  handle_error("malloc", strerror(errno), -1);
   exit(1);
 }
 

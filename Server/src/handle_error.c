@@ -12,9 +12,9 @@
 
 #include	"handle_error.h"
 
-int	handleError(char *errFunc, char *errMsg, int fd)
+int	handle_error(char *err_func, char *err_msg, int fd)
 {
-  fprintf(stderr, "Error: %s: %s\n", errFunc, errMsg);
+  fprintf(stderr, "Error: %s: %s\n", err_func, err_msg);
   if (fd > -1)
     close(fd);
   return (-1);

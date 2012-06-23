@@ -35,11 +35,45 @@ static int	team_ghost(void *this, size_t len, void *cmp, size_t l2)
   return (-1);
 }
 
+static void	init_ghost(t_iter **ghost, t_player *p, int nb_c)
+{
+  t_map		map;
+  char		*str;
+
+  (*(t_player*)(*ghost)->data)->cm.in = (*p)->cm.in;
+  (*(t_player*)(*ghost)->data)->cm.out = (*p)->cm.out;
+  memcpy(&((*(t_player*)(*ghost)->data)->cm), &((*p)->cm), sizeof((*p)->cm));
+  (*(t_player*)(*ghost)->data)->welcome = TRUE;
+  map = get_map(NULL);
+  asprintf(&str, "%d\n%d %d\n", nb_c, map->size_x, map->size_y);
+  list_push_back_new((*(t_player*)(*ghost)->data)->cm.out,
+		     str, strlen(str) + 1);
+  free(str);
+  (*p)->dead = TRUE;
+  (*p)->deleted = TRUE;
+  (*p)->cm.online = FALSE;
+  (*p)->cm.out = NULL;
+  (*p)->cm.in = NULL;
+}
+
+static void	first_contact(t_player *p, int nb_c, char *data)
+{
+  t_map		map;
+  char		*str;
+
+  printf("test nb_client : %d\n", nb_c); // TODO affichage tmp
+  map = get_map(NULL);
+  asprintf(&str, "%d\n%d %d\n", nb_c, map->size_x, map->size_y);
+  list_push_back_new((*p)->cm.out, str, strlen(str) + 1);
+  free(str);
+  (*p)->welcome = TRUE;
+  (*p)->team = strdup(data);
+  list_pop_front((*p)->cm.in);
+}
+
 t_bool		welcome_player(t_data_serv server, t_player player, char *data)
 {
   int		nb_client;
-  char		*str;
-  t_map		map;
   t_iter	*ghost;
 
   if (data)
@@ -52,31 +86,10 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
 	}
       if ((ghost = list_find_cmp(server->player, &team_ghost, data, 0)))
 	{
-	  (*(t_player*)ghost->data)->cm.in = player->cm.in;
-
-	  (*(t_player*)ghost->data)->cm.out = player->cm.out;
-
-	  memcpy(&((*(t_player*)ghost->data)->cm), &player->cm, sizeof(player->cm));
-	  (*(t_player*)ghost->data)->welcome = TRUE;
-	  map = get_map(NULL);
-	  asprintf(&str, "%d\n%d %d\n", nb_client, map->size_x, map->size_y);
-	  list_push_back_new((*(t_player*)ghost->data)->cm.out, str, strlen(str) + 1);
-	  free(str);
-	  player->dead = TRUE;
-	  player->deleted = TRUE;
-	  player->cm.online = FALSE;
-	  player->cm.out = NULL;
-	  player->cm.in = NULL;
-	  return(TRUE);
+	  init_ghost(&ghost, &player, nb_client);
+	  return (TRUE);
 	}
-      printf("test nb_client : %d\n", nb_client); // TODO affichage tmp
-      map = get_map(NULL);
-      asprintf(&str, "%d\n%d %d\n", nb_client, map->size_x, map->size_y);
-      list_push_back_new(player->cm.out, str, strlen(str) + 1);
-      free(str);
-      player->welcome = TRUE;
-      player->team = strdup(data);
-      list_pop_front(player->cm.in);
+      first_contact(&player, nb_client, data);
     }
   return (TRUE);
 }

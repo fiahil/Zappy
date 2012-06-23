@@ -48,5 +48,5 @@ void		select_manager(t_data_serv ds, t_select_manager sm)
   FD_SET(ds->sock.fd, &sm->rds);
   list_for_each(ds->player, &select_set);
   if (select(sm->max_fd + 1, &sm->rds, &sm->wds, NULL, &sm->timeout) < 0)
-    handleError("select", strerror(errno), -1);
+    handle_error("select", strerror(errno), -1);
 }

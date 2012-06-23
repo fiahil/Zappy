@@ -123,4 +123,3 @@ t_bool  left_process_function(t_player this, char *data, t_data_serv info)
   msgout_gauche(this->cm.out);
   return (TRUE);
 }
-

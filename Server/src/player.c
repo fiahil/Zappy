@@ -19,12 +19,8 @@
 
 static int	g_id_player = 0;
 
-t_player	create_player()
+static void	init_player(t_player player)
 {
-  t_player player;
-
-  if (!(player = malloc(sizeof(t_u_player))))
-    handle_error("malloc", strerror(errno), -1); // TODO retour erreur
   player->id = g_id_player++;
   player->lvl = 1;
   player->team = NULL;
@@ -44,6 +40,15 @@ t_player	create_player()
   player->cm.mode = UNKNOW;
   player->cm.is_processing = FALSE;
   player->cm.online = FALSE;
+}
+
+t_player	create_player()
+{
+  t_player player;
+
+  if (!(player = malloc(sizeof(t_u_player))))
+    handle_error("malloc", strerror(errno), -1); // TODO retour erreur
+  init_player(player);
   list_push_back_new(get_map(NULL)->map[player->pos.y][player->pos.x]->players,
 		     &player, sizeof(&player));
   return (player);

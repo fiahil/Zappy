@@ -143,6 +143,23 @@ static void	iter_egg(void *ptr, size_t s)
     }
 }
 
+static void		iter_incant(void *ptr, size_t s)
+{
+  t_u_timeval	current;
+
+  (void)s;
+  get_current_time(&current);
+  if (cmp_time(&((t_incant)ptr)->timeout, &current) <= 0)
+    {
+      if (incant_is_ok((t_incant)ptr))
+	level_up((t_incant)ptr);
+      else
+	printf("Incant couldn't be performed\n");
+      //msgout_incantation(((t_incant)ptr)->incantor->cm.out, ((t_incant)ptr)->incantor->lvl);
+      ((t_incant)ptr)->timeout.tv_sec = 0;
+    }
+}
+
 void		iter_client(t_select_manager sm, t_data_serv ds)
 {
   t_player	player;

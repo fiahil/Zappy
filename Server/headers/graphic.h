@@ -28,6 +28,9 @@ void	ebo(t_list*, int);
 void	eht(t_list*, int);
 void	enw(t_list*, int, int, t_pos);
 
+void	msz(t_graphic, size_t, size_t);
+void	tna(t_graphic, t_list*);
+
 void	mn_push(t_list*, char*);
 void	mn_out(t_list *);
 void	mn_rep(t_graphic, char*);

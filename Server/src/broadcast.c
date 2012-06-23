@@ -20,29 +20,30 @@
 
 #define	ABS(x)	(x > 0 ? x : -x)
 
-static const int	g_quarter[4][3] = {
-  { 6, 5, 4 },
-  { 2, 3, 4 },
-  { 6, 7, 0 },
-  { 2, 1, 0 }
-};
+static const int	g_quarter[4][3] =
+  {
+    { 6, 5, 4 },
+    { 2, 3, 4 },
+    { 6, 7, 0 },
+    { 2, 1, 0 }
+  };
 
-static const t_u_pos	g_out_pos[8] = {
-  { 1, 0 },
-  { 0, 1 },
-  { 1, 1 },
-  { -1, 0 },
-  { 0, -1 },
-  { -1, 1 },
-  { 1, -1 },
-  { -1, -1 }
-};
+static const t_u_pos	g_out_pos[8] =
+  {
+    { 1, 0 },
+    { 0, 1 },
+    { 1, 1 },
+    { -1, 0 },
+    { 0, -1 },
+    { -1, 1 },
+    { 1, -1 },
+    { -1, -1 }
+  };
 
 static void	get_closest_pos(t_u_pos *src, t_u_pos *dest, t_u_pos *close)
 {
   int		i;
-  int		x;
-  int		y;
+  t_u_pos	coord;
   t_map		map;
   double	tmp1;
   double	tmp2;
@@ -53,14 +54,14 @@ static void	get_closest_pos(t_u_pos *src, t_u_pos *dest, t_u_pos *close)
   close->y = src->y;
   while (i < 8)
     {
-      x = src->x + g_out_pos[i].x * map->size_x;
-      y = src->y + g_out_pos[i].y * map->size_y;
+      coord.x = src->x + g_out_pos[i].x * map->size_x;
+      coord.y = src->y + g_out_pos[i].y * map->size_y;
       tmp1 = sqrt(pow(close->x - dest->x, 2.0) + pow(close->y - dest->y, 2.0));
-      tmp2 = sqrt(pow(x - dest->x, 2.0) + pow(y - dest->y, 2.0));
+      tmp2 = sqrt(pow(coord.x - dest->x, 2.0) + pow(coord.y - dest->y, 2.0));
       if (tmp2 < tmp1)
 	{
-	  close->x = x;
-	  close->y = y;
+	  close->x = coord.x;
+	  close->y = coord.y;
 	}
       ++i;
     }
@@ -91,7 +92,7 @@ static int	where_does_it_come_from(t_u_pos *dest, t_u_pos *src)
     }
   else
     ret = y > 0 ? 4 : 0;
-  return ret;
+  return (ret);
 }
 
 void	message(t_player src, t_player dest, char *txt)

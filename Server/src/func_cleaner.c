@@ -35,3 +35,11 @@ int		egg_cleaner(void *ptr, size_t s)
     return (1);
   return (0);
 }
+
+int		incant_cleaner(void *ptr, size_t s)
+{
+  (void)s;
+  if (!((t_incant)ptr)->timeout.tv_sec)
+    return (1);
+  return (0);
+}

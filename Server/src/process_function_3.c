@@ -15,19 +15,21 @@
 #include "process_function.h"
 #include "algorithm.h"
 
-static const int	g_dir[4][2] = {
-  { 0, -1},
-  { 1, 0},
-  { 0, 1},
-  { -1, 0}
-};
+static const int	g_dir[4][2] =
+  {
+    { 0, -1},
+    { 1, 0},
+    { 0, 1},
+    { -1, 0}
+  };
 
-static const int	g_src[4][4] = {
-  { 5, 7, 1, 3},
-  { 3, 5, 7, 1},
-  { 1, 3, 5, 7},
-  { 7, 1, 3, 5}
-};
+static const int	g_src[4][4] =
+  {
+    { 5, 7, 1, 3},
+    { 3, 5, 7, 1},
+    { 1, 3, 5, 7},
+    { 7, 1, 3, 5}
+  };
 
 static int	cmp_player_list(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
 {

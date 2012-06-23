@@ -42,12 +42,30 @@ static void		init_act(t_data_serv ds, t_player this, t_proc_func ret)
     }
 }
 
-static void	welcome_new_player(t_data_serv ds, t_player this, char *buf)
+static t_bool	welcome_new_player(t_data_serv ds, t_player this, char *buf)
 {
-  if (!welcome_player(ds, this, buf))
+  if (!this->welcome)
     {
-      this->dead = TRUE;
-      msgout_fail(this->cm.out);
+      if (!welcome_player(ds, this, buf))
+	{
+	  this->dead = TRUE;
+	  msgout_fail(this->cm.out);
+	}
+      free(buf);
+      return (0);
+    }
+  return (1);
+}
+
+static void	process(t_player this, t_data_serv ds, t_proc_func ret)
+{
+  if (!(this->cm.in->empty)
+      && !(this->cm.is_processing))
+    {
+      printf("Processing \"%s\" ... \n",
+	     (char*)(list_front(this->cm.in))); // TODO
+      init_act(ds, this, ret);
+      fflush(0);
     }
 }
 
@@ -73,20 +91,9 @@ void		server_routine_input(t_data_serv ds, t_player this)
       return ;
     }
   get_commands(this, buf);
-  if (!this->welcome)
-    {
-      welcome_new_player(ds, this, buf);
-      free(buf);
-      return ;
-    }
-  if (!(this->cm.in->empty)
-      && !(this->cm.is_processing))
-    {
-      printf("Processing \"%s\" ... \n",
-	     (char*)(list_front(this->cm.in))); // TODO
-      init_act(ds, this, ret);
-      fflush(0);
-    }
+  if (!welcome_new_player(ds, this, buf))
+    return ;
+  process(this, ds, ret);
   free(buf);
 }
 

@@ -8,6 +8,6 @@
 
 #include "def.h"
 
-void	iter_client(t_select_manager, t_data_serv);
+void	iter_client();
 
 #endif /* __NETMANAGER_H__ */

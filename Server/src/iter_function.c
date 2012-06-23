@@ -1,112 +1,95 @@
-/*
-** iter_function.c for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/Server/src/
-** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
-** 
-** Started on Sat Jun 16 16:11:56 2012 benjamin businaro
-*/
 
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+#include	<stdio.h>
+#include	<stdlib.h>
 
-#include "handle_error.h"
-#include "iter_function.h"
-#include "map.h"
-#include "clock.h"
-#include "player.h"
+#include	"def.h"
+#include	"clock.h"
+#include	"incant.h"
+#include	"algorithm.h"
+#include	"iter_tools.h"
+#include	"var_manager.h"
+#include	"team_manager.h"
+#include	"select_manager.h"
+#include	"server_routine.h"
 
-int	sort_player_life(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
+void		iter_rds(void *ptr, size_t s)
 {
-  int	val1;
-  int	val2;
+  t_select_manager	sm;
+  t_data_serv		ds;
 
-  (void)sz1;
-  (void)sz2;
-  val1 = 0;
-  val2 = 0;
-  if ((*((t_player*)(ptr1)))->inv.resources[FOOD] <= 0)
-    val1 = ((*((t_player*)(ptr1)))->inv.resources[FOOD] - 1)
-      * 127 + (*((t_player*)(ptr1)))->inv.cur_life;
-  if ((*((t_player*)(ptr2)))->inv.resources[FOOD] <= 0)
-    val2 = ((*((t_player*)(ptr2)))->inv.resources[FOOD] - 1)
-      * 127 + (*((t_player*)(ptr2)))->inv.cur_life;
-  if (val1 > val2)
-    return (1);
-  if (val1 < val2)
-    return (-1);
-  return (0);
+  (void)s;
+  sm = get_select_manager(NULL);
+  ds = get_data_serv(NULL);
+  if ((*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->dead == FALSE
+      && select_r_isset(sm, (*(t_player*)ptr)->cm.sock.fd))
+    server_routine_input(ds, *(t_player*)ptr);
+  if ((*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->deleted == FALSE
+      && select_w_isset(sm, (*(t_player*)ptr)->cm.sock.fd))
+    server_routine_output(ds, *(t_player*)ptr);
 }
 
-static void	set_timeout_action(t_player_action ptr, t_timeval time)
+void		iter_action(void *ptr, size_t s)
 {
   t_u_timeval	current;
-  double	d_current;
-  double	d_act;
+  t_data_serv	ds;
 
-  if (!ptr)
-    {
-      time->tv_usec = 10000;
-      time->tv_sec = 10000;
-      return ;
-    }
+  (void)s;
   get_current_time(&current);
-  d_current = convert_to_u(&current);
-  d_act = convert_to_u(&(ptr->time));
-  if (d_act - d_current <= 0)
+  ds = get_data_serv(NULL);
+  if (((t_player_action)ptr)->player->cm.is_processing
+      && !(((t_player_action)ptr)->done)
+      && cmp_time(&current, &(((t_player_action)ptr)->time)) == 1)
     {
-      time->tv_usec = 0;
-      time->tv_sec = 0;
+      if (((t_player_action)ptr)->player->dead == FALSE)
+	(((t_player_action)ptr)->action)
+	  (((t_player_action)ptr)->player, ((t_player_action)ptr)->param, ds);
+      ((t_player_action)ptr)->done = TRUE;
+      ((t_player_action)ptr)->player->cm.is_processing = FALSE;
     }
-  else
+	if (!((t_player_action)ptr)->player->cm.in->empty
+	    && !(((t_player_action)ptr)->player->cm.is_processing))
     {
-      time->tv_usec = (int)(d_act - d_current) % 1000000;
-      time->tv_sec = (int)(d_act - d_current) / 1000000;
+      printf("Processing \"%s\" ... \n",
+	     (char*)(list_front(((t_player_action)ptr)->player->cm.in))); // TODO affichage tmp
+      fflush(0);
+      push_new_action((t_player_action)ptr); // TODO PARAMETRE
     }
 }
 
-static void set_timeout_death(t_data_serv ds, t_timeval time)
+void		iter_egg(void *ptr, size_t s)
 {
-  double tot;
-  t_player *ptr = list_front(ds->player);
+  t_iter	*it;
+  t_u_timeval	current;
+  t_data_serv	ds;
 
-  if (!ptr)
+  (void)s;
+  get_current_time(&current);
+  ds = get_data_serv(NULL);
+  if (cmp_time(&current, &(((t_egg)ptr)->timeout)) >= 0)
     {
-      time->tv_usec = 10000;
-      time->tv_sec = 10000;
-      return ;
+      // il ne rentre pas ici ??
+      printf("New player !\n");
+      it = list_find_cmp(ds->teams, &func_cmp_team, ((t_egg)ptr)->fetus->team, 0);
+      ((t_team)it->data)->remaining += 1;
+      list_push_back_new(ds->player, &((t_egg)ptr)->fetus,
+			 sizeof(((t_egg)ptr)->fetus));
+      ((t_egg)ptr)->timeout.tv_sec = 0;
     }
-  if ((*ptr)->inv.resources[FOOD] <= 0)
-    {
-      time->tv_usec = 0;
-      time->tv_sec = 0;
-      return ;
-    }
-  tot = ((*ptr)->inv.resources[FOOD] - 1) * 127;
-  tot += (*ptr)->inv.cur_life;
-  tot *= 1.0 / ds->t;
-  tot *= 1000000.0;
-  time->tv_sec = (int)tot / 1000000;
-  time->tv_usec = (int)tot % 1000000;
 }
 
-/* static void set_timeout_incant(t_player *ptr, t_timeval time) */
-/* { */
-/*   (void)ptr; */
-/*   (void)time; */
-/* } */
-
-void	set_timeout_select(t_data_serv ds, t_timeval time)
+void		iter_incant(void *ptr, size_t s)
 {
-  t_u_timeval death;
+  t_u_timeval	current;
 
-  set_timeout_action(list_front(&(ds->action->queue)), time);
-  set_timeout_death(ds, &death);
-  if (cmp_time(time, &death) > 0)
+  (void)s;
+  get_current_time(&current);
+  if (cmp_time(&((t_incant)ptr)->timeout, &current) <= 0)
     {
-      time->tv_usec = death.tv_usec;
-      time->tv_sec = death.tv_sec;
+      if (incant_is_ok((t_incant)ptr))
+	level_up((t_incant)ptr);
+      else
+	printf("Incant couldn't be performed\n");
+      //msgout_incantation(((t_incant)ptr)->incantor->cm.out, ((t_incant)ptr)->incantor->lvl);
+      ((t_incant)ptr)->timeout.tv_sec = 0;
     }
 }

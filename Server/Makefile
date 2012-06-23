@@ -14,6 +14,7 @@ SRC	=	src/main.c			\
 		src/get_opt_3.c			\
 		src/usage.c			\
 		src/parse_arg.c			\
+		src/var_manager.c		\
 		src/select_manager.c		\
 		src/select_tools.c		\
 		src/max_fd.c			\
@@ -40,10 +41,13 @@ SRC	=	src/main.c			\
 		src/welcome_player.c		\
 		src/iter.c			\
 		src/iter_function.c		\
+		src/iter_tools.c		\
+		src/set_timeout.c		\
 		src/fill_map.c			\
 		src/broadcast.c			\
 		src/graphic_tools.c		\
 		src/graphic_function_1.c	\
+		src/graphic_function_2.c	\
 		src/graphic_function_4.c	\
 		src/graphic_function_5.c	\
 		src/incantation_manager.c	\

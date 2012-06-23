@@ -8,14 +8,16 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "map.h"
+
 #include "def.h"
+#include "map.h"
+#include "iter.h"
+#include "clock.h"
 #include "get_arg.h"
 #include "network.h"
-#include "iter.h"
-#include "select_manager.h"
+#include "var_manager.h"
 #include "handle_error.h"
-#include "clock.h"
+#include "select_manager.h"
 
 int		run(t_data_serv data_serv)
 {
@@ -26,8 +28,10 @@ int		run(t_data_serv data_serv)
   sm.timeout.tv_sec = 10000;
   sm.timeout.tv_usec = 10000;
   select_add(&sm, data_serv->sock.fd);
+  get_data_serv(data_serv);
+  get_select_manager(&sm);
   while (666)
-    iter_client(&sm, data_serv);
+    iter_client();
   return (0);
 }
 

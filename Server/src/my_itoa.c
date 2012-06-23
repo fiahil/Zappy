@@ -28,7 +28,8 @@ static char	*itoa_concat(size_t nb, char *ret)
   return (itoa_concat(nb / 10, strcat(ret, g_intTab[nb % 10])));
 }
 
-static char	*my_revstr(char *str) {
+static char	*my_revstr(char *str)
+{
   int	size;
   int	it;
   char	swap;

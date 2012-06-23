@@ -5,5 +5,6 @@
 int		action_cleaner(void *, size_t);
 int		player_cleaner(void *, size_t);
 int		egg_cleaner(void *, size_t);
+int		incant_cleaner(void *, size_t);
 
 #endif		/* !__FUNC_CLEANER_H__ */

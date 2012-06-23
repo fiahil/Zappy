@@ -24,7 +24,7 @@ t_player	create_player()
   t_player player;
 
   if (!(player = malloc(sizeof(t_u_player))))
-    handleError("malloc", strerror(errno), -1); // TODO retour erreur
+    handle_error("malloc", strerror(errno), -1); // TODO retour erreur
   player->id = g_id_player++;
   player->lvl = 1;
   player->team = NULL;

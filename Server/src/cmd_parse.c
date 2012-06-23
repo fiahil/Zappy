@@ -44,11 +44,11 @@ t_bool		match_ressource(char const *str)
 
   i = 0;
   while (g_obj_tab[i])
-  {
-    if (!strcmp(str, g_obj_tab[i]))
-      return (TRUE);
-    ++i;
-  }
+    {
+      if (!strcmp(str, g_obj_tab[i]))
+	return (TRUE);
+      ++i;
+    }
   return (FALSE);
 }
 
@@ -58,18 +58,17 @@ t_proc_func	cmd_parse(char const *input, int *off)
 
   i = 0;
   while (g_cmd_tab[i].cmd)
-  {
-    if (!strncmp(input, g_cmd_tab[i].cmd, g_cmd_tab[i].size))
     {
-      *off = g_cmd_tab[i].size;
-      if ((i == 5 && !match_ressource(input + g_cmd_tab[i].size)) ||
-	  (i == 6 && !match_ressource(input + g_cmd_tab[i].size)) ||
-	  (i != 8 && i != 5 && i != 6 && input[g_cmd_tab[i].size] != '\0'))
-	return (NULL);
-      return (g_cmd_tab[i].func);
+      if (!strncmp(input, g_cmd_tab[i].cmd, g_cmd_tab[i].size))
+	{
+	  *off = g_cmd_tab[i].size;
+	  if ((i == 5 && !match_ressource(input + g_cmd_tab[i].size)) ||
+	      (i == 6 && !match_ressource(input + g_cmd_tab[i].size)) ||
+	      (i != 8 && i != 5 && i != 6 && input[g_cmd_tab[i].size] != '\0'))
+	    return (NULL);
+	  return (g_cmd_tab[i].func);
+	}
+      ++i;
     }
-    ++i;
-  }
   return (NULL);
 }
-

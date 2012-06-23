@@ -3,9 +3,9 @@
  * 06.06.2012
  */
 
-#ifndef __ERRORR_H__
-#define __ERRORR_H__
+#ifndef __HANDLE_ERROR_H__
+#define __HANDLE_ERROR_H__
 
-int	handleError(char *, char *, int);
+int	handle_error(char *, char *, int);
 
-#endif /* __ERRORR_H__ */
+#endif /* __ERROR_H__ */

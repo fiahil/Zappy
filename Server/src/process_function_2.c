@@ -23,7 +23,7 @@
 #include "map.h"
 #include "clock.h"
 
-t_bool		broadcast_process_function(t_player this, char *data, t_data_serv info)
+t_bool	broadcast_process(t_player this, char *data, t_data_serv info)
 {
   t_iter	*it;
 
@@ -39,7 +39,7 @@ t_bool		broadcast_process_function(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool		incantation_process_function(t_player this, char *data, t_data_serv info)
+t_bool	incantation_process(t_player this, char *data, t_data_serv info)
 {
   t_u_incant	incant;
   t_map		map;
@@ -61,7 +61,7 @@ t_bool		incantation_process_function(t_player this, char *data, t_data_serv info
   return (TRUE);
 }
 
-t_bool		fork_process_function(t_player this, char *data, t_data_serv info)
+t_bool	fork_process(t_player this, char *data, t_data_serv info)
 {
   t_u_egg	egg;
 
@@ -72,7 +72,7 @@ t_bool		fork_process_function(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool		connect_nbr_process_function(t_player this, char *data, t_data_serv info)
+t_bool	connect_nbr_process(t_player this, char *data, t_data_serv info)
 {
   t_iter	*it;
   char		*str;

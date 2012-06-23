@@ -12,18 +12,18 @@
 
 #include "def.h"
 
-t_bool	move_process_function(t_player, char *, t_data_serv);
-t_bool	right_process_function(t_player, char *, t_data_serv);
-t_bool	left_process_function(t_player, char *, t_data_serv);
-t_bool	look_process_function(t_player, char *, t_data_serv);
-t_bool	inventory_process_function(t_player, char *, t_data_serv);
-t_bool	take_process_function(t_player, char *, t_data_serv);
-t_bool	drop_process_function(t_player, char *, t_data_serv);
-t_bool	expulse_process_function(t_player, char *, t_data_serv);
-t_bool	broadcast_process_function(t_player, char *, t_data_serv);
-t_bool	incantation_process_function(t_player, char *, t_data_serv);
-t_bool	fork_process_function(t_player, char *, t_data_serv);
-t_bool	connect_nbr_process_function(t_player, char *, t_data_serv);
+t_bool	move_process(t_player, char *, t_data_serv);
+t_bool	right_process(t_player, char *, t_data_serv);
+t_bool	left_process(t_player, char *, t_data_serv);
+t_bool	look_process(t_player, char *, t_data_serv);
+t_bool	inventory_process(t_player, char *, t_data_serv);
+t_bool	take_process(t_player, char *, t_data_serv);
+t_bool	drop_process(t_player, char *, t_data_serv);
+t_bool	expulse_process(t_player, char *, t_data_serv);
+t_bool	broadcast_process(t_player, char *, t_data_serv);
+t_bool	incantation_process(t_player, char *, t_data_serv);
+t_bool	fork_process(t_player, char *, t_data_serv);
+t_bool	connect_nbr_process(t_player, char *, t_data_serv);
 char	*get_look(t_player, t_map);
 void	message(t_player, t_player, char*);
 

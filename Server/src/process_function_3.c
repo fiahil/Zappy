@@ -67,7 +67,7 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
   list_push_back(get_map(NULL)->map[this->pos.y][this->pos.x]->players, tmp);
 }
 
-t_bool  move_process_function(t_player this, char *data, t_data_serv info)
+t_bool  move_process(t_player this, char *data, t_data_serv info)
 {
   char *str;
 
@@ -91,7 +91,7 @@ t_bool  move_process_function(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool		expulse_process_function(t_player this, char *data, t_data_serv info)
+t_bool	expulse_process(t_player this, char *data, t_data_serv info)
 {
   char		*msg;
   t_list	*players;
@@ -119,7 +119,7 @@ t_bool		expulse_process_function(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool		inventory_process_function(t_player this, char *data, t_data_serv info)
+t_bool	inventory_process(t_player this, char *data, t_data_serv info)
 {
   (void)data;
   (void)info;

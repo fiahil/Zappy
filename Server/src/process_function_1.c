@@ -29,7 +29,7 @@ static char	*g_resources[] =
     NULL
   };
 
-t_bool		look_process_function(t_player this, char *data, t_data_serv info)
+t_bool	look_process(t_player this, char *data, t_data_serv info)
 {
   char		*look;
   t_map		map;
@@ -43,7 +43,7 @@ t_bool		look_process_function(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool		take_process_function(t_player this, char *data, t_data_serv info)
+t_bool	take_process(t_player this, char *data, t_data_serv info)
 {
   t_map		map;
   char		*log;
@@ -72,7 +72,7 @@ t_bool		take_process_function(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool		drop_process_function(t_player this, char *data, t_data_serv info)
+t_bool	drop_process(t_player this, char *data, t_data_serv info)
 {
   t_map		map;
   char		*log;
@@ -100,7 +100,7 @@ t_bool		drop_process_function(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool  right_process_function(t_player this, char *data, t_data_serv info)
+t_bool  right_process(t_player this, char *data, t_data_serv info)
 {
   (void)data;
   (void)info;
@@ -112,7 +112,7 @@ t_bool  right_process_function(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool  left_process_function(t_player this, char *data, t_data_serv info)
+t_bool  left_process(t_player this, char *data, t_data_serv info)
 {
   (void)data;
   (void)info;

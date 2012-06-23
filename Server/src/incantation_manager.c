@@ -100,7 +100,7 @@ t_bool	init_incant(t_incant incant, t_player play, t_square cell, int t)
   incant->pos.x = play->pos.x;
   incant->pos.y = play->pos.y;
   incant->incantor = play;
-  get_time_per_function(&incant->timeout, &incantation_process_function, t);
+  get_time_per_function(&incant->timeout, &incantation_process, t);
   fill_hashcode(&incant->hashcode, cell);
   if (memcmp(&incant->hashcode, &g_hash_cmp[play->lvl - 1], sizeof(incant->hashcode)))
     {

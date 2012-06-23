@@ -11,18 +11,18 @@
 
 static const t_u_parse_elem	g_cmd_tab[] =
   {
-    {6, "avance", &move_process_function},
-    {6, "droite", &right_process_function},
-    {6, "gauche", &left_process_function},
-    {4, "voir", &look_process_function},
-    {10, "inventaire", &inventory_process_function},
-    {6, "prend ", &take_process_function},
-    {5, "pose ", &drop_process_function},
-    {7, "expulse", &expulse_process_function},
-    {10, "broadcast ", &broadcast_process_function},
-    {11, "incantation", &incantation_process_function},
-    {4, "fork", &fork_process_function},
-    {11, "connect_nbr", &connect_nbr_process_function},
+    {6, "avance", &move_process},
+    {6, "droite", &right_process},
+    {6, "gauche", &left_process},
+    {4, "voir", &look_process},
+    {10, "inventaire", &inventory_process},
+    {6, "prend ", &take_process},
+    {5, "pose ", &drop_process},
+    {7, "expulse", &expulse_process},
+    {10, "broadcast ", &broadcast_process},
+    {11, "incantation", &incantation_process},
+    {4, "fork", &fork_process},
+    {11, "connect_nbr", &connect_nbr_process},
     {0, NULL, NULL}
   };
 

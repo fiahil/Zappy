@@ -36,8 +36,6 @@ t_bool		look_process_function(t_player this, char *data, t_data_serv info)
 
   (void)data;
   (void)info;
-  list_push_back_new(this->cm.out, "I look at this !\n",
-		     strlen("I look at this !\n") + 1);
   map = get_map(NULL);
   look = get_look(this, map);
   msgout_voir(this->cm.out, look);
@@ -110,8 +108,6 @@ t_bool  right_process_function(t_player this, char *data, t_data_serv info)
     this->dir = NORTH;
   else
     this->dir += 1;
-  list_push_back_new(this->cm.out, "I turn right !\n",
-		     strlen("I turn right !\n") + 1);
   msgout_droite(this->cm.out);
   return (TRUE);
 }
@@ -124,8 +120,6 @@ t_bool  left_process_function(t_player this, char *data, t_data_serv info)
     this->dir = WEST;
   else
     this->dir -= 1;
-  list_push_back_new(this->cm.out, "I turn left !\n",
-		     strlen("I turn left !\n") + 1);
   msgout_gauche(this->cm.out);
   return (TRUE);
 }

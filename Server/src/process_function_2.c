@@ -29,8 +29,6 @@ t_bool		broadcast_process_function(t_player this, char *data, t_data_serv info)
 
   (void)data;
   (void)info;
-  list_push_back_new(this->cm.out, "I launch a broadcast !\n",
-		     strlen("I launch a broadcast !\n") + 1);
   it = list_begin(info->player);
   while (it != list_end(info->player))
     {
@@ -68,7 +66,6 @@ t_bool		fork_process_function(t_player this, char *data, t_data_serv info)
   t_u_egg	egg;
 
   (void)data;
-  list_push_back_new(this->cm.out, "I fork !\n", strlen("I fork !\n") + 1);
   init_egg(&egg, this, info->t);
   list_push_front_new(info->egg, &egg, sizeof(egg));
   msgout_fork(this->cm.out);
@@ -81,8 +78,6 @@ t_bool		connect_nbr_process_function(t_player this, char *data, t_data_serv info
   char		*str;
 
   (void)data;
-  list_push_back_new(this->cm.out, "I ask for thr connect number !\n",
-		     strlen("I ask for the connect number !\n") + 1);
   if ((it = list_find_cmp(info->teams, &func_cmp_team, this->team, 0)) == NULL)
     return (FALSE);
   asprintf(&str, "%d\n", ((t_team)it->data)->remaining);

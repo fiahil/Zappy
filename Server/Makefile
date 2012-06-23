@@ -41,6 +41,8 @@ SRC	=	src/main.c			\
 		src/welcome_player.c		\
 		src/iter.c			\
 		src/iter_function.c		\
+		src/iter_tools.c		\
+		src/set_timeout.c		\
 		src/fill_map.c			\
 		src/broadcast.c			\
 		src/graphic_tools.c		\

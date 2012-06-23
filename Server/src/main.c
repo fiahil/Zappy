@@ -31,7 +31,7 @@ int		run(t_data_serv data_serv)
   get_data_serv(data_serv);
   get_select_manager(&sm);
   while (666)
-    iter_client(&sm, data_serv);
+    iter_client();
   return (0);
 }
 

@@ -3,6 +3,12 @@
 
 #include "def.h"
 
+void	pnw(t_list *, t_player);
+void	ppo(t_list *, t_player);
+void	plv(t_list *, int, int);
+void	pin(t_list *, t_player);
+void	pex(t_list *, int);
+
 void	sbp(t_list*);
 void	suc(t_list*);
 void	smg(t_list*, char const*);

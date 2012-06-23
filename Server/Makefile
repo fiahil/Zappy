@@ -44,6 +44,7 @@ SRC	=	src/main.c			\
 		src/broadcast.c			\
 		src/graphic_tools.c		\
 		src/graphic_function_1.c	\
+		src/graphic_function_2.c	\
 		src/incantation_manager.c	\
 		src/player.c
 

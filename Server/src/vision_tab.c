@@ -367,7 +367,7 @@ static int	calc_nbcases(int lvl)
   return (nbcases - 1);
 }
 
-void		add_to_str(char **dest, const char *src)
+static void	add_to_str(char **dest, const char *src)
 {
   char		*tmp;
 
@@ -381,7 +381,7 @@ void		add_to_str(char **dest, const char *src)
     }
 }
 
-void		add_players(t_square s, char **look)
+static void	add_players(t_square s, char **look)
 {
   size_t	i;
 
@@ -396,7 +396,7 @@ void		add_players(t_square s, char **look)
     }
 }
 
-void		add_resources(t_square s, char **look)
+static void	add_resources(t_square s, char **look)
 {
   int		i;
   int		j;
@@ -421,7 +421,8 @@ char		*get_look(t_player this, t_map map)
   int		nbcases;
   t_square	cur;
 
-  nbcases = calc_nbcases(this->lvl);
+  // test pour quentin -> level passé en dur pour voir si le voir marche
+  nbcases = calc_nbcases(8); // nbcases = calc_nbcases(this->lvl);
   look = strdup("{");
   i = 0;
   while (i <= nbcases)

@@ -46,3 +46,12 @@ void		seg(t_list *mn, int team)
   free(str);
 }
 
+void		pgt(t_list *mn, int id, int res)
+{
+  char	*str;
+
+  str = NULL;
+  asprintf(&str, "pgt #%d %d\n", id, res);
+  mn_push(mn, str);
+  free(str);
+}

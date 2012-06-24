@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:47 2012 ulric lefevre
-** Last update Sat Jun 23 20:14:48 2012 ulric lefevre
+** Last update Sun Jun 24 15:46:47 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -44,7 +44,7 @@ static void	init_player(t_player player)
 
 t_player	create_player()
 {
-  t_player player;
+  t_player	player;
 
   if (!(player = malloc(sizeof(t_u_player))))
     handle_error("malloc", strerror(errno), -1); // TODO retour erreur

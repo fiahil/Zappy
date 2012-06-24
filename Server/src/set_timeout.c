@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:54 2012 ulric lefevre
-** Last update Sat Jun 23 20:13:55 2012 ulric lefevre
+** Last update Sun Jun 24 15:56:09 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -41,11 +41,12 @@ static void	set_timeout_action(t_player_action ptr, t_timeval time)
     }
 }
 
-static void set_timeout_death(t_data_serv ds, t_timeval time)
+static void	set_timeout_death(t_data_serv ds, t_timeval time)
 {
-  double tot;
-  t_player *ptr = list_front(ds->player);
+  double	tot;
+  t_player	*ptr;
 
+  ptr = list_front(ds->player);
   if (!ptr)
     {
       time->tv_usec = 10000;
@@ -72,9 +73,9 @@ static void set_timeout_death(t_data_serv ds, t_timeval time)
 /*   (void)time; */
 /* } */
 
-void	set_timeout_select(t_data_serv ds, t_timeval time)
+void		set_timeout_select(t_data_serv ds, t_timeval time)
 {
-  t_u_timeval death;
+  t_u_timeval	death;
 
   set_timeout_action(list_front(&(ds->action->queue)), time);
   set_timeout_death(ds, &death);

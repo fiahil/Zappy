@@ -5,20 +5,21 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:31 2012 ulric lefevre
-** Last update Sat Jun 23 20:15:32 2012 ulric lefevre
+** Last update Sun Jun 24 15:40:44 2012 ulric lefevre
 */
 
 #include <time.h>
-#include <stdlib.h>
-#include <string.h>
 #include <errno.h>
 #include <stdio.h>
-#include "handle_error.h"
-#include "map.h"
+#include <stdlib.h>
+#include <string.h>
 
-t_map	get_map(t_map param)
+#include "map.h"
+#include "handle_error.h"
+
+t_map		get_map(t_map param)
 {
-  static t_map map = NULL;
+  static t_map	map = NULL;
 
   if (!param)
     return (map);
@@ -35,8 +36,8 @@ static void	malloc_error()
 
 static void	alloc_map(t_map this, void *pool)
 {
-  int	y;
-  int	x;
+  int		y;
+  int		x;
 
   y = 0;
   while (y < this->size_y)
@@ -59,10 +60,10 @@ static void	alloc_map(t_map this, void *pool)
     }
 }
 
-void	init_map(int szx, int szy, int nb_play)
+void		init_map(int szx, int szy, int nb_play)
 {
-  t_map this;
-  void	*pool;
+  t_map		this;
+  void		*pool;
 
   if (!(this = malloc(sizeof(*this))))
     malloc_error();

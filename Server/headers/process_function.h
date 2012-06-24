@@ -27,6 +27,7 @@ t_bool	fork_process(t_player, char *, t_data_serv);
 t_bool	connect_nbr_process(t_player, char *, t_data_serv);
 char	*get_look(t_player, t_map);
 void	message(t_player, t_player, char*);
+int	cmp_player_list(void *, size_t, void *, size_t);
 
 #endif /* __PROCESS_FUNCTION_H__ */
 

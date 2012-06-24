@@ -5,20 +5,19 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Sun Jun 24 14:40:33 2012 ulric lefevre
+** Last update Sun Jun 24 15:48:44 2012 ulric lefevre
 */
 
-#define _GNU_SOURCE
+#define		_GNU_SOURCE
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
 
-#include "map.h"
-#include "my_itoa.h"
-#include "msgout_cmd.h"
-#include "process_function.h"
-#include "algorithm.h"
+#include	"map.h"
+#include	"algorithm.h"
+#include	"msgout_cmd.h"
+#include	"process_function.h"
 
 static const int	g_dir[4][2] =
   {
@@ -36,7 +35,7 @@ static const int	g_src[4][4] =
     { 7, 1, 3, 5}
   };
 
-static int	cmp_player_list(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
+int		cmp_player_list(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
 {
   (void)sz1;
   (void)sz2;
@@ -72,9 +71,9 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
   list_push_back(get_map(NULL)->map[this->pos.y][this->pos.x]->players, tmp);
 }
 
-t_bool  move_process(t_player this, char *data, t_data_serv info)
+t_bool		move_process(t_player this, char *data, t_data_serv info)
 {
-  char *str; // TODO affichage tmp
+  char		*str; // TODO affichage tmp
 
   (void)data;
   (void)info;
@@ -88,7 +87,7 @@ t_bool  move_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool	expulse_process(t_player this, char *data, t_data_serv info)
+t_bool		expulse_process(t_player this, char *data, t_data_serv info)
 {
   char		*msg;
   t_list	*players;
@@ -116,7 +115,7 @@ t_bool	expulse_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool	inventory_process(t_player this, char *data, t_data_serv info)
+t_bool		inventory_process(t_player this, char *data, t_data_serv info)
 {
   (void)data;
   (void)info;

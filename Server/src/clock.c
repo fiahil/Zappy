@@ -5,16 +5,13 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:14 2012 ulric lefevre
-** Last update Sat Jun 23 20:52:17 2012 ulric lefevre
+** Last update Sun Jun 24 15:30:05 2012 ulric lefevre
 */
 
-#include <errno.h>
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
 #include "clock.h"
-#include "handle_error.h"
 #include "process_function.h"
 
 static const t_u_time_attrib g_time_attrib[] =
@@ -34,7 +31,7 @@ static const t_u_time_attrib g_time_attrib[] =
     {NULL, 0}
   };
 
-void	get_current_time(t_timeval time)
+void		get_current_time(t_timeval time)
 {
   struct timezone	zone;
 
@@ -43,9 +40,9 @@ void	get_current_time(t_timeval time)
   gettimeofday(time, &zone);
 }
 
-void	get_time_per_function(t_timeval time, t_proc_func f, double t)
+void		get_time_per_function(t_timeval time, t_proc_func f, double t)
 {
-  int	i;
+  int		i;
 
   i = 0;
   get_current_time(time);
@@ -57,7 +54,7 @@ void	get_time_per_function(t_timeval time, t_proc_func f, double t)
     }
 }
 
-void	add_time(t_timeval time, double maj, double t)
+void		add_time(t_timeval time, double maj, double t)
 {
   if (t)
     maj /= t;
@@ -66,19 +63,19 @@ void	add_time(t_timeval time, double maj, double t)
   time->tv_usec += (int)maj % 1000000;
 }
 
-double convert_to_u(t_timeval time)
+double		convert_to_u(t_timeval time)
 {
-  double ret;
+  double	ret;
 
   ret = time->tv_sec * 1000000;
   ret += time->tv_usec;
   return (ret);
 }
 
-void	unitest_clock() // TODO tmp
+void		unitest_clock() // TODO tmp
 {
-  t_u_timeval time;
-  t_u_timeval time2;
+  t_u_timeval	time;
+  t_u_timeval	time2;
 
   get_current_time(&time);
   sleep(1);

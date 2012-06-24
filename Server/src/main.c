@@ -57,6 +57,7 @@ static void	init_teams(t_data_serv data_serv, t_arg *args)
 
 static void	init_lists(t_data_serv data_serv)
 {
+  data_serv->monitor = new_list(NULL, NULL, NULL);
   data_serv->player = new_list(NULL, NULL, NULL);
   data_serv->action = new_pqueue(&cmp_action);
   data_serv->send_q = new_list(NULL, NULL, NULL);

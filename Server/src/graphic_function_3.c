@@ -1,3 +1,13 @@
+#define _GNU_SOURCE
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "def.h"
+#include "c_lists.h"
+#include "graphic.h"
+
 void		pbc(t_list *mn, int id, char *msg)
 {
   char	*str;
@@ -8,7 +18,7 @@ void		pbc(t_list *mn, int id, char *msg)
   free(str);
 }
 
-void		pic(t_list *mn, t_incant inc, t_list *player)
+void		pic(t_list *mn, t_incant inc, t_list *play)
 {
   char		*str;
   char		*tmp;
@@ -17,6 +27,7 @@ void		pic(t_list *mn, t_incant inc, t_list *player)
   str = NULL;
   tmp = NULL;
   asprintf(&str, "pic %d %d %d #%d", inc->pos.x, inc->pos.y, inc->incantor->lvl, inc->incantor->id);
+  it = play->head;
   while (it)
     {
       if ((*(t_player*)(it->data))->id != inc->incantor->id)

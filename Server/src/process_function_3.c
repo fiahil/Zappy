@@ -18,6 +18,7 @@
 #include	"algorithm.h"
 #include	"msgout_cmd.h"
 #include	"process_function.h"
+#include	"graphic.h"
 
 static const int	g_dir[4][2] =
   {

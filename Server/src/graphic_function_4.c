@@ -55,3 +55,13 @@ void		enw(t_list *mn, int egg, int player, t_pos p)
   mn_push(mn, str);
   free(str);
 }
+
+void		pdi(t_list *mn, int id)
+{
+  char	*str;
+
+  str = NULL;
+  asprintf(&str, "pdi #%d\n", id);
+  mn_push(mn, str);
+  free(str);
+}

@@ -18,6 +18,16 @@
 #include	"algorithm.h"
 #include	"var_manager.h"
 #include	"team_manager.h"
+#include	"process_function.h"
+
+void		map_cleaner(t_player p)
+{
+  t_iter	*tmp;
+
+  tmp = list_find_cmp(get_map(NULL)->map[p->pos.y][p->pos.x]->players,
+      &cmp_player_list, p, sizeof(*p));
+  list_extract(get_map(NULL)->map[p->pos.y][p->pos.x]->players, tmp);
+}
 
 int		player_cleaner(void *ptr, size_t s)
 {
@@ -36,6 +46,7 @@ int		player_cleaner(void *ptr, size_t s)
           assert(it != NULL);
           ((t_team)it->data)->remaining += 1;
         }
+      map_cleaner(*(t_player*)ptr);
       delete_player(*(t_player*)ptr);
       return (1);
     }

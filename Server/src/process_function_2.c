@@ -5,26 +5,26 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:27 2012 ulric lefevre
-** Last update Sat Jun 23 20:14:28 2012 ulric lefevre
+** Last update Sun Jun 24 15:50:21 2012 ulric lefevre
 */
 
-#define _GNU_SOURCE
+#define		_GNU_SOURCE
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
 
-#include "def.h"
-#include "algorithm.h"
-#include "msgout_cmd.h"
-#include "egg_manager.h"
-#include "team_manager.h"
-#include "process_function.h"
-#include "incant.h"
-#include "map.h"
-#include "clock.h"
+#include	"def.h"
+#include	"map.h"
+#include	"clock.h"
+#include	"incant.h"
+#include	"algorithm.h"
+#include	"msgout_cmd.h"
+#include	"egg_manager.h"
+#include	"team_manager.h"
+#include	"process_function.h"
 
-t_bool	broadcast_process(t_player this, char *data, t_data_serv info)
+t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
 {
   t_iter	*it;
 
@@ -40,7 +40,7 @@ t_bool	broadcast_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool	incantation_process(t_player this, char *data, t_data_serv info)
+t_bool		incantation_process(t_player this, char *data, t_data_serv info)
 {
   t_u_incant	incant;
   t_map		map;
@@ -62,7 +62,7 @@ t_bool	incantation_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool	fork_process(t_player this, char *data, t_data_serv info)
+t_bool		fork_process(t_player this, char *data, t_data_serv info)
 {
   t_u_egg	egg;
 
@@ -73,7 +73,7 @@ t_bool	fork_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool	connect_nbr_process(t_player this, char *data, t_data_serv info)
+t_bool		connect_nbr_process(t_player this, char *data, t_data_serv info)
 {
   t_iter	*it;
   char		*str;

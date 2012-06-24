@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:43 2012 ulric lefevre
-** Last update Sat Jun 23 20:21:29 2012 ulric lefevre
+** Last update Sun Jun 24 15:23:08 2012 ulric lefevre
 */
 
 #ifndef		__DEF_H__
@@ -16,6 +16,11 @@
 #include	<sys/time.h>
 #include	"c_lists.h"
 #include	"pqueue.h"
+
+/*
+** Macros
+*/
+#define ABS(x)  (x > 0 ? x : -x)
 
 /*
 ** System typedef

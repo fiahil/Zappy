@@ -21,7 +21,6 @@ SRC	=	src/main.c			\
 		src/func_cmp.c			\
 		src/server_routine.c		\
 		src/cmd_parse.c			\
-		src/my_itoa.c			\
 		src/map.c			\
 		src/clock.c			\
 		src/func_cleaner.c		\

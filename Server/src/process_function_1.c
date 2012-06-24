@@ -5,18 +5,18 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:32 2012 ulric lefevre
-** Last update Sun Jun 24 14:11:35 2012 ulric lefevre
+** Last update Sun Jun 24 15:51:17 2012 ulric lefevre
 */
 
-#define _GNU_SOURCE
+#define		_GNU_SOURCE
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
 
-#include "map.h"
-#include "msgout_cmd.h"
-#include "process_function.h"
+#include	"map.h"
+#include	"msgout_cmd.h"
+#include	"process_function.h"
 
 static char	*g_resources[] =
   {
@@ -30,7 +30,7 @@ static char	*g_resources[] =
     NULL
   };
 
-t_bool	look_process(t_player this, char *data, t_data_serv info)
+t_bool		look_process(t_player this, char *data, t_data_serv info)
 {
   char		*look;
   t_map		map;
@@ -44,7 +44,7 @@ t_bool	look_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool	take_process(t_player this, char *data, t_data_serv info)
+t_bool		take_process(t_player this, char *data, t_data_serv info)
 {
   t_map		map;
   char		*log;
@@ -73,7 +73,7 @@ t_bool	take_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool	drop_process(t_player this, char *data, t_data_serv info)
+t_bool		drop_process(t_player this, char *data, t_data_serv info)
 {
   t_map		map;
   char		*log;
@@ -101,7 +101,7 @@ t_bool	drop_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool  right_process(t_player this, char *data, t_data_serv info)
+t_bool		right_process(t_player this, char *data, t_data_serv info)
 {
   (void)data;
   (void)info;
@@ -113,7 +113,7 @@ t_bool  right_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool  left_process(t_player this, char *data, t_data_serv info)
+t_bool		left_process(t_player this, char *data, t_data_serv info)
 {
   (void)data;
   (void)info;

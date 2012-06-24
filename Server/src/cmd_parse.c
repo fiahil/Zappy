@@ -5,14 +5,14 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:08 2012 ulric lefevre
-** Last update Sun Jun 24 15:30:49 2012 ulric lefevre
+** Last update Sun Jun 24 21:44:03 2012 ulric lefevre
 */
 
-#include <stdlib.h>
-#include <string.h>
+#include	<stdlib.h>
+#include	<string.h>
 
-#include "cmd_parse.h"
-#include "process_function.h"
+#include	"cmd_parse.h"
+#include	"process_function.h"
 
 static const t_u_parse_elem	g_cmd_tab[] =
   {

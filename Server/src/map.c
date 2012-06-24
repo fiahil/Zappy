@@ -5,17 +5,17 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:31 2012 ulric lefevre
-** Last update Sun Jun 24 15:40:44 2012 ulric lefevre
+** Last update Sun Jun 24 21:41:00 2012 ulric lefevre
 */
 
-#include <time.h>
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include	<time.h>
+#include	<errno.h>
+#include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
 
-#include "map.h"
-#include "handle_error.h"
+#include	"map.h"
+#include	"handle_error.h"
 
 t_map		get_map(t_map param)
 {

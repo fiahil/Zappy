@@ -1,12 +1,12 @@
-#define _GNU_SOURCE
+#define		_GNU_SOURCE
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include	<stdio.h>
+#include	<string.h>
+#include	<stdlib.h>
 
-#include "def.h"
-#include "c_lists.h"
-#include "graphic.h"
+#include	"def.h"
+#include	"c_lists.h"
+#include	"graphic.h"
 
 void		pbc(t_list *mn, int id, char *msg)
 {

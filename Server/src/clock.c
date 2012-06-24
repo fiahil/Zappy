@@ -5,14 +5,14 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:14 2012 ulric lefevre
-** Last update Sun Jun 24 15:30:05 2012 ulric lefevre
+** Last update Sun Jun 24 21:43:53 2012 ulric lefevre
 */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include	<stdio.h>
+#include	<stdlib.h>
 
-#include "clock.h"
-#include "process_function.h"
+#include	"clock.h"
+#include	"process_function.h"
 
 static const t_u_time_attrib g_time_attrib[] =
   {

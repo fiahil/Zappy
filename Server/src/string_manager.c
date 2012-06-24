@@ -5,16 +5,16 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:51 2012 ulric lefevre
-** Last update Sun Jun 24 15:58:05 2012 ulric lefevre
+** Last update Sun Jun 24 21:40:24 2012 ulric lefevre
 */
 
-#include <stdio.h>
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
+#include	<stdio.h>
+#include	<assert.h>
+#include	<stdlib.h>
+#include	<string.h>
 
-#include "def.h"
-#include "msgout_cmd.h"
+#include	"def.h"
+#include	"msgout_cmd.h"
 
 static const char *g_separator [] =
   {

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Sun Jun 24 13:44:51 2012 ulric lefevre
+** Last update Sun Jun 24 14:32:02 2012 ulric lefevre
 */
 
 #define _GNU_SOURCE
@@ -40,6 +40,7 @@ static int	cmp_player_list(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
 {
   (void)sz1;
   (void)sz2;
+  printf("\033[1;33m[CMP Player] ptr1 : %p ; ptr2 : %p\n\033[0m", ptr1, ptr2);
   if ((*((t_player*)ptr1)) == ((t_player)(ptr2)))
     return (0);
   else

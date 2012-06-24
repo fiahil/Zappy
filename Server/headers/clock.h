@@ -1,11 +1,11 @@
 /*
-** clock.h for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/Server/headers/
+** clock.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on  Wed Jun 13 11:39:01 2012 benjamin businaro
-** Last update Wed Jun 20 18:52:07 2012 benjamin businaro
+** Started on  Sat Jun 23 20:21:47 2012 ulric lefevre
+** Last update Sat Jun 23 20:21:57 2012 ulric lefevre
 */
 
 #ifndef __CLOCK_H__

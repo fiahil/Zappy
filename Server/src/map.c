@@ -1,11 +1,11 @@
 /*
-** map.c for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/src/
+** map.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on Tue Jun 12 11:00:09 2012 benjamin businaro
-** Last update Sat Jun 16 16:34:14 2012 benjamin businaro
+** Started on  Sat Jun 23 20:15:31 2012 ulric lefevre
+** Last update Sat Jun 23 20:15:32 2012 ulric lefevre
 */
 
 #include <time.h>

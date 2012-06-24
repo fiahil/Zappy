@@ -1,10 +1,11 @@
 /*
-** other_process_function.c for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/src/
+** process_function_2.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on Thu Jun  7 14:22:28 2012 benjamin businaro
+** Started on  Sat Jun 23 20:14:27 2012 ulric lefevre
+** Last update Sat Jun 23 20:14:28 2012 ulric lefevre
 */
 
 #define _GNU_SOURCE

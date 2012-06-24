@@ -1,3 +1,13 @@
+/*
+** incant.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:20:17 2012 ulric lefevre
+** Last update Sat Jun 23 20:21:55 2012 ulric lefevre
+*/
+
 #ifndef __INCANT_H__
 #define __INCANT_H__
 

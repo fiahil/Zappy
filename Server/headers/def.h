@@ -1,7 +1,12 @@
 /*
- * Texan
- * 05.06.2012
- */
+** def.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:20:43 2012 ulric lefevre
+** Last update Sat Jun 23 20:21:29 2012 ulric lefevre
+*/
 
 #ifndef		__DEF_H__
 # define	__DEF_H__
@@ -13,9 +18,8 @@
 #include	"pqueue.h"
 
 /*
- * System typedef
- */
-
+** System typedef
+*/
 typedef struct sockaddr*	t_sock_addr;
 typedef struct sockaddr		t_u_sock_addr;
 
@@ -23,9 +27,8 @@ typedef struct sockaddr_in*	t_sock_addr_in;
 typedef struct sockaddr_in	t_u_sock_addr_in;
 
 /*
- * Struct typedef
- */
-
+** Struct typedef
+*/
 typedef struct s_hash*		t_hash;
 typedef struct s_hash		t_u_hash;
 
@@ -78,9 +81,8 @@ typedef struct s_data_serv*	t_data_serv;
 typedef struct s_time_attrib	t_u_time_attrib;
 
 /*
- * Enum typedef
- */
-
+** Enum typedef
+*/
 #define BUFFER_SIZE	(4096)
 
 typedef enum
@@ -117,15 +119,13 @@ typedef enum
 } t_dir;
 
 /*
- * Ptrfunc
- */
-
+** Ptrfunc
+*/
 typedef t_bool	(*t_proc_func)(t_player, char *, t_data_serv);
 
 /*
- * Struct definition
- */
-
+** Struct definition
+*/
 struct			s_map
 {
   int			size_x;

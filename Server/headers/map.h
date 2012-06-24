@@ -1,11 +1,11 @@
 /*
-** map.h for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/src/
+** map.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on  Tue Jun 12 11:17:04 2012 benjamin businaro
-** Last update Tue Jun 12 11:17:50 2012 benjamin businaro
+** Started on  Sat Jun 23 20:19:49 2012 ulric lefevre
+** Last update Sat Jun 23 20:21:54 2012 ulric lefevre
 */
 
 #ifndef __MAP_H__

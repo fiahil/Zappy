@@ -1,28 +1,34 @@
 /*
- * Fiahil
- * 06.06.2012
- */
+** main.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:15:37 2012 ulric lefevre
+** Last update Sat Jun 23 20:55:52 2012 ulric lefevre
+*/
 
-#include <errno.h>
-#include <time.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include	<time.h>
+#include	<errno.h>
+#include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
 
-#include "def.h"
-#include "map.h"
-#include "iter.h"
-#include "clock.h"
-#include "get_arg.h"
-#include "network.h"
-#include "var_manager.h"
-#include "handle_error.h"
-#include "select_manager.h"
+#include	"def.h"
+#include	"map.h"
+#include	"iter.h"
+#include	"clock.h"
+#include	"get_arg.h"
+#include	"network.h"
+#include	"func_cmp.h"
+#include	"var_manager.h"
+#include	"func_cleaner.h"
+#include	"handle_error.h"
+#include	"select_manager.h"
 
 int		run(t_data_serv data_serv)
 {
   t_u_select_manager	sm;
-
 
   memset(&sm, '\0', sizeof(sm));
   sm.timeout.tv_sec = 10000;
@@ -38,23 +44,8 @@ int		run(t_data_serv data_serv)
 void		print_list(void *data, size_t size) // TODO affichage tmp
 {
   (void)size;
-  printf("name : %s -> size : %d\n", ((t_team)data)->name, ((t_team)data)->remaining);
-}
-
-int		cmp_incant(void *e1, size_t s1, void *e2, size_t s2)
-{
-  (void)s1;
-  (void)s2;
-  return (cmp_time(&((*((t_incant*)e1))->timeout),
-		   &((*((t_incant*)e2))->timeout)));
-}
-
-int		cmp_action(void *e1, size_t s1, void *e2, size_t s2)
-{
-  (void)s1;
-  (void)s2;
-  return (cmp_time(&((*((t_player_action*)e1))->time),
-		   &((*((t_player_action*)e2))->time)));
+  printf("name : %s -> size : %d\n",
+	 ((t_team)data)->name, ((t_team)data)->remaining);
 }
 
 static void	init_teams(t_data_serv data_serv, t_arg *args)
@@ -64,32 +55,13 @@ static void	init_teams(t_data_serv data_serv, t_arg *args)
   args->teams = NULL;
 }
 
-void		clean_all(t_data_serv ds)
+static void	init_lists(t_data_serv data_serv)
 {
-  t_map	map;
-  int	x;
-  int	y;
-
-  delete_list(ds->player);
-  delete_list(ds->teams);
-  delete_pqueue(ds->action);
-  delete_list(ds->send_q);
-  delete_pqueue(ds->incant);
-  map = get_map(NULL);
-  y = 0;
-  while (y < map->size_y)
-    {
-      x = 0;
-      while (x < map->size_x)
-	delete_list(map->map[y][x++]->players);
-      ++y;
-    }
-  free(map->map[0][0]);
-  x = 0;
-  while (x < map->size_y)
-    free(map->map[x++]);
-  free(map->map);
-  free(map);
+  data_serv->player = new_list(NULL, NULL, NULL);
+  data_serv->action = new_pqueue(&cmp_action);
+  data_serv->send_q = new_list(NULL, NULL, NULL);
+  data_serv->incant = new_pqueue(&cmp_incant);
+  data_serv->egg = new_list(NULL, NULL, NULL);
 }
 
 int		main(int ac, char **av)
@@ -114,11 +86,7 @@ int		main(int ac, char **av)
 	   args.height,
 	   (args.teams->size * args.nb_per_team));
   init_teams(&data_serv, &args);
-  data_serv.player = new_list(NULL, NULL, NULL);
-  data_serv.action = new_pqueue(&cmp_action);
-  data_serv.send_q = new_list(NULL, NULL, NULL);
-  data_serv.incant = new_pqueue(&cmp_incant);
-  data_serv.egg = new_list(NULL, NULL, NULL);
+  init_lists(&data_serv);
   data_serv.t = args.exec_time;
   set_connection(&data_serv, args.port);
   //  unitest_clock(); // TODO unitest

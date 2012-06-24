@@ -1,3 +1,12 @@
+/*
+** item.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:24:27 2012 ulric lefevre
+** Last update Sat Jun 23 20:24:36 2012 ulric lefevre
+*/
 
 #ifndef __ITEM_H__
 #define __ITEM_H__
@@ -23,6 +32,7 @@ typedef struct s_item
 t_item		*new_item();
 t_item		*new_item_param(void *, size_t);
 t_item		*new_item_copy(t_item *);
+
 /*
 **   Initialazers for chained-lists' item
 */

@@ -18,6 +18,7 @@ SRC	=	src/main.c			\
 		src/select_manager.c		\
 		src/select_tools.c		\
 		src/max_fd.c			\
+		src/func_cmp.c			\
 		src/server_routine.c		\
 		src/cmd_parse.c			\
 		src/my_itoa.c			\

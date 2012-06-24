@@ -1,11 +1,11 @@
 /*
-** player.h for zappy in /home/mart_i/Work/unix/Zappy/Server/headers/
+** player.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
 ** 
-** Made by pierre martin
-** Login   <mart_i@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on  Thu Jun 21 15:51:01 2012 pierre martin
-** Last update Thu Jun 21 15:51:30 2012 pierre martin
+** Started on  Sat Jun 23 20:19:29 2012 ulric lefevre
+** Last update Sat Jun 23 20:21:52 2012 ulric lefevre
 */
 
 #ifndef __PLAYER_H__

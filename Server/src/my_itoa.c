@@ -1,10 +1,11 @@
 /*
-** my_itoa.c for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/Server/src
+** my_itoa.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on  Thu Jun 14 20:25:39 2012 benjamin businaro
+** Started on  Sat Jun 23 20:15:09 2012 ulric lefevre
+** Last update Sat Jun 23 20:15:10 2012 ulric lefevre
 */
 
 #include <stdlib.h>

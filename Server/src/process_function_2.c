@@ -38,6 +38,7 @@ t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
       it = it->next;
     }
   msgout_broadcast(this->cm.out);
+  pbc(info->monitor, this->id, data);
   return (TRUE);
 }
 

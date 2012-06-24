@@ -212,7 +212,6 @@ struct			s_player
 
 struct			s_graphic
 {
-  t_bool		welcome;
   t_u_client_manager	cm;
 };
 

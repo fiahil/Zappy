@@ -36,6 +36,13 @@ void		iter_rds(void *ptr, size_t s)
   if ((*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->deleted == FALSE
       && select_w_isset(sm, (*(t_player*)ptr)->cm.sock.fd))
     server_routine_output(ds, *(t_player*)ptr);
+  if (!(*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->dead == TRUE &&
+      (*(t_player*)ptr)->deleted == FALSE)
+  {
+    (*(t_player*)ptr)->deleted = TRUE;
+    close((*(t_player*)ptr)->cm.sock.fd);
+    (*(t_player*)ptr)->cm.online = FALSE;
+  }
 }
 
 void		iter_action(void *ptr, size_t s)

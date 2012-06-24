@@ -16,6 +16,7 @@
 
 #include	"def.h"
 #include	"map.h"
+#include	"graphic.h"
 #include	"algorithm.h"
 #include	"team_manager.h"
 
@@ -23,6 +24,8 @@ static int	chk_team(t_data_serv server, char *data)
 {
   t_iter	*it;
 
+  if (!strcmp(data, "GRAPHIC"))
+    return (-2);
   if ((it = list_find_cmp(server->teams, &func_cmp_team, data, 0)) == NULL)
     return (-1);
   printf("Connection query to : %s\n", ((t_team)it->data)->name);
@@ -81,6 +84,20 @@ static void	first_contact(t_player *p, int nb_c, char *data)
   list_pop_front((*p)->cm.in);
 }
 
+void		welcome_graphic(t_data_serv ds, t_player p)
+{
+  t_u_graphic	mn;
+
+  puts("bonjour madame");
+  memcpy(&mn.cm, &p->cm, sizeof(mn));
+  memset(&mn.cm.stock, '\0', sizeof(mn.cm.stock));
+  mn.cm.in = new_list(NULL, NULL, NULL);
+  mn.cm.out = new_list(NULL, NULL, NULL);
+  list_push_back_new(ds->monitor, &mn, sizeof(mn));
+  msz(&mn, get_map(NULL)->size_x, get_map(NULL)->size_y);
+  p->cm.sock.fd = -1;
+}
+
 t_bool		welcome_player(t_data_serv server, t_player player, char *data)
 {
   int		nb_client;
@@ -90,8 +107,9 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
     {
       if ((nb_client = chk_team(server, data)) < 0)
 	{
-	  printf("Not enough slot in the team or team unknown\n"); // TODO affichage tmp
-	  list_push_back_new(player->cm.out, "ko\n", 4);
+	  printf("Not enough slot in the team or team unknown\n"); // TODO affichage
+	  if (nb_client == -2)
+	    welcome_graphic(server, player);
 	  return (FALSE);
 	}
       if ((ghost = list_find_cmp(server->player, &team_ghost, data, 0)))

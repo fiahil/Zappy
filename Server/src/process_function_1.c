@@ -17,6 +17,7 @@
 #include	"map.h"
 #include	"msgout_cmd.h"
 #include	"process_function.h"
+#include	"graphic.h"
 
 static char	*g_resources[] =
   {
@@ -70,6 +71,9 @@ t_bool		take_process(t_player this, char *data, t_data_serv info)
   free(log);
   msgout_prend_objet(this->cm.out, is_done);
   //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
+  pgt(info->monitor, this->id, i);
+  pin_general(info->monitor, this);
+  bct_general(info->monitor, map->map[this->pos.y][this->pos.x], &this->pos);
   return (TRUE);
 }
 
@@ -97,6 +101,9 @@ t_bool		drop_process(t_player this, char *data, t_data_serv info)
   list_push_back_new(this->cm.out, log, strlen(log) + 1);
   msgout_pose_objet(this->cm.out, is_done);
   free(log);
+  pdr(info->monitor, this->id, i);
+  pin_general(info->monitor, this);
+  bct_general(info->monitor, map->map[this->pos.y][this->pos.x], &this->pos);
   //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   return (TRUE);
 }
@@ -110,6 +117,7 @@ t_bool		right_process(t_player this, char *data, t_data_serv info)
   else
     this->dir += 1;
   msgout_droite(this->cm.out);
+  ppo_general(info->monitor, this);
   return (TRUE);
 }
 
@@ -122,5 +130,6 @@ t_bool		left_process(t_player this, char *data, t_data_serv info)
   else
     this->dir -= 1;
   msgout_gauche(this->cm.out);
+  ppo_general(info->monitor, this);
   return (TRUE);
 }

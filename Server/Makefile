@@ -48,6 +48,7 @@ SRC	=	src/main.c			\
 		src/graphic_tools.c		\
 		src/graphic_function_1.c	\
 		src/graphic_function_2.c	\
+		src/graphic_function_3.c	\
 		src/graphic_function_4.c	\
 		src/graphic_function_5.c	\
 		src/graphic_function_6.c	\

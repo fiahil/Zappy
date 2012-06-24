@@ -110,6 +110,7 @@ t_bool		right_process(t_player this, char *data, t_data_serv info)
   else
     this->dir += 1;
   msgout_droite(this->cm.out);
+  ppo_general(info->monitor, this);
   return (TRUE);
 }
 
@@ -122,5 +123,6 @@ t_bool		left_process(t_player this, char *data, t_data_serv info)
   else
     this->dir -= 1;
   msgout_gauche(this->cm.out);
+  ppo_general(info->monitor, this);
   return (TRUE);
 }

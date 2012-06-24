@@ -84,6 +84,7 @@ t_bool		move_process(t_player this, char *data, t_data_serv info)
   free(str); // TODO affichage tmp
 
   msgout_avance(this->cm.out);
+  ppo_general(info->monitor, this);
   return (TRUE);
 }
 

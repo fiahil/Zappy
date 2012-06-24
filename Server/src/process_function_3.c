@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Sat Jun 23 20:14:20 2012 ulric lefevre
+** Last update Sun Jun 24 13:44:51 2012 ulric lefevre
 */
 
 #define _GNU_SOURCE
@@ -74,23 +74,15 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
 
 t_bool  move_process(t_player this, char *data, t_data_serv info)
 {
-  char *str;
+  char *str; // TODO affichage tmp
 
   (void)data;
   (void)info;
-  /* if (this->dir == NORTH) */
-  /*   do_move_process(this, 0, -1); */
-  /* else if (this->dir == EAST) */
-  /*   do_move_process(this, 1, 0); */
-  /* else if (this->dir == SOUTH) */
-  /*   do_move_process(this, 0, 1); */
-  /* else */
-  /*   do_move_process(this, -1, 0); */
   do_move_process(this, g_dir[this->dir][0], g_dir[this->dir][1]);
-  str = NULL;
-  asprintf(&str, "I move in %d : %d !\n", this->pos.x, this->pos.y); // TODO:TMP
+  str = NULL; // TODO affichage tmp
+  asprintf(&str, "I move in %d : %d !\n", this->pos.x, this->pos.y); // TODO affichage tmp
   list_push_back_new(this->cm.out, str, strlen(str) + 1);
-  free(str); // TODO:TMP
+  free(str); // TODO affichage tmp
 
   msgout_avance(this->cm.out);
   return (TRUE);

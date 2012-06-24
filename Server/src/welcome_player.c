@@ -119,5 +119,6 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
 	}
       first_contact(&player, nb_client, data);
     }
+  pnw(server->monitor, player);
   return (TRUE);
 }

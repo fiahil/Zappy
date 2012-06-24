@@ -70,6 +70,7 @@ t_bool		fork_process(t_player this, char *data, t_data_serv info)
   init_egg(&egg, this, info->t);
   list_push_front_new(info->egg, &egg, sizeof(egg));
   msgout_fork(this->cm.out);
+  pfk(this->monitor, this->id);
   return (TRUE);
 }
 

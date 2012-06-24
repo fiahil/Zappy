@@ -13,6 +13,10 @@
 
 #include "def.h"
 
+void	ppo_general(t_list *, t_player);
+void	pin_general(t_list *, t_player);
+void	bct_general(t_list *, t_square, t_pos);
+
 void	pnw(t_list *, t_player);
 void	ppo(t_graphic, t_player);
 void	plv(t_graphic, int, int);

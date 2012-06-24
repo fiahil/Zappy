@@ -5,16 +5,17 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:22 2012 ulric lefevre
-** Last update Sat Jun 23 20:16:23 2012 ulric lefevre
+** Last update Sun Jun 24 21:42:45 2012 ulric lefevre
 */
 
-#define _GNU_SOURCE
+#define		_GNU_SOURCE
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "graphic.h"
-#include "def.h"
+#include	<stdio.h>
+#include	<string.h>
+#include	<stdlib.h>
+
+#include	"graphic.h"
+#include	"def.h"
 
 void		edi(t_list *mn, int id)
 {

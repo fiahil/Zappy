@@ -5,13 +5,13 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:00 2012 ulric lefevre
-** Last update Sun Jun 24 14:06:18 2012 ulric lefevre
+** Last update Sun Jun 24 21:43:35 2012 ulric lefevre
 */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include	<stdio.h>
+#include	<stdlib.h>
 
-#include "def.h"
+#include	"def.h"
 
 static void	get_position(int dim, t_map map, int (*coord)[])
 {

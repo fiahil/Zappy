@@ -1,11 +1,11 @@
-#define _GNU_SOURCE
+#define		_GNU_SOURCE
 
-#include <stdio.h>
-#include <stdlib.h>
+#include	<stdio.h>
+#include	<stdlib.h>
 
-#include "c_lists.h"
-#include "graphic.h"
-#include "def.h"
+#include	"c_lists.h"
+#include	"graphic.h"
+#include	"def.h"
 
 void	ppo_general(t_list *mn, t_player play)
 {

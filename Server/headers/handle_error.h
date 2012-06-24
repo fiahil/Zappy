@@ -5,12 +5,12 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:21 2012 ulric lefevre
-** Last update Sat Jun 23 20:21:55 2012 ulric lefevre
+** Last update Sun Jun 24 21:32:06 2012 ulric lefevre
 */
 
-#ifndef __HANDLE_ERROR_H__
-#define __HANDLE_ERROR_H__
+#ifndef		__HANDLE_ERROR_H__
+# define	__HANDLE_ERROR_H__
 
 int	handle_error(char *, char *, int);
 
-#endif /* __ERROR_H__ */
+#endif		/* __ERROR_H__ */

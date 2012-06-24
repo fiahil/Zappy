@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Sat Jun 23 21:01:15 2012 ulric lefevre
+** Last update Sun Jun 24 14:13:58 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -75,6 +75,9 @@ static void	iter_lists(t_data_serv ds)
   list_remove_if(ds->player, &player_cleaner);
 }
 
+void display(t_map); // TODO affichage tmp
+t_map get_map(t_map); // TODO affichage tmp
+
 void		iter_client()
 {
   t_player		player;
@@ -83,6 +86,7 @@ void		iter_client()
 
   sm = get_select_manager(NULL);
   ds = get_data_serv(NULL);
+  display(get_map(NULL)); // TODO affichage tmp
   select_manager(ds, sm);
   get_current_time(&g_current);
   if ((g_last.tv_sec) || (g_last.tv_usec))

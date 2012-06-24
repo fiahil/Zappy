@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:00 2012 ulric lefevre
-** Last update Sat Jun 23 20:17:24 2012 ulric lefevre
+** Last update Sun Jun 24 14:06:18 2012 ulric lefevre
 */
 
 #include <stdio.h>
@@ -78,7 +78,7 @@ static void	put_res_on_map(t_map map, int (*stock)[], int coord[])
   /**/y = -1;
   /**/x = -1;
   /**/while (++x < map->size_x)
-    /**/printf("------");
+    /**/printf("----------");
   /**/printf("-");
   /**/printf("\n");
   /**/while (++y < map->size_y)
@@ -87,13 +87,13 @@ static void	put_res_on_map(t_map map, int (*stock)[], int coord[])
     /**/printf("|");
     /**/while (++x < map->size_x)
       /**/if (count_res(map->map[y][x]->inv.resources))
-	/**/printf(" \033[1;32m%.3d\033[0m |", count_res(map->map[y][x]->inv.resources));
+	/**/printf(" \033[1;32m%.3d\033[0m \033[1;34m(%zu)\033[0m |", count_res(map->map[y][x]->inv.resources), map->map[y][x]->players->size);
     /**/else
-      /**/printf(" \033[1;31m%.3d\033[0m |", count_res(map->map[y][x]->inv.resources));
+      /**/printf(" \033[1;31m%.3d\033[0m \033[1;34m(%zu)\033[0m |", count_res(map->map[y][x]->inv.resources), map->map[y][x]->players->size);
     /**/printf("\n");
-    /**/printf("-----");
+    /**/printf("---------");
     /**/while (--x)
-      /**/printf("------");
+      /**/printf("----------");
     /**/printf("--");
     /**/printf("\n");
     /**/}

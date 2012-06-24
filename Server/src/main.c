@@ -90,7 +90,6 @@ int		main(int ac, char **av)
   init_lists(&data_serv);
   data_serv.t = args.exec_time;
   set_connection(&data_serv, args.port);
-  //  unitest_clock(); // TODO unitest
   if (run(&data_serv) < 0)
     {
       clean_all(&data_serv);

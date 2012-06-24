@@ -95,6 +95,7 @@ void		welcome_graphic(t_data_serv ds, t_player p)
   mn.cm.out = new_list(NULL, NULL, NULL);
   list_push_back_new(ds->monitor, &mn, sizeof(mn));
   msz(&mn, get_map(NULL)->size_x, get_map(NULL)->size_y);
+  p->cm.sock.fd = -1;
 }
 
 t_bool		welcome_player(t_data_serv server, t_player player, char *data)

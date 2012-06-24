@@ -23,6 +23,7 @@
 #include	"egg_manager.h"
 #include	"team_manager.h"
 #include	"process_function.h"
+#include	"graphic.h"
 
 t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
 {
@@ -70,7 +71,7 @@ t_bool		fork_process(t_player this, char *data, t_data_serv info)
   init_egg(&egg, this, info->t);
   list_push_front_new(info->egg, &egg, sizeof(egg));
   msgout_fork(this->cm.out);
-  pfk(this->monitor, this->id);
+  pfk(info->monitor, this->id);
   return (TRUE);
 }
 

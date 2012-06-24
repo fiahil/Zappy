@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:19:43 2012 ulric lefevre
-** Last update Sat Jun 23 20:21:53 2012 ulric lefevre
+** Last update Sun Jun 24 21:36:29 2012 ulric lefevre
 */
 
 #ifndef		__MSGOUT_CMD_H__

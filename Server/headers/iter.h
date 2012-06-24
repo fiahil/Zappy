@@ -5,14 +5,12 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:19:57 2012 ulric lefevre
-** Last update Sat Jun 23 20:20:10 2012 ulric lefevre
+** Last update Sun Jun 24 21:31:26 2012 ulric lefevre
 */
 
-#ifndef __NETMANAGER_H__
-#define __NETMANAGER_H__
-
-#include "def.h"
+#ifndef		__NETMANAGER_H__
+# define	__NETMANAGER_H__
 
 void	iter_client();
 
-#endif /* __NETMANAGER_H__ */
+#endif		/* __NETMANAGER_H__ */

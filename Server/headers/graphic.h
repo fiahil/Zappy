@@ -5,13 +5,13 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:25 2012 ulric lefevre
-** Last update Sat Jun 23 20:21:56 2012 ulric lefevre
+** Last update Sun Jun 24 21:37:14 2012 ulric lefevre
 */
 
-#ifndef __GRAPHIC_H__
-#define __GRAPHIC_H__
+#ifndef		__GRAPHIC_H__
+# define	__GRAPHIC_H__
 
-#include "def.h"
+#include	"def.h"
 
 void	ppo_general(t_list *, t_player);
 void	pin_general(t_list *, t_player);
@@ -49,4 +49,4 @@ void	mn_push(t_list*, char*);
 void	mn_out(t_list *);
 void	mn_rep(t_graphic, char*);
 
-#endif /* __GRAPHIC_H__ */
+#endif		/* __GRAPHIC_H__ */

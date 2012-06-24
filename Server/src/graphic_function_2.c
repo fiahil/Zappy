@@ -31,7 +31,7 @@ void	pnw(t_list *mn, t_player play)
   free(str);
 }
 
-void	ppo(t_list *mn, t_player play)
+void	ppo(t_graphic mn, t_player play)
 {
   char	*str;
 
@@ -41,21 +41,21 @@ void	ppo(t_list *mn, t_player play)
 	   play->pos.x,
 	   play->pos.y,
 	   play->dir + 1);
-  mn_push(mn, str);
+  mn_rep(mn, str);
   free(str);
 }
 
-void	plv(t_list *mn, int id, int lvl)
+void	plv(t_graphic mn, int id, int lvl)
 {
   char	*str;
 
   str = NULL;
   asprintf(&str, "plv #%d %d\n", id, lvl);
-  mn_push(mn, str);
+  mn_rep(mn, str);
   free(str);
 }
 
-void	pin(t_list *mn, t_player play)
+void	pin(t_graphic mn, t_player play)
 {
   char	*str;
 
@@ -71,7 +71,7 @@ void	pin(t_list *mn, t_player play)
 	   play->inv.resources[MENDIANE],
 	   play->inv.resources[PHIRAS],
 	   play->inv.resources[THYSTAME]);
-  mn_push(mn, str);
+  mn_rep(mn, str);
   free(str);
 }
 

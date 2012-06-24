@@ -14,10 +14,17 @@
 #include "def.h"
 
 void	pnw(t_list *, t_player);
-void	ppo(t_list *, t_player);
-void	plv(t_list *, int, int);
-void	pin(t_list *, t_player);
+void	ppo(t_graphic, t_player);
+void	plv(t_graphic, int, int);
+void	pin(t_graphic, t_player);
 void	pex(t_list *, int);
+void	pbc(t_list *, int, char *);
+void	pic(t_list *, t_incant, t_list *);
+void	pie(t_list *, t_incant);
+void	pfk(t_list *, int);
+void	pdr(t_list *, int, int);
+void	pgt(t_list *, int, int);
+void	pdi(t_list *, int);
 
 void	sbp(t_list*);
 void	suc(t_list*);

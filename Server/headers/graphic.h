@@ -28,6 +28,7 @@ void	ebo(t_list*, int);
 void	eht(t_list*, int);
 void	enw(t_list*, int, int, t_pos);
 
+void	sgt(t_graphic, int);
 void	msz(t_graphic, size_t, size_t);
 void	tna(t_graphic, t_list*);
 void	bct(t_graphic, t_square, t_pos);

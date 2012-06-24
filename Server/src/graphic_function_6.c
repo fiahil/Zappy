@@ -48,3 +48,13 @@ void		bct_all(t_graphic mn, t_map map)
     y++;
   }
 }
+
+void		sgt(t_graphic mn, int t)
+{
+  char		*str;
+
+  str = NULL;
+  asprintf(&str, "sgt %d\n", t);
+  mn_rep(mn, str);
+  free(str);
+}

@@ -20,6 +20,8 @@ void	enw(t_list*, int, int, t_pos);
 
 void	msz(t_graphic, size_t, size_t);
 void	tna(t_graphic, t_list*);
+void	bct(t_graphic, t_square, t_pos);
+void	bct_all(t_graphic, t_map);
 
 void	mn_push(t_list*, char*);
 void	mn_out(t_list *);

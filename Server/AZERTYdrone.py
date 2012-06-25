@@ -35,24 +35,24 @@ try:
 except socket.error:
   pass
 
-cmds = [("0", "connect_nbr"),
-	("1", "voir"),
-    	("2", "inventaire"),
-	("3", "expulse"),
+cmds = [("y", "connect_nbr"),
+	("a", "voir"),
+    	("z", "inventaire"),
+	("t", "expulse"),
 	("4", "gauche"),
-	("5", "avance"),
+	("8", "avance"),
 	("6", "droite"),
-	("7", "incantation"),
-	("8", "fork"),
-	("9", "broadcast PONEEEYYYY!")]
+	("r", "incantation"),
+	("e", "fork"),
+	("o", "broadcast PONEEEYYYY!")]
 
-cmdr = [("a", "z", "nourriture"),
+cmdr = [("q", "w", "nourriture"),
     	("s", "x", "linemate"),
 	("d", "c", "deraumere"),
 	("f", "v", "sibur"),
 	("g", "b", "mendiane"),
 	("h", "n", "phiras"),
-	("j", "m", "thystame")]
+	("j", ",", "thystame")]
 
 attr = termios.tcgetattr(0)
 attr[3] = attr[3] & ~(termios.ECHO | termios.ICANON)

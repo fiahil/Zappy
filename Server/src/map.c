@@ -27,13 +27,6 @@ t_map		get_map(t_map param)
   return (map);
 }
 
-static void	malloc_error()
-{
-  // TODO error
-  handle_error("malloc", strerror(errno), -1);
-  exit(1);
-}
-
 static void	alloc_map(t_map this, void *pool)
 {
   int		y;
@@ -44,14 +37,13 @@ static void	alloc_map(t_map this, void *pool)
     {
       x = 0;
       if (!(this->map[y] = malloc(sizeof(*(this->map)) * this->size_x)))
-	malloc_error();
+	crash_error("malloc", "out_of_memory");
       while (x < this->size_x)
 	{
 	  this->map[y][x] = pool;
 	  this->map[y][x]->inv.status = FALSE;
-	  memset(this->map[y][x]->inv.resources,
-		 0,
-		 sizeof(this->map[y][x]->inv.resources));
+	  memset(this->map[y][x]->inv.resources, 0,
+	      sizeof(this->map[y][x]->inv.resources));
 	  this->map[y][x]->players = new_list(NULL, NULL, NULL);
 	  pool += sizeof(t_u_square);
 	  ++x;
@@ -66,13 +58,13 @@ void		init_map(int szx, int szy, int nb_play)
   void		*pool;
 
   if (!(this = malloc(sizeof(*this))))
-    malloc_error();
+    crash_error("malloc", "out_of_memory");
   this->size_x = szx;
   this->size_y = szy;
   if (!(pool = malloc(szx * szy * sizeof(t_u_square))))
-    malloc_error();
+    crash_error("malloc", "out_of_memory");
   if (!(this->map = malloc(sizeof(**(this->map)) * szy)))
-    malloc_error();
+    crash_error("malloc", "out_of_memory");
   alloc_map(this, pool);
   fill_map(this, (this->size_x * this->size_y), nb_play);
   get_map(this);

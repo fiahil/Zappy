@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:00 2012 ulric lefevre
-** Last update Mon Jun 25 14:46:22 2012 ulric lefevre
+** Last update Mon Jun 25 18:32:58 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -79,11 +79,6 @@ void		fill_map(t_map map, int dim, int nb_play)
 
   fill_res_stock(nb_play, &stock);
   counts[0] = -1;
-  /* TODO : unitest fill_map */
-  /**/fprintf(stdout, ".::: map_fill.c :::.\n\n(To remove this display, see in fill_map.c at lines 99, 100 and 111)");
-  /**/fprintf(stdout,
-	  "Nb play = %d\nTotal res = %d\n\tFOOD = %d\n\tLINEMATE = %d\n\tDERAUMERE = %d\n\tSIBUR = %d\n\tMENDIANE = %d\n\tPHIRAS = %d\n\tTHYSTAME = %d\n\n",
-	  nb_play, count_res(stock), stock[0], stock[1], stock[2], stock[3], stock[4], stock[5], stock[6]);
   while (count_res(stock))
     {
       get_position(dim, map, &coord);

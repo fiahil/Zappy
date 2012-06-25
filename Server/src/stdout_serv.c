@@ -5,9 +5,10 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:18 2012 ulric lefevre
-** Last update Mon Jun 25 14:28:49 2012 ulric lefevre
+** Last update Mon Jun 25 18:35:10 2012 ulric lefevre
 */
 
+#include	<time.h>
 #include	<stdio.h>
 #include	<stdlib.h>
 
@@ -32,9 +33,17 @@ void            stdout_logo()
 void            stdout_serv_status(const char *str, int flag)
 {
   if (flag)
-    printf("\033[1;31m%s\n\033[0m", str);
+    {
+      printf("\033[1;35m");
+      printf("%d\t\tServer : %s", (int)time(NULL), str);
+      printf("\033[0m");
+    }
   else
-    printf("\033[1;32m%s\n\033[0m", str);
+    {
+      printf("\033[1;33m");
+      printf("%d\t\tServer : %s", (int)time(NULL), str);
+      printf("\033[0m");
+    }
 }
 
 static void	print_list(void *data, size_t size)
@@ -55,6 +64,6 @@ void            stdout_data_serv(t_arg *args)
   printf("\t\tHeight : %d\n", args->height);
   printf("Teams Infos : \n");
   list_for_each(args->teams, &print_list);
-  printf("\t\tClients per team : %d\n", args->nb_per_team);
+  printf("\t\tClients per team : %d\n\n", args->nb_per_team);
   printf("\033[0m");
 }

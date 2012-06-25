@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Mon Jun 25 15:17:41 2012 ulric lefevre
+** Last update Mon Jun 25 15:49:36 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -14,6 +14,7 @@
 #include	"def.h"
 #include	"clock.h"
 #include	"incant.h"
+#include	"stdout.h"
 #include	"algorithm.h"
 #include	"iter_tools.h"
 #include	"var_manager.h"
@@ -65,8 +66,9 @@ void		iter_action(void *ptr, size_t s)
 	if (!((t_player_action)ptr)->player->cm.in->empty
 	    && !(((t_player_action)ptr)->player->cm.is_processing))
     {
-      printf("Processing \"%s\" ... \n",
-	     (char*)(list_front(((t_player_action)ptr)->player->cm.in))); // TODO affichage tmp
+      stdout_player_input((char*)
+			  (list_front(((t_player_action)ptr)->player->cm.in)),
+			  ((t_player_action)ptr)->player->id);
       fflush(0);
       push_new_action((t_player_action)ptr); // TODO PARAMETRE
     }

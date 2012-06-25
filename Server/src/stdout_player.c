@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:08 2012 ulric lefevre
-** Last update Mon Jun 25 14:29:40 2012 ulric lefevre
+** Last update Mon Jun 25 17:54:49 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -15,7 +15,7 @@
 void            stdout_player_status(const char *str, int id)
 {
   printf("\033[1;36m");
-  printf("%d\t\tPlayer %d : %s\n", (int)time(NULL), id, str);
+  printf("%d\t\tPlayer %d : %s", (int)time(NULL), id, str);
   printf("\033[0m");
 }
 
@@ -29,7 +29,7 @@ void            stdout_player_input(const char *str, int id)
 void            stdout_player_output(const char *str, int id)
 {
   printf("\033[1;31m");
-  printf("%d\t\tPlayer %d : %s\n", (int)time(NULL), id, str);
+  printf("%d\t\tPlayer %d : %s", (int)time(NULL), id, str);
   printf("\033[0m");
 }
 

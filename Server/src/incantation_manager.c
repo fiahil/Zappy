@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:54 2012 ulric lefevre
-** Last update Mon Jun 25 19:14:54 2012 ulric lefevre
+** Last update Mon Jun 25 20:27:58 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -15,6 +15,7 @@
 #include	"def.h"
 #include	"map.h"
 #include	"clock.h"
+#include	"stdout.h"
 #include	"msgout_cmd.h"
 #include	"process_function.h"
 

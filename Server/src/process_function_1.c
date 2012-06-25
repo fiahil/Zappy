@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:32 2012 ulric lefevre
-** Last update Mon Jun 25 15:32:10 2012 ulric lefevre
+** Last update Mon Jun 25 20:53:51 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -82,15 +82,15 @@ t_bool		drop_process(t_player this, char *data, t_data_serv info)
   int		i;
   t_bool	is_done;
 
-  (void)info;
   i = -1;
   is_done = FALSE;
+  map = get_map(NULL);
   while (g_resources[++i] && strcmp(data, g_resources[i]));
   //system("clear"); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   if (g_resources[i] && this->inv.resources[i])
     {
-      ++(map = get_map(NULL))->map[this->pos.y][this->pos.x]->inv.resources[i];
-      --this->inv.resources[i];
+      ++(map->map[this->pos.y][this->pos.x]->inv.resources[i]);
+      --(this->inv.resources[i]);
       asprintf(&log, "Dropping %s !\n", data);
       is_done = TRUE;
     }

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:18 2012 ulric lefevre
-** Last update Mon Jun 25 18:35:10 2012 ulric lefevre
+** Last update Mon Jun 25 19:04:19 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -19,14 +19,12 @@
 void            stdout_logo()
 {
   printf("\033[1;31m");
-  printf("            ,--,\n");
-  printf("      _ ___/ /\\|\n");
-  printf("    ;( )__, )\n");
-  printf("   ; //   '--;");
-  printf("\033[0m  -- Au poney fringant of the death --\n");
-  printf("\033[1;31m");
-  printf("     \\     |\n");
-  printf("      ^    ^\n");
+  printf("       _\n");
+  printf("____  /_/     _  _  _  _     _/|_._  _  _  _ _");
+  printf("/_  _ _/| _/_/_ _    _/_  _ _/_/_ ____\n");
+  printf("     / //_/  /_//_// //_'/_/ / /// //_//_|/ //");
+  printf("   /_//   / / //_' /_//_'/_|/ / /\n");
+  printf("            /            _/         _/\n");
   printf("\033[0m");
 }
 

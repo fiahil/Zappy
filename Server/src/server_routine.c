@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Mon Jun 25 15:28:45 2012 ulric lefevre
+** Last update Mon Jun 25 18:47:16 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -94,7 +94,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
 	}
       close(this->cm.sock.fd);
       select_del(ds, this->cm.sock.fd);
-      puts(".:: Client disconnected ::.");
+      stdout_player_status("disconnected", this->id);
       fflush(0);
       return ;
     }

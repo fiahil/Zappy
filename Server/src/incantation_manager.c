@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:54 2012 ulric lefevre
-** Last update Sun Jun 24 21:41:11 2012 ulric lefevre
+** Last update Mon Jun 25 20:27:58 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -15,6 +15,7 @@
 #include	"def.h"
 #include	"map.h"
 #include	"clock.h"
+#include	"stdout.h"
 #include	"msgout_cmd.h"
 #include	"process_function.h"
 
@@ -55,12 +56,12 @@ void	level_up(t_incant incant)
   while (it)
     {
       ++(*(t_player *)(it->data))->lvl;
+      stdout_player_action("Level up", (*(t_player *)(it->data))->id);
       it = it->next;
     }
   i = 0;
   while (++i < LAST)
     map->map[incant->pos.y][incant->pos.x]->inv.resources[i] = 0;
-  printf("Level up\n");
 }
 
 void	fill_hashcode(t_hash hashcode, t_square cell)

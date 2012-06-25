@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Sun Jun 24 15:48:44 2012 ulric lefevre
+** Last update Mon Jun 25 15:30:36 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -84,7 +84,7 @@ t_bool		move_process(t_player this, char *data, t_data_serv info)
   list_push_back_new(this->cm.out, str, strlen(str) + 1);
   free(str); // TODO affichage tmp
 
-  msgout_avance(this->cm.out);
+  msgout_avance(this);
   ppo_general(info->monitor, this);
   return (TRUE);
 }
@@ -101,7 +101,7 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
   players = get_map(NULL)->map[this->pos.y][this->pos.x]->players;
   ti = list_find_cmp(players, &cmp_player_list, this, sizeof(*this));
   list_extract(players, ti);
-  msgout_expulse(this->cm.out, players->size ? TRUE : FALSE);
+  msgout_expulse(this, players->size ? TRUE : FALSE);
   while (players->size)
     {
       p = list_front(players);
@@ -123,6 +123,6 @@ t_bool		inventory_process(t_player this, char *data, t_data_serv info)
 {
   (void)data;
   (void)info;
-  msgout_inventaire(this->cm.out, this->inv);
+  msgout_inventaire(this, this->inv);
   return (TRUE);
 }

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:12:58 2012 ulric lefevre
-** Last update Sun Jun 24 10:53:38 2012 ulric lefevre
+** Last update Mon Jun 25 18:16:03 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -16,19 +16,23 @@
 
 #include	"def.h"
 #include	"map.h"
+#include	"stdout.h"
 #include	"graphic.h"
 #include	"algorithm.h"
 #include	"team_manager.h"
 
 static int	chk_team(t_data_serv server, char *data)
 {
+  char		*str;
   t_iter	*it;
 
   if (!strcmp(data, "GRAPHIC"))
     return (-2);
   if ((it = list_find_cmp(server->teams, &func_cmp_team, data, 0)) == NULL)
     return (-1);
-  printf("Connection query to : %s\n", ((t_team)it->data)->name);
+  str = NULL;
+  asprintf(&str, "Connection query to : %s\n", ((t_team)it->data)->name);
+  stdout_serv_status(str, 0);
   if (((t_team)it->data)->remaining > 0)
     ((t_team)it->data)->remaining -= 1;
   else
@@ -74,7 +78,9 @@ static void	first_contact(t_player *p, int nb_c, char *data)
   t_map		map;
   char		*str;
 
-  printf("test nb_client : %d\n", nb_c); // TODO affichage tmp
+  str = NULL;
+  asprintf(&str, "Remaining Client(s) : %d\n", nb_c);
+  free(str);
   map = get_map(NULL);
   asprintf(&str, "%d\n%d %d\n", nb_c, map->size_x, map->size_y);
   list_push_back_new((*p)->cm.out, str, strlen(str) + 1);
@@ -94,7 +100,7 @@ void		welcome_graphic(t_data_serv ds, t_player p)
   mn.cm.in = new_list(NULL, NULL, NULL);
   mn.cm.out = new_list(NULL, NULL, NULL);
   list_push_back_new(ds->monitor, &mn, sizeof(mn));
-  msz(&mn, get_map(NULL)->size_x, get_map(NULL)->size_y);
+  monitor_graphic(&mn, ds, p);
   p->cm.sock.fd = -1;
 }
 
@@ -105,7 +111,7 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
 
   if (data)
     {
-      if ((nb_client = chk_team(server, data)) < 0)
+      if ((nb_client = chk_team(server, data)) == -1)
 	{
 	  printf("Not enough slot in the team or team unknown\n"); // TODO affichage
 	  if (nb_client == -2)

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Sun Jun 24 13:02:17 2012 ulric lefevre
+** Last update Mon Jun 25 20:17:41 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -14,6 +14,7 @@
 #include	"def.h"
 #include	"clock.h"
 #include	"incant.h"
+#include	"stdout.h"
 #include	"algorithm.h"
 #include	"iter_tools.h"
 #include	"var_manager.h"
@@ -27,7 +28,6 @@ void		iter_rds(void *ptr, size_t s)
   t_data_serv		ds;
 
   (void)s;
-  printf("\033[1;34m\n----------[Iter rds]----------\nPlayer %d :\n\tLevel : %d\n\tTeam : %s\n\tPosition : x = %d ; y = %d\n\tDirection : %d\n\033[0m", (*(t_player*)ptr)->id, (*(t_player*)ptr)->lvl, (*(t_player*)ptr)->team, (*(t_player*)ptr)->pos.x, (*(t_player*)ptr)->pos.y, (*(t_player*)ptr)->dir); //TODO affichage tmp
   sm = get_select_manager(NULL);
   ds = get_data_serv(NULL);
   if ((*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->dead == FALSE
@@ -66,8 +66,9 @@ void		iter_action(void *ptr, size_t s)
 	if (!((t_player_action)ptr)->player->cm.in->empty
 	    && !(((t_player_action)ptr)->player->cm.is_processing))
     {
-      printf("Processing \"%s\" ... \n",
-	     (char*)(list_front(((t_player_action)ptr)->player->cm.in))); // TODO affichage tmp
+      stdout_player_input((char*)
+			  (list_front(((t_player_action)ptr)->player->cm.in)),
+			  ((t_player_action)ptr)->player->id);
       fflush(0);
       push_new_action((t_player_action)ptr); // TODO PARAMETRE
     }
@@ -85,7 +86,7 @@ void		iter_egg(void *ptr, size_t s)
   if (cmp_time(&current, &(((t_egg)ptr)->timeout)) >= 0)
     {
       // il ne rentre pas ici ??
-      printf("New player !\n");
+      stdout_serv_status("new player\n", 0);
       it = list_find_cmp(ds->teams, &func_cmp_team,
 			 ((t_egg)ptr)->fetus->team, 0);
       ((t_team)it->data)->remaining += 1;

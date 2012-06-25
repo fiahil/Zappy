@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Sun Jun 24 15:53:14 2012 ulric lefevre
+** Last update Mon Jun 25 18:47:16 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -15,6 +15,7 @@
 
 #include	"def.h"
 #include	"clock.h"
+#include	"stdout.h"
 #include	"network.h"
 #include	"algorithm.h"
 #include	"cmd_parse.h"
@@ -34,7 +35,7 @@ static void		init_act(t_data_serv ds, t_player this, t_proc_func ret)
   while (!(this->cm.in->empty) && !ret)
     {
       if (!(ret = cmd_parse(list_front(this->cm.in), &off)))
-	msgout_fail(this->cm.out);
+	msgout_fail(this);
       else
 	{
 	  act.action = ret;
@@ -56,7 +57,7 @@ static t_bool	welcome_new_player(t_data_serv ds, t_player this, char *buf)
       if (!welcome_player(ds, this, buf))
 	{
 	  this->dead = TRUE;
-	  msgout_fail(this->cm.out);
+	  msgout_fail(this);
 	}
       free(buf);
       return (0);
@@ -69,8 +70,7 @@ static void	process(t_player this, t_data_serv ds, t_proc_func ret)
   if (!(this->cm.in->empty)
       && !(this->cm.is_processing))
     {
-      printf("Processing \"%s\" ... \n",
-	     (char*)(list_front(this->cm.in))); // TODO
+      stdout_player_input((char*)(list_front(this->cm.in)), this->id);
       init_act(ds, this, ret);
       fflush(0);
     }
@@ -94,7 +94,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
 	}
       close(this->cm.sock.fd);
       select_del(ds, this->cm.sock.fd);
-      puts(".:: Client disconnected ::.");
+      stdout_player_status("disconnected", this->id);
       fflush(0);
       return ;
     }

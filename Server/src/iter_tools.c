@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:41 2012 ulric lefevre
-** Last update Sat Jun 23 20:15:42 2012 ulric lefevre
+** Last update Mon Jun 25 15:35:21 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -57,7 +57,7 @@ void		push_new_action(t_player_action pa)
   while (!(pa->player->cm.in->empty) && !ret)
     {
       if (!(ret = cmd_parse(list_front(pa->player->cm.in), &off)))
-	msgout_fail(pa->player->cm.out);
+	msgout_fail(pa->player);
       else
 	{
 	  act.action = ret;

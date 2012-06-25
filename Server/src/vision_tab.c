@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:29 2012 ulric lefevre
-** Last update Sun Jun 24 10:20:48 2012 ulric lefevre
+** Last update Mon Jun 25 15:18:54 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -431,8 +431,6 @@ char		*get_look(t_player this, t_map map)
   t_square	cur;
 
   nbcases = calc_nbcases(this->lvl);
-  printf("[Voir] Player Direction : d = %d\n[Voir] Player Position : x = %d y = %d\n",
-	 this->dir, this->pos.x, this->pos.y); // TODO affichage tmp
   look = strdup("{");
   i = 0;
   while (i <= nbcases)

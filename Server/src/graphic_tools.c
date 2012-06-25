@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:08 2012 ulric lefevre
-** Last update Sun Jun 24 21:41:25 2012 ulric lefevre
+** Last update Mon Jun 25 15:11:39 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -28,7 +28,8 @@ static void	iter_monitor(void *ptr, size_t s)
   if (!((t_graphic)ptr)->cm.out->empty &&
       select_w_isset(get_select_manager(NULL), ((t_graphic)ptr)->cm.sock.fd))
    {
-     my_send(((t_graphic)ptr)->cm.sock.fd, list_front(((t_graphic)ptr)->cm.out));
+     my_send(((t_graphic)ptr)->cm.sock.fd,
+	     list_front(((t_graphic)ptr)->cm.out));
      list_pop_front(((t_graphic)ptr)->cm.out);
    }
 }

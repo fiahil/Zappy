@@ -1,7 +1,12 @@
 /*
- * Fiahil
- * 23/06/2012
- */
+** graphic_function_6.c for zappy bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Mon Jun 25 15:09:31 2012 ulric lefevre
+** Last update Mon Jun 25 15:09:42 2012 ulric lefevre
+*/
 
 #define		_GNU_SOURCE
 

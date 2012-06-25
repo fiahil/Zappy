@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:37 2012 ulric lefevre
-** Last update Sat Jun 23 20:55:52 2012 ulric lefevre
+** Last update Mon Jun 25 13:59:32 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -18,6 +18,7 @@
 #include	"map.h"
 #include	"iter.h"
 #include	"clock.h"
+#include	"stdout.h"
 #include	"get_arg.h"
 #include	"network.h"
 #include	"func_cmp.h"
@@ -39,13 +40,6 @@ int		run(t_data_serv data_serv)
   while (666)
     iter_client();
   return (0);
-}
-
-void		print_list(void *data, size_t size) // TODO affichage tmp
-{
-  (void)size;
-  printf("name : %s -> size : %d\n",
-	 ((t_team)data)->name, ((t_team)data)->remaining);
 }
 
 static void	init_teams(t_data_serv data_serv, t_arg *args)
@@ -77,12 +71,8 @@ int		main(int ac, char **av)
     return (EXIT_FAILURE);
   if (parse_arg(&args) == -1)
     return (EXIT_FAILURE);
-  printf("port : %d\n", args.port); // TODO affichage tmp
-  printf("width : %d\n", args.width); // TODO affichage tmp
-  printf("height : %d\n", args.height); // TODO affichage tmp
-  list_for_each(args.teams, &print_list); // TODO affichage tmp
-  printf("nb clients per team : %d\n", args.nb_per_team); // TODO affichage tmp
-  printf("execution time : %d\n", args.exec_time); // TODO affichage tmp
+  stdout_logo();
+  stdout_data_serv(&args);
   init_map(args.width,
 	   args.height,
 	   (args.teams->size * args.nb_per_team));

@@ -5,8 +5,10 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:57 2012 ulric lefevre
-** Last update Mon Jun 25 18:28:08 2012 ulric lefevre
+** Last update Mon Jun 25 18:59:05 2012 ulric lefevre
 */
+
+#define		_GNU_SOURCE
 
 #include	<stdio.h>
 #include	<stdlib.h>

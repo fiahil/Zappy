@@ -94,7 +94,7 @@ void		welcome_graphic(t_data_serv ds, t_player p)
   mn.cm.in = new_list(NULL, NULL, NULL);
   mn.cm.out = new_list(NULL, NULL, NULL);
   list_push_back_new(ds->monitor, &mn, sizeof(mn));
-  msz(&mn, get_map(NULL)->size_x, get_map(NULL)->size_y);
+  monitor_graphic(&mn, ds, p);
   p->cm.sock.fd = -1;
 }
 

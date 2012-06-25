@@ -13,6 +13,10 @@
 
 #include	"def.h"
 
+void	drop_graphic(t_list *, t_player, t_square, int);
+void	take_graphic(t_list *, t_player, t_square, int);
+void	expulse_graphic(t_list *, t_player, t_list *);
+
 void	ppo_general(t_list *, t_player);
 void	pin_general(t_list *, t_player);
 void	bct_general(t_list *, t_square, t_pos);

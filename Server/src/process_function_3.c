@@ -114,14 +114,8 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
       free(msg);
     }
   list_push_back(players, ti);
-  pex(info->monitor, this->id);
-  ti = get_map(NULL)->map[this->pos.y][this->pos.x]->players->head;
-  while (ti)
-    {
-      if ((*(t_player*)(ti->data))->id != this->id)
-	ppo_general(info->monitor, (*(t_player*)(ti->data)));
-      ti = ti->next;
-    }
+  expulse_graphic(info->monitor, this,
+		  get_map(NULL)->map[this->pos.y][this->pos.x]->players);
   return (TRUE);
 }
 

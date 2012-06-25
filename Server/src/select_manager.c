@@ -31,18 +31,39 @@ static void	select_set(void *ptr, size_t s)
   }
 }
 
+static void	select_mset(void *ptr, size_t s)
+{
+  (void)s;
+  if (((t_graphic)ptr)->cm.online)
+  {
+    FD_SET(((t_graphic)ptr)->cm.sock.fd, &g_sm->rds);
+    if (!((t_graphic)ptr)->cm.out->empty)
+      FD_SET(((t_graphic)ptr)->cm.sock.fd, &g_sm->wds);
+  }
+}
+
 static void	select_cmp(void *ptr, size_t s)
 {
   (void)s;
-  if ((*(t_player*)ptr)->cm.sock.fd > g_sm->max_fd)
+  if ((*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->cm.sock.fd > g_sm->max_fd)
     g_sm->max_fd = (*(t_player*)ptr)->cm.sock.fd;
 }
 
-void		select_del(t_data_serv ds, t_select_manager sm, int fd)
+static void	select_mcmp(void *ptr, size_t s)
 {
-  g_sm = sm;
-  if (fd == sm->max_fd)
+  (void)s;
+  if (((t_graphic)ptr)->cm.online && ((t_graphic)ptr)->cm.sock.fd > g_sm->max_fd)
+    g_sm->max_fd = ((t_graphic)ptr)->cm.sock.fd;
+}
+
+void		select_del(t_data_serv ds, int fd)
+{
+  if (fd == g_sm->max_fd)
+  {
+    g_sm->max_fd = ds->sock.fd;
     list_for_each(ds->player, &select_cmp);
+    list_for_each(ds->monitor, &select_mcmp);
+  }
 }
 
 void		select_manager(t_data_serv ds, t_select_manager sm)
@@ -52,6 +73,7 @@ void		select_manager(t_data_serv ds, t_select_manager sm)
   FD_ZERO(&sm->wds);
   FD_SET(ds->sock.fd, &sm->rds);
   list_for_each(ds->player, &select_set);
+  list_for_each(ds->monitor, &select_mset);
   if (select(sm->max_fd + 1, &sm->rds, &sm->wds, NULL, &sm->timeout) < 0)
     handle_error("select", strerror(errno), -1);
 }

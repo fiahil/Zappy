@@ -21,6 +21,7 @@
 #include	"msgout_cmd.h"
 #include	"func_cleaner.h"
 #include	"team_manager.h"
+#include	"select_manager.h"
 #include	"server_routine.h"
 #include	"string_manager.h"
 
@@ -92,6 +93,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
 	  ((t_team)it->data)->remaining += 1;
 	}
       close(this->cm.sock.fd);
+      select_del(ds, this->cm.sock.fd);
       puts(".:: Client disconnected ::.");
       fflush(0);
       return ;
@@ -113,6 +115,7 @@ void		server_routine_output(t_data_serv ds, t_player this)
   {
     this->deleted = TRUE;
     close(this->cm.sock.fd);
+    select_del(ds, this->cm.sock.fd);
     this->cm.online = FALSE;
   }
 }

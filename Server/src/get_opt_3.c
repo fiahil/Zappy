@@ -12,6 +12,7 @@
 #include	<stdlib.h>
 #include	<string.h>
 
+#include	"handle_error.h"
 #include	"get_arg.h"
 #include	"def.h"
 
@@ -25,7 +26,7 @@ static void	*ctor_team(va_list va)
   t_team	team;
 
   if ((team = malloc(sizeof(*team))) == NULL)
-    return (NULL);
+    crash_error("malloc", "out_of_memory");
   team->name = strdup(va_arg(va, char*));
   team->remaining = va_arg(va, int);
   return (team);
@@ -45,7 +46,8 @@ void		get_opt_n(char **av, t_arg *args)
 {
   int		found;
 
-  args->teams = new_list(&ctor_team, &dtor_team, NULL);
+  if ((args->teams = new_list(&ctor_team, &dtor_team, NULL)) == NULL)
+    crash_error("malloc", "out_of_memory");
   found = 0;
   while (!found && av && (*av))
     {

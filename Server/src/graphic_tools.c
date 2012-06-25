@@ -14,18 +14,23 @@
 #include	<string.h>
 #include	<assert.h>
 
+#include	"select_manager.h"
 #include	"graphic.h"
 #include	"network.h"
 #include	"def.h"
+#include	"var_manager.h"
 
 static char 	*g_msg;
 
 static void	iter_monitor(void *ptr, size_t s)
 {
   (void)s;
-  assert(!((t_graphic)ptr)->cm.out->empty);
-  my_send(((t_graphic)ptr)->cm.sock.fd, list_front(((t_graphic)ptr)->cm.out));
-  list_pop_front(((t_graphic)ptr)->cm.out);
+  if (!((t_graphic)ptr)->cm.out->empty &&
+      select_w_isset(get_select_manager(NULL), ((t_graphic)ptr)->cm.sock.fd))
+   {
+     my_send(((t_graphic)ptr)->cm.sock.fd, list_front(((t_graphic)ptr)->cm.out));
+     list_pop_front(((t_graphic)ptr)->cm.out);
+   }
 }
 
 static void	push_to_monitor(void *ptr, size_t s)

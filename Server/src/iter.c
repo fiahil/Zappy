@@ -17,6 +17,7 @@
 #include	"player.h"
 #include	"stdout.h"
 #include	"network.h"
+#include	"graphic.h"
 #include	"algorithm.h"
 #include	"iter_tools.h"
 #include	"msgout_cmd.h"
@@ -74,6 +75,7 @@ static void	iter_lists(t_data_serv ds)
   list_remove_if(ds->egg, &egg_cleaner);
   list_sort(ds->player, &sort_player_life);
   list_remove_if(ds->player, &player_cleaner);
+  mn_out(ds->monitor);
 }
 
 void display(t_map); // TODO affichage tmp
@@ -95,9 +97,9 @@ void		iter_client()
   if (select_r_isset(sm, ds->sock.fd))
     {
       player = create_player();
-      if (accept_connection(sm, ds, player) < 0)
+      if (player && accept_connection(sm, ds, player) < 0)
 	delete_player(player);
-      else
+      else if (player)
 	list_push_back_new(ds->player, &player, sizeof(player));
     }
   iter_lists(ds);

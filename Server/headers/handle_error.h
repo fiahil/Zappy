@@ -12,5 +12,8 @@
 # define	__HANDLE_ERROR_H__
 
 int	handle_error(char *, char *, int);
+int	handle_error_ft(char *, char *, int);
+void	handle_error_nr(char *, char *);
+void	crash_error(char *, char *);
 
 #endif		/* __ERROR_H__ */

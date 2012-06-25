@@ -56,6 +56,7 @@ SRC	=	src/main.c			\
 		src/graphic_function_5.c	\
 		src/graphic_function_6.c	\
 		src/graphic_function_all.c	\
+		src/process_graphic_calls.c	\
 		src/incantation_manager.c	\
 		src/player.c
 

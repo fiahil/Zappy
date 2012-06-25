@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:32 2012 ulric lefevre
-** Last update Sun Jun 24 15:51:17 2012 ulric lefevre
+** Last update Mon Jun 25 15:32:10 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -40,7 +40,7 @@ t_bool		look_process(t_player this, char *data, t_data_serv info)
   (void)info;
   map = get_map(NULL);
   look = get_look(this, map);
-  msgout_voir(this->cm.out, look);
+  msgout_voir(this, look);
   free(look);
   return (TRUE);
 }
@@ -69,7 +69,7 @@ t_bool		take_process(t_player this, char *data, t_data_serv info)
     asprintf(&log, "No %s on this square !\n", data);
   list_push_back_new(this->cm.out, log, strlen(log) + 1);
   free(log);
-  msgout_prend_objet(this->cm.out, is_done);
+  msgout_prend_objet(this, is_done);
   //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   take_graphic(info->monitor, this, map->map[this->pos.y][this->pos.x], i);
   return (TRUE);
@@ -97,7 +97,7 @@ t_bool		drop_process(t_player this, char *data, t_data_serv info)
   else
     asprintf(&log, "No %s in inventory !\n", data);
   list_push_back_new(this->cm.out, log, strlen(log) + 1);
-  msgout_pose_objet(this->cm.out, is_done);
+  msgout_pose_objet(this, is_done);
   free(log);
   drop_graphic(info->monitor, this, map->map[this->pos.y][this->pos.x], i);
   //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
@@ -112,7 +112,7 @@ t_bool		right_process(t_player this, char *data, t_data_serv info)
     this->dir = NORTH;
   else
     this->dir += 1;
-  msgout_droite(this->cm.out);
+  msgout_droite(this);
   ppo_general(info->monitor, this);
   return (TRUE);
 }
@@ -125,7 +125,7 @@ t_bool		left_process(t_player this, char *data, t_data_serv info)
     this->dir = WEST;
   else
     this->dir -= 1;
-  msgout_gauche(this->cm.out);
+  msgout_gauche(this);
   ppo_general(info->monitor, this);
   return (TRUE);
 }

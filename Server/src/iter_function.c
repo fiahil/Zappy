@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Sun Jun 24 13:02:17 2012 ulric lefevre
+** Last update Mon Jun 25 15:17:41 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -27,7 +27,6 @@ void		iter_rds(void *ptr, size_t s)
   t_data_serv		ds;
 
   (void)s;
-  printf("\033[1;34m\n----------[Iter rds]----------\nPlayer %d :\n\tLevel : %d\n\tTeam : %s\n\tPosition : x = %d ; y = %d\n\tDirection : %d\n\033[0m", (*(t_player*)ptr)->id, (*(t_player*)ptr)->lvl, (*(t_player*)ptr)->team, (*(t_player*)ptr)->pos.x, (*(t_player*)ptr)->pos.y, (*(t_player*)ptr)->dir); //TODO affichage tmp
   sm = get_select_manager(NULL);
   ds = get_data_serv(NULL);
   if ((*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->dead == FALSE

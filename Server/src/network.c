@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:54 2012 ulric lefevre
-** Last update Mon Jun 25 15:06:30 2012 ulric lefevre
+** Last update Mon Jun 25 15:13:04 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -36,7 +36,8 @@ int	set_connection(t_data_serv data_serv, int port)
   stdout_serv_status("\t\t\tConfiguring socket.", 0);
   if (setsockopt(data_serv->sock.fd,
 		 SOL_SOCKET, SO_REUSEADDR, &op, sizeof(op)) < 0)
-    return (handle_error_ft("setsockopt", strerror(errno), data_serv->sock.fd));
+    return (handle_error_ft("setsockopt", strerror(errno),
+			    data_serv->sock.fd));
   stdout_serv_status("\t\t\tBinding socket.", 0);
   data_serv->sock.addr.sin_family = AF_INET;
   data_serv->sock.addr.sin_port = htons(port);

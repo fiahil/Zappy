@@ -5,27 +5,28 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:13 2012 ulric lefevre
-** Last update Sat Jun 23 20:15:14 2012 ulric lefevre
+** Last update Mon Jun 25 15:34:12 2012 ulric lefevre
 */
 
+#include	"stdout.h"
 #include	"msgout_cmd.h"
 
-void		msgout_avance(t_list *out)
+void		msgout_avance(t_player this)
 {
-  list_push_back_new(out, "ok\n", 4);
+  list_push_back_new(this->cm.out, "ok\n", 4);
 }
 
-void		msgout_droite(t_list *out)
+void		msgout_droite(t_player this)
 {
-  list_push_back_new(out, "ok\n", 4);
+  list_push_back_new(this->cm.out, "ok\n", 4);
 }
 
-void		msgout_gauche(t_list *out)
+void		msgout_gauche(t_player this)
 {
-  list_push_back_new(out, "ok\n", 4);
+  list_push_back_new(this->cm.out, "ok\n", 4);
 }
 
-void		msgout_fail(t_list *out)
+void		msgout_fail(t_player this)
 {
-  list_push_back_new(out, "ko\n", 4);
+  list_push_back_new(this->cm.out, "ko\n", 4);
 }

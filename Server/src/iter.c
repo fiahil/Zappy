@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Mon Jun 25 14:43:44 2012 ulric lefevre
+** Last update Mon Jun 25 15:35:38 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -60,7 +60,7 @@ static void		iter_lose_life(void *ptr, size_t s)
   if ((*(t_player*)ptr)->inv.resources[FOOD] <= 0)
     {
       (*(t_player*)ptr)->dead = TRUE;
-      msgout_mort((*(t_player*)ptr)->cm.out);
+      msgout_mort((*(t_player*)ptr));
     }
 }
 
@@ -78,9 +78,6 @@ static void	iter_lists(t_data_serv ds)
   mn_out(ds->monitor);
 }
 
-void display(t_map); // TODO affichage tmp
-t_map get_map(t_map); // TODO affichage tmp
-
 void		iter_client()
 {
   t_player		player;
@@ -89,7 +86,6 @@ void		iter_client()
 
   sm = get_select_manager(NULL);
   ds = get_data_serv(NULL);
-  stdout_map();
   select_manager(ds, sm);
   get_current_time(&g_current);
   if ((g_last.tv_sec) || (g_last.tv_usec))

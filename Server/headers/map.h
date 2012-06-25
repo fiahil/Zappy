@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:19:49 2012 ulric lefevre
-** Last update Sun Jun 24 21:35:22 2012 ulric lefevre
+** Last update Mon Jun 25 14:45:05 2012 ulric lefevre
 */
 
 #ifndef		__MAP_H__
@@ -16,6 +16,7 @@
 void	fill_map(t_map, int, int);
 t_map	get_map(t_map);
 void	init_map(int, int, int);
+int     count_res(int []);
 
 #endif		/* __MAP_H__ */
 

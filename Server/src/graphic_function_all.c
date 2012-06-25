@@ -1,3 +1,13 @@
+/*
+** graphic_function_all.c for zappy bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Mon Jun 25 15:09:11 2012 ulric lefevre
+** Last update Mon Jun 25 15:09:19 2012 ulric lefevre
+*/
+
 #define		_GNU_SOURCE
 
 #include	<stdio.h>

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:27 2012 ulric lefevre
-** Last update Sun Jun 24 15:50:21 2012 ulric lefevre
+** Last update Mon Jun 25 15:31:25 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -37,7 +37,7 @@ t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
       message(this, *((t_player*)it->data), data);
       it = it->next;
     }
-  msgout_broadcast(this->cm.out);
+  msgout_broadcast(this);
   pbc(info->monitor, this->id, data);
   return (TRUE);
 }
@@ -60,7 +60,7 @@ t_bool		incantation_process(t_player this, char *data, t_data_serv info)
       printf("Incant is Ok\n");
       pqueue_push(info->incant, &incant, sizeof(incant));
     }
-  msgout_incantation(this->cm.out, this->lvl);
+  msgout_incantation(this, this->lvl);
   return (TRUE);
 }
 
@@ -71,7 +71,7 @@ t_bool		fork_process(t_player this, char *data, t_data_serv info)
   (void)data;
   init_egg(&egg, this, info->t);
   list_push_front_new(info->egg, &egg, sizeof(egg));
-  msgout_fork(this->cm.out);
+  msgout_fork(this);
   pfk(info->monitor, this->id);
   return (TRUE);
 }
@@ -85,7 +85,7 @@ t_bool		connect_nbr_process(t_player this, char *data, t_data_serv info)
   if ((it = list_find_cmp(info->teams, &func_cmp_team, this->team, 0)) == NULL)
     return (FALSE);
   asprintf(&str, "%d\n", ((t_team)it->data)->remaining);
-  msgout_connect_nbr(this->cm.out, str);
+  msgout_connect_nbr(this, str);
   free(str);
   return (TRUE);
 }

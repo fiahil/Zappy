@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:51 2012 ulric lefevre
-** Last update Sun Jun 24 21:40:24 2012 ulric lefevre
+** Last update Mon Jun 25 15:36:03 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -46,7 +46,7 @@ static void	treatment_get_cmd(t_player this, t_bool *clear, char **buf)
 	list_push_back_new(this->cm.in, this->cm.stock,
 			   strlen(this->cm.stock) + 1);
       else
-	msgout_fail(this->cm.out);
+	msgout_fail(this);
       memset(this->cm.stock, '\0', BUFFER_SIZE);
       *buf = tmp;
     }

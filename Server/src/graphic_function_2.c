@@ -21,7 +21,7 @@ void	pnw(t_list *mn, t_player play)
   char	*str;
 
   str = NULL;
-  asprintf(&str, "pnw #%d %d %d %d %d %s\n",
+  asprintf(&str, "pnw %d %d %d %d %d %s\n",
 	   play->id,
 	   play->pos.x,
 	   play->pos.y,
@@ -37,7 +37,7 @@ void	ppo(t_graphic mn, t_player play)
   char	*str;
 
   str = NULL;
-  asprintf(&str, "ppo #%d %d %d %d\n",
+  asprintf(&str, "ppo %d %d %d %d\n",
 	   play->id,
 	   play->pos.x,
 	   play->pos.y,
@@ -51,7 +51,7 @@ void	plv(t_graphic mn, int id, int lvl)
   char	*str;
 
   str = NULL;
-  asprintf(&str, "plv #%d %d\n", id, lvl);
+  asprintf(&str, "plv %d %d\n", id, lvl);
   mn_rep(mn, str);
   free(str);
 }
@@ -61,7 +61,7 @@ void	pin(t_graphic mn, t_player play)
   char	*str;
 
   str = NULL;
-  asprintf(&str, "pin #%d %d %d %d %d %d %d %d %d %d\n",
+  asprintf(&str, "pin %d %d %d %d %d %d %d %d %d %d\n",
 	   play->id,
 	   play->pos.x,
 	   play->pos.y,
@@ -81,7 +81,7 @@ void	pex(t_list *mn, int id)
   char	*str;
 
   str = NULL;
-  asprintf(&str, "pex #%d\n", id);
+  asprintf(&str, "pex %d\n", id);
   mn_push(mn, str);
   free(str);
 }

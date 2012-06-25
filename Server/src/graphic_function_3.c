@@ -23,7 +23,7 @@ void		pbc(t_list *mn, int id, char *msg)
   char	*str;
 
   str = NULL;
-  asprintf(&str, "pbc #%d %s\n", id, msg);
+  asprintf(&str, "pbc %d %s\n", id, msg);
   mn_push(mn, str);
   free(str);
 }
@@ -36,13 +36,13 @@ void		pic(t_list *mn, t_incant inc, t_list *play)
 
   str = NULL;
   tmp = NULL;
-  asprintf(&str, "pic %d %d %d #%d", inc->pos.x, inc->pos.y, inc->incantor->lvl, inc->incantor->id);
+  asprintf(&str, "pic %d %d %d %d", inc->pos.x, inc->pos.y, inc->incantor->lvl, inc->incantor->id);
   it = play->head;
   while (it)
     {
       if ((*(t_player*)(it->data))->id != inc->incantor->id)
 	{
-	  asprintf(&tmp, " #%d", (*(t_player*)(it->data))->id);
+	  asprintf(&tmp, " %d", (*(t_player*)(it->data))->id);
 	  str = strcat(str, tmp);
 	}
       it = it->next;
@@ -67,7 +67,7 @@ void		pfk(t_list *mn, int id)
   char	*str;
 
   str = NULL;
-  asprintf(&str, "pfk #%d\n", id);
+  asprintf(&str, "pfk %d\n", id);
   mn_push(mn, str);
   free(str);
 }
@@ -77,7 +77,7 @@ void		pdr(t_list *mn, int id, int res)
   char	*str;
 
   str = NULL;
-  asprintf(&str, "pdr #%d %d\n", id, res);
+  asprintf(&str, "pdr %d %d\n", id, res);
   mn_push(mn, str);
   free(str);
 }

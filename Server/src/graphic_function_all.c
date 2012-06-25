@@ -22,7 +22,7 @@ void	ppo_general(t_list *mn, t_player play)
   char	*str;
 
   str = NULL;
-  asprintf(&str, "ppo #%d %d %d %d\n",
+  asprintf(&str, "ppo %d %d %d %d\n",
 	   play->id,
 	   play->pos.x,
 	   play->pos.y,
@@ -36,7 +36,7 @@ void	pin_general(t_list *mn, t_player play)
   char	*str;
 
   str = NULL;
-  asprintf(&str, "pin #%d %d %d %d %d %d %d %d %d %d\n",
+  asprintf(&str, "pin %d %d %d %d %d %d %d %d %d %d\n",
 	   play->id,
 	   play->pos.x,
 	   play->pos.y,

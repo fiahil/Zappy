@@ -111,7 +111,7 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
 
   if (data)
     {
-      if ((nb_client = chk_team(server, data)) == -1)
+      if ((nb_client = chk_team(server, data)) < 0)
 	{
 	  printf("Not enough slot in the team or team unknown\n"); // TODO affichage
 	  if (nb_client == -2)

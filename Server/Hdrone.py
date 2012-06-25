@@ -60,7 +60,7 @@ termios.tcsetattr(0, termios.TCSANOW, attr)
 
 flag = True
 while flag:
-  (rlist, _, _) = select.select([sys.stdin, s], [], [], 0.0)
+  (rlist, _, _) = select.select([sys.stdin, s], [], [], 1.0)
   if rlist.count(sys.stdin) > 0:
     data = getcmd(sys.stdin.read(1), cmds, cmdr)
     if data == None:

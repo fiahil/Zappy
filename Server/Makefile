@@ -13,6 +13,9 @@ SRC	=	src/main.c			\
 		src/get_opt_2.c			\
 		src/get_opt_3.c			\
 		src/usage.c			\
+		src/stdout_serv.c		\
+		src/stdout_player.c		\
+		src/stdout_map.c		\
 		src/parse_arg.c			\
 		src/var_manager.c		\
 		src/select_manager.c		\

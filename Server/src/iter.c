@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Sun Jun 24 14:13:58 2012 ulric lefevre
+** Last update Mon Jun 25 14:43:44 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -15,6 +15,7 @@
 #include	"iter.h"
 #include	"clock.h"
 #include	"player.h"
+#include	"stdout.h"
 #include	"network.h"
 #include	"algorithm.h"
 #include	"iter_tools.h"
@@ -86,7 +87,7 @@ void		iter_client()
 
   sm = get_select_manager(NULL);
   ds = get_data_serv(NULL);
-  display(get_map(NULL)); // TODO affichage tmp
+  stdout_map();
   select_manager(ds, sm);
   get_current_time(&g_current);
   if ((g_last.tv_sec) || (g_last.tv_usec))

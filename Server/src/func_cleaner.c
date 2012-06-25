@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:57 2012 ulric lefevre
-** Last update Sun Jun 24 15:34:17 2012 ulric lefevre
+** Last update Mon Jun 25 18:28:08 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -13,6 +13,7 @@
 
 #include	"def.h"
 #include	"map.h"
+#include	"stdout.h"
 #include	"assert.h"
 #include	"player.h"
 #include	"algorithm.h"
@@ -31,14 +32,18 @@ void		map_cleaner(t_player p)
 
 int		player_cleaner(void *ptr, size_t s)
 {
+  char		*str;
   t_data_serv	ds;
   t_iter	*it;
 
   (void)s;
+  str = NULL;
   ds = get_data_serv(NULL);
   if ((*(t_player*)ptr)->deleted == TRUE)
     {
-      printf("Suppression du joueur %d\n", (*(t_player*)ptr)->id); // TODO affichage
+      asprintf(&str, "Suppression du joueur %d\n", (*(t_player*)ptr)->id);
+      stdout_serv_status(str, 0);
+      free(str);
       if ((*(t_player*)ptr)->team)
         {
           it = list_find_cmp(ds->teams, &func_cmp_team,

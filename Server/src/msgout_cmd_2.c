@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:18 2012 ulric lefevre
-** Last update Mon Jun 25 15:33:48 2012 ulric lefevre
+** Last update Mon Jun 25 17:49:35 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -20,6 +20,7 @@
 void		msgout_voir(t_player this, char *look)
 {
   list_push_back_new(this->cm.out, look, strlen(look) + 1);
+  stdout_player_output(look, this->id);
 }
 
 void		msgout_inventaire(t_player this, t_u_inventory inv)
@@ -33,29 +34,48 @@ void		msgout_inventaire(t_player this, t_u_inventory inv)
 	   inv.resources[SIBUR], inv.resources[MENDIANE],
 	   inv.resources[PHIRAS], inv.resources[THYSTAME]);
   list_push_back_new(this->cm.out, str, strlen(str) + 1);
+  stdout_player_output(str, this->id);
   free(str);
 }
 
 void		msgout_prend_objet(t_player this, t_bool is_done)
 {
   if (is_done)
-    list_push_back_new(this->cm.out, "ok\n", 4);
+    {
+      list_push_back_new(this->cm.out, "ok\n", 4);
+      stdout_player_output("ok\n", this->id);
+    }
   else
-    list_push_back_new(this->cm.out, "ko\n", 4);
+    {
+      list_push_back_new(this->cm.out, "ko\n", 4);
+      stdout_player_output("ko\n", this->id);
+    }
 }
 
 void		msgout_pose_objet(t_player this, t_bool is_done)
 {
   if (is_done)
-    list_push_back_new(this->cm.out, "ok\n", 4);
+    {
+      list_push_back_new(this->cm.out, "ok\n", 4);
+      stdout_player_output("ok\n", this->id);
+    }
   else
-    list_push_back_new(this->cm.out, "ko\n", 4);
+    {
+      list_push_back_new(this->cm.out, "ko\n", 4);
+      stdout_player_output("ko\n", this->id);
+    }
 }
 
 void		msgout_expulse(t_player this, t_bool is_done)
 {
   if (is_done)
-    list_push_back_new(this->cm.out, "ok\n", 4);
+    {
+      list_push_back_new(this->cm.out, "ok\n", 4);
+      stdout_player_output("ok\n", this->id);
+    }
   else
-    list_push_back_new(this->cm.out, "ko\n", 4);
+    {
+      list_push_back_new(this->cm.out, "ko\n", 4);
+      stdout_player_output("ko\n", this->id);
+    }
 }

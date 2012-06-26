@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:18 2012 ulric lefevre
-** Last update Mon Jun 25 19:04:19 2012 ulric lefevre
+** Last update Tue Jun 26 12:06:03 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -18,14 +18,16 @@
 
 void            stdout_logo()
 {
-  printf("\033[1;31m");
-  printf("       _\n");
-  printf("____  /_/     _  _  _  _     _/|_._  _  _  _ _");
-  printf("/_  _ _/| _/_/_ _    _/_  _ _/_/_ ____\n");
-  printf("     / //_/  /_//_// //_'/_/ / /// //_//_|/ //");
-  printf("   /_//   / / //_' /_//_'/_|/ / /\n");
-  printf("            /            _/         _/\n");
-  printf("\033[0m");
+  char		str[85];
+  FILE		*logo;
+
+  if ((logo = fopen("logo", "r")) != NULL)
+    {
+      printf("\033[1;31m");
+      while (fgets(str, 84, logo) != NULL)
+	printf("%s", str);
+      printf("\n\n\033[0m");
+    }
 }
 
 void            stdout_serv_status(const char *str, int flag)

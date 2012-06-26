@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:25 2012 ulric lefevre
-** Last update Sun Jun 24 21:37:14 2012 ulric lefevre
+** Last update Tue Jun 26 11:31:08 2012 ulric lefevre
 */
 
 #ifndef		__GRAPHIC_H__
@@ -13,6 +13,7 @@
 
 #include	"def.h"
 
+void    welcome_graphic(t_data_serv, t_player);
 void	drop_graphic(t_list *, t_player, t_square, int);
 void	take_graphic(t_list *, t_player, t_square, int);
 void	expulse_graphic(t_list *, t_player, t_list *);

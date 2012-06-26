@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:12:58 2012 ulric lefevre
-** Last update Tue Jun 26 11:28:48 2012 pierre martin
+** Last update Tue Jun 26 12:09:45 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -93,20 +93,6 @@ static void	first_contact(t_player *p, int nb_c, char *data)
   list_pop_front((*p)->cm.in);
 }
 
-void		welcome_graphic(t_data_serv ds, t_player p)
-{
-  t_u_graphic	mn;
-
-  puts("bonjour madame");
-  memcpy(&mn.cm, &p->cm, sizeof(mn));
-  memset(&mn.cm.stock, '\0', sizeof(mn.cm.stock));
-  mn.cm.in = new_list(NULL, NULL, NULL);
-  mn.cm.out = new_list(NULL, NULL, NULL);
-  list_push_back_new(ds->monitor, &mn, sizeof(mn));
-  monitor_graphic(&mn, ds, p);
-  p->cm.sock.fd = -1;
-}
-
 t_bool		welcome_player(t_data_serv server, t_player player, char *data)
 {
   int		nb_client;
@@ -116,7 +102,7 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
     {
       if ((nb_client = chk_team(server, data)) < 0)
 	{
-	  printf("Not enough slot in the team or team unknown\n"); // TODO affichage
+	  stdout_serv_status("Team full or Team unknown\n", 0);
 	  if (nb_client == -2)
 	    welcome_graphic(server, player);
 	  return (FALSE);

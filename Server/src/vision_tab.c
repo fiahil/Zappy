@@ -1,3 +1,12 @@
+/*
+** vision_tab.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:13:29 2012 ulric lefevre
+** Last update Mon Jun 25 15:18:54 2012 ulric lefevre
+*/
 
 #include	<stdio.h>
 #include	<stdlib.h>
@@ -367,7 +376,7 @@ static int	calc_nbcases(int lvl)
   return (nbcases - 1);
 }
 
-void		add_to_str(char **dest, const char *src)
+static void	add_to_str(char **dest, const char *src)
 {
   char		*tmp;
 
@@ -381,7 +390,7 @@ void		add_to_str(char **dest, const char *src)
     }
 }
 
-void		add_players(t_square s, char **look)
+static void	add_players(t_square s, char **look)
 {
   size_t	i;
 
@@ -396,7 +405,7 @@ void		add_players(t_square s, char **look)
     }
 }
 
-void		add_resources(t_square s, char **look)
+static void	add_resources(t_square s, char **look)
 {
   int		i;
   int		j;

@@ -1,22 +1,20 @@
 /*
-** iter_function.h for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/Server/headers/
+** iter_function.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on  Sat Jun 16 16:16:43 2012 benjamin businaro
-** Last update Tue Jun 19 17:41:02 2012 benjamin businaro
+** Started on  Sat Jun 23 20:20:13 2012 ulric lefevre
+** Last update Sun Jun 24 21:31:38 2012 ulric lefevre
 */
 
-#ifndef __ITER_FUNCTION_H__
-#define __ITER_FUNCTION_H__
+#ifndef		__ITER_FUNCTION_H__
+# define	__ITER_FUNCTION_H__
 
-#include "def.h"
+void	iter_rds(void *, size_t);
+void	iter_action(void *, size_t);
+void	iter_egg(void *, size_t);
+void	iter_incant(void *, size_t);
 
-int		action_cleaner(void *, size_t );
-t_player	init_player();
-int	sort_player_life(void *, size_t, void *, size_t);
-void	set_timeout_select(t_data_serv, t_timeval);
-
-#endif /* __ITER_FUNCTION_H__ */
+#endif		/* __ITER_FUNCTION_H__ */
 

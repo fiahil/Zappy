@@ -13,15 +13,20 @@ SRC	=	src/main.c			\
 		src/get_opt_2.c			\
 		src/get_opt_3.c			\
 		src/usage.c			\
+		src/stdout_serv.c		\
+		src/stdout_player.c		\
+		src/stdout_map.c		\
 		src/parse_arg.c			\
+		src/var_manager.c		\
 		src/select_manager.c		\
 		src/select_tools.c		\
 		src/max_fd.c			\
+		src/func_cmp.c			\
 		src/server_routine.c		\
 		src/cmd_parse.c			\
-		src/my_itoa.c			\
 		src/map.c			\
 		src/clock.c			\
+		src/func_cleaner.c		\
 		src/process_function_1.c	\
 		src/process_function_2.c	\
 		src/process_function_3.c	\
@@ -30,6 +35,7 @@ SRC	=	src/main.c			\
 		src/msgout_cmd_3.c		\
 		src/team_manager.c		\
 		src/string_manager.c		\
+		src/egg_manager.c		\
 		src/network.c			\
 		src/my_send.c			\
 		src/my_receive.c		\
@@ -38,9 +44,21 @@ SRC	=	src/main.c			\
 		src/welcome_player.c		\
 		src/iter.c			\
 		src/iter_function.c		\
+		src/iter_tools.c		\
+		src/set_timeout.c		\
 		src/fill_map.c			\
 		src/broadcast.c			\
-		src/incantation_funcs.c
+		src/graphic_tools.c		\
+		src/graphic_function_1.c	\
+		src/graphic_function_2.c	\
+		src/graphic_function_3.c	\
+		src/graphic_function_4.c	\
+		src/graphic_function_5.c	\
+		src/graphic_function_6.c	\
+		src/graphic_function_all.c	\
+		src/process_graphic_calls.c	\
+		src/incantation_manager.c	\
+		src/player.c
 
 OBJ	=	$(SRC:.c=.o)
 

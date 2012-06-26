@@ -9,7 +9,7 @@ import random
 
 print " - Launching Server"
 
-command = "../zappy -c 1000 -x 100 -y 100"
+command = "../zappy -c 1005 -x 100 -y 100"
 f = open("./log_server", "w")
 p = subprocess.Popen(shlex.split(command), stdout=f)
 

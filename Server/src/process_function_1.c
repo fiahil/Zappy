@@ -1,21 +1,23 @@
 /*
-** process_function.c for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/src/
+** process_function_1.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on Thu Jun  7 14:12:59 2012 benjamin businaro
+** Started on  Sat Jun 23 20:14:32 2012 ulric lefevre
+** Last update Mon Jun 25 20:53:51 2012 ulric lefevre
 */
 
-#define _GNU_SOURCE
+#define		_GNU_SOURCE
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
 
-#include "map.h"
-#include "msgout_cmd.h"
-#include "process_function.h"
+#include	"map.h"
+#include	"msgout_cmd.h"
+#include	"process_function.h"
+#include	"graphic.h"
 
 static char	*g_resources[] =
   {
@@ -29,23 +31,21 @@ static char	*g_resources[] =
     NULL
   };
 
-t_bool		look_process_function(t_player this, char *data, t_data_serv info)
+t_bool		look_process(t_player this, char *data, t_data_serv info)
 {
   char		*look;
   t_map		map;
 
   (void)data;
   (void)info;
-  list_push_back_new(this->cm.out, "I look at this !\n",
-		     strlen("I look at this !\n") + 1);
   map = get_map(NULL);
   look = get_look(this, map);
-  msgout_voir(this->cm.out, look);
+  msgout_voir(this, look);
   free(look);
   return (TRUE);
 }
 
-t_bool		take_process_function(t_player this, char *data, t_data_serv info)
+t_bool		take_process(t_player this, char *data, t_data_serv info)
 {
   t_map		map;
   char		*log;
@@ -69,40 +69,42 @@ t_bool		take_process_function(t_player this, char *data, t_data_serv info)
     asprintf(&log, "No %s on this square !\n", data);
   list_push_back_new(this->cm.out, log, strlen(log) + 1);
   free(log);
-  msgout_prend_objet(this->cm.out, is_done);
+  msgout_prend_objet(this, is_done);
   //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
+  take_graphic(info->monitor, this, map->map[this->pos.y][this->pos.x], i);
   return (TRUE);
 }
 
-t_bool		drop_process_function(t_player this, char *data, t_data_serv info)
+t_bool		drop_process(t_player this, char *data, t_data_serv info)
 {
   t_map		map;
   char		*log;
   int		i;
   t_bool	is_done;
 
-  (void)info;
   i = -1;
   is_done = FALSE;
+  map = get_map(NULL);
   while (g_resources[++i] && strcmp(data, g_resources[i]));
   //system("clear"); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   if (g_resources[i] && this->inv.resources[i])
     {
-      ++(map = get_map(NULL))->map[this->pos.y][this->pos.x]->inv.resources[i];
-      --this->inv.resources[i];
+      ++(map->map[this->pos.y][this->pos.x]->inv.resources[i]);
+      --(this->inv.resources[i]);
       asprintf(&log, "Dropping %s !\n", data);
       is_done = TRUE;
     }
   else
     asprintf(&log, "No %s in inventory !\n", data);
   list_push_back_new(this->cm.out, log, strlen(log) + 1);
-  msgout_pose_objet(this->cm.out, is_done);
+  msgout_pose_objet(this, is_done);
   free(log);
+  drop_graphic(info->monitor, this, map->map[this->pos.y][this->pos.x], i);
   //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   return (TRUE);
 }
 
-t_bool  right_process_function(t_player this, char *data, t_data_serv info)
+t_bool		right_process(t_player this, char *data, t_data_serv info)
 {
   (void)data;
   (void)info;
@@ -110,13 +112,12 @@ t_bool  right_process_function(t_player this, char *data, t_data_serv info)
     this->dir = NORTH;
   else
     this->dir += 1;
-  list_push_back_new(this->cm.out, "I turn right !\n",
-		     strlen("I turn right !\n") + 1);
-  msgout_droite(this->cm.out);
+  msgout_droite(this);
+  ppo_general(info->monitor, this);
   return (TRUE);
 }
 
-t_bool  left_process_function(t_player this, char *data, t_data_serv info)
+t_bool		left_process(t_player this, char *data, t_data_serv info)
 {
   (void)data;
   (void)info;
@@ -124,9 +125,7 @@ t_bool  left_process_function(t_player this, char *data, t_data_serv info)
     this->dir = WEST;
   else
     this->dir -= 1;
-  list_push_back_new(this->cm.out, "I turn left !\n",
-		     strlen("I turn left !\n") + 1);
-  msgout_gauche(this->cm.out);
+  msgout_gauche(this);
+  ppo_general(info->monitor, this);
   return (TRUE);
 }
-

@@ -1,7 +1,17 @@
+/*
+** get_arg.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:16:53 2012 ulric lefevre
+** Last update Sun Jun 24 15:35:47 2012 ulric lefevre
+*/
 
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<unistd.h>
+
 #include	"get_arg.h"
 
 static const	t_opt g_ptrtab_opt[5] =

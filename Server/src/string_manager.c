@@ -1,18 +1,20 @@
 /*
-** string_manager.c for zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/
+** string_manager.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on Wed Jun  6 11:42:13 2012 benjamin businaro
+** Started on  Sat Jun 23 20:13:51 2012 ulric lefevre
+** Last update Mon Jun 25 15:36:03 2012 ulric lefevre
 */
 
-#include <stdio.h>
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
+#include	<stdio.h>
+#include	<assert.h>
+#include	<stdlib.h>
+#include	<string.h>
 
-#include "def.h"
+#include	"def.h"
+#include	"msgout_cmd.h"
 
 static const char *g_separator [] =
   {
@@ -40,8 +42,11 @@ static void	treatment_get_cmd(t_player this, t_bool *clear, char **buf)
       tmp += (strlen(g_separator[this->cm.mode]));
       if (strlen((*buf)) < (BUFFER_SIZE / 2))
 	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
-      list_push_back_new(this->cm.in, this->cm.stock,
-			 strlen(this->cm.stock) + 1);
+      if (this->cm.in->size < 10)
+	list_push_back_new(this->cm.in, this->cm.stock,
+			   strlen(this->cm.stock) + 1);
+      else
+	msgout_fail(this);
       memset(this->cm.stock, '\0', BUFFER_SIZE);
       *buf = tmp;
     }
@@ -49,7 +54,7 @@ static void	treatment_get_cmd(t_player this, t_bool *clear, char **buf)
 
 static void	treatment_first_cmd(t_player this, char *buf)
 {
-  char *tmp;
+  char		*tmp;
 
   tmp = NULL;
 
@@ -65,7 +70,7 @@ static void	treatment_first_cmd(t_player this, char *buf)
     }
 }
 
-void	get_commands(t_player this, char *buf)
+void		get_commands(t_player this, char *buf)
 {
   t_bool	clear;
 

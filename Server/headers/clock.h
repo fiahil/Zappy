@@ -1,24 +1,24 @@
 /*
-** clock.h for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/Server/headers/
+** clock.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on  Wed Jun 13 11:39:01 2012 benjamin businaro
-** Last update Wed Jun 20 18:52:07 2012 benjamin businaro
+** Started on  Sat Jun 23 20:21:47 2012 ulric lefevre
+** Last update Sun Jun 24 21:36:05 2012 ulric lefevre
 */
 
-#ifndef __CLOCK_H__
-#define __CLOCK_H__
+#ifndef		__CLOCK_H__
+# define	__CLOCK_H__
 
-#include "def.h"
+#include	"def.h"
 
 void	get_current_time(t_timeval);
 char	cmp_time(t_timeval, t_timeval);
 void	get_time_per_function(t_timeval, t_proc_func, double);
 void	add_time(t_timeval, double, double);
 void	unitest_clock();
-double convert_to_u(t_timeval);
+double	convert_to_u(t_timeval);
 
-#endif /* __CLOCK_H__ */
+#endif		/* __CLOCK_H__ */
 

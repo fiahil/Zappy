@@ -1,3 +1,12 @@
+/*
+** pqueue.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:23:56 2012 ulric lefevre
+** Last update Sat Jun 23 20:23:57 2012 ulric lefevre
+*/
 
 #include	<assert.h>
 #include	<stdlib.h>

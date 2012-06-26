@@ -1,13 +1,18 @@
 /*
- * Fiahil
- * 06.06.2012
- */
+** cmd_parse.h for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/headers
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:21:37 2012 ulric lefevre
+** Last update Sun Jun 24 21:35:01 2012 ulric lefevre
+*/
 
-#ifndef __CMD_PARSE_H__
-#define __CMD_PARSE_H__
+#ifndef		__CMD_PARSE_H__
+# define	__CMD_PARSE_H__
 
-#include "def.h"
+#include	"def.h"
 
 t_proc_func	cmd_parse(char const*, int *);
 
-#endif /* __CMD_PARSE_H__ */
+#endif		/* __CMD_PARSE_H__ */

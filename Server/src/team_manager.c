@@ -1,3 +1,12 @@
+/*
+** team_manager.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:13:44 2012 ulric lefevre
+** Last update Sat Jun 23 20:13:45 2012 ulric lefevre
+*/
 
 #include	<stdio.h>
 #include	<stdlib.h>

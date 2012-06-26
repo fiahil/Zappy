@@ -1,24 +1,25 @@
 /*
-** map.c for Zappy in /home/busina_b/Projet/Zappy-Unix/Zappy/src/
+** map.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
-** Made by benjamin businaro
-** Login   <busina_b@epitech.net>
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
 ** 
-** Started on Tue Jun 12 11:00:09 2012 benjamin businaro
-** Last update Sat Jun 16 16:34:14 2012 benjamin businaro
+** Started on  Sat Jun 23 20:15:31 2012 ulric lefevre
+** Last update Sun Jun 24 21:41:00 2012 ulric lefevre
 */
 
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <stdio.h>
-#include "handle_error.h"
-#include "map.h"
+#include	<time.h>
+#include	<errno.h>
+#include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
 
-t_map	get_map(t_map param)
+#include	"map.h"
+#include	"handle_error.h"
+
+t_map		get_map(t_map param)
 {
-  static t_map map = NULL;
+  static t_map	map = NULL;
 
   if (!param)
     return (map);
@@ -26,31 +27,23 @@ t_map	get_map(t_map param)
   return (map);
 }
 
-static void	malloc_error()
-{
-  // TODO error
-  handleError("malloc", strerror(errno), -1);
-  exit(1);
-}
-
 static void	alloc_map(t_map this, void *pool)
 {
-  int	y;
-  int	x;
+  int		y;
+  int		x;
 
   y = 0;
   while (y < this->size_y)
     {
       x = 0;
       if (!(this->map[y] = malloc(sizeof(*(this->map)) * this->size_x)))
-	malloc_error();
+	crash_error("malloc", "out_of_memory");
       while (x < this->size_x)
 	{
 	  this->map[y][x] = pool;
 	  this->map[y][x]->inv.status = FALSE;
-	  memset(this->map[y][x]->inv.resources,
-		 0,
-		 sizeof(this->map[y][x]->inv.resources));
+	  memset(this->map[y][x]->inv.resources, 0,
+	      sizeof(this->map[y][x]->inv.resources));
 	  this->map[y][x]->players = new_list(NULL, NULL, NULL);
 	  pool += sizeof(t_u_square);
 	  ++x;
@@ -59,19 +52,19 @@ static void	alloc_map(t_map this, void *pool)
     }
 }
 
-void	init_map(int szx, int szy, int nb_play)
+void		init_map(int szx, int szy, int nb_play)
 {
-  t_map this;
-  void	*pool;
+  t_map		this;
+  void		*pool;
 
   if (!(this = malloc(sizeof(*this))))
-    malloc_error();
+    crash_error("malloc", "out_of_memory");
   this->size_x = szx;
   this->size_y = szy;
   if (!(pool = malloc(szx * szy * sizeof(t_u_square))))
-    malloc_error();
+    crash_error("malloc", "out_of_memory");
   if (!(this->map = malloc(sizeof(**(this->map)) * szy)))
-    malloc_error();
+    crash_error("malloc", "out_of_memory");
   alloc_map(this, pool);
   fill_map(this, (this->size_x * this->size_y), nb_play);
   get_map(this);

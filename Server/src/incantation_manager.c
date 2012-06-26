@@ -1,8 +1,25 @@
-#include <stdio.h>
-#include <string.h>
-#include "def.h"
+/*
+** incantation_manager.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Sat Jun 23 20:15:54 2012 ulric lefevre
+** Last update Tue Jun 26 11:41:30 2012 benjamin businaro
+*/
 
-static t_u_hash	g_hash_cmp[] = 
+#include	<time.h>
+#include	<stdio.h>
+#include	<string.h>
+
+#include	"def.h"
+#include	"map.h"
+#include	"clock.h"
+#include	"stdout.h"
+#include	"msgout_cmd.h"
+#include	"process_function.h"
+
+static t_u_hash	g_hash_cmp[] =
   {
     {1, 1, 0, 0, 0, 0, 0},
     {2, 1, 1, 1, 0, 0, 0},
@@ -28,16 +45,23 @@ size_t	check_players(t_list *players, int lvl)
   return (count);
 }
 
-void	level_up(t_square cell)
+void	level_up(t_incant incant)
 {
   t_iter	*it;
+  t_map		map;
+  int		i;
 
-  it = cell->players->head;
+  map = get_map(NULL);
+  it = map->map[incant->pos.y][incant->pos.x]->players->head;
   while (it)
     {
       ++(*(t_player *)(it->data))->lvl;
+      stdout_player_action("Level up", (*(t_player *)(it->data))->id);
       it = it->next;
     }
+  i = 0;
+  while (++i < LAST)
+    map->map[incant->pos.y][incant->pos.x]->inv.resources[i] = 0;
 }
 
 void	fill_hashcode(t_hash hashcode, t_square cell)
@@ -54,27 +78,28 @@ void	fill_hashcode(t_hash hashcode, t_square cell)
 t_bool	incant_is_ok(t_incant incant)
 {
   t_u_hash	hashcode;
+  t_u_pos	pos;
   t_map		map;
 
   if (incant->status == FALSE)
     return (FALSE);
   map = get_map(NULL);
-  if (check_players(map->map[incant->pos.y][incant->pos.x]->players , incant->incantor->lvl) != map->map[incant->pos.y][incant->pos.x]->players->size)
+  pos.x = incant->pos.x;
+  pos.y = incant->pos.y;
+  if (check_players(map->map[pos.y][pos.x]->players, incant->incantor->lvl) !=
+      map->map[pos.y][pos.x]->players->size) // || player is dead
     {
       incant->status = FALSE;
       return (FALSE);
     }
-  fill_hashcode(&hashcode, map->map[incant->pos.y][incant->pos.x]);
+  fill_hashcode(&hashcode, map->map[pos.y][pos.x]);
   if (memcmp(&incant->hashcode, &hashcode, sizeof(hashcode)))
     incant->status = FALSE;
   return (incant->status);
 }
 
-t_bool	init_incant(t_incant incant, t_player play, t_square cell)
+t_bool	init_incant(t_incant incant, t_player play, t_square cell, int t)
 {
-  int	i;
-
-  i = -1;
   memset(incant, 0, sizeof(*incant));
   incant->status = TRUE;
   if (check_players(cell->players, play->lvl) != cell->players->size)
@@ -86,17 +111,17 @@ t_bool	init_incant(t_incant incant, t_player play, t_square cell)
   incant->pos.x = play->pos.x;
   incant->pos.y = play->pos.y;
   incant->incantor = play;
-  //incant->timeout = ?;
+  get_time_per_function(&incant->timeout, &incantation_process, t);
   fill_hashcode(&incant->hashcode, cell);
-  while (++i < 7 && memcmp(&incant->hashcode, &g_hash_cmp[i], sizeof(g_hash_cmp[i])));
-  if (i == 7)
+  if (memcmp(&incant->hashcode, &g_hash_cmp[play->lvl - 1],
+	     sizeof(incant->hashcode)))
     {
       // TEST DISPLAY
       printf("Resources not good\n");
       incant->status = FALSE;
     }
-  printf("Incantation set\n");
   // TEST DISPLAY
+  printf("Incantation set\n");
   printf("nb_play = %d\nlinemate = %d\nderaumere = %d\nsibur = %d\nmendiane = %d\nphiras = %d\nthystame = %d\nx = %d - y = %d\n",
 	 incant->hashcode.nb_play,
 	 incant->hashcode.linemate,

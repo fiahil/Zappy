@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 15:09:36 2012 ulric lefevre
-** Last update Mon Jun 25 15:09:37 2012 ulric lefevre
+** Last update Tue Jun 26 16:31:10 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -36,7 +36,8 @@ void		pic(t_list *mn, t_incant inc, t_list *play)
 
   str = NULL;
   tmp = NULL;
-  asprintf(&str, "pic %d %d %d %d", inc->pos.x, inc->pos.y, inc->incantor->lvl, inc->incantor->id);
+  asprintf(&str, "pic %d %d %d %d", inc->pos.x, inc->pos.y,
+	   inc->incantor->lvl, inc->incantor->id);
   it = play->head;
   while (it)
     {

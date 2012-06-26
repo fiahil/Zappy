@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:32 2012 ulric lefevre
-** Last update Mon Jun 25 20:53:51 2012 ulric lefevre
+** Last update Tue Jun 26 15:52:29 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -48,7 +48,6 @@ t_bool		look_process(t_player this, char *data, t_data_serv info)
 t_bool		take_process(t_player this, char *data, t_data_serv info)
 {
   t_map		map;
-  char		*log;
   int		i;
   t_bool	is_done;
 
@@ -56,21 +55,14 @@ t_bool		take_process(t_player this, char *data, t_data_serv info)
   i = -1;
   is_done = FALSE;
   while (g_resources[++i] && strcmp(data, g_resources[i]));
-  //system("clear"); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   if (g_resources[i] &&
       (map = get_map(NULL))->map[this->pos.y][this->pos.x]->inv.resources[i])
     {
       --map->map[this->pos.y][this->pos.x]->inv.resources[i];
       ++this->inv.resources[i];
-      asprintf(&log, "Taking %s !\n", data);
       is_done = TRUE;
     }
-  else
-    asprintf(&log, "No %s on this square !\n", data);
-  list_push_back_new(this->cm.out, log, strlen(log) + 1);
-  free(log);
   msgout_prend_objet(this, is_done);
-  //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   take_graphic(info->monitor, this, map->map[this->pos.y][this->pos.x], i);
   return (TRUE);
 }
@@ -78,7 +70,6 @@ t_bool		take_process(t_player this, char *data, t_data_serv info)
 t_bool		drop_process(t_player this, char *data, t_data_serv info)
 {
   t_map		map;
-  char		*log;
   int		i;
   t_bool	is_done;
 
@@ -86,21 +77,14 @@ t_bool		drop_process(t_player this, char *data, t_data_serv info)
   is_done = FALSE;
   map = get_map(NULL);
   while (g_resources[++i] && strcmp(data, g_resources[i]));
-  //system("clear"); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   if (g_resources[i] && this->inv.resources[i])
     {
       ++(map->map[this->pos.y][this->pos.x]->inv.resources[i]);
       --(this->inv.resources[i]);
-      asprintf(&log, "Dropping %s !\n", data);
       is_done = TRUE;
     }
-  else
-    asprintf(&log, "No %s in inventory !\n", data);
-  list_push_back_new(this->cm.out, log, strlen(log) + 1);
   msgout_pose_objet(this, is_done);
-  free(log);
   drop_graphic(info->monitor, this, map->map[this->pos.y][this->pos.x], i);
-  //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   return (TRUE);
 }
 

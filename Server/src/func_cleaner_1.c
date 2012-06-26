@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:57 2012 ulric lefevre
-** Last update Mon Jun 25 18:59:05 2012 ulric lefevre
+** Last update Tue Jun 26 12:10:09 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -30,6 +30,7 @@ void		map_cleaner(t_player p)
   tmp = list_find_cmp(get_map(NULL)->map[p->pos.y][p->pos.x]->players,
       &cmp_player_list, p, sizeof(*p));
   list_extract(get_map(NULL)->map[p->pos.y][p->pos.x]->players, tmp);
+  delete_iter(tmp, NULL);
 }
 
 int		player_cleaner(void *ptr, size_t s)
@@ -85,32 +86,4 @@ int		incant_cleaner(void *ptr, size_t s)
   if (!((t_incant)ptr)->timeout.tv_sec)
     return (1);
   return (0);
-}
-
-void		clean_all(t_data_serv ds)
-{
-  t_map	map;
-  int	x;
-  int	y;
-
-  delete_list(ds->player);
-  delete_list(ds->teams);
-  delete_pqueue(ds->action);
-  delete_list(ds->send_q);
-  delete_pqueue(ds->incant);
-  map = get_map(NULL);
-  y = 0;
-  while (y < map->size_y)
-    {
-      x = 0;
-      while (x < map->size_x)
-	delete_list(map->map[y][x++]->players);
-      ++y;
-    }
-  free(map->map[0][0]);
-  x = 0;
-  while (x < map->size_y)
-    free(map->map[x++]);
-  free(map->map);
-  free(map);
 }

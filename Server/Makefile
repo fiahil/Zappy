@@ -18,7 +18,8 @@ SRC	=	src/main.c			\
 		src/stdout_map.c		\
 		src/parse_arg.c			\
 		src/var_manager.c		\
-		src/select_manager.c		\
+		src/select_manager_1.c		\
+		src/select_manager_2.c		\
 		src/select_tools.c		\
 		src/max_fd.c			\
 		src/func_cmp.c			\
@@ -26,7 +27,8 @@ SRC	=	src/main.c			\
 		src/cmd_parse.c			\
 		src/map.c			\
 		src/clock.c			\
-		src/func_cleaner.c		\
+		src/func_cleaner_1.c		\
+		src/func_cleaner_2.c		\
 		src/process_function_1.c	\
 		src/process_function_2.c	\
 		src/process_function_3.c	\
@@ -42,6 +44,7 @@ SRC	=	src/main.c			\
 		src/handle_error.c		\
 		src/vision_tab.c		\
 		src/welcome_player.c		\
+		src/welcome_graphic.c		\
 		src/iter.c			\
 		src/iter_function.c		\
 		src/iter_tools.c		\

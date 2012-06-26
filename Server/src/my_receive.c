@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:02 2012 ulric lefevre
-** Last update Sat Jun 23 20:15:03 2012 ulric lefevre
+** Last update Tue Jun 26 12:07:30 2012 pierre martin
 */
 
 #include	<stdlib.h>
@@ -14,6 +14,13 @@
 #include	<sys/socket.h>
 
 #include	"def.h"
+
+static void	*cleaner(char * buf, void *ret)
+{
+  if (buf != ret)
+    free(buf);
+  return (ret);
+}
 
 char*	my_receive(int fd)
 {
@@ -29,10 +36,10 @@ char*	my_receive(int fd)
   while (test)
     {
       if ((test = recv(fd, buff, BUFFER_SIZE - 1, 0)) == 0)
-	return (ret[0] ? ret : (char*)-1);
+	return (cleaner(ret, ret[0] ? ret : (char*)-1));
       buff[test] = '\0';
       if ((tmp = malloc(strlen(ret) + test + 1)) == NULL)
-	return (NULL);
+	return (cleaner(ret, NULL));
       strcpy(tmp, ret);
       strcat(tmp, buff);
       free(ret);

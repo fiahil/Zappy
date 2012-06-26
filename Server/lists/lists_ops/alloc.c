@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:24:56 2012 ulric lefevre
-** Last update Sat Jun 23 20:24:57 2012 ulric lefevre
+** Last update Mon Jun 25 18:20:10 2012 pierre martin
 */
 
 #include <stdlib.h>
@@ -40,5 +40,17 @@ void		delete_list(t_list *this)
     {
       delete_iters(this->head, this->dtor);
       free(this);
+    }
+}
+
+void		list_clear(t_list *this)
+{
+  if (this)
+    {
+      delete_iters(this->head, this->dtor);
+      this->head = NULL;
+      this->tail = NULL;
+      this->size = 0;
+      this->empty = 1;
     }
 }

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Mon Jun 25 15:30:36 2012 ulric lefevre
+** Last update Tue Jun 26 12:24:34 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -74,16 +74,9 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
 
 t_bool		move_process(t_player this, char *data, t_data_serv info)
 {
-  char		*str; // TODO affichage tmp
-
   (void)data;
   (void)info;
   do_move_process(this, g_dir[this->dir][0], g_dir[this->dir][1]);
-  str = NULL; // TODO affichage tmp
-  asprintf(&str, "I move in %d : %d !\n", this->pos.x, this->pos.y); // TODO affichage tmp
-  list_push_back_new(this->cm.out, str, strlen(str) + 1);
-  free(str); // TODO affichage tmp
-
   msgout_avance(this);
   ppo_general(info->monitor, this);
   return (TRUE);
@@ -91,7 +84,6 @@ t_bool		move_process(t_player this, char *data, t_data_serv info)
 
 t_bool		expulse_process(t_player this, char *data, t_data_serv info)
 {
-  char		*msg;
   t_list	*players;
   t_iter	*ti;
   t_player	*p;
@@ -107,11 +99,6 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
       p = list_front(players);
       do_move_process(*p, g_dir[this->dir][0],
 		      g_dir[this->dir][1]);
-      msg = NULL;
-      asprintf(&msg, "deplacement: %d\n",
-	       g_src[this->dir][(*p)->dir]);
-      list_push_back_new((*p)->cm.out, msg, strlen(msg) + 1);
-      free(msg);
     }
   list_push_back(players, ti);
   expulse_graphic(info->monitor, this,

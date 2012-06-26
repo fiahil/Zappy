@@ -5,7 +5,11 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Tue Jun 26 17:21:17 2012 benjamin businaro
+<<<<<<< HEAD
+** Last update Tue Jun 26 17:35:34 2012 benjamin businaro
+=======
+** Last update Tue Jun 26 11:11:28 2012 ulric lefevre
+>>>>>>> 497aec33d1ca0256e8a816103f1bdc1505fa6a44
 */
 
 #include	<stdio.h>
@@ -30,23 +34,29 @@
 static t_u_timeval	g_last = {0, 0};
 static t_u_timeval	g_current = {0, 0};
 
+static int		get_dmg()
+{
+  t_data_serv	ds;
+  double	val;
+
+  ds = get_data_serv(NULL);
+  val = g_current.tv_usec - g_last.tv_usec;
+  val += ((g_current.tv_sec - g_last.tv_sec) * 1000000.0);
+  val /= 1000000.0;
+  val /= (1.0 / ds->t);
+  return (val);
+}
+
 static void		iter_lose_life(void *ptr, size_t s)
 {
-  double	val;
   int		dmg;
   int		i;
-  t_data_serv	ds;
 
   (void)s;
   if ((*(t_player*)ptr)->welcome)
     {
-      ds = get_data_serv(NULL);
       i = 0;
-      val = g_current.tv_usec - g_last.tv_usec;
-      val += ((g_current.tv_sec - g_last.tv_sec) * 1000000.0);
-      val /= 1000000.0;
-      val /= (1.0 / ds->t);
-      dmg = val;
+      dmg = get_dmg();
       while (!i)
 	if (dmg < (*(t_player*)ptr)->inv.cur_life)
 	  {

@@ -5,11 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-<<<<<<< HEAD
-** Last update Tue Jun 26 17:35:34 2012 benjamin businaro
-=======
-** Last update Tue Jun 26 11:11:28 2012 ulric lefevre
->>>>>>> 497aec33d1ca0256e8a816103f1bdc1505fa6a44
+** Last update Tue Jun 26 17:54:10 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -47,28 +43,35 @@ static int		get_dmg()
   return (val);
 }
 
-static void		iter_lose_life(void *ptr, size_t s)
+static void		lose_life_loop(t_player *this)
 {
   int		dmg;
   int		i;
 
+  i = 0;
+  dmg = get_dmg();
+  while (!i)
+    {
+      if (dmg < (*this)->inv.cur_life)
+	{
+	  (*this)->inv.cur_life -= dmg;
+	  i = 1;
+	}
+      else
+	{
+	  dmg -= (*this)->inv.cur_life;
+	  (*this)->inv.cur_life = 127;
+	  (*this)->inv.resources[FOOD] -= 1;
+	}
+    }
+}
+
+static void		iter_lose_life(void *ptr, size_t s)
+{
   (void)s;
   if ((*(t_player*)ptr)->welcome)
     {
-      i = 0;
-      dmg = get_dmg();
-      while (!i)
-	if (dmg < (*(t_player*)ptr)->inv.cur_life)
-	  {
-	    (*(t_player*)ptr)->inv.cur_life -= dmg;
-	    i = 1;
-	  }
-	else
-	  {
-	    dmg -= (*(t_player*)ptr)->inv.cur_life;
-	    (*(t_player*)ptr)->inv.cur_life = 127;
-	    (*(t_player*)ptr)->inv.resources[FOOD] -= 1;
-	  }
+      lose_life_loop((t_player*)ptr);
       if ((*(t_player*)ptr)->inv.resources[FOOD] <= 0)
 	{
 	  (*(t_player*)ptr)->dead = TRUE;

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:20 2012 ulric lefevre
-** Last update Sun Jun 24 21:43:59 2012 ulric lefevre
+** Last update Tue Jun 26 14:51:15 2012 pierre martin
 */
 
 #define		_GNU_SOURCE
@@ -107,7 +107,7 @@ void	message(t_player src, t_player dest, char *txt)
       if (dir >= 0)
 	dir = ((dir + (dest->dir * 2)) % 8);
       ++dir;
-      asprintf(&msg, "message %d, %s\n", dir, txt);
+      asprintf(&msg, "message %d,%s\n", dir, txt);
       list_push_back_new(dest->cm.out, msg, strlen(msg) + 1);
       free(msg);
     }

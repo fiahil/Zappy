@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:57 2012 ulric lefevre
-** Last update Mon Jun 25 18:59:05 2012 ulric lefevre
+** Last update Tue Jun 26 11:26:26 2012 pierre martin
 */
 
 #define		_GNU_SOURCE
@@ -30,6 +30,7 @@ void		map_cleaner(t_player p)
   tmp = list_find_cmp(get_map(NULL)->map[p->pos.y][p->pos.x]->players,
       &cmp_player_list, p, sizeof(*p));
   list_extract(get_map(NULL)->map[p->pos.y][p->pos.x]->players, tmp);
+  delete_iter(tmp, NULL);
 }
 
 int		player_cleaner(void *ptr, size_t s)

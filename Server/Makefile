@@ -18,7 +18,8 @@ SRC	=	src/main.c			\
 		src/stdout_map.c		\
 		src/parse_arg.c			\
 		src/var_manager.c		\
-		src/select_manager.c		\
+		src/select_manager_1.c		\
+		src/select_manager_2.c		\
 		src/select_tools.c		\
 		src/max_fd.c			\
 		src/func_cmp.c			\

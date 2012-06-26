@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:12:58 2012 ulric lefevre
-** Last update Tue Jun 26 11:27:13 2012 ulric lefevre
+** Last update Tue Jun 26 12:09:45 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -33,6 +33,7 @@ static int	chk_team(t_data_serv server, char *data)
   str = NULL;
   asprintf(&str, "Connection query to : %s\n", ((t_team)it->data)->name);
   stdout_serv_status(str, 0);
+  free(str);
   if (((t_team)it->data)->remaining > 0)
     ((t_team)it->data)->remaining -= 1;
   else
@@ -56,6 +57,8 @@ static void	init_ghost(t_iter **ghost, t_player *p, int nb_c)
   t_map		map;
   char		*str;
 
+  delete_list((*(t_player*)(*ghost)->data)->cm.in);
+  delete_list((*(t_player*)(*ghost)->data)->cm.out);
   (*(t_player*)(*ghost)->data)->cm.in = (*p)->cm.in;
   (*(t_player*)(*ghost)->data)->cm.out = (*p)->cm.out;
   memcpy(&((*(t_player*)(*ghost)->data)->cm), &((*p)->cm), sizeof((*p)->cm));

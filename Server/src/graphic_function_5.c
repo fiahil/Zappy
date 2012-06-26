@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:15 2012 ulric lefevre
-** Last update Sun Jun 24 21:42:41 2012 ulric lefevre
+** Last update Tue Jun 26 11:30:43 2012 pierre martin
 */
 
 #define		_GNU_SOURCE
@@ -14,8 +14,9 @@
 #include	<string.h>
 #include	<stdlib.h>
 
-#include	"graphic.h"
 #include	"def.h"
+#include	"graphic.h"
+#include	"algorithm.h"
 
 static t_graphic	g_mn;
 

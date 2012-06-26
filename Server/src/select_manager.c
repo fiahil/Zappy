@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:14 2012 ulric lefevre
-** Last update Sat Jun 23 20:14:14 2012 ulric lefevre
+** Last update Tue Jun 26 11:29:18 2012 pierre martin
 */
 
 #include	<errno.h>
@@ -15,6 +15,7 @@
 #include	<sys/time.h>
 
 #include	"def.h"
+#include	"algorithm.h"
 #include	"handle_error.h"
 #include	"select_manager.h"
 

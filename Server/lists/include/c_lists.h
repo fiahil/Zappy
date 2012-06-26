@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:24:43 2012 ulric lefevre
-** Last update Sat Jun 23 20:24:44 2012 ulric lefevre
+** Last update Mon Jun 25 18:21:12 2012 pierre martin
 */
 
 #ifndef __C_LISTS_H__
@@ -77,15 +77,9 @@ t_iter		*list_begin(t_list *this);
 t_iter		*list_end(t_list *this);
 
 /*
-**   Algorithms for chained-lists
-*/
-t_iter		*list_find(t_list *this, void *param);
-void		list_for_each(t_list *this, t_func f);
-
-/* t_iter		*list_iter_find_if(t_list *this, t_predicate pred); */
-/*
 **   Desallocator for chained-lists
 */
+void		list_clear(t_list *this);
 void		delete_list(t_list *this);
 
 #endif /* __C_LISTS_H__ */

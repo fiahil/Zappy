@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:08 2012 ulric lefevre
-** Last update Mon Jun 25 15:11:39 2012 ulric lefevre
+** Last update Tue Jun 26 11:30:16 2012 pierre martin
 */
 
 #define		_GNU_SOURCE
@@ -14,11 +14,12 @@
 #include	<string.h>
 #include	<assert.h>
 
-#include	"select_manager.h"
+#include	"def.h"
 #include	"graphic.h"
 #include	"network.h"
-#include	"def.h"
+#include	"algorithm.h"
 #include	"var_manager.h"
+#include	"select_manager.h"
 
 static char 	*g_msg;
 

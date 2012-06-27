@@ -58,10 +58,12 @@ void		iter_action(void *ptr, size_t s)
       && cmp_time(&current, &(((t_player_action)ptr)->time)) == 1)
     {
       if (((t_player_action)ptr)->player->dead == FALSE)
-	(((t_player_action)ptr)->action)
-	  (((t_player_action)ptr)->player, ((t_player_action)ptr)->param, ds);
-      ((t_player_action)ptr)->done = TRUE;
-      ((t_player_action)ptr)->player->cm.is_processing = FALSE;
+	if ((((t_player_action)ptr)->action)
+	    (((t_player_action)ptr)->player, ((t_player_action)ptr)->param, ds))
+	  {
+	    ((t_player_action)ptr)->done = TRUE;
+	    ((t_player_action)ptr)->player->cm.is_processing = FALSE;
+	  }
     }
 	if (!((t_player_action)ptr)->player->cm.in->empty
 	    && !(((t_player_action)ptr)->player->cm.is_processing))

@@ -105,4 +105,3 @@ let unitest () =
     pull ();
   end
 
-let _ = unitest ()

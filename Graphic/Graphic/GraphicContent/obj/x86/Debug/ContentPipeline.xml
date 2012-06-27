@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline" xmlns:Framework="Microsoft.Xna.Framework" xmlns:Processors="Microsoft.Xna.Framework.Content.Pipeline.Processors">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>Character_sylvanas.FBX</Source>
+      <Name>Character_sylvanas</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\bin\x86\Debug\Content\Character_sylvanas.xnb</Output>
+      <Time>2012-05-30T21:11:36+02:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Character_sylvanas_0.xml</Key>
+        <Value>2012-06-26T17:01:47.9211792+02:00</Value>
+      </Dependency>
+      <Request>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\bin\x86\Debug\Content\FBX\B0182532\Character_sylvanas.fbm\LADYSYLVANASWINDRUNNER_01_0.xnb</Request>
+      <Request>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\bin\x86\Debug\Content\FBX\B0182532\Character_sylvanas.fbm\LADYSYLVANASWINDRUNNER_02_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>Character_sylvanas.FBX</Source>
+      <Importer>FbxImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Character_sylvanas_0.xml</Output>
+      <Time>2012-05-30T21:11:36+02:00</Time>
+    </Item>
+    <Item>
+      <Source>obj\x86\Debug\FBX\B0182532\Character_sylvanas.fbm\LADYSYLVANASWINDRUNNER_01.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\bin\x86\Debug\Content\FBX\B0182532\Character_sylvanas.fbm\LADYSYLVANASWINDRUNNER_01_0.xnb</Output>
+      <Time>2012-06-26T17:01:29.071101+02:00</Time>
+    </Item>
+    <Item>
+      <Source>obj\x86\Debug\FBX\B0182532\Character_sylvanas.fbm\LADYSYLVANASWINDRUNNER_02.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\bin\x86\Debug\Content\FBX\B0182532\Character_sylvanas.fbm\LADYSYLVANASWINDRUNNER_02_0.xnb</Output>
+      <Time>2012-06-26T17:01:29.0671008+02:00</Time>
+    </Item>
+    <Item>
+      <Source>tank.fbx</Source>
+      <Name>tank</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\bin\x86\Debug\Content\tank.xnb</Output>
+      <Time>2010-12-08T23:53:38+01:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\tank_0.xml</Key>
+        <Value>2012-06-26T17:16:17.232901+02:00</Value>
+      </Dependency>
+      <Request>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\bin\x86\Debug\Content\engine_diff_tex_0.xnb</Request>
+      <Request>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\bin\x86\Debug\Content\turret_alt_diff_tex_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>tank.fbx</Source>
+      <Importer>FbxImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\tank_0.xml</Output>
+      <Time>2010-12-08T23:53:38+01:00</Time>
+    </Item>
+    <Item>
+      <Source>engine_diff_tex.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\bin\x86\Debug\Content\engine_diff_tex_0.xnb</Output>
+      <Time>2010-12-08T23:53:38+01:00</Time>
+    </Item>
+    <Item>
+      <Source>turret_alt_diff_tex.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\bin\x86\Debug\Content\turret_alt_diff_tex_0.xnb</Output>
+      <Time>2010-12-08T23:53:38+01:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>HiDef</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\GraphicContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\GraphicContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Marti\Documents\GitHub\Zappy\Graphic\Graphic\Graphic\bin\x86\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T12:41:18+02:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-08-03T17:33:58.6222029+02:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>

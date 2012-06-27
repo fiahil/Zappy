@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:32 2012 ulric lefevre
-** Last update Tue Jun 26 12:23:56 2012 ulric lefevre
+** Last update Tue Jun 26 15:52:29 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -55,7 +55,6 @@ t_bool		take_process(t_player this, char *data, t_data_serv info)
   i = -1;
   is_done = FALSE;
   while (g_resources[++i] && strcmp(data, g_resources[i]));
-  //system("clear"); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   if (g_resources[i] &&
       (map = get_map(NULL))->map[this->pos.y][this->pos.x]->inv.resources[i])
     {
@@ -64,7 +63,6 @@ t_bool		take_process(t_player this, char *data, t_data_serv info)
       is_done = TRUE;
     }
   msgout_prend_objet(this, is_done);
-  //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   take_graphic(info->monitor, this, map->map[this->pos.y][this->pos.x], i);
   return (TRUE);
 }
@@ -79,7 +77,6 @@ t_bool		drop_process(t_player this, char *data, t_data_serv info)
   is_done = FALSE;
   map = get_map(NULL);
   while (g_resources[++i] && strcmp(data, g_resources[i]));
-  //system("clear"); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   if (g_resources[i] && this->inv.resources[i])
     {
       ++(map->map[this->pos.y][this->pos.x]->inv.resources[i]);
@@ -88,7 +85,6 @@ t_bool		drop_process(t_player this, char *data, t_data_serv info)
     }
   msgout_pose_objet(this, is_done);
   drop_graphic(info->monitor, this, map->map[this->pos.y][this->pos.x], i);
-  //display((map = get_map(NULL))); // ENABLE THIS LINE FOR "REALTIME" MAP DISPLAY
   return (TRUE);
 }
 

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:14 2012 ulric lefevre
-** Last update Tue Jun 26 11:29:18 2012 pierre martin
+** Last update Tue Jun 26 16:11:42 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -40,30 +40,6 @@ static void	select_mset(void *ptr, size_t s)
     FD_SET(((t_graphic)ptr)->cm.sock.fd, &g_sm->rds);
     if (!((t_graphic)ptr)->cm.out->empty)
       FD_SET(((t_graphic)ptr)->cm.sock.fd, &g_sm->wds);
-  }
-}
-
-static void	select_cmp(void *ptr, size_t s)
-{
-  (void)s;
-  if ((*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->cm.sock.fd > g_sm->max_fd)
-    g_sm->max_fd = (*(t_player*)ptr)->cm.sock.fd;
-}
-
-static void	select_mcmp(void *ptr, size_t s)
-{
-  (void)s;
-  if (((t_graphic)ptr)->cm.online && ((t_graphic)ptr)->cm.sock.fd > g_sm->max_fd)
-    g_sm->max_fd = ((t_graphic)ptr)->cm.sock.fd;
-}
-
-void		select_del(t_data_serv ds, int fd)
-{
-  if (fd == g_sm->max_fd)
-  {
-    g_sm->max_fd = ds->sock.fd;
-    list_for_each(ds->player, &select_cmp);
-    list_for_each(ds->monitor, &select_mcmp);
   }
 }
 

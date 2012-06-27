@@ -23,9 +23,9 @@ FLAGS	=	-w Aelz
 
 CC	=	ocamlopt
 
-INC	=	unix.cma
+INC	=	unix.cma str.cma
 
-INCX	=	unix.cmxa
+INCX	=	unix.cmxa str.cmxa
 
 %.cmx: %.ml
 	$(CC) $(INCX) -o $@		-c $<	$(FLAGS)

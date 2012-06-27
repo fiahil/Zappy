@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:54 2012 ulric lefevre
-** Last update Mon Jun 25 20:27:58 2012 ulric lefevre
+** Last update Tue Jun 26 11:41:30 2012 benjamin businaro
 */
 
 #include	<time.h>

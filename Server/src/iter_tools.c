@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:41 2012 ulric lefevre
-** Last update Mon Jun 25 15:35:21 2012 ulric lefevre
+** Last update Tue Jun 26 17:41:42 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -16,6 +16,7 @@
 #include	"map.h"
 #include	"clock.h"
 #include	"player.h"
+#include	"process_function.h"
 #include	"cmd_parse.h"
 #include	"msgout_cmd.h"
 #include	"var_manager.h"
@@ -62,7 +63,8 @@ void		push_new_action(t_player_action pa)
 	{
 	  act.action = ret;
 	  act.done = FALSE;
-	  get_time_per_function(&(act.time), ret, ds->t);
+	  (ret == &incantation_process) ? (get_current_time(&(act.time))) :
+	    (get_time_per_function(&(act.time), ret, ds->t));
 	  act.player = pa->player;
 	  act.param = strdup(list_front(pa->player->cm.in) + off);
 	  pqueue_push(ds->action, &act, sizeof(act));

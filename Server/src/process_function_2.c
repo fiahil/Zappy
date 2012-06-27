@@ -24,6 +24,7 @@
 #include	"team_manager.h"
 #include	"process_function.h"
 #include	"graphic.h"
+#include	"iter_tools.h"
 
 t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
 {
@@ -42,10 +43,20 @@ t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
+///////
+t_bool		do_incant(t_player this, char *data, t_data_serv info)
+{
+  (void)this;
+  (void)data;
+  (void)info;
+  return (TRUE);
+}
+
 t_bool		incantation_process(t_player this, char *data, t_data_serv info)
 {
-  t_u_incant	incant;
-  t_map		map;
+  t_u_player_action	act;
+  t_u_incant		incant;
+  t_map			map;
 
   (void)data;
   map = get_map(NULL);
@@ -58,7 +69,14 @@ t_bool		incantation_process(t_player this, char *data, t_data_serv info)
   else
     {
       printf("Incant is Ok\n");
-      pqueue_push(info->incant, &incant, sizeof(incant));
+      this->cm.is_processing = TRUE;
+      act.action = &do_incant;
+      get_time_per_function(&act.time, &incantation_process, info->t);
+      act.player = this;
+      act.param = NULL;
+      act.done = FALSE;
+      push_new_action(&act);
+      //pqueue_push(info->incant, &incant, sizeof(incant));
     }
   msgout_incantation(this, this->lvl);
   return (TRUE);

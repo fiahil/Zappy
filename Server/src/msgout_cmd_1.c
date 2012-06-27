@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:21 2012 ulric lefevre
-** Last update Wed Jun 27 23:32:26 2012 ulric lefevre
+** Last update Wed Jun 27 23:36:04 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -30,7 +30,7 @@ void		msgout_incantation(t_player this, int lvl)
   if (lvl == 0)
     asprintf(&str, "elevation en cours\n");
   else if (lvl == -1)
-    asprintf(&str, "ko\n", lvl);
+    asprintf(&str, "ko\n");
   else
     asprintf(&str, "niveau actuel: %d\n", lvl);
   list_push_back_new(this->cm.out, str, strlen(str) + 1);

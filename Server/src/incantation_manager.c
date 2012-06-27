@@ -55,8 +55,9 @@ void	level_up(t_incant incant)
   it = map->map[incant->pos.y][incant->pos.x]->players->head;
   while (it)
     {
-      ++(*(t_player *)(it->data))->lvl;
-      stdout_player_action("Level up", (*(t_player *)(it->data))->id);
+      ++(*(t_player*)(it->data))->lvl;
+      stdout_player_action("Level up", (*(t_player*)(it->data))->id);
+      msgout_incantation((*(t_player*)(it->data)), (*(t_player*)(it->data))->lvl);
       it = it->next;
     }
   i = 0;
@@ -81,28 +82,20 @@ t_bool	incant_is_ok(t_incant incant)
   t_u_pos	pos;
   t_map		map;
 
-  printf("INCANT = %p\n", incant);
   if (incant->status == FALSE)
-    {
-      printf("Status = false\n");
-      return (FALSE);
-    }
+    return (FALSE);
   map = get_map(NULL);
   pos.x = incant->pos.x;
   pos.y = incant->pos.y;
   if (check_players(map->map[pos.y][pos.x]->players, incant->incantor->lvl) !=
-      map->map[pos.y][pos.x]->players->size) // || player is dead
+      map->map[pos.y][pos.x]->players->size)
     {
-      printf("Players not good\n");
       incant->status = FALSE;
       return (FALSE);
     }
   fill_hashcode(&hashcode, map->map[pos.y][pos.x]);
   if (memcmp(&incant->hashcode, &hashcode, sizeof(hashcode)))
-    {
-      printf("Hash not good\n");
-      incant->status = FALSE;
-    }
+    incant->status = FALSE;
   return (incant->status);
 }
 
@@ -111,11 +104,7 @@ t_bool	init_incant(t_incant incant, t_player play, t_square cell, int t)
   memset(incant, 0, sizeof(*incant));
   incant->status = TRUE;
   if (check_players(cell->players, play->lvl) != cell->players->size)
-    {
-      // TEST DISPLAY
-      printf("Players not good\n");
-      incant->status = FALSE;
-    }
+    incant->status = FALSE;
   incant->pos.x = play->pos.x;
   incant->pos.y = play->pos.y;
   incant->incantor = play;
@@ -123,22 +112,6 @@ t_bool	init_incant(t_incant incant, t_player play, t_square cell, int t)
   fill_hashcode(&incant->hashcode, cell);
   if (memcmp(&incant->hashcode, &g_hash_cmp[play->lvl - 1],
 	     sizeof(incant->hashcode)))
-    {
-      // TEST DISPLAY
-      printf("Resources not good - %i\n", play->lvl);
-      incant->status = FALSE;
-    }
-  // TEST DISPLAY
-  printf("Incantation set\n");
-  printf("nb_play = %d\nlinemate = %d\nderaumere = %d\nsibur = %d\nmendiane = %d\nphiras = %d\nthystame = %d\nx = %d - y = %d\n",
-	 incant->hashcode.nb_play,
-	 incant->hashcode.linemate,
-	 incant->hashcode.deraumere,
-	 incant->hashcode.sibur,
-	 incant->hashcode.mendiane,
-	 incant->hashcode.phiras,
-	 incant->hashcode.thystame,
-	 incant->pos.x,
-	 incant->pos.y);
+    incant->status = FALSE;
   return (TRUE);
 }

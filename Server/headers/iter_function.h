@@ -14,7 +14,7 @@
 void	iter_rds(void *, size_t);
 void	iter_action(void *, size_t);
 void	iter_egg(void *, size_t);
-void	iter_incant(void *, size_t);
+t_bool	iter_incant(t_player, char *, t_data_serv);
 
 #endif		/* __ITER_FUNCTION_H__ */
 

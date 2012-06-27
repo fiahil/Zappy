@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:08 2012 ulric lefevre
-** Last update Mon Jun 25 18:47:38 2012 ulric lefevre
+** Last update Wed Jun 27 13:46:17 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -15,27 +15,23 @@
 void            stdout_player_status(const char *str, int id)
 {
   printf("\033[1;36m");
-  printf("%d\t\tPlayer %d : %s\n", (int)time(NULL), id, str);
-  printf("\033[0m");
+  printf("%d\t\tPlayer %d : %s\033[0m\n", (int)time(NULL), id, str);
 }
 
 void            stdout_player_input(const char *str, int id)
 {
   printf("\033[1;32m");
-  printf("%d\t\tPlayer %d : %s\n", (int)time(NULL), id, str);
-  printf("\033[0m");
+  printf("%d\t\tPlayer %d : %s\033[0m\n", (int)time(NULL), id, str);
 }
 
 void            stdout_player_output(const char *str, int id)
 {
   printf("\033[1;31m");
-  printf("%d\t\tPlayer %d : %s", (int)time(NULL), id, str);
-  printf("\033[0m");
+  printf("%d\t\tPlayer %d : %s\033[0m", (int)time(NULL), id, str);
 }
 
 void            stdout_player_action(const char *str, int id)
 {
   printf("\033[1;35m");
-  printf("%d\t\tPlayer %d : %s\n", (int)time(NULL), id, str);
-  printf("\033[0m");
+  printf("%d\t\tPlayer %d : %s\033[0m\n", (int)time(NULL), id, str);
 }

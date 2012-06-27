@@ -27,4 +27,5 @@ void		welcome_graphic(t_data_serv ds, t_player p)
   list_push_back_new(ds->monitor, &mn, sizeof(mn));
   monitor_graphic(&mn, ds, p);
   p->cm.sock.fd = -1;
+  p->cm.online = FALSE;
 }

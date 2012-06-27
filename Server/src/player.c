@@ -19,7 +19,7 @@
 
 static int	g_id_player = 0;
 
-static void	init_player(t_player player)
+static void	init_player(t_player player, int egg)
 {
   player->id = g_id_player++;
   player->lvl = 1;
@@ -30,6 +30,7 @@ static void	init_player(t_player player)
   player->dead = FALSE;
   player->deleted = FALSE;
   player->welcome = FALSE;
+  player->egg = egg;
   player->inv.status = FALSE;
   memset(player->inv.resources, '\0', sizeof(int) * LAST);
   player->inv.resources[FOOD] = 10;
@@ -42,13 +43,13 @@ static void	init_player(t_player player)
   player->cm.online = FALSE;
 }
 
-t_player	create_player()
+t_player	create_player(int egg)
 {
   t_player	player;
 
   if (!(player = malloc(sizeof(t_u_player))))
     return (NULL);
-  init_player(player);
+  init_player(player, egg);
   list_push_back_new(get_map(NULL)->map[player->pos.y][player->pos.x]->players,
       &player, sizeof(&player));
   return (player);

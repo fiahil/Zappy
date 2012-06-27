@@ -18,6 +18,7 @@ void	drop_graphic(t_list *, t_player, t_square, int);
 void	take_graphic(t_list *, t_player, t_square, int);
 void	expulse_graphic(t_list *, t_player, t_list *);
 void	monitor_graphic(t_graphic, t_data_serv, t_player);
+void	player_graphic(t_list *, t_player);
 
 void	ppo_general(t_list *, t_player);
 void	pin_general(t_list *, t_player);

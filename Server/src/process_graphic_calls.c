@@ -50,3 +50,10 @@ void		monitor_graphic(t_graphic mn, t_data_serv ds, t_player p)
   pnw(ds->monitor, p);
   enw(ds->monitor, ds->egg->size, p->lvl, &p->pos);
 }
+
+void		player_graphic(t_list *mn, t_player this)
+{
+  if (this->egg >= 0)
+    ebo(mn, this->egg);
+  pnw(mn, this);
+}

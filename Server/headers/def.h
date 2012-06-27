@@ -208,6 +208,7 @@ struct			s_player
   t_bool		dead;
   t_bool		deleted;
   t_bool		welcome;
+  int			egg;
   t_u_client_manager	cm;
 };
 

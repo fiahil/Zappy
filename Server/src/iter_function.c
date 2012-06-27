@@ -49,6 +49,7 @@ void		iter_action(void *ptr, size_t s)
 {
   t_u_timeval	current;
   t_data_serv	ds;
+  t_bool	test;
 
   (void)s;
   get_current_time(&current);
@@ -58,12 +59,11 @@ void		iter_action(void *ptr, size_t s)
       && cmp_time(&current, &(((t_player_action)ptr)->time)) == 1)
     {
       if (((t_player_action)ptr)->player->dead == FALSE)
-	if ((((t_player_action)ptr)->action)
-	    (((t_player_action)ptr)->player, ((t_player_action)ptr)->param, ds))
-	  {
-	    ((t_player_action)ptr)->done = TRUE;
-	    ((t_player_action)ptr)->player->cm.is_processing = FALSE;
-	  }
+	test = (((t_player_action)ptr)->action)
+	  (((t_player_action)ptr)->player, ((t_player_action)ptr)->param, ds);
+      ((t_player_action)ptr)->done = TRUE;
+      if (test)
+	((t_player_action)ptr)->player->cm.is_processing = FALSE;
     }
 	if (!((t_player_action)ptr)->player->cm.in->empty
 	    && !(((t_player_action)ptr)->player->cm.is_processing))
@@ -111,6 +111,8 @@ void		iter_incant(void *ptr, size_t s)
       else
 	printf("Incant couldn't be performed\n");
       // msgout_incantation(((t_incant)ptr)->incantor->cm.out, ((t_incant)ptr)->incantor->lvl);
+      ((t_incant)ptr)->incantor->cm.is_processing = FALSE;
       ((t_incant)ptr)->timeout.tv_sec = 0;
+      ((t_incant)ptr)->timeout.tv_usec = 0;
     }
 }

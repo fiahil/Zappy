@@ -81,20 +81,28 @@ t_bool	incant_is_ok(t_incant incant)
   t_u_pos	pos;
   t_map		map;
 
+  printf("INCANT = %p\n", incant);
   if (incant->status == FALSE)
-    return (FALSE);
+    {
+      printf("Status = false\n");
+      return (FALSE);
+    }
   map = get_map(NULL);
   pos.x = incant->pos.x;
   pos.y = incant->pos.y;
   if (check_players(map->map[pos.y][pos.x]->players, incant->incantor->lvl) !=
       map->map[pos.y][pos.x]->players->size) // || player is dead
     {
+      printf("Players not good\n");
       incant->status = FALSE;
       return (FALSE);
     }
   fill_hashcode(&hashcode, map->map[pos.y][pos.x]);
   if (memcmp(&incant->hashcode, &hashcode, sizeof(hashcode)))
-    incant->status = FALSE;
+    {
+      printf("Hash not good\n");
+      incant->status = FALSE;
+    }
   return (incant->status);
 }
 
@@ -117,7 +125,7 @@ t_bool	init_incant(t_incant incant, t_player play, t_square cell, int t)
 	     sizeof(incant->hashcode)))
     {
       // TEST DISPLAY
-      printf("Resources not good\n");
+      printf("Resources not good - %i\n", play->lvl);
       incant->status = FALSE;
     }
   // TEST DISPLAY

@@ -25,6 +25,7 @@
 #include	"process_function.h"
 #include	"graphic.h"
 #include	"iter_tools.h"
+#include	"time.h"
 
 t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
 {
@@ -46,26 +47,39 @@ t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
 ///////
 t_bool		do_incant(t_player this, char *data, t_data_serv info)
 {
-  (void)this;
-  (void)data;
+  //t_u_timeval	current;
+
   (void)info;
-  printf("PLOP\n");
+  (void)this;
+  //get_current_time(&current);
+  printf("BITE\n");
+  /* if (cmp_time(&((t_incant)data)->timeout, &current) <= 0) */
+  /*   { */
+  printf("DATA = %p | %d\n", data, ((t_incant)data)->status);
+  if (incant_is_ok((t_incant)data))
+    level_up((t_incant)data);
+  else
+    printf("Incant couldn't be performed\n");
+  ((t_incant)data)->incantor->cm.is_processing = FALSE;
+  //((t_incant)data)->timeout.tv_sec = 0;
+      //}
   return (TRUE);
 }
 
 t_bool		incantation_process(t_player this, char *data, t_data_serv info)
 {
   t_u_player_action	act;
-  t_u_incant		incant;
+  t_incant		incant;
   t_map			map;
 
   (void)data;
   map = get_map(NULL);
-  init_incant(&incant, this, map->map[this->pos.y][this->pos.x], info->t);
-  if (incant.status == FALSE)
+  incant = malloc(sizeof(*incant));
+  init_incant(incant, this, map->map[this->pos.y][this->pos.x], info->t);
+  if (incant->status == FALSE)
     {
       printf("Incant ain't Ok\n");
-      get_current_time(&incant.timeout);
+      get_current_time(&incant->timeout);
     }
   else
     {
@@ -73,10 +87,13 @@ t_bool		incantation_process(t_player this, char *data, t_data_serv info)
       //this->cm.is_processing = TRUE;
       act.action = &do_incant;
       get_time_per_function(&act.time, &incantation_process, info->t);
+      printf("time = %s\n", ctime(&act.time.tv_sec));
       act.player = this;
-      act.param = NULL;
+      printf("CAST = %p\n", incant);
+      act.param = ((char *)(incant));
       act.done = FALSE;
-      push_new_action(&act);
+      //push_new_action(&act);
+      pqueue_push(info->action, &(act), sizeof(act));
       //pqueue_push(info->incant, &incant, sizeof(incant));
       msgout_incantation(this, this->lvl);
       return (FALSE);

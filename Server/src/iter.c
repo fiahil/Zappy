@@ -102,7 +102,9 @@ void		iter_client()
 
   sm = get_select_manager(NULL);
   ds = get_data_serv(NULL);
+  printf("PROUT\n");
   select_manager(ds, sm);
+  printf("PROUT 2\n");
   get_current_time(&g_current);
   if ((g_last.tv_sec) || (g_last.tv_usec))
     list_for_each(ds->player, &iter_lose_life);

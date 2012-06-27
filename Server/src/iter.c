@@ -108,7 +108,7 @@ void		iter_client()
     list_for_each(ds->player, &iter_lose_life);
   if (select_r_isset(sm, ds->sock.fd))
     {
-      player = create_player();
+      player = create_player(-1);
       if (player && accept_connection(sm, ds, player) < 0)
 	delete_player(player);
       else if (player)

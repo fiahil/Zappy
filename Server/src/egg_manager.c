@@ -21,7 +21,7 @@ static int	g_id_egg = 0;
 void		init_egg(t_egg egg, t_player this, int t)
 {
   egg->id = g_id_egg++;
-  egg->fetus = create_player();
+  egg->fetus = create_player(egg->id);
   egg->fetus->team = strdup(this->team);
   egg->fetus->pos.x = this->pos.x;
   egg->fetus->pos.y = this->pos.y;

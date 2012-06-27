@@ -92,7 +92,7 @@ void		iter_egg(void *ptr, size_t s)
       list_push_back_new(ds->player, &((t_egg)ptr)->fetus,
 			 sizeof(((t_egg)ptr)->fetus));
       ((t_egg)ptr)->timeout.tv_sec = 0;
-      //eht(ds->monitor, ds->eg->size, ((t_egg)ptr)->id, );
+      eht(ds->monitor, ((t_egg)ptr)->id);
     }
 }
 

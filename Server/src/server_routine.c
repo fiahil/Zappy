@@ -26,6 +26,7 @@
 #include	"process_function.h"
 #include	"server_routine.h"
 #include	"string_manager.h"
+#include	"graphic.h"
 
 static void		init_act(t_data_serv ds, t_player this, t_proc_func ret)
 {
@@ -64,6 +65,7 @@ static t_bool	welcome_new_player(t_data_serv ds, t_player this, char *buf)
 	  msgout_fail(this);
 	}
       free(buf);
+      player_graphic(ds->monitor, this);
       return (0);
     }
   return (1);

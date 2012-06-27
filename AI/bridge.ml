@@ -16,55 +16,93 @@ type command =
   | Broadcast of string
   | Prend of string
   | Pose of string
-  | Reponse of string
+  | Team of string
 
-type action = command * (string -> unit)
+let bat_re = Array.make 10 (Str.regexp ".*")
 
-let send_queue = Queue.create ()
+let _ = bat_re.(0) <- Str.regexp "^[0-9]+\n"
+let _ = bat_re.(1) <- Str.regexp "^ok\n"
+let _ = bat_re.(2) <- Str.regexp "^ko\n"
+let _ = bat_re.(3) <- Str.regexp "^message [0-8],.*\n"
+let _ = bat_re.(4) <- Str.regexp "^deplacement: [1-8]\n"
+let _ = bat_re.(5) <- Str.regexp "^elevation en cours\n"
+let _ = bat_re.(6) <- Str.regexp "^niveau actuel : [2-8]\n"
+let _ = bat_re.(7) <- Str.regexp "^{nourriture [0-9]+,linemate [0-9]+,deraumere [0-9]+,sibur [0-9]+,mendiane [0-9]+,phiras [0-9]+,thystame [0-9]+}\n"
+let _ = bat_re.(8) <- Str.regexp "^{\\(\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*,\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*\\)*}\n"
+let _ = bat_re.(9) <- Str.regexp "^[0-9]+ [0-9]+\n"
 
-(*
- * TODO
- *)
-let update () =
-  true
+let push = function
+  | Connect_nbr         -> Socket.send "connect_nbr\n"
+  | Voir                -> Socket.send "voir\n"
+  | Inventaire          -> Socket.send "inventaire\n"
+  | Expulse             -> Socket.send "expulse\n"
+  | Gauche              -> Socket.send "gauche\n"
+  | Droite              -> Socket.send "droite\n"
+  | Avance              -> Socket.send "avance\n"
+  | Fork                -> Socket.send "fork\n"
+  | Incantation         -> Socket.send "incantation\n"
+  | Broadcast value     -> Socket.send ("broadcast " ^ value ^ "\n")
+  | Prend value         -> Socket.send ("prend " ^ value ^ "\n")
+  | Pose value          -> Socket.send ("pose " ^ value ^ "\n")
+  | Team value          -> Socket.send (value ^ "\n")
 
-let push a =
-  if Queue.length send_queue < 10 then
-    begin
-      Queue.push a send_queue;
-      true
-    end
-  else
-    false
-
-let discard () =
-  try
-    ignore (Queue.pop send_queue)
-  with
-    | Queue.Empty       -> ()
-
-let call () =
-  let aux = function
-    | (Reponse rep, fct)        -> fct rep
-    | _                         -> ()
+let pull () =
+  let rec aux idx str =
+    if idx < 10 && Str.string_match bat_re.(idx) str 0 then
+      print_endline str
+    else if idx < 10 then
+      aux (idx + 1) str
   in
-    try
-      aux (Queue.pop send_queue)
-    with
-      | Queue.Empty     -> ()
+    aux 0 (Socket.recv ())
 
-let make_action c f = (c, f)
-
-(*
- * Unitest
- *)
 let unitest () =
-  let _ = push (make_action Incantation print_endline)
-  and
-      _ = push (make_action (Reponse "Poney") print_endline)
-  in
-    begin
-      discard ();
-      call ()
-    end
+  begin
+    Socket.connect "127.0.0.1" 4242;
+    push (Team "Poney");
+    pull ();
+    pull ();
+    push (Voir);
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Connect_nbr);
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Inventaire);
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Expulse);
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Gauche);
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Droite);
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Avance);
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Fork);
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Incantation);
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Broadcast "Poney");
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Prend "nourriture");
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Pose "linemate");
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Prend "phiras");
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    push (Pose "mendiane");
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+  end
 
+let _ = unitest ()

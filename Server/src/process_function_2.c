@@ -49,6 +49,7 @@ t_bool		do_incant(t_player this, char *data, t_data_serv info)
   (void)this;
   (void)data;
   (void)info;
+  printf("PLOP\n");
   return (TRUE);
 }
 
@@ -69,7 +70,7 @@ t_bool		incantation_process(t_player this, char *data, t_data_serv info)
   else
     {
       printf("Incant is Ok\n");
-      this->cm.is_processing = TRUE;
+      //this->cm.is_processing = TRUE;
       act.action = &do_incant;
       get_time_per_function(&act.time, &incantation_process, info->t);
       act.player = this;
@@ -77,8 +78,9 @@ t_bool		incantation_process(t_player this, char *data, t_data_serv info)
       act.done = FALSE;
       push_new_action(&act);
       //pqueue_push(info->incant, &incant, sizeof(incant));
+      msgout_incantation(this, this->lvl);
+      return (FALSE);
     }
-  msgout_incantation(this, this->lvl);
   return (TRUE);
 }
 

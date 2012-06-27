@@ -30,8 +30,10 @@ int		cmp_incant(void *e1, size_t s1, void *e2, size_t s2)
 {
   (void)s1;
   (void)s2;
-  return (cmp_time(&((*((t_incant*)e1))->timeout),
-		   &((*((t_incant*)e2))->timeout)));
+  /* return (cmp_time(&((*((t_incant*)e1))->timeout), */
+  /* 		   &((*((t_incant*)e2))->timeout))); */
+  return (cmp_time(&(((t_incant)e1)->timeout),
+		   &(((t_incant)e2)->timeout)));
 }
 
 int		cmp_action(void *e1, size_t s1, void *e2, size_t s2)

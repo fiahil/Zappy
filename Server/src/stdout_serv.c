@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:18 2012 ulric lefevre
-** Last update Tue Jun 26 12:06:03 2012 ulric lefevre
+** Last update Wed Jun 27 13:44:24 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -26,7 +26,7 @@ void            stdout_logo()
       printf("\033[1;31m");
       while (fgets(str, 84, logo) != NULL)
 	printf("%s", str);
-      printf("\n\n\033[0m");
+      printf("\033[0m\n\n");
     }
 }
 
@@ -64,6 +64,5 @@ void            stdout_data_serv(t_arg *args)
   printf("\t\tHeight : %d\n", args->height);
   printf("Teams Infos : \n");
   list_for_each(args->teams, &print_list);
-  printf("\t\tClients per team : %d\n\n", args->nb_per_team);
-  printf("\033[0m");
+  printf("\t\tClients per team : %d\033[0m\n\n", args->nb_per_team);
 }

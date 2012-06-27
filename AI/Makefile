@@ -8,7 +8,9 @@
 NAME	=	socktest
 
 ML	=	socket.ml	\
-		bridge.ml
+		bridge.ml	\
+		fsm.ml		\
+		main.ml
 
 MLI	=	socket.mli	\
 		bridge.mli

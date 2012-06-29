@@ -64,8 +64,9 @@ static t_bool	welcome_new_player(t_data_serv ds, t_player this, char *buf)
 	  this->dead = TRUE;
 	  msgout_fail(this);
 	}
+      else
+	player_graphic(ds->monitor, this);
       free(buf);
-      player_graphic(ds->monitor, this);
       return (0);
     }
   return (1);

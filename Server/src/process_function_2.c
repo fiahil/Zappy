@@ -45,7 +45,6 @@ t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-///////
 t_bool		incantation_process(t_player this, char *data, t_data_serv info)
 {
   t_u_player_action	act;
@@ -56,6 +55,7 @@ t_bool		incantation_process(t_player this, char *data, t_data_serv info)
   map = get_map(NULL);
   incant = malloc(sizeof(*incant));
   init_incant(incant, this, map->map[this->pos.y][this->pos.x], info->t);
+  pic(info->monitor, incant, map->map[this->pos.y][this->pos.x]->players);
   if (incant->status == FALSE)
     msgout_incantation(this, -1);
   else

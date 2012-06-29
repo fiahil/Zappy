@@ -24,7 +24,6 @@ void		clean_all(t_data_serv ds)
   delete_list(ds->teams);
   delete_pqueue(ds->action);
   delete_list(ds->send_q);
-  delete_pqueue(ds->incant);
   map = get_map(NULL);
   y = 0;
   while (y < map->size_y)

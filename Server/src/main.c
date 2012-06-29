@@ -55,7 +55,6 @@ static void	init_lists(t_data_serv data_serv)
   data_serv->player = new_list(NULL, NULL, NULL);
   data_serv->action = new_pqueue(&cmp_action);
   data_serv->send_q = new_list(NULL, NULL, NULL);
-  data_serv->incant = new_pqueue(&cmp_incant);
   data_serv->egg = new_list(NULL, NULL, NULL);
 }
 

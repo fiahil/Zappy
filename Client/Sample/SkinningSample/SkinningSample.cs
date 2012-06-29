@@ -115,7 +115,7 @@ namespace SkinningSample
             Matrix view = Matrix.CreateTranslation(0, -40, 0) * 
                           Matrix.CreateRotationY(MathHelper.ToRadians(cameraRotation)) *
                           Matrix.CreateRotationX(MathHelper.ToRadians(cameraArc)) *
-                          Matrix.CreateLookAt(new Vector3(0, 0, -cameraDistance), 
+                          Matrix.CreateLookAt(new Vector3(0.0f, -100.0f, 0.5f), 
                                               new Vector3(0, 0, 0), Vector3.Up);
 
             Matrix projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,

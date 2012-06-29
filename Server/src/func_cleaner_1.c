@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:57 2012 ulric lefevre
-** Last update Tue Jun 26 12:10:09 2012 ulric lefevre
+** Last update Fri Jun 29 11:53:59 2012 benjamin businaro
 */
 
 #define		_GNU_SOURCE
@@ -22,6 +22,16 @@
 #include	"var_manager.h"
 #include	"team_manager.h"
 #include	"process_function.h"
+
+static t_player	g_current = NULL;
+
+int		del_player_action(void *ptr, size_t s)
+{
+  (void)s;
+  if (g_current && ((t_player_action)ptr)->player == g_current)
+    return (1);
+  return (0);
+}
 
 void		map_cleaner(t_player p)
 {
@@ -47,6 +57,8 @@ int		player_cleaner(void *ptr, size_t s)
       asprintf(&str, "Suppression du joueur %d\n", (*(t_player*)ptr)->id);
       stdout_serv_status(str, 0);
       free(str);
+      g_current = (*(t_player*)ptr);
+      list_remove_if(&(get_data_serv(NULL)->action->queue), &del_player_action);
       if ((*(t_player*)ptr)->team)
         {
           it = list_find_cmp(ds->teams, &func_cmp_team,
@@ -56,6 +68,7 @@ int		player_cleaner(void *ptr, size_t s)
         }
       map_cleaner(*(t_player*)ptr);
       delete_player(*(t_player*)ptr);
+      g_current = NULL;
       return (1);
     }
   return (0);

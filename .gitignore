@@ -10,3 +10,9 @@
 *.lai
 *.la
 *.a
+Viewer/Viewer/Viewer/bin/x86/Debug/Viewer.exe
+Viewer/Viewer/Viewer/obj/x86/Debug/Viewer.csprojResolveAssemblyReference.cache
+Viewer/Viewer/Viewer/obj/x86/Debug/Viewer.pdb
+Viewer/Viewer/Viewer/obj/x86/Debug/Viewer.exe
+Viewer/Viewer/Viewer/obj/*
+Viewer/Viewer/ViewerContent/obj/*

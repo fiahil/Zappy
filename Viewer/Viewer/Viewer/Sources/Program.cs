@@ -1,6 +1,6 @@
 using System;
 
-namespace Viewer
+namespace Viewer.Sources
 {
 #if WINDOWS || XBOX
     static class Program

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace Viewer
+namespace Viewer.Sources
 {
     /// <summary>
     /// This is the main type for your game
@@ -18,12 +18,14 @@ namespace Viewer
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Map map;
 
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
+            this.map = new Map(this, 20, 20);
         }
 
         /// <summary>

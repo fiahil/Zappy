@@ -26,6 +26,7 @@ namespace Viewer.Sources
             Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
             this.map = new Map(this, 20, 20);
+            this.Components.Add(this.map);
         }
 
         /// <summary>
@@ -37,7 +38,6 @@ namespace Viewer.Sources
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -49,6 +49,7 @@ namespace Viewer.Sources
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.Content.Load<Texture2D>("Pylon");
 
             // TODO: use this.Content to load your game content here
         }

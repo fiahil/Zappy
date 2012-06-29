@@ -254,7 +254,6 @@ struct			s_data_serv
   t_list		*teams;
   t_pqueue		*action;
   t_list		*send_q;
-  t_pqueue		*incant;
   t_list		*egg;
 };
 

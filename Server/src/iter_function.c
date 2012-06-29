@@ -21,6 +21,7 @@
 #include	"team_manager.h"
 #include	"select_manager.h"
 #include	"server_routine.h"
+#include	"msgout_cmd.h"
 
 void		iter_rds(void *ptr, size_t s)
 {
@@ -98,21 +99,14 @@ void		iter_egg(void *ptr, size_t s)
     }
 }
 
-void		iter_incant(void *ptr, size_t s)
+t_bool		iter_incant(t_player this, char *data, t_data_serv info)
 {
-  t_u_timeval	current;
-
-  (void)s;
-  get_current_time(&current);
-  if (cmp_time(&((t_incant)ptr)->timeout, &current) <= 0)
-    {
-      if (incant_is_ok((t_incant)ptr))
-	level_up((t_incant)ptr);
-      else
-	printf("Incant couldn't be performed\n");
-      // msgout_incantation(((t_incant)ptr)->incantor->cm.out, ((t_incant)ptr)->incantor->lvl);
-      ((t_incant)ptr)->incantor->cm.is_processing = FALSE;
-      ((t_incant)ptr)->timeout.tv_sec = 0;
-      ((t_incant)ptr)->timeout.tv_usec = 0;
-    }
+  (void)info;
+  (void)this;
+  if (incant_is_ok((t_incant)data))
+    level_up((t_incant)data);
+  else
+    msgout_incantation(this, -1);
+  ((t_incant)data)->incantor->cm.is_processing = FALSE;
+  return (TRUE);
 }

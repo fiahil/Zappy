@@ -85,8 +85,6 @@ static void	iter_lists(t_data_serv ds)
   list_for_each(ds->player, &iter_rds);
   list_for_each(&(ds->action->queue), &iter_action);
   list_remove_if(&(ds->action->queue), &action_cleaner);
-  list_for_each(&(ds->incant->queue), &iter_incant);
-  list_remove_if(&(ds->incant->queue), &incant_cleaner);
   list_for_each(ds->egg, &iter_egg);
   list_remove_if(ds->egg, &egg_cleaner);
   list_sort(ds->player, &sort_player_life);
@@ -102,9 +100,7 @@ void		iter_client()
 
   sm = get_select_manager(NULL);
   ds = get_data_serv(NULL);
-  printf("PROUT\n");
   select_manager(ds, sm);
-  printf("PROUT 2\n");
   get_current_time(&g_current);
   if ((g_last.tv_sec) || (g_last.tv_usec))
     list_for_each(ds->player, &iter_lose_life);

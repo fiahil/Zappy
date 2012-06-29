@@ -67,33 +67,6 @@ static void	set_timeout_death(t_data_serv ds, t_timeval time)
   time->tv_usec = (int)tot % 1000000;
 }
 
-static void set_timeout_incant(t_incant ptr, t_timeval time)
-{
-  t_u_timeval	current;
-  double	d_current;
-  double	d_inc;
-
-  if (!ptr)
-    {
-      time->tv_usec = 10000;
-      time->tv_sec = 10000;
-      return ;
-    }
-  get_current_time(&current);
-  d_current = convert_to_u(&current);
-  d_inc = convert_to_u(&(ptr->timeout));
-  if (d_inc - d_current <= 0)
-    {
-      time->tv_usec = 0;
-      time->tv_sec = 0;
-    }
-  else
-    {
-      time->tv_usec = (int)(d_inc - d_current) % 1000000;
-      time->tv_sec = (int)(d_inc - d_current) / 1000000;
-    }
-}
-
 void		set_timeout_select(t_data_serv ds, t_timeval time)
 {
   t_u_timeval	death;
@@ -101,7 +74,6 @@ void		set_timeout_select(t_data_serv ds, t_timeval time)
 
   set_timeout_action(list_front(&(ds->action->queue)), time);
   set_timeout_death(ds, &death);
-  set_timeout_incant(list_front(&(ds->incant->queue)), &incant);
   if (cmp_time(time, &death) > 0)
     {
       time->tv_usec = death.tv_usec;

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:14 2012 ulric lefevre
-** Last update Tue Jun 26 11:41:31 2012 benjamin businaro
+** Last update Fri Jun 29 00:12:22 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -72,8 +72,7 @@ double		convert_to_u(t_timeval time)
   return (ret);
 }
 
- // TODO tmp
-void		unitest_clock()
+void		unitest_clock() // TODO tmp
 {
   t_u_timeval	time;
   t_u_timeval	time2;

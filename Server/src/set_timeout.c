@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:54 2012 ulric lefevre
-** Last update Tue Jun 26 16:40:53 2012 benjamin businaro
+** Last update Fri Jun 29 13:05:35 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -31,7 +31,7 @@ static void	set_timeout_action(t_player_action ptr, t_timeval time)
   d_act = convert_to_u(&(ptr->time));
   if (d_act - d_current <= 0)
     {
-      time->tv_usec = 0;
+      time->tv_usec = 5;
       time->tv_sec = 0;
     }
   else
@@ -55,7 +55,7 @@ static void	set_timeout_death(t_data_serv ds, t_timeval time)
     }
   if ((*ptr)->inv.resources[FOOD] <= 0)
     {
-      time->tv_usec = 0;
+      time->tv_usec = 5;
       time->tv_sec = 0;
       return ;
     }

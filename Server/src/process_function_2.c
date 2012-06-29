@@ -25,6 +25,8 @@
 #include	"process_function.h"
 #include	"graphic.h"
 #include	"iter_tools.h"
+#include	"time.h"
+#include	"iter_function.h"
 
 t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
 {
@@ -44,41 +46,27 @@ t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
 }
 
 ///////
-t_bool		do_incant(t_player this, char *data, t_data_serv info)
-{
-  (void)this;
-  (void)data;
-  (void)info;
-  printf("PLOP\n");
-  return (TRUE);
-}
-
 t_bool		incantation_process(t_player this, char *data, t_data_serv info)
 {
   t_u_player_action	act;
-  t_u_incant		incant;
+  t_incant		incant;
   t_map			map;
 
   (void)data;
   map = get_map(NULL);
-  init_incant(&incant, this, map->map[this->pos.y][this->pos.x], info->t);
-  if (incant.status == FALSE)
-    {
-      printf("Incant ain't Ok\n");
-      get_current_time(&incant.timeout);
-    }
+  incant = malloc(sizeof(*incant));
+  init_incant(incant, this, map->map[this->pos.y][this->pos.x], info->t);
+  if (incant->status == FALSE)
+    msgout_incantation(this, -1);
   else
     {
-      printf("Incant is Ok\n");
-      //this->cm.is_processing = TRUE;
-      act.action = &do_incant;
+      act.action = &iter_incant;
       get_time_per_function(&act.time, &incantation_process, info->t);
       act.player = this;
-      act.param = NULL;
+      act.param = ((char *)(incant));
       act.done = FALSE;
-      push_new_action(&act);
-      //pqueue_push(info->incant, &incant, sizeof(incant));
-      msgout_incantation(this, this->lvl);
+      pqueue_push(info->action, &(act), sizeof(act));
+      msgout_incantation(this, 0);
       return (FALSE);
     }
   return (TRUE);

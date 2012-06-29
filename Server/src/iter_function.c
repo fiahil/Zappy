@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Tue Jun 26 16:28:09 2012 ulric lefevre
+** Last update Thu Jun 28 20:24:56 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -51,29 +51,27 @@ void		iter_action(void *ptr, size_t s)
   t_u_timeval	current;
   t_data_serv	ds;
   t_bool	test;
+  t_player_action p_act;
 
   (void)s;
+  p_act = (t_player_action)ptr;
   get_current_time(&current);
   ds = get_data_serv(NULL);
-  if (((t_player_action)ptr)->player->cm.is_processing
-      && !(((t_player_action)ptr)->done)
-      && cmp_time(&current, &(((t_player_action)ptr)->time)) == 1)
+  if (p_act->player->cm.is_processing && !(p_act->done)
+      && cmp_time(&current, &(p_act->time)) == 1)
     {
-      if (((t_player_action)ptr)->player->dead == FALSE)
-	test = (((t_player_action)ptr)->action)
-	  (((t_player_action)ptr)->player, ((t_player_action)ptr)->param, ds);
-      ((t_player_action)ptr)->done = TRUE;
+      if (p_act->player->dead == FALSE)
+	test = (p_act->action)(p_act->player, p_act->param, ds);
+      p_act->done = TRUE;
       if (test)
-	((t_player_action)ptr)->player->cm.is_processing = FALSE;
+	p_act->player->cm.is_processing = FALSE;
     }
-	if (!((t_player_action)ptr)->player->cm.in->empty
-	    && !(((t_player_action)ptr)->player->cm.is_processing))
+  if (!p_act->player->cm.in->empty && !(p_act->player->cm.is_processing))
     {
-      stdout_player_input((char*)
-			  (list_front(((t_player_action)ptr)->player->cm.in)),
-			  ((t_player_action)ptr)->player->id);
+      stdout_player_input((char*)(list_front(p_act->player->cm.in)),
+			  p_act->player->id);
       fflush(0);
-      push_new_action((t_player_action)ptr); // TODO PARAMETRE
+      push_new_action(p_act);
     }
 }
 

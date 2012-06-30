@@ -16,8 +16,8 @@
     <XnaProfile>HiDef</XnaProfile>
     <XnaCrossPlatformGroupID>a1a176e5-6e42-4b41-96cc-57940fc3d865</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
-    <Thumbnail>GameThumbnail.png</Thumbnail>
+    <ApplicationIcon>Ressources\Game.ico</ApplicationIcon>
+    <Thumbnail>Ressources\GameThumbnail.png</Thumbnail>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -108,12 +108,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Main.cs" />
+    <Compile Include="Sources\Inventory.cs" />
+    <Compile Include="Sources\Map.cs" />
+    <Compile Include="Sources\Player.cs" />
+    <Compile Include="Sources\Program.cs" />
+    <Compile Include="Sources\Main.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Game.ico" />
-    <Content Include="GameThumbnail.png" />
+    <Content Include="Ressources\Game.ico" />
+    <Content Include="Ressources\GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ViewerContent\ViewerContent.contentproj">

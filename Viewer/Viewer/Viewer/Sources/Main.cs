@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace Viewer
+namespace Viewer.Sources
 {
     /// <summary>
     /// This is the main type for your game
@@ -18,11 +18,15 @@ namespace Viewer
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Map map;
 
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.IsMouseVisible = true;
+            this.map = new Map(this, 20, 20);
+            this.Components.Add(this.map);
         }
 
         /// <summary>
@@ -34,7 +38,6 @@ namespace Viewer
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -56,7 +59,6 @@ namespace Viewer
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -82,8 +84,6 @@ namespace Viewer
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }

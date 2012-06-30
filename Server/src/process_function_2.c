@@ -69,6 +69,7 @@ t_bool		incantation_process(t_player this, char *data, t_data_serv info)
       msgout_incantation(this, 0);
       return (FALSE);
     }
+  incend_graphic(info, incant);
   return (TRUE);
 }
 

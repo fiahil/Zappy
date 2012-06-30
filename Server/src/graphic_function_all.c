@@ -67,3 +67,13 @@ void	bct_general(t_list *mn, t_square sq, t_pos p)
   mn_push(mn, str);
   free(str);
 }
+
+void	plv_general(t_list *mn, int id, int lvl)
+{
+  char	*str;
+
+  str = NULL;
+  asprintf(&str, "plv %d %d\n", id, lvl);
+  mn_push(mn, str);
+  free(str);
+}

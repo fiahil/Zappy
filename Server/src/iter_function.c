@@ -22,6 +22,7 @@
 #include	"select_manager.h"
 #include	"server_routine.h"
 #include	"msgout_cmd.h"
+#include	"graphic.h"
 
 void		iter_rds(void *ptr, size_t s)
 {
@@ -106,5 +107,6 @@ t_bool		iter_incant(t_player this, char *data, t_data_serv info)
   else
     msgout_incantation(this, -1);
   ((t_incant)data)->incantor->cm.is_processing = FALSE;
+  incend_graphic(info, ((t_incant)data));
   return (TRUE);
 }

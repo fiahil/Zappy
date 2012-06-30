@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Fri Jun 29 13:06:08 2012 ulric lefevre
+** Last update Sat Jun 30 14:58:07 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -22,6 +22,7 @@
 #include	"select_manager.h"
 #include	"server_routine.h"
 #include	"msgout_cmd.h"
+#include	"graphic.h"
 
 void		iter_rds(void *ptr, size_t s)
 {
@@ -70,7 +71,6 @@ void		iter_action(void *ptr, size_t s)
     {
       stdout_player_input((char*)(list_front(p_act->player->cm.in)),
 			  p_act->player->id);
-      fflush(0);
       push_new_action(p_act);
     }
 }
@@ -84,7 +84,7 @@ void		iter_egg(void *ptr, size_t s)
   (void)s;
   get_current_time(&current);
   ds = get_data_serv(NULL);
-  if (cmp_time(&current, &(((t_egg)ptr)->timeout)) >= 0)
+  if (((t_egg)ptr)->status && cmp_time(&current, &(((t_egg)ptr)->timeout)) >= 0)
     {
       stdout_serv_status("new player\n", 0);
       it = list_find_cmp(ds->teams, &func_cmp_team,
@@ -92,7 +92,7 @@ void		iter_egg(void *ptr, size_t s)
       ((t_team)it->data)->remaining += 1;
       list_push_back_new(ds->player, &((t_egg)ptr)->fetus,
 			 sizeof(((t_egg)ptr)->fetus));
-      ((t_egg)ptr)->timeout.tv_sec = 0;
+      ((t_egg)ptr)->status = FALSE;
       eht(ds->monitor, ((t_egg)ptr)->id);
     }
 }
@@ -106,5 +106,6 @@ t_bool		iter_incant(t_player this, char *data, t_data_serv info)
   else
     msgout_incantation(this, -1);
   ((t_incant)data)->incantor->cm.is_processing = FALSE;
+  incend_graphic(info, ((t_incant)data));
   return (TRUE);
 }

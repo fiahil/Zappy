@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:12:58 2012 ulric lefevre
-** Last update Tue Jun 26 12:09:45 2012 ulric lefevre
+** Last update Sat Jun 30 19:34:06 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -64,6 +64,7 @@ static void	init_ghost(t_iter **ghost, t_player *p, int nb_c)
   memcpy(&((*(t_player*)(*ghost)->data)->cm), &((*p)->cm), sizeof((*p)->cm));
   (*(t_player*)(*ghost)->data)->welcome = TRUE;
   map = get_map(NULL);
+  printf("Ghost contact !!\n"); // TODO TMP
   asprintf(&str, "%d\n%d %d\n", nb_c, map->size_x, map->size_y);
   list_push_back_new((*(t_player*)(*ghost)->data)->cm.out,
 		     str, strlen(str) + 1);
@@ -82,9 +83,8 @@ static void	first_contact(t_player *p, int nb_c, char *data)
   char		*str;
 
   str = NULL;
-  asprintf(&str, "Remaining Client(s) : %d\n", nb_c);
-  free(str);
   map = get_map(NULL);
+  printf("Premier contact !!\n"); // TODO TMP
   asprintf(&str, "%d\n%d %d\n", nb_c, map->size_x, map->size_y);
   list_push_back_new((*p)->cm.out, str, strlen(str) + 1);
   free(str);

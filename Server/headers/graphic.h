@@ -19,10 +19,12 @@ void	take_graphic(t_list *, t_player, t_square, int);
 void	expulse_graphic(t_list *, t_player, t_list *);
 void	monitor_graphic(t_graphic, t_data_serv, t_player);
 void	player_graphic(t_list *, t_player);
+void	incend_graphic(t_data_serv, t_incant);
 
 void	ppo_general(t_list *, t_player);
 void	pin_general(t_list *, t_player);
 void	bct_general(t_list *, t_square, t_pos);
+void	plv_general(t_list *, int, int);
 
 void	pnw(t_list *, t_player);
 void	ppo(t_graphic, t_player);

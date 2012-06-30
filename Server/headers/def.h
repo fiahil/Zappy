@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:43 2012 ulric lefevre
-** Last update Sun Jun 24 21:28:56 2012 ulric lefevre
+** Last update Fri Jun 29 20:35:31 2012 ulric lefevre
 */
 
 #ifndef		__DEF_H__
@@ -219,6 +219,7 @@ struct			s_graphic
 
 struct			s_egg
 {
+  t_bool		status;
   int			id;
   t_player		fetus;
   t_u_timeval		timeout;

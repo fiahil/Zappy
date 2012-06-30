@@ -24,7 +24,6 @@ namespace Viewer.Sources
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.IsMouseVisible = true;
             this.map = new Map(this, 20, 20);
             this.Components.Add(this.map);
         }
@@ -37,8 +36,14 @@ namespace Viewer.Sources
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             base.Initialize();
+
+            this.IsMouseVisible = true;
+            this.Window.Title = "Zappy BBC";
+            this.graphics.PreferMultiSampling = true;
+            this.graphics.PreferredBackBufferWidth = 1280;
+            this.graphics.PreferredBackBufferHeight = 720;
+            this.graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -47,10 +52,9 @@ namespace Viewer.Sources
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            this.map.Load(this.Content, this.spriteBatch);
         }
 
         /// <summary>
@@ -68,13 +72,10 @@ namespace Viewer.Sources
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-
-            // TODO: Add your update logic here
-
             base.Update(gameTime);
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                this.Exit();
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace Viewer.Sources
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             base.Draw(gameTime);
         }

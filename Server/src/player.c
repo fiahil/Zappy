@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:47 2012 ulric lefevre
-** Last update Tue Jun 26 11:26:55 2012 pierre martin
+** Last update Sat Jun 30 16:23:39 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -55,7 +55,7 @@ t_player	create_player(int egg)
   return (player);
 }
 
-void	delete_player(t_player this)
+void		delete_player(t_player this)
 {
   if (this)
     {

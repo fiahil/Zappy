@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Sat Jun 30 14:10:39 2012 ulric lefevre
+** Last update Sat Jun 30 14:58:07 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -44,7 +44,6 @@ void		iter_rds(void *ptr, size_t s)
     close((*(t_player*)ptr)->cm.sock.fd);
     (*(t_player*)ptr)->cm.online = FALSE;
   }
-  printf("iter_rds\n");
 }
 
 void		iter_action(void *ptr, size_t s)

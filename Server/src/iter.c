@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Sat Jun 30 14:11:08 2012 ulric lefevre
+** Last update Sat Jun 30 14:58:15 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -90,7 +90,6 @@ static void	iter_lists(t_data_serv ds)
   list_sort(ds->player, &sort_player_life);
   list_remove_if(ds->player, &player_cleaner);
   mn_out(ds->monitor);
-  printf("iter_lists\n");
 }
 
 void		iter_client()

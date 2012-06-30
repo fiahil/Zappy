@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:12:58 2012 ulric lefevre
-** Last update Sat Jun 30 16:34:35 2012 ulric lefevre
+** Last update Sat Jun 30 19:34:06 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -68,7 +68,7 @@ static void	init_ghost(t_iter **ghost, t_player *p, int nb_c)
   asprintf(&str, "%d\n%d %d\n", nb_c, map->size_x, map->size_y);
   list_push_back_new((*(t_player*)(*ghost)->data)->cm.out,
 		     str, strlen(str) + 1);
-  // list_pop_front((*(t_player*)(*ghost)->data)->cm.in);
+  list_pop_front((*(t_player*)(*ghost)->data)->cm.in);
   free(str);
   (*p)->dead = TRUE;
   (*p)->deleted = TRUE;

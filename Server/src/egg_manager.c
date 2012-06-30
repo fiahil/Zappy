@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:03 2012 ulric lefevre
-** Last update Sun Jun 24 15:32:13 2012 ulric lefevre
+** Last update Fri Jun 29 21:16:11 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -20,12 +20,12 @@ static int	g_id_egg = 0;
 
 void		init_egg(t_egg egg, t_player this, int t)
 {
+  egg->status = TRUE;
   egg->id = g_id_egg++;
   egg->fetus = create_player(egg->id);
   egg->fetus->team = strdup(this->team);
   egg->fetus->pos.x = this->pos.x;
   egg->fetus->pos.y = this->pos.y;
   get_current_time(&egg->timeout);
-  egg->timeout.tv_usec = 0;
-  egg->timeout.tv_sec += 360 / t;
+  add_time(&egg->timeout, 360, t);
 }

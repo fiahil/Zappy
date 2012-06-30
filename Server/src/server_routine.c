@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Tue Jun 26 11:42:43 2012 benjamin businaro
+** Last update Sat Jun 30 14:09:17 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -67,6 +67,7 @@ static t_bool	welcome_new_player(t_data_serv ds, t_player this, char *buf)
       else
 	player_graphic(ds->monitor, this);
       free(buf);
+      printf("welcome_new_player\n");
       return (0);
     }
   return (1);
@@ -79,7 +80,6 @@ static void	process(t_player this, t_data_serv ds, t_proc_func ret)
     {
       stdout_player_input((char*)(list_front(this->cm.in)), this->id);
       init_act(ds, this, ret);
-      fflush(0);
     }
 }
 
@@ -102,12 +102,14 @@ void		server_routine_input(t_data_serv ds, t_player this)
       close(this->cm.sock.fd);
       select_del(ds, this->cm.sock.fd);
       stdout_player_status("disconnected", this->id);
-      fflush(0);
       return ;
     }
   get_commands(this, buf);
-  if (!welcome_new_player(ds, this, buf))
-    return ;
+  if (!welcome_new_player(ds, this, buf)) // probleme ici
+    {
+      printf("server_routine_input\n");
+      return ;
+    }
   process(this, ds, ret);
   free(buf);
 }

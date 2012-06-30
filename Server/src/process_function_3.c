@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Tue Jun 26 12:24:34 2012 ulric lefevre
+** Last update Fri Jun 29 13:54:06 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -94,7 +94,7 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
   ti = list_find_cmp(players, &cmp_player_list, this, sizeof(*this));
   list_extract(players, ti);
   msgout_expulse(this, players->size ? TRUE : FALSE);
-  while (players->size)
+  while (players->size) // boucle infini ?
     {
       p = list_front(players);
       do_move_process(*p, g_dir[this->dir][0],

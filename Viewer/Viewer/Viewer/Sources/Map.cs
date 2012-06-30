@@ -48,16 +48,19 @@ namespace Viewer.Sources
         Vector2 dim;
         Rectangle square;
         Elt[,] map;
+        bool[] edge;
         SpriteBatch sb;
         TimeSpan repeat;
         TimeSpan Vrep;
         TimeSpan Hrep;
+        uint view;
 
         public Map(Game game, uint size_x, uint size_y)
             : base(game)
         {
             this.dim = new Vector2(size_x, size_y);
             this.map = new Elt[size_x, size_y];
+            this.edge = new bool[4];
 
             this.square = new Rectangle();
             this.square.Height = 58;
@@ -68,6 +71,13 @@ namespace Viewer.Sources
             this.repeat = TimeSpan.Zero;
             this.Hrep = TimeSpan.Zero;
             this.Vrep = TimeSpan.Zero;
+
+            this.edge[0] = false;
+            this.edge[1] = false;
+            this.edge[2] = false;
+            this.edge[3] = false;
+
+            this.view = 0;
         }
 
         public void Load(ContentManager cm, SpriteBatch sb)
@@ -104,26 +114,41 @@ namespace Viewer.Sources
                 this.square.Width -= 10;
                 this.square.X += 80;
                 this.repeat = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
+
+                if (this.view <= 50)
+                {
+                    this.square.Height += 10;
+                    this.square.Width += 10;
+                    this.square.X -= 80;
+                }
             }
-            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && this.Vrep <= gameTime.TotalGameTime)
+            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && (this.view > 50 || edge[1]) && this.Vrep <= gameTime.TotalGameTime)
             {
                 this.square.Y += 20;
                 this.Vrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
+                this.edge[1] = false;
+                this.edge[2] = true;
             }
-            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && this.Vrep <= gameTime.TotalGameTime)
+            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && (this.view > 50 || edge[2]) && this.Vrep <= gameTime.TotalGameTime)
             {
                 this.square.Y -= 20;
                 this.Vrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
+                this.edge[1] = true;
+                this.edge[2] = false;
             }
-            if ((Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left)) && this.Hrep <= gameTime.TotalGameTime)
+            if ((Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left)) && (this.view > 50 || this.edge[0]) && this.Hrep <= gameTime.TotalGameTime)
             {
                 this.square.X += 20;
                 this.Hrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
+                this.edge[3] = true;
+                this.edge[0] = false;
             }
-            if ((Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right)) && this.Hrep <= gameTime.TotalGameTime)
+            if ((Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right)) && (this.view > 50 || this.edge[3]) && this.Hrep <= gameTime.TotalGameTime)
             {
                 this.square.X -= 20;
                 this.Hrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
+                this.edge[3] = false;
+                this.edge[0] = true;
             }
         }
 
@@ -136,12 +161,20 @@ namespace Viewer.Sources
             Point p = new Point(0, 0);
             Point off = new Point(0, 0);
 
+            this.view = 0;
+
             for (int i = 0; i < this.dim.X; ++i, off.X += this.square.Width / 2, off.Y += this.square.Height / 2)
                 for (int j = 0; j < this.dim.Y; ++j)
                 {
                     p.X = j * (this.square.Width / 2) + (off.X) + this.square.X;
                     p.Y = -j * (this.square.Height /2) + (off.Y) + this.square.Y;
-                    this.map[i, j].Draw(new Rectangle(p.X, p.Y, this.square.Width, this.square.Height));
+
+                    Rectangle target = new Rectangle(p.X, p.Y, this.square.Width, this.square.Height);
+
+                    if (this.Game.Window.ClientBounds.Contains(target))
+                        this.view += 1;
+
+                    this.map[i, j].Draw(target);
                 }
 
             this.sb.End();

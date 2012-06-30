@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:54 2012 ulric lefevre
-** Last update Tue Jun 26 11:41:30 2012 benjamin businaro
+** Last update Thu Jun 28 20:26:21 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -57,7 +57,8 @@ void	level_up(t_incant incant)
     {
       ++(*(t_player*)(it->data))->lvl;
       stdout_player_action("Level up", (*(t_player*)(it->data))->id);
-      msgout_incantation((*(t_player*)(it->data)), (*(t_player*)(it->data))->lvl);
+      msgout_incantation((*(t_player*)(it->data)),
+			 (*(t_player*)(it->data))->lvl);
       it = it->next;
     }
   i = 0;

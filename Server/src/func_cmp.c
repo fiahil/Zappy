@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:49:18 2012 ulric lefevre
-** Last update Sat Jun 23 20:53:28 2012 ulric lefevre
+** Last update Thu Jun 28 20:18:27 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -30,8 +30,6 @@ int		cmp_incant(void *e1, size_t s1, void *e2, size_t s2)
 {
   (void)s1;
   (void)s2;
-  /* return (cmp_time(&((*((t_incant*)e1))->timeout), */
-  /* 		   &((*((t_incant*)e2))->timeout))); */
   return (cmp_time(&(((t_incant)e1)->timeout),
 		   &(((t_incant)e2)->timeout)));
 }

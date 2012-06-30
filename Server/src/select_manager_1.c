@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:14 2012 ulric lefevre
-** Last update Tue Jun 26 16:11:42 2012 ulric lefevre
+** Last update Fri Jun 29 13:03:20 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -51,6 +51,10 @@ void		select_manager(t_data_serv ds, t_select_manager sm)
   FD_SET(ds->sock.fd, &sm->rds);
   list_for_each(ds->player, &select_set);
   list_for_each(ds->monitor, &select_mset);
+  if (sm->timeout.tv_sec < 0)
+    sm->timeout.tv_sec = 0;
+  if (sm->timeout.tv_sec == 0 && sm->timeout.tv_usec <= 0)
+    sm->timeout.tv_usec = 5;
   if (select(sm->max_fd + 1, &sm->rds, &sm->wds, NULL, &sm->timeout) < 0)
     handle_error("select", strerror(errno), -1);
 }

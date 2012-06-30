@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Fri Jun 29 11:54:12 2012 benjamin businaro
+** Last update Sat Jun 30 14:10:39 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -44,6 +44,7 @@ void		iter_rds(void *ptr, size_t s)
     close((*(t_player*)ptr)->cm.sock.fd);
     (*(t_player*)ptr)->cm.online = FALSE;
   }
+  printf("iter_rds\n");
 }
 
 void		iter_action(void *ptr, size_t s)
@@ -51,29 +52,26 @@ void		iter_action(void *ptr, size_t s)
   t_u_timeval	current;
   t_data_serv	ds;
   t_bool	test;
+  t_player_action p_act;
 
   (void)s;
+  p_act = (t_player_action)ptr;
   get_current_time(&current);
   ds = get_data_serv(NULL);
-  if (((t_player_action)ptr)->player->cm.is_processing
-      && !(((t_player_action)ptr)->done)
-      && cmp_time(&current, &(((t_player_action)ptr)->time)) == 1)
+  if (p_act->player->cm.is_processing && !(p_act->done)
+      && cmp_time(&current, &(p_act->time)) == 1)
     {
-      if (((t_player_action)ptr)->player->dead == FALSE)
-	test = (((t_player_action)ptr)->action)
-	  (((t_player_action)ptr)->player, ((t_player_action)ptr)->param, ds);
-      ((t_player_action)ptr)->done = TRUE;
+      if (p_act->player->dead == FALSE)
+	test = (p_act->action)(p_act->player, p_act->param, ds);
+      p_act->done = TRUE;
       if (test)
-	((t_player_action)ptr)->player->cm.is_processing = FALSE;
+	p_act->player->cm.is_processing = FALSE;
     }
-	if (!((t_player_action)ptr)->player->cm.in->empty
-	    && !(((t_player_action)ptr)->player->cm.is_processing))
+  if (!p_act->player->cm.in->empty && !(p_act->player->cm.is_processing))
     {
-      stdout_player_input((char*)
-			  (list_front(((t_player_action)ptr)->player->cm.in)),
-			  ((t_player_action)ptr)->player->id);
-      fflush(0);
-      push_new_action((t_player_action)ptr); // TODO PARAMETRE
+      stdout_player_input((char*)(list_front(p_act->player->cm.in)),
+			  p_act->player->id);
+      push_new_action(p_act);
     }
 }
 
@@ -86,7 +84,7 @@ void		iter_egg(void *ptr, size_t s)
   (void)s;
   get_current_time(&current);
   ds = get_data_serv(NULL);
-  if (cmp_time(&current, &(((t_egg)ptr)->timeout)) >= 0)
+  if (((t_egg)ptr)->status && cmp_time(&current, &(((t_egg)ptr)->timeout)) >= 0)
     {
       stdout_serv_status("new player\n", 0);
       it = list_find_cmp(ds->teams, &func_cmp_team,
@@ -94,7 +92,7 @@ void		iter_egg(void *ptr, size_t s)
       ((t_team)it->data)->remaining += 1;
       list_push_back_new(ds->player, &((t_egg)ptr)->fetus,
 			 sizeof(((t_egg)ptr)->fetus));
-      ((t_egg)ptr)->timeout.tv_sec = 0;
+      ((t_egg)ptr)->status = FALSE;
       eht(ds->monitor, ((t_egg)ptr)->id);
     }
 }

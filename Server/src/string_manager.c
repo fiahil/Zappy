@@ -5,8 +5,10 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:51 2012 ulric lefevre
-** Last update Sat Jun 30 13:50:06 2012 ulric lefevre
+** Last update Sun Jul  1 17:34:55 2012 ulric lefevre
 */
+
+#define		_GNU_SOURCE
 
 #include	<stdio.h>
 #include	<assert.h>
@@ -14,6 +16,7 @@
 #include	<string.h>
 
 #include	"def.h"
+#include	"stdout.h"
 #include	"msgout_cmd.h"
 
 static const char *g_separator [] =
@@ -22,6 +25,16 @@ static const char *g_separator [] =
     "\n",
     "\0128"
   };
+
+static void	print_stock(char **buf)
+{
+  char		*str;
+
+  str = NULL;
+  asprintf(&str, "add to stock = [%s]\n", (*buf));
+  stdout_serv_status(str, 1);
+  free(str);
+}
 
 static void	treatment_get_cmd(t_player this, t_bool *clear, char **buf)
 {
@@ -33,7 +46,7 @@ static void	treatment_get_cmd(t_player this, t_bool *clear, char **buf)
       if (strlen(*buf) < (BUFFER_SIZE / 2))
 	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
       *clear = TRUE;
-      printf("add to stock = [%s]\n", (*buf));
+      print_stock(buf);
     }
   else if ((*buf)[0] != '\0')
     {
@@ -41,11 +54,10 @@ static void	treatment_get_cmd(t_player this, t_bool *clear, char **buf)
       tmp += (strlen(g_separator[this->cm.mode]));
       if (strlen((*buf)) < (BUFFER_SIZE / 2))
 	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
-      if (this->cm.in->size < 10)
-	list_push_back_new(this->cm.in, this->cm.stock,
-			   strlen(this->cm.stock) + 1);
-      else
-	msgout_fail(this);
+      (this->cm.in->size < 10) ?
+	(list_push_back_new(this->cm.in, this->cm.stock,
+			    strlen(this->cm.stock) + 1)) :
+	(msgout_fail(this));
       memset(this->cm.stock, '\0', BUFFER_SIZE);
       *buf = tmp;
     }

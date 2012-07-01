@@ -174,36 +174,6 @@ namespace Viewer.Sources
                     this.map[i, j] = new Elt(sb);
                     this.map[i, j].Load(cm);
                 }
-
-            this.map[0, 0].iv.setAll(4, 0, 0, 0, 0, 0, 0);
-            this.map[0, 1].iv.setAll(5, 0, 0, 0, 0, 0, 0);
-
-            this.map[1, 0].iv.setAll(0, 4, 0, 0, 0, 0, 0);
-            this.map[1, 1].iv.setAll(0, 5, 0, 0, 0, 0, 0);
-
-            this.map[2, 0].iv.setAll(0, 0, 1, 0, 0, 0, 0);
-            this.map[2, 1].iv.setAll(0, 0, 8, 0, 0, 0, 0);
-
-            this.map[3, 0].iv.setAll(0, 0, 0, 1, 0, 0, 0);
-            this.map[3, 1].iv.setAll(0, 0, 0, 6, 0, 0, 0);
-
-            this.map[4, 0].iv.setAll(0, 0, 0, 0, 4, 0, 0);
-            this.map[4, 1].iv.setAll(0, 0, 0, 0, 5, 0, 0);
-
-            this.map[5, 0].iv.setAll(0, 0, 0, 0, 0, 4, 0);
-            this.map[5, 1].iv.setAll(0, 0, 0, 0, 0, 5, 0);
-
-            this.map[6, 0].iv.setAll(0, 0, 0, 0, 0, 0, 4);
-            this.map[6, 1].iv.setAll(0, 0, 0, 0, 0, 0, 5);
-
-            this.map[8, 22].iv.setAll(4, 4, 4, 4, 4, 4, 4);
-            this.map[12, 23].iv.setAll(6, 6, 6, 6, 6, 6, 6);
-
-            this.map[9, 21].iv.setAll(4, 5, 6, 7, 8, 9, 1);
-            this.map[9, 20].iv.setAll(5, 6, 7, 8, 9, 1, 4);
-            this.map[9, 20].iv.setAll(6, 7, 8, 9, 1, 4, 5);
-            this.map[9, 22].iv.setAll(7, 8, 9, 1, 4, 5, 6);
-            this.map[10, 23].iv.setAll(8, 9, 1, 4, 4, 5, 6);
         }
 
         public override void Initialize()

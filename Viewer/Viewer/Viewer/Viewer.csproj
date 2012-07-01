@@ -113,6 +113,7 @@
     <Compile Include="Sources\Player.cs" />
     <Compile Include="Sources\Program.cs" />
     <Compile Include="Sources\Main.cs" />
+    <Compile Include="Sources\Sprite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Ressources\Game.ico" />

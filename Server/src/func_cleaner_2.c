@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Tue Jun 26 11:14:45 2012 ulric lefevre
-** Last update Tue Jun 26 11:18:04 2012 ulric lefevre
+** Last update Sun Jul  1 14:22:06 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -13,6 +13,25 @@
 
 #include	"def.h"
 #include	"map.h"
+
+int		action_cleaner(void *ptr, size_t s)
+{
+  (void)s;
+  if (((t_player_action)ptr)->done == TRUE)
+    {
+      free(((t_player_action)ptr)->param);
+      return (1);
+    }
+  return (0);
+}
+
+int		egg_cleaner(void *ptr, size_t s)
+{
+  (void)s;
+  if (!((t_egg)ptr)->status)
+    return (1);
+  return (0);
+}
 
 void		clean_all(t_data_serv ds)
 {

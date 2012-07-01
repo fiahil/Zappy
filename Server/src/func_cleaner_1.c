@@ -5,11 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:57 2012 ulric lefevre
-<<<<<<< HEAD
-** Last update Fri Jun 29 12:04:54 2012 benjamin businaro
-=======
-** Last update Fri Jun 29 20:38:20 2012 ulric lefevre
->>>>>>> e8dbc649f2d3df3d8c1d1c8504fbf44445b110f2
+** Last update Sun Jul  1 14:22:54 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -47,6 +43,13 @@ void		map_cleaner(t_player p)
   delete_iter(tmp, NULL);
 }
 
+t_player	get_current(t_player p)
+{
+  if (p != NULL)
+    g_current = p;
+  return (g_current);
+}
+
 int		player_cleaner(void *ptr, size_t s)
 {
   char		*str;
@@ -75,24 +78,5 @@ int		player_cleaner(void *ptr, size_t s)
       g_current = NULL;
       return (1);
     }
-  return (0);
-}
-
-int		action_cleaner(void *ptr, size_t s)
-{
-  (void)s;
-  if (((t_player_action)ptr)->done == TRUE)
-    {
-      free(((t_player_action)ptr)->param);
-      return (1);
-    }
-  return (0);
-}
-
-int		egg_cleaner(void *ptr, size_t s)
-{
-  (void)s;
-  if (!((t_egg)ptr)->status)
-    return (1);
   return (0);
 }

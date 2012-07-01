@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:12:58 2012 ulric lefevre
-** Last update Sat Jun 30 19:34:06 2012 ulric lefevre
+** Last update Sun Jul  1 00:22:21 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -61,14 +61,16 @@ static void	init_ghost(t_iter **ghost, t_player *p, int nb_c)
   delete_list((*(t_player*)(*ghost)->data)->cm.out);
   (*(t_player*)(*ghost)->data)->cm.in = (*p)->cm.in;
   (*(t_player*)(*ghost)->data)->cm.out = (*p)->cm.out;
+  (*(t_player*)(*ghost)->data)->cm.online = TRUE;
   memcpy(&((*(t_player*)(*ghost)->data)->cm), &((*p)->cm), sizeof((*p)->cm));
   (*(t_player*)(*ghost)->data)->welcome = TRUE;
   map = get_map(NULL);
-  printf("Ghost contact !!\n"); // TODO TMP
   asprintf(&str, "%d\n%d %d\n", nb_c, map->size_x, map->size_y);
   list_push_back_new((*(t_player*)(*ghost)->data)->cm.out,
 		     str, strlen(str) + 1);
+  printf("test1 = %s\n", (char*)list_front((*(t_player*)(*ghost)->data)->cm.in)); // tmp
   list_pop_front((*(t_player*)(*ghost)->data)->cm.in);
+  printf("test2 = %s\n", (char*)list_front((*(t_player*)(*ghost)->data)->cm.in)); // tmp
   free(str);
   (*p)->dead = TRUE;
   (*p)->deleted = TRUE;
@@ -84,7 +86,6 @@ static void	first_contact(t_player *p, int nb_c, char *data)
 
   str = NULL;
   map = get_map(NULL);
-  printf("Premier contact !!\n"); // TODO TMP
   asprintf(&str, "%d\n%d %d\n", nb_c, map->size_x, map->size_y);
   list_push_back_new((*p)->cm.out, str, strlen(str) + 1);
   free(str);

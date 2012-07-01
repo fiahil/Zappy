@@ -16,8 +16,8 @@
     <XnaProfile>HiDef</XnaProfile>
     <XnaCrossPlatformGroupID>a1a176e5-6e42-4b41-96cc-57940fc3d865</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>Ressources\Game.ico</ApplicationIcon>
-    <Thumbnail>Ressources\GameThumbnail.png</Thumbnail>
+    <ApplicationIcon>Resources\Game.ico</ApplicationIcon>
+    <Thumbnail>Resources\GameThumbnail.png</Thumbnail>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -116,8 +116,8 @@
     <Compile Include="Sources\Sprite.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Ressources\Game.ico" />
-    <Content Include="Ressources\GameThumbnail.png" />
+    <Content Include="Resources\Game.ico" />
+    <Content Include="Resources\GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ViewerContent\ViewerContent.contentproj">

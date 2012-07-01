@@ -88,39 +88,39 @@ namespace Viewer.Sources
             this.tiles[this.off].Draw(sb, square);
 
             if (this.iv.nourriture > 0 && this.iv.nourriture < 5)
-                this.nourriture[0].Draw(sb, new Rectangle(square.X, square.Y, (int)(54.0 * (square.Width / 155.0)), (int)(48.0 * (square.Height / 58))));
+                this.nourriture[0].Draw(sb, new Rectangle(square.X + (int)(98 * (square.Width / 155.0)), square.Y + (int)(18 * (square.Height / 58.0)), (int)(54.0 * (square.Width / 155.0 * 0.45)), (int)(48.0 * (square.Height / 58.0 * 0.45))));
             if (this.iv.nourriture >= 5)
-                this.nourriture[1].Draw(sb, new Rectangle(square.X, square.Y, (int)(66.0 * (square.Width / 155.0)), (int)(54.0 * (square.Height / 58.0))));
-
-            if (this.iv.linemate > 0 && this.iv.linemate < 5)
-                this.linemate[0].Draw(sb, new Rectangle(square.X, square.Y, (int)(62.0 * (square.Width / 155.0)), (int)(55.0 * (square.Height / 58.0))));
-            if (this.iv.linemate >= 5)
-                this.linemate[1].Draw(sb, new Rectangle(square.X, square.Y, (int)(66.0 * (square.Width / 155.0)), (int)(53.0 * (square.Height / 58.0))));
-
-            if (this.iv.deraumere > 0 && this.iv.deraumere < 5)
-                this.deraumere[0].Draw(sb, new Rectangle(square.X, square.Y, (int)(55.0 * (square.Width / 155.0)), (int)(45.0 * (square.Height / 58.0))));
-            if (this.iv.deraumere >= 5)
-                this.deraumere[1].Draw(sb, new Rectangle(square.X, square.Y, (int)(67.0 * (square.Width / 155.0)), (int)(58.0 * (square.Height / 58.0))));
-
-            if (this.iv.sibur > 0 && this.iv.sibur < 5)
-                this.sibur[0].Draw(sb, new Rectangle(square.X, square.Y, (int)(55.0 * (square.Width / 155.0)), (int)(43.0 * (square.Height / 58.0))));
-            if (this.iv.sibur >= 5)
-                this.sibur[1].Draw(sb, new Rectangle(square.X, square.Y, (int)(72.0 * (square.Width / 155.0)), (int)(67.0 * (square.Height / 58.0))));
+                this.nourriture[1].Draw(sb, new Rectangle(square.X + (int)(98 * (square.Width / 155.0)), square.Y + (int)(16 * (square.Height / 58.0)), (int)(66.0 * (square.Width / 155.0 * 0.45)), (int)(54.0 * (square.Height / 58.0 * 0.45))));
 
             if (this.iv.mendiane > 0 && this.iv.mendiane < 5)
-                this.mendiane[0].Draw(sb, new Rectangle(square.X, square.Y, (int)(57.0 * (square.Width / 155.0)), (int)(50.0 * (square.Height / 58.0))));
+                this.mendiane[0].Draw(sb, new Rectangle(square.X + (int)(42 * (square.Width / 155.0)), square.Y + (int)(9 * (square.Height / 58.0)), (int)(57.0 * (square.Width / 155.0 * 0.45)), (int)(50.0 * (square.Height / 58.0 * 0.45))));
             if (this.iv.mendiane >= 5)
-                this.mendiane[1].Draw(sb, new Rectangle(square.X, square.Y, (int)(66.0 * (square.Width / 155.0)), (int)(52.0 * (square.Height / 58.0))));
+                this.mendiane[1].Draw(sb, new Rectangle(square.X + (int)(45 * (square.Width / 155.0)), square.Y + (int)(7 * (square.Height / 58.0)), (int)(66.0 * (square.Width / 155.0 * 0.45)), (int)(52.0 * (square.Height / 58.0 * 0.45))));
 
             if (this.iv.phiras > 0 && this.iv.phiras < 5)
-                this.phiras[0].Draw(sb, new Rectangle(square.X, square.Y, (int)(54.0 * (square.Width / 155.0)), (int)(46.0 * (square.Height / 58.0))));
+                this.phiras[0].Draw(sb, new Rectangle(square.X + (int)(62 * (square.Width / 155.0)), square.Y + (int)(18 * (square.Height / 58.0)), (int)(54.0 * (square.Width / 155.0 * 0.45)), (int)(46.0 * (square.Height / 58.0 * 0.45))));
             if (this.iv.phiras >= 5)
-                this.phiras[1].Draw(sb, new Rectangle(square.X, square.Y, (int)(67.0 * (square.Width / 155.0)), (int)(53.0 * (square.Height / 58.0))));
+                this.phiras[1].Draw(sb, new Rectangle(square.X + (int)(62 * (square.Width / 155.0)), square.Y + (int)(15 * (square.Height / 58.0)), (int)(67.0 * (square.Width / 155.0 * 0.45)), (int)(53.0 * (square.Height / 58.0 * 0.45))));
 
             if (this.iv.thystame > 0 && this.iv.thystame < 5)
-                this.thystame[0].Draw(sb, new Rectangle(square.X, square.Y, (int)(57.0 * (square.Width / 155.0)), (int)(51.0 * (square.Height / 58.0))));
+                this.thystame[0].Draw(sb, new Rectangle(square.X + (int)(80 * (square.Width / 155.0)), square.Y + (int)(25 * (square.Height / 58.0)), (int)(57.0 * (square.Width / 155.0 * 0.45)), (int)(51.0 * (square.Height / 58.0 * 0.45))));
             if (this.iv.thystame >= 5)
-                this.thystame[1].Draw(sb, new Rectangle(square.X, square.Y, (int)(66.0 * (square.Width / 155.0)), (int)(53.0 * (square.Height / 58.0))));
+                this.thystame[1].Draw(sb, new Rectangle(square.X + (int)(80 * (square.Width / 155.0)), square.Y + (int)(24 * (square.Height / 58.0)), (int)(66.0 * (square.Width / 155.0 * 0.45)), (int)(53.0 * (square.Height / 58.0 * 0.45))));
+
+            if (this.iv.linemate > 0 && this.iv.linemate < 5)
+                this.linemate[0].Draw(sb, new Rectangle(square.X + (int)(20 * (square.Width / 155.0)), square.Y + (int)(16 * (square.Height / 58.0)), (int)(62.0 * (square.Width / 155.0 * 0.45)), (int)(55.0 * (square.Height / 58.0 * 0.45))));
+            if (this.iv.linemate >= 5)
+                this.linemate[1].Draw(sb, new Rectangle(square.X + (int)(22 * (square.Width / 155.0)), square.Y + (int)(17 * (square.Height / 58.0)), (int)(66.0 * (square.Width / 155.0 * 0.45)), (int)(53.0 * (square.Height / 58.0 * 0.45))));
+
+            if (this.iv.deraumere > 0 && this.iv.deraumere < 5)
+                this.deraumere[0].Draw(sb, new Rectangle(square.X + (int)(42 * (square.Width / 155.0)), square.Y + (int)(28 * (square.Height / 58.0)), (int)(55.0 * (square.Width / 155.0 * 0.45)), (int)(45.0 * (square.Height / 58.0 * 0.45))));
+            if (this.iv.deraumere >= 5)
+                this.deraumere[1].Draw(sb, new Rectangle(square.X + (int)(40 * (square.Width / 155.0)), square.Y + (int)(22 * (square.Height / 58.0)), (int)(67.0 * (square.Width / 155.0 * 0.45)), (int)(58.0 * (square.Height / 58.0 * 0.45))));
+
+            if (this.iv.sibur > 0 && this.iv.sibur < 5)
+                this.sibur[0].Draw(sb, new Rectangle(square.X + (int)(64 * (square.Width / 155.0)), square.Y + (int)(36 * (square.Height / 58.0)), (int)(55.0 * (square.Width / 155.0 * 0.45)), (int)(43.0 * (square.Height / 58.0 * 0.45))));
+            if (this.iv.sibur >= 5)
+                this.sibur[1].Draw(sb, new Rectangle(square.X + (int)(57 * (square.Width / 155.0)), square.Y + (int)(25 * (square.Height / 58.0)), (int)(72.0 * (square.Width / 155.0 * 0.45)), (int)(67.0 * (square.Height / 58.0 * 0.45))));
         }
     }
 
@@ -198,6 +198,12 @@ namespace Viewer.Sources
 
             this.map[8, 22].iv.setAll(4, 4, 4, 4, 4, 4, 4);
             this.map[12, 23].iv.setAll(6, 6, 6, 6, 6, 6, 6);
+
+            this.map[9, 21].iv.setAll(4, 5, 6, 7, 8, 9, 1);
+            this.map[9, 20].iv.setAll(5, 6, 7, 8, 9, 1, 4);
+            this.map[9, 20].iv.setAll(6, 7, 8, 9, 1, 4, 5);
+            this.map[9, 22].iv.setAll(7, 8, 9, 1, 4, 5, 6);
+            this.map[10, 23].iv.setAll(8, 9, 1, 4, 4, 5, 6);
         }
 
         public override void Initialize()

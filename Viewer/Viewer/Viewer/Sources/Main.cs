@@ -19,6 +19,7 @@ namespace Viewer.Sources
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Map map;
+        List<Player> plist;
 
         public Main()
         {

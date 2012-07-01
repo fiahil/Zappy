@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:27 2012 ulric lefevre
-** Last update Mon Jun 25 15:31:25 2012 ulric lefevre
+** Last update Sat Jun 30 14:56:03 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -79,7 +79,7 @@ t_bool		fork_process(t_player this, char *data, t_data_serv info)
 
   (void)data;
   init_egg(&egg, this, info->t);
-  list_push_front_new(info->egg, &egg, sizeof(egg));
+  list_push_back_new(info->egg, &egg, sizeof(egg));
   msgout_fork(this);
   pfk(info->monitor, this->id);
   return (TRUE);

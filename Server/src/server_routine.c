@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Sat Jun 30 14:09:17 2012 ulric lefevre
+** Last update Sat Jun 30 14:57:58 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -67,7 +67,6 @@ static t_bool	welcome_new_player(t_data_serv ds, t_player this, char *buf)
       else
 	player_graphic(ds->monitor, this);
       free(buf);
-      printf("welcome_new_player\n");
       return (0);
     }
   return (1);
@@ -106,10 +105,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
     }
   get_commands(this, buf);
   if (!welcome_new_player(ds, this, buf)) // probleme ici
-    {
-      printf("server_routine_input\n");
-      return ;
-    }
+    return ;
   process(this, ds, ret);
   free(buf);
 }

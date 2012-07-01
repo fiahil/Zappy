@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:18 2012 ulric lefevre
-** Last update Wed Jun 27 13:44:24 2012 ulric lefevre
+** Last update Sun Jul  1 01:55:06 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -27,6 +27,7 @@ void            stdout_logo()
       while (fgets(str, 84, logo) != NULL)
 	printf("%s", str);
       printf("\033[0m\n\n");
+      fclose(logo);
     }
 }
 

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Sat Jun 30 14:57:58 2012 ulric lefevre
+** Last update Sun Jul  1 00:17:23 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -104,7 +104,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
       return ;
     }
   get_commands(this, buf);
-  if (!welcome_new_player(ds, this, buf)) // probleme ici
+  if (!welcome_new_player(ds, this, buf))
     return ;
   process(this, ds, ret);
   free(buf);

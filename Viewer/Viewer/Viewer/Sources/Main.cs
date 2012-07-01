@@ -80,11 +80,11 @@ namespace Viewer.Sources
 
         /// <summary>
         /// This is called when the game should draw itself.
-        /// </summary>
+        /// </summary>x 
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Azure);
 
             base.Draw(gameTime);
         }

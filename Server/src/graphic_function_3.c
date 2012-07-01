@@ -44,11 +44,14 @@ void		pic(t_list *mn, t_incant inc, t_list *play)
       if ((*(t_player*)(it->data))->id != inc->incantor->id)
 	{
 	  asprintf(&tmp, " %d", (*(t_player*)(it->data))->id);
-	  str = strcat(str, tmp);
+	  str = realloc(str, strlen(str) + strlen(tmp) + 1);
+	  strcat(str, tmp);
+	  free(tmp);
 	}
       it = it->next;
     }
-  str = strcat(str, "\n");
+  str = realloc(str, strlen(str) + 2);
+  strcat(str, "\n");
   mn_push(mn, str);
   free(str);
 }

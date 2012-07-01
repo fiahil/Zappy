@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:43 2012 ulric lefevre
-** Last update Fri Jun 29 20:35:31 2012 ulric lefevre
+** Last update Sat Jun 30 20:31:47 2012 ulric lefevre
 */
 
 #ifndef		__DEF_H__
@@ -31,6 +31,9 @@ typedef struct sockaddr		t_u_sock_addr;
 
 typedef struct sockaddr_in*	t_sock_addr_in;
 typedef struct sockaddr_in	t_u_sock_addr_in;
+
+typedef struct timezone*	t_timezone;
+typedef struct timezone		t_u_timezone;
 
 /*
 ** Struct typedef

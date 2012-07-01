@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:14 2012 ulric lefevre
-** Last update Fri Jun 29 00:12:22 2012 ulric lefevre
+** Last update Sat Jun 30 20:32:04 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -33,7 +33,7 @@ static const t_u_time_attrib g_time_attrib[] =
 
 void		get_current_time(t_timeval time)
 {
-  struct timezone	zone;
+  t_u_timezone	zone;
 
   zone.tz_minuteswest = 0;
   zone.tz_dsttime = 0;

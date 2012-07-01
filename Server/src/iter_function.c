@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Sun Jul  1 15:30:18 2012 ulric lefevre
+** Last update Sun Jul  1 17:37:14 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -87,7 +87,7 @@ void		iter_egg(void *ptr, size_t s)
   if (((t_egg)ptr)->status && cmp_time(&current,
 				       &(((t_egg)ptr)->timeout)) >= 0)
     {
-      stdout_serv_status("new player\n", 0);
+      stdout_serv_status("new player\n", 1);
       it = list_find_cmp(ds->teams, &func_cmp_team,
 			 ((t_egg)ptr)->fetus->team, 0);
       ((t_team)it->data)->remaining += 1;

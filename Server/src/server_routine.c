@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Sun Jul  1 14:22:00 2012 ulric lefevre
+** Last update Sun Jul  1 15:27:10 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -28,12 +28,14 @@
 #include	"string_manager.h"
 #include	"graphic.h"
 
-static void		init_act(t_data_serv ds, t_player this, t_proc_func ret)
+static void		init_act(t_data_serv ds, t_player this)
 {
   t_u_player_action	act;
+  t_proc_func		ret;
   int			off;
 
   off = -1;
+  ret = NULL;
   while (!(this->cm.in->empty) && !ret)
     {
       if (!(ret = cmd_parse(list_front(this->cm.in), &off)))
@@ -72,23 +74,21 @@ static t_bool	welcome_new_player(t_data_serv ds, t_player this, char *buf)
   return (1);
 }
 
-static void	process(t_player this, t_data_serv ds, t_proc_func ret)
+static void	process(t_player this, t_data_serv ds)
 {
   if (!(this->cm.in->empty)
       && !(this->cm.is_processing))
     {
       stdout_player_input((char*)(list_front(this->cm.in)), this->id);
-      init_act(ds, this, ret);
+      init_act(ds, this);
     }
 }
 
 void		server_routine_input(t_data_serv ds, t_player this)
 {
   char		*buf;
-  t_proc_func	ret;
   t_iter	*it;
 
-  ret = NULL;
   if ((buf = my_receive(this->cm.sock.fd)) == (char*)(-1))
     {
       this->cm.online = FALSE;
@@ -108,7 +108,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
   get_commands(this, buf);
   if (!welcome_new_player(ds, this, buf))
     return ;
-  process(this, ds, ret);
+  process(this, ds);
   free(buf);
 }
 

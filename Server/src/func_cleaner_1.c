@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:57 2012 ulric lefevre
-** Last update Sun Jul  1 14:22:54 2012 ulric lefevre
+** Last update Sun Jul  1 16:06:09 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -54,27 +54,24 @@ int		player_cleaner(void *ptr, size_t s)
 {
   char		*str;
   t_data_serv	ds;
-  t_iter	*it;
+  t_player	p;
 
   (void)s;
+  p = *(t_player*)ptr;
   str = NULL;
   ds = get_data_serv(NULL);
-  if ((*(t_player*)ptr)->deleted == TRUE)
+  if (p->deleted == TRUE)
     {
-      asprintf(&str, "Suppression du joueur %d\n", (*(t_player*)ptr)->id);
+      asprintf(&str, "Suppression du joueur %d\n", p->id);
       stdout_serv_status(str, 0);
       free(str);
-      g_current = (*(t_player*)ptr);
-      list_remove_if(&(get_data_serv(NULL)->action->queue), &del_player_action);
-      if ((*(t_player*)ptr)->team)
-        {
-          it = list_find_cmp(ds->teams, &func_cmp_team,
-			     (*(t_player*)ptr)->team, 0);
-          assert(it != NULL);
-          ((t_team)it->data)->remaining += 1;
-        }
-      map_cleaner(*(t_player*)ptr);
-      delete_player(*(t_player*)ptr);
+      g_current = p;
+      list_remove_if(&(ds->action->queue), &del_player_action);
+      if (p->team)
+	++(((t_team)(list_find_cmp(ds->teams, &func_cmp_team,
+				   p->team, 0))->data)->remaining);
+      map_cleaner(p);
+      delete_player(p);
       g_current = NULL;
       return (1);
     }

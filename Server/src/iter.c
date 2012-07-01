@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Sat Jun 30 14:58:15 2012 ulric lefevre
+** Last update Sun Jul  1 15:28:51 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -72,7 +72,8 @@ static void		iter_lose_life(void *ptr, size_t s)
   if ((*(t_player*)ptr)->welcome)
     {
       lose_life_loop((t_player*)ptr);
-      if (!((*(t_player*)ptr)->dead) && (*(t_player*)ptr)->inv.resources[FOOD] <= 0)
+      if (!((*(t_player*)ptr)->dead)
+	  && (*(t_player*)ptr)->inv.resources[FOOD] <= 0)
 	{
 	  (*(t_player*)ptr)->dead = TRUE;
 	  pdi(get_data_serv(NULL)->monitor, (*(t_player*)ptr)->id);
@@ -84,7 +85,7 @@ static void		iter_lose_life(void *ptr, size_t s)
 static void	iter_lists(t_data_serv ds)
 {
   list_for_each(ds->player, &iter_rds);
-  //list_for_each(ds->monitor, &iter_graphic_rds);
+  // list_for_each(ds->monitor, &iter_graphic_rds);
   list_for_each(&(ds->action->queue), &iter_action);
   list_remove_if(&(ds->action->queue), &action_cleaner);
   list_for_each(ds->egg, &iter_egg);

@@ -115,7 +115,6 @@ void		server_routine_input(t_data_serv ds, t_player this)
 void		server_routine_output(t_data_serv ds, t_player this)
 {
   (void)ds;
-  printf("ROUTINE OUTPUT BEGIN =\n%24conline = %d | dead = %d | deleted = %d\n", ' ', this->cm.online, this->dead, this->deleted);
   assert(!this->cm.out->empty);
   my_send(this->cm.sock.fd, list_front(this->cm.out));
   list_pop_front(this->cm.out);
@@ -126,5 +125,4 @@ void		server_routine_output(t_data_serv ds, t_player this)
     select_del(ds, this->cm.sock.fd);
     this->cm.online = FALSE;
   }
-  printf("ROUTINE OUTPUT END =\n%24conline = %d | dead = %d | deleted = %d\n", ' ', this->cm.online, this->dead, this->deleted);
 }

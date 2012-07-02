@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Mon Jul  2 15:03:00 2012 pierre martin
-** Last update Mon Jul  2 18:03:21 2012 pierre martin
+** Last update Mon Jul  2 18:10:10 2012 pierre martin
 */
 
 #define		_GNU_SOURCE
@@ -64,11 +64,13 @@ static void	game_over(void *data, size_t len)
 
 int	is_there_a_victorious(t_data_serv ds)
 {
+  t_iter	*ret;
   t_player	*winner;
   char		*buf;
 
-  if ((winner = (t_player*)list_find_if(ds->player, &is_level_height)))
+  if ((ret = list_find_if(ds->player, &is_level_height)))
     {
+      winner = (t_player*)ret->data;
       buf = NULL;
       asprintf(&buf, "L'equipe victorieuse est %s.\n", (*winner)->team);
       stdout_serv_status(buf, 0);

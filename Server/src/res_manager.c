@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Mon Jul  2 16:15:37 2012 ulric lefevre
+** Last update Mon Jul  2 16:42:43 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -57,6 +57,41 @@ void		put_inv(t_inventory inv)
 	  x = random() % map->size_x;
 	  y = random() % map->size_y;
 	  --(inv->resources[res]);
+	  ++(map->map[y][x]->inv.resources[res]);
+	}
+      ++res;
+    }
+}
+
+static void	init_res_tab(int (*new)[])
+{
+  (*new)[FOOD] = 20;
+  (*new)[LINEMATE] = 4;
+  (*new)[DERAUMERE] = 3;
+  (*new)[SIBUR] = 5;
+  (*new)[MENDIANE] = 2;
+  (*new)[PHIRAS] = 3;
+  (*new)[THYSTAME] = 1;
+}
+
+void		put_res_egg()
+{
+  int		x;
+  int		y;
+  t_map		map;
+  t_resource	res;
+  int		new[LAST];
+
+  init_res_tab(&new);
+  map = get_map(NULL);
+  res = FOOD;
+  while (res != LAST)
+    {
+      while (new[res])
+	{
+	  x = random() % map->size_x;
+	  y = random() % map->size_y;
+	  --(new[res]);
 	  ++(map->map[y][x]->inv.resources[res]);
 	}
       ++res;

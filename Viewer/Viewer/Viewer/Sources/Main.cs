@@ -30,6 +30,8 @@ namespace Viewer.Sources
             this.Components.Add(this.map);
             test = new Network();
             test.Initialize();
+            this.plist = new List<Player>();
+            this.plist.Add(new Player());
         }
 
         /// <summary>
@@ -59,6 +61,7 @@ namespace Viewer.Sources
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             this.map.Load(this.Content, this.spriteBatch);
+            this.plist[0].Load(this.Content); // TODO
         }
 
         /// <summary>
@@ -88,9 +91,12 @@ namespace Viewer.Sources
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Azure);
 
+            GraphicsDevice.Clear(Color.AliceBlue);
             base.Draw(gameTime);
+            this.spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend);
+            this.plist[0].Draw(gameTime, this.map.getSquare(), this.spriteBatch);
+            this.spriteBatch.End();
         }
     }
 }

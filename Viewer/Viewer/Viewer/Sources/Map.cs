@@ -18,8 +18,8 @@ namespace Viewer.Sources
     class Elt
     {
         SpriteBatch sb;
-        Sprite[] tiles;
 
+        Sprite[] tiles;
         Sprite[] nourriture;
         Sprite[] linemate;
         Sprite[] deraumere;
@@ -38,7 +38,6 @@ namespace Viewer.Sources
         public Elt(SpriteBatch sb)
         {
             this.tiles = new Sprite[3];
-
             this.nourriture = new Sprite[2];
             this.linemate = new Sprite[2];
             this.deraumere = new Sprite[2];
@@ -55,30 +54,30 @@ namespace Viewer.Sources
 
         public void Load(ContentManager cm)
         {
-            this.tiles[0] = new Sprite(cm.Load<Texture2D>("Tiles/base1"), 1);
-            this.tiles[1] = new Sprite(cm.Load<Texture2D>("Tiles/base2"), 1);
-            this.tiles[2] = new Sprite(cm.Load<Texture2D>("Tiles/base3"), 1);
+            this.tiles[0] = new Sprite(cm.Load<Texture2D>("Tiles/base1"));
+            this.tiles[1] = new Sprite(cm.Load<Texture2D>("Tiles/base2"));
+            this.tiles[2] = new Sprite(cm.Load<Texture2D>("Tiles/base3"));
 
-            this.nourriture[0] = new Sprite(cm.Load<Texture2D>("Resources/nourriture_small"), 1);
-            this.nourriture[1] = new Sprite(cm.Load<Texture2D>("Resources/nourriture_big"), 1);
+            this.nourriture[0] = new Sprite(cm.Load<Texture2D>("Resources/nourriture_small"));
+            this.nourriture[1] = new Sprite(cm.Load<Texture2D>("Resources/nourriture_big"));
 
-            this.linemate[0] = new Sprite(cm.Load<Texture2D>("Resources/linemate_small"), 1);
-            this.linemate[1] = new Sprite(cm.Load<Texture2D>("Resources/linemate_big"), 1);
+            this.linemate[0] = new Sprite(cm.Load<Texture2D>("Resources/linemate_small"));
+            this.linemate[1] = new Sprite(cm.Load<Texture2D>("Resources/linemate_big"));
 
-            this.deraumere[0] = new Sprite(cm.Load<Texture2D>("Resources/deraumere_small"), 1);
-            this.deraumere[1] = new Sprite(cm.Load<Texture2D>("Resources/deraumere_big"), 1);
+            this.deraumere[0] = new Sprite(cm.Load<Texture2D>("Resources/deraumere_small"));
+            this.deraumere[1] = new Sprite(cm.Load<Texture2D>("Resources/deraumere_big"));
 
-            this.sibur[0] = new Sprite(cm.Load<Texture2D>("Resources/sibur_small"), 1);
-            this.sibur[1] = new Sprite(cm.Load<Texture2D>("Resources/sibur_big"), 1);
+            this.sibur[0] = new Sprite(cm.Load<Texture2D>("Resources/sibur_small"));
+            this.sibur[1] = new Sprite(cm.Load<Texture2D>("Resources/sibur_big"));
 
-            this.mendiane[0] = new Sprite(cm.Load<Texture2D>("Resources/mendiane_small"), 1);
-            this.mendiane[1] = new Sprite(cm.Load<Texture2D>("Resources/mendiane_big"), 1);
+            this.mendiane[0] = new Sprite(cm.Load<Texture2D>("Resources/mendiane_small"));
+            this.mendiane[1] = new Sprite(cm.Load<Texture2D>("Resources/mendiane_big"));
 
-            this.phiras[0] = new Sprite(cm.Load<Texture2D>("Resources/phiras_small"), 1);
-            this.phiras[1] = new Sprite(cm.Load<Texture2D>("Resources/phiras_big"), 1);
+            this.phiras[0] = new Sprite(cm.Load<Texture2D>("Resources/phiras_small"));
+            this.phiras[1] = new Sprite(cm.Load<Texture2D>("Resources/phiras_big"));
 
-            this.thystame[0] = new Sprite(cm.Load<Texture2D>("Resources/thystame_small"), 1);
-            this.thystame[1] = new Sprite(cm.Load<Texture2D>("Resources/thystame_big"), 1);
+            this.thystame[0] = new Sprite(cm.Load<Texture2D>("Resources/thystame_small"));
+            this.thystame[1] = new Sprite(cm.Load<Texture2D>("Resources/thystame_big"));
 
             this.Bounds = tiles[0].getBounds();
         }
@@ -138,6 +137,9 @@ namespace Viewer.Sources
         TimeSpan Vrep;
         TimeSpan Hrep;
         uint view;
+        Sprite square_details;
+        bool square_details_on;
+        TimeSpan square_setails_timer;
 
         public Map(Game game, uint size_x, uint size_y)
             : base(game)
@@ -162,11 +164,15 @@ namespace Viewer.Sources
             this.edge[3] = false;
 
             this.view = 0;
+            this.square_details_on = false;
+            this.square_setails_timer = TimeSpan.Zero;
         }
 
         public void Load(ContentManager cm, SpriteBatch sb)
         {
             this.sb = sb;
+
+            this.square_details = new Sprite(this.Game.Content.Load<Texture2D>("Tiles/map_resources"));
 
             for (int i = 0; i < this.dim.X; ++i)
                 for (int j = 0; j < this.dim.Y; ++j)
@@ -228,6 +234,18 @@ namespace Viewer.Sources
                 this.edge[3] = false;
                 this.edge[0] = true;
             }
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                Point pos = new Point(Mouse.GetState().X, Mouse.GetState().Y);
+
+                if (this.map[0, 0].Bounds.Contains(pos))
+                {
+                    this.square_details_on = true;
+                    this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
+                }
+            }
+            if (this.square_setails_timer <= gameTime.TotalGameTime)
+                this.square_details_on = false;
         }
 
         public override void Draw(GameTime gameTime)
@@ -254,6 +272,9 @@ namespace Viewer.Sources
 
                     this.map[i, j].Draw(target);
                 }
+
+            if (this.square_details_on)
+                this.square_details.Draw(this.sb, new Rectangle(this.Game.Window.ClientBounds.Width - this.square_details.getBounds().Width, 0, this.square_details.getBounds().Width, this.square_details.getBounds().Height));
 
             this.sb.End();
         }

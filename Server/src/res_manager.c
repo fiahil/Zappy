@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Mon Jul  2 16:42:43 2012 ulric lefevre
+** Last update Mon Jul  2 23:02:54 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -22,21 +22,18 @@ void		put_res(int val)
   int		x;
   int		y;
   t_map		map;
-  t_data_serv	ds;
-  int		nb_play;
 
   last_val += val;
-  i = last_val / 50;
-  last_val %= 50;
+  i = last_val / 300;
+  last_val %= 300;
   map = get_map(NULL);
-  ds = get_data_serv(NULL);
-  nb_play = ds->player->size;
   while (i)
     {
       x = random() % map->size_x;
       y = random() % map->size_y;
-      map->map[y][x]->inv.resources[FOOD] += nb_play;
-      map->map[y][x]->inv.resources[random() % LAST] += nb_play;
+      map->map[y][x]->inv.resources[FOOD] += random() % 4 + 1;
+      map->map[y][x]->inv.resources[random() % (LAST - 1) + 1]
+	+= random() % 2 + 1;
       --i;
     }
 }
@@ -65,13 +62,13 @@ void		put_inv(t_inventory inv)
 
 static void	init_res_tab(int (*new)[])
 {
-  (*new)[FOOD] = 20;
-  (*new)[LINEMATE] = 4;
-  (*new)[DERAUMERE] = 3;
-  (*new)[SIBUR] = 5;
-  (*new)[MENDIANE] = 2;
-  (*new)[PHIRAS] = 3;
-  (*new)[THYSTAME] = 1;
+  (*new)[FOOD] = 100;
+  (*new)[LINEMATE] = 18;
+  (*new)[DERAUMERE] = 16;
+  (*new)[SIBUR] = 20;
+  (*new)[MENDIANE] = 10;
+  (*new)[PHIRAS] = 12;
+  (*new)[THYSTAME] = 2;
 }
 
 void		put_res_egg()

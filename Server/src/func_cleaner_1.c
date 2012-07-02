@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:57 2012 ulric lefevre
-** Last update Sun Jul  1 16:06:09 2012 ulric lefevre
+** Last update Mon Jul  2 14:45:08 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -19,6 +19,7 @@
 #include	"assert.h"
 #include	"player.h"
 #include	"algorithm.h"
+#include	"res_manager.h"
 #include	"var_manager.h"
 #include	"team_manager.h"
 #include	"process_function.h"

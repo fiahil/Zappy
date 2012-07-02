@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:02 2012 ulric lefevre
-** Last update Tue Jun 26 12:07:30 2012 pierre martin
+** Last update Mon Jul  2 11:23:54 2012 ulric lefevre
 */
 
 #include	<stdlib.h>
@@ -22,12 +22,12 @@ static void	*cleaner(char * buf, void *ret)
   return (ret);
 }
 
-char*	my_receive(int fd)
+char*		my_receive(int fd)
 {
-  char	buff[BUFFER_SIZE];
-  char	*ret;
-  char	*tmp;
-  int	test;
+  char		buff[BUFFER_SIZE];
+  char		*ret;
+  char		*tmp;
+  int		test;
 
   test = 1;
   if ((ret = malloc(8)) == NULL)

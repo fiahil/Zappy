@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Sun Jul  1 17:37:14 2012 ulric lefevre
+** Last update Mon Jul  2 14:54:55 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -55,6 +55,7 @@ void		iter_action(void *ptr, size_t s)
   t_player_action p_act;
 
   (void)s;
+  test = FALSE;
   p_act = (t_player_action)ptr;
   get_current_time(&current);
   ds = get_data_serv(NULL);

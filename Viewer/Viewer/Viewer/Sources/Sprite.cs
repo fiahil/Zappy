@@ -19,11 +19,10 @@ namespace Viewer.Sources
         int totalFrames;
         Rectangle frameSize;
 
-        public Sprite(Texture2D t, int tf)
+        public Sprite(Texture2D t)
         {
             this.texture = t;
             this.currentFrame = 0;
-            this.totalFrames = tf;
             this.frameSize = this.texture.Bounds;
             this.frameSize.Width /= this.totalFrames;
         }

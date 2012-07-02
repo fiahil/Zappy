@@ -20,7 +20,12 @@ namespace Viewer.Sources
         SpriteBatch spriteBatch;
         Map map;
         List<Player> plist;
-        Network test;
+        Network server;
+       
+        Rectangle screen;
+        Player inventory_details;
+        TimeSpan inventory_timer;
+        Sprite inventory_page;
 
         public Main()
         {
@@ -28,8 +33,18 @@ namespace Viewer.Sources
             Content.RootDirectory = "Content";
             this.map = new Map(this, 50, 50);
             this.Components.Add(this.map);
-            test = new Network();
-            test.Initialize();
+            server = new Network();
+            server.Initialize(map);
+            this.plist = new List<Player>();
+            this.plist.Add(new Player());
+            this.screen = new Rectangle(0, 0, 1280, 720);
+            this.inventory_details = null;
+            this.inventory_timer = TimeSpan.Zero;
+        }
+
+        public void unplug()
+        {
+            this.inventory_details = null;
         }
 
         /// <summary>
@@ -59,6 +74,8 @@ namespace Viewer.Sources
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             this.map.Load(this.Content, this.spriteBatch);
+            this.inventory_page = new Sprite(this.Content.Load<Texture2D>("Tiles/map_inventory"));
+            this.plist[0].Load(this.Content); // TODO
         }
 
         /// <summary>
@@ -76,21 +93,44 @@ namespace Viewer.Sources
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            server.Update();
             base.Update(gameTime);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
+
+            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+            {
+                foreach (Player elt in this.plist)
+                {
+                    if (elt.getBounds().Contains(new Point(Mouse.GetState().X, Mouse.GetState().Y)))
+                    {
+                        this.inventory_details = elt;
+                        this.inventory_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
+                        this.map.unplug();
+                    }
+                }
+            }
+
+            if (this.inventory_timer <= gameTime.TotalGameTime && this.inventory_details != null)
+            {
+                this.inventory_details = null;
+            }
         }
 
         /// <summary>
         /// This is called when the game should draw itself.
-        /// </summary>x 
+        /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Azure);
-
+            GraphicsDevice.Clear(Color.AliceBlue);
             base.Draw(gameTime);
+            this.spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend);
+            this.plist[0].Draw(gameTime, this.map.getSquare(), this.spriteBatch);
+            if (this.inventory_details != null)
+                this.inventory_page.Draw(this.spriteBatch, new Rectangle(this.Window.ClientBounds.Width - this.inventory_page.getBounds().Width, 0, this.inventory_page.getBounds().Width, this.inventory_page.getBounds().Height));
+            this.spriteBatch.End();
         }
     }
 }

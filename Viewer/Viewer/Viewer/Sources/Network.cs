@@ -93,14 +93,20 @@ namespace Viewer.Sources
     class Network
     {
         Socket s;
+        Treatment t;
         Queue<string> _out;
         Queue<string> _in;
+        string tmp;
 
-        public void Initialize()
+        public void Initialize(Map m)
         {
             PopUp pop = new PopUp();
             Byte[] buff = new byte[128];
+            _out = new Queue<string>();
+            _in = new Queue<string>();
+            t = new Treatment();
 
+            t.Initialize(m);
             pop.Initialize();
             if (pop.isValid)
             {
@@ -126,21 +132,36 @@ namespace Viewer.Sources
             }
         }
 
-        private void GetData()
+        public void Update()
         {
-            if (s.Available > 0)
+            if (s!= null && s.Available > 0)
             {
                 Byte[] buff = new byte[s.Available];
                 s.Receive(buff);
+
+                string[] res = (tmp + Encoding.UTF8.GetString(buff)).Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                if (buff[buff.Length - 1] != '\n')
+                {
+                    tmp = res[res.Length - 1];
+                    res = res.Reverse().Skip(1).Reverse() as string[];
+                }
+                _in.Concat(res);
+            }
+            while (_in.Count > 0)
+            {
+                t.Treat(_in.Dequeue());
             }
         }
 
         public void SendDatas(string msg)
         {
-            _out.Enqueue(msg);
-            while (s.Poll(-1, SelectMode.SelectWrite) && _out.Count > 0)
+            if (s != null)
             {
-                s.Send(Encoding.UTF8.GetBytes(_out.Dequeue()));
+                _out.Enqueue(msg);
+                while (s.Poll(-1, SelectMode.SelectWrite) && _out.Count > 0)
+                {
+                    s.Send(Encoding.UTF8.GetBytes(_out.Dequeue()));
+                }
             }
         }
     }

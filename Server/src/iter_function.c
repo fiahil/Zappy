@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Mon Jul  2 14:54:55 2012 ulric lefevre
+** Last update Mon Jul  2 16:33:57 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -17,6 +17,7 @@
 #include	"stdout.h"
 #include	"algorithm.h"
 #include	"iter_tools.h"
+#include	"res_manager.h"
 #include	"var_manager.h"
 #include	"team_manager.h"
 #include	"select_manager.h"
@@ -89,6 +90,7 @@ void		iter_egg(void *ptr, size_t s)
 				       &(((t_egg)ptr)->timeout)) >= 0)
     {
       stdout_serv_status("new player\n", 1);
+      put_res_egg();
       it = list_find_cmp(ds->teams, &func_cmp_team,
 			 ((t_egg)ptr)->fetus->team, 0);
       ((t_team)it->data)->remaining += 1;

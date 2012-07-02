@@ -5,10 +5,11 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Mon Jul  2 15:03:00 2012 pierre martin
-** Last update Mon Jul  2 18:10:10 2012 pierre martin
+** Last update Mon Jul  2 18:12:04 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
+
 #include	<stdio.h>
 #include	<stdlib.h>
 
@@ -22,7 +23,7 @@ static char* g_end_msg = NULL;
 
 static int	is_level_height(void *data, size_t len)
 {
-  t_player player;
+  t_player	player;
 
   (void)len;
   if (data)
@@ -62,7 +63,7 @@ static void	game_over(void *data, size_t len)
     }
 }
 
-int	is_there_a_victorious(t_data_serv ds)
+int		is_there_a_victorious(t_data_serv ds)
 {
   t_iter	*ret;
   t_player	*winner;
@@ -72,7 +73,7 @@ int	is_there_a_victorious(t_data_serv ds)
     {
       winner = (t_player*)ret->data;
       buf = NULL;
-      asprintf(&buf, "L'equipe victorieuse est %s.\n", (*winner)->team);
+      asprintf(&buf, "L'equipe victorieuse est %s\n", (*winner)->team);
       stdout_serv_status(buf, 0);
       free(buf);
       asprintf(&g_end_msg, "seg %s\n", (*winner)->team);

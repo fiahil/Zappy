@@ -20,6 +20,7 @@ namespace Viewer.Sources
         SpriteBatch spriteBatch;
         Map map;
         List<Player> plist;
+        Network test;
 
         public Main()
         {
@@ -27,6 +28,8 @@ namespace Viewer.Sources
             Content.RootDirectory = "Content";
             this.map = new Map(this, 50, 50);
             this.Components.Add(this.map);
+            test = new Network();
+            test.Initialize();
         }
 
         /// <summary>

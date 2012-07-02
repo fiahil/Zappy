@@ -24,10 +24,7 @@ void		bct_process(t_graphic mn, char *param, t_data_serv ds)
 
 void		mct_process(t_graphic mn, char *param, t_data_serv ds)
 {
-  t_map		map;
-
   (void)param;
   (void)ds;
-  map = get_map(NULL);
-  bct_all(mn, map);
+  bct_all(mn, get_map(NULL));
 }

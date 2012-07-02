@@ -28,7 +28,7 @@ static const t_u_parse_graph g_cmd[] =
 static const char *g_separator[] =
   {
     "\r\n",
-    "\n"
+    "\n",
     "\0128"
   };
 
@@ -92,7 +92,6 @@ void		get_graphic_commands(t_graphic this, char *buf)
   t_bool	clear;
 
   clear = FALSE;
-  printf("MODE = %d\n", this->cm.mode);
   if (this->cm.mode == UNKNOW)
     graphic_first_cmd(this, buf);
   while (buf && buf[0] && !clear)
@@ -107,16 +106,13 @@ static void	graphic_process(t_graphic this, t_data_serv ds)
   (void)ds;
   while (!(this->cm.in->empty))
     {
-      printf("PLOP\n");
       i = -1;
       flag = FALSE;
-      while (g_cmd[++i].cmd)
+      while (!flag && g_cmd[++i].cmd)
 	if (!strncmp(list_front(this->cm.in), g_cmd[i].cmd, g_cmd[i].size))
 	  flag = TRUE;
-      if (!flag)
-	printf("FAIL\n");
-      else
-	printf("CMD = %s - param = %s\n", g_cmd[i].cmd, (char *)list_front(this->cm.in) + 3);
+      if (flag)
+	(g_cmd[i].func)(this, list_front(this->cm.in) + 4, ds);
       list_pop_front(this->cm.in);
     }
 }

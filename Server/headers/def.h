@@ -55,6 +55,8 @@ typedef struct s_select_manager	t_u_select_manager;
 typedef struct s_sock_layer	t_u_sock_layer;
 typedef struct s_client_manager	t_u_client_manager;
 
+typedef struct s_parse_graph	t_u_parse_graph;
+
 typedef struct s_parse_elem	t_u_parse_elem;
 
 typedef struct s_pos		t_u_pos;
@@ -132,6 +134,8 @@ typedef enum
 */
 typedef t_bool	(*t_proc_func)(t_player, char *, t_data_serv);
 
+typedef void	(*t_graph_func)(t_graphic, char *, t_data_serv);
+
 /*
 ** Struct definition
 */
@@ -168,6 +172,13 @@ struct			s_player_action
   t_player		player;
   char			*param;
   t_bool		done;
+};
+
+struct			s_parse_graph
+{
+  int			size;
+  char const		*cmd;
+  t_graph_func		func;
 };
 
 struct			s_parse_elem

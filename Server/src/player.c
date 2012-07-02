@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:47 2012 ulric lefevre
-** Last update Sat Jun 30 16:23:39 2012 ulric lefevre
+** Last update Mon Jul  2 17:46:48 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -50,8 +50,9 @@ t_player	create_player(int egg)
   if (!(player = malloc(sizeof(t_u_player))))
     return (NULL);
   init_player(player, egg);
-  list_push_back_new(get_map(NULL)->map[player->pos.y][player->pos.x]->players,
-      &player, sizeof(&player));
+  if (egg == -1)
+    list_push_back_new(get_map(NULL)->map[player->pos.y]
+		       [player->pos.x]->players, &player, sizeof(player));
   return (player);
 }
 

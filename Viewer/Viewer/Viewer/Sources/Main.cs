@@ -20,7 +20,7 @@ namespace Viewer.Sources
         SpriteBatch spriteBatch;
         Map map;
         List<Player> plist;
-        Network test;
+        Network server;
 
         public Main()
         {
@@ -28,8 +28,8 @@ namespace Viewer.Sources
             Content.RootDirectory = "Content";
             this.map = new Map(this, 50, 50);
             this.Components.Add(this.map);
-            test = new Network();
-            test.Initialize();
+            server = new Network();
+            server.Initialize();
             this.plist = new List<Player>();
             this.plist.Add(new Player());
         }
@@ -79,6 +79,7 @@ namespace Viewer.Sources
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            server.Update();
             base.Update(gameTime);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))

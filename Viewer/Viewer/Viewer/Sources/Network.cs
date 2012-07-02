@@ -95,11 +95,14 @@ namespace Viewer.Sources
         Socket s;
         Queue<string> _out;
         Queue<string> _in;
+        string tmp;
 
         public void Initialize()
         {
             PopUp pop = new PopUp();
             Byte[] buff = new byte[128];
+            _out = new Queue<string>();
+            _in = new Queue<string>();
 
             pop.Initialize();
             if (pop.isValid)
@@ -126,21 +129,32 @@ namespace Viewer.Sources
             }
         }
 
-        private void GetData()
+        public void Update()
         {
-            if (s.Available > 0)
+            if (s!= null && s.Available > 0)
             {
                 Byte[] buff = new byte[s.Available];
                 s.Receive(buff);
+
+                string[] res = (tmp + Encoding.UTF8.GetString(buff)).Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                if (buff[buff.Length - 1] != '\n')
+                {
+                    tmp = res[res.Length - 1];
+                    res = res.Reverse().Skip(1).Reverse() as string[];
+                }
+                _in.Concat(res);
             }
         }
 
         public void SendDatas(string msg)
         {
-            _out.Enqueue(msg);
-            while (s.Poll(-1, SelectMode.SelectWrite) && _out.Count > 0)
+            if (s != null)
             {
-                s.Send(Encoding.UTF8.GetBytes(_out.Dequeue()));
+                _out.Enqueue(msg);
+                while (s.Poll(-1, SelectMode.SelectWrite) && _out.Count > 0)
+                {
+                    s.Send(Encoding.UTF8.GetBytes(_out.Dequeue()));
+                }
             }
         }
     }

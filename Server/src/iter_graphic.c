@@ -11,7 +11,7 @@
 #include "msgout_cmd.h"
 #include "graphic.h"
 
-static const t_u_parse_elem g_cmd[] =
+static const t_u_parse_graph g_cmd[] =
   {
     {3, "msz", &msz_process},
     {3, "bct", &bct_process},
@@ -109,7 +109,7 @@ static void	graphic_process(t_graphic this, t_data_serv ds)
       i = -1;
       flag = FALSE;
       while (g_cmd[++i].cmd)
-	if (!strncmp(, g_cmd[i].cmd, g_cmd[i].size))
+	if (!strncmp(list_front(this->cm.in), g_cmd[i].cmd, g_cmd[i].size))
 	  flag = TRUE;
       if (!flag)
 	printf("FAIL\n");

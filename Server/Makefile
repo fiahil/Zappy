@@ -63,6 +63,9 @@ SRC	=	src/main.c			\
 		src/graphic_function_all.c	\
 		src/process_graphic_calls.c	\
 		src/incantation_manager.c	\
+		src/graphic_process_1.c		\
+		src/graphic_process_2.c		\
+		src/graphic_process_3.c		\
 		src/iter_graphic.c		\
 		src/player.c
 

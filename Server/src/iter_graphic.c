@@ -92,6 +92,7 @@ void		get_graphic_commands(t_graphic this, char *buf)
   t_bool	clear;
 
   clear = FALSE;
+  printf("MODE = %d\n", this->cm.mode);
   if (this->cm.mode == UNKNOW)
     graphic_first_cmd(this, buf);
   while (buf && buf[0] && !clear)
@@ -106,6 +107,7 @@ static void	graphic_process(t_graphic this, t_data_serv ds)
   (void)ds;
   while (!(this->cm.in->empty))
     {
+      printf("PLOP\n");
       i = -1;
       flag = FALSE;
       while (g_cmd[++i].cmd)
@@ -114,7 +116,7 @@ static void	graphic_process(t_graphic this, t_data_serv ds)
       if (!flag)
 	printf("FAIL\n");
       else
-	printf("CMD = %s - param = %s\n", g_cmd[i].cmd, list_front(this->cm.in) + 3);
+	printf("CMD = %s - param = %s\n", g_cmd[i].cmd, (char *)list_front(this->cm.in) + 3);
       list_pop_front(this->cm.in);
     }
 }

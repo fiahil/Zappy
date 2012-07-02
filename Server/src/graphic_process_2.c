@@ -2,10 +2,12 @@
 #include	<stdlib.h>
 
 #include	"def.h"
+#include	"graphic.h"
+#include	"algorithm.h"
 
 static int	g_current_id;
 
-static int	cmp_id(void *p, size_t len)
+static int	cmp_id(void *data, size_t len)
 {
   t_player	player;
 
@@ -20,7 +22,7 @@ void		tna_process(t_graphic mn, char *param, t_data_serv ds)
 {
   (void)param;
   (void)ds;
-  tna(mn, ds->team);
+  tna(mn, ds->teams);
 }
 
 void		ppo_process(t_graphic mn, char *param, t_data_serv ds)
@@ -35,11 +37,8 @@ void		ppo_process(t_graphic mn, char *param, t_data_serv ds)
 void		plv_process(t_graphic mn, char *param, t_data_serv ds)
 {
   t_iter	*it;
-  int		id;
 
-  id = atoi(param);
-  it = ds->player->head;
-  while (it && (((t_player)it->data)->id != id))
-    it = it->next;
-  plv(mn, ((t_player)it->data)->id, ((t_player)it->data)->lvl);
+  g_current_id = atoi(param);
+  if ((it = list_find_if(ds->player, &cmp_id)))
+    plv(mn, (*(t_player*)it->data)->id, (*(t_player*)it->data)->lvl);
 }

@@ -134,7 +134,7 @@ typedef enum
 */
 typedef t_bool	(*t_proc_func)(t_player, char *, t_data_serv);
 
-typedef void	(*t_graph_func)(t_graphic, t_data_serv);
+typedef void	(*t_graph_func)(t_graphic, char *, t_data_serv);
 
 /*
 ** Struct definition

@@ -13,6 +13,16 @@
 
 #include	"def.h"
 
+void	msz_process(t_graphic, char *, t_data_serv);
+void	bct_process(t_graphic, char *, t_data_serv);
+void	mct_process(t_graphic, char *, t_data_serv);
+void	tna_process(t_graphic, char *, t_data_serv);
+void	ppo_process(t_graphic, char *, t_data_serv);
+void	plv_process(t_graphic, char *, t_data_serv);
+void	pin_process(t_graphic, char *, t_data_serv);
+void	sgt_process(t_graphic, char *, t_data_serv);
+void	sst_process(t_graphic, char *, t_data_serv);
+
 void    welcome_graphic(t_data_serv, t_player);
 void	drop_graphic(t_list *, t_player, t_square, int);
 void	take_graphic(t_list *, t_player, t_square, int);

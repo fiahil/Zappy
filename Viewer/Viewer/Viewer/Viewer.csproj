@@ -17,7 +17,8 @@
     <XnaCrossPlatformGroupID>a1a176e5-6e42-4b41-96cc-57940fc3d865</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Resources\Game.ico</ApplicationIcon>
-    <Thumbnail>Resources\GameThumbnail.png</Thumbnail>
+    <Thumbnail>
+    </Thumbnail>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>

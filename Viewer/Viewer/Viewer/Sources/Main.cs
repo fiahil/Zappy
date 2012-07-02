@@ -25,7 +25,7 @@ namespace Viewer.Sources
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.map = new Map(this, 50, 50);
+            this.map = new Map(this, 10, 10);
             this.Components.Add(this.map);
         }
 

@@ -165,6 +165,8 @@
   <ItemGroup>
     <Compile Include="Tiles\base_highlited.png">
       <Name>base_highlited</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
     <Compile Include="Players\player1.png">
       <Name>player1</Name>
@@ -182,6 +184,8 @@
   <ItemGroup>
     <Compile Include="Tiles\map_inventory.png">
       <Name>map_inventory</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
     <Compile Include="Players\player2.png">
       <Name>player2</Name>

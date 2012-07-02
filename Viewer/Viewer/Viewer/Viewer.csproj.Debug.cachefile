@@ -19,11 +19,9 @@ Content\Tiles\map_resources.xnb
 Content\Background\wall.xnb
 Content\Background\wall2.xnb
 Content\Background\wall3.xnb
-<<<<<<< HEAD
 Content\Tiles\base_highlited.xnb
-Content\Font\Classic.xnb
-=======
 Content\Players\player1.xnb
+Content\Tiles\map_inventory.xnb
 Content\Players\player2.xnb
 Content\Background\cloud.xnb
->>>>>>> a1d0f7ca82a048bf960251e7e5fb4485773f9dbd
+Content\Font\Classic.xnb

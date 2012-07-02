@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Mon Jul  2 14:58:30 2012 ulric lefevre
+** Last update Mon Jul  2 16:15:37 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -15,24 +15,29 @@
 #include	"map.h"
 #include	"var_manager.h"
 
-void		put_res()
+void		put_res(int val)
 {
+  static int	last_val = 0;
+  int		i;
   int		x;
   int		y;
   t_map		map;
   t_data_serv	ds;
   int		nb_play;
 
+  last_val += val;
+  i = last_val / 50;
+  last_val %= 50;
   map = get_map(NULL);
   ds = get_data_serv(NULL);
   nb_play = ds->player->size;
-  while (nb_play)
+  while (i)
     {
       x = random() % map->size_x;
       y = random() % map->size_y;
-      ++(map->map[y][x]->inv.resources[FOOD]);
-      ++(map->map[y][x]->inv.resources[random() % LAST]);
-      --nb_play;
+      map->map[y][x]->inv.resources[FOOD] += nb_play;
+      map->map[y][x]->inv.resources[random() % LAST] += nb_play;
+      --i;
     }
 }
 

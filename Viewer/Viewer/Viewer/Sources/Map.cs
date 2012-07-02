@@ -236,9 +236,22 @@ namespace Viewer.Sources
             }
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                Point pos = new Point(Mouse.GetState().X, Mouse.GetState().Y);
+                Vector2 pos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+                Rectangle targetz = this.map[0, 0].Bounds;
+                targetz.X += this.square.X;
+                targetz.Y += this.square.Y;
 
-                if (this.map[0, 0].Bounds.Contains(pos))
+                Vector2 p = new Vector2(1 * (this.square.Width / 2) + (1 * (this.square.Width / 2)), -1 * (this.square.Height / 2) + (1 * (this.square.Height / 2)));
+
+                Polygon target = new Polygon(new Vector2[]
+                {
+                    new Vector2((this.square.X + p.X) + this.square.Width / 2, (this.square.Y + p.Y)),
+                    new Vector2((this.square.X + p.X) + this.square.Width, (this.square.Y + p.Y) + this.square.Height / 2),
+                    new Vector2((this.square.X + p.X) + this.square.Width / 2, (this.square.Y + p.Y) + this.square.Height),
+                    new Vector2((this.square.X + p.X), (this.square.Y + p.Y) + this.square.Height / 2)
+                });
+
+                if (target.Contains(pos))
                 {
                     this.square_details_on = true;
                     this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);

@@ -111,6 +111,7 @@
     <Compile Include="Sources\Inventory.cs" />
     <Compile Include="Sources\Map.cs" />
     <Compile Include="Sources\Player.cs" />
+    <Compile Include="Sources\Polygon.cs" />
     <Compile Include="Sources\Program.cs" />
     <Compile Include="Sources\Main.cs" />
     <Compile Include="Sources\Sprite.cs" />

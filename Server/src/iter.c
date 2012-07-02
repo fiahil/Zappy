@@ -26,6 +26,7 @@
 #include	"func_cleaner.h"
 #include	"iter_function.h"
 #include	"select_manager.h"
+#include	"iter_graphic.h"
 
 static t_u_timeval	g_last = {0, 0};
 static t_u_timeval	g_current = {0, 0};
@@ -84,8 +85,8 @@ static void		iter_lose_life(void *ptr, size_t s)
 
 static void	iter_lists(t_data_serv ds)
 {
+  list_for_each(ds->monitor, &iter_graphic_rds);
   list_for_each(ds->player, &iter_rds);
-  // list_for_each(ds->monitor, &iter_graphic_rds);
   list_for_each(&(ds->action->queue), &iter_action);
   list_remove_if(&(ds->action->queue), &action_cleaner);
   list_for_each(ds->egg, &iter_egg);

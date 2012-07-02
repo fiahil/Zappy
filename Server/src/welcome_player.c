@@ -101,9 +101,10 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
     {
       if ((nb_client = chk_team(server, data)) < 0)
 	{
-	  stdout_serv_status("Team full or Team unknown\n", 0);
 	  if (nb_client == -2)
 	    welcome_graphic(server, player);
+	  else
+	    stdout_serv_status("Team full or Team unknown\n", 0);
 	  return (FALSE);
 	}
       if ((ghost = list_find_cmp(server->player, &team_ghost, data, 0)))

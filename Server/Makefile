@@ -61,6 +61,7 @@ SRC	=	src/main.c			\
 		src/graphic_function_all.c	\
 		src/process_graphic_calls.c	\
 		src/incantation_manager.c	\
+		src/iter_graphic.c		\
 		src/player.c
 
 OBJ	=	$(SRC:.c=.o)

@@ -19,7 +19,7 @@ void		welcome_graphic(t_data_serv ds, t_player p)
 {
   t_u_graphic	mn;
 
-  puts("bonjour madame");
+  puts("Monitor connection");
   memcpy(&mn.cm, &p->cm, sizeof(mn));
   memset(&mn.cm.stock, '\0', sizeof(mn.cm.stock));
   mn.cm.in = new_list(NULL, NULL, NULL);

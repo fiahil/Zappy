@@ -75,13 +75,15 @@ namespace Viewer.Sources
             this.square_setails_timer = TimeSpan.Zero;
         }
 
+<<<<<<< HEAD
         //TODO REMOVE THIS
         static Random p = new Random();
-
+=======
         public Rectangle getSquare()
         {
             return this.square;
         }
+>>>>>>> a1d0f7ca82a048bf960251e7e5fb4485773f9dbd
 
         public void Load(ContentManager cm, SpriteBatch sb)
         {
@@ -100,6 +102,7 @@ namespace Viewer.Sources
                     this.map[i, j] = new Elt(sb, new Point(i, j));
                     this.map[i, j].Load(cm);
                 }
+<<<<<<< HEAD
 
             //TODO REMOVE THIS
             foreach (Elt element in this.map)
@@ -107,6 +110,9 @@ namespace Viewer.Sources
                 if (p.Next(3) == 0)
                     element.Iv.setAll((uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10));
             }
+=======
+            this.map[0,0].iv.setAll(4,4,6,6,6,6,6);
+>>>>>>> a1d0f7ca82a048bf960251e7e5fb4485773f9dbd
         }
 
         public override void Initialize()
@@ -257,10 +263,14 @@ namespace Viewer.Sources
                     {
                         p.X = j * (this.square.Width / 2) + this.square.X;
                         p.Y = -j * (this.square.Height / 2) + this.square.Y;
-
-                        Rectangle tar = new Rectangle((int)(p.X - (int)(33 * (this.square.Width / 155.0))), (int)(p.Y - (int)(103 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+<<<<<<< HEAD
+                        Rectangle tar = new Rectangle((int)(p.X - (int)(31 * (this.square.Width / 155.0))), (int)(p.Y - (int)(101 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
                         if (this.screen.Intersects(tar))
                             this._wall[2].Draw(this.sb, tar);
+=======
+                        Rectangle tar = new Rectangle((int)(p.X - (int)(33 * (this.square.Width / 155.0))), (int)(p.Y - (int)(103 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                        this._wall[2].Draw(this.sb, tar);
+>>>>>>> a1d0f7ca82a048bf960251e7e5fb4485773f9dbd
                     }
                 }
                 if (i != 0)

@@ -8,6 +8,7 @@ NAME	=	zappy
 MAKE=           make --no-print-directory
 
 SRC	=	src/main.c			\
+		src/victory.c			\
 		src/get_arg.c			\
 		src/get_opt_1.c			\
 		src/get_opt_2.c			\
@@ -50,6 +51,7 @@ SRC	=	src/main.c			\
 		src/iter_tools.c		\
 		src/set_timeout.c		\
 		src/fill_map.c			\
+		src/res_manager.c		\
 		src/broadcast.c			\
 		src/graphic_tools.c		\
 		src/graphic_function_1.c	\

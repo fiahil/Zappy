@@ -5,18 +5,20 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Sun Jul  1 17:37:14 2012 ulric lefevre
+** Last update Mon Jul  2 17:47:33 2012 ulric lefevre
 */
 
 #include	<stdio.h>
 #include	<stdlib.h>
 
 #include	"def.h"
+#include	"map.h"
 #include	"clock.h"
 #include	"incant.h"
 #include	"stdout.h"
 #include	"algorithm.h"
 #include	"iter_tools.h"
+#include	"res_manager.h"
 #include	"var_manager.h"
 #include	"team_manager.h"
 #include	"select_manager.h"
@@ -55,6 +57,7 @@ void		iter_action(void *ptr, size_t s)
   t_player_action p_act;
 
   (void)s;
+  test = FALSE;
   p_act = (t_player_action)ptr;
   get_current_time(&current);
   ds = get_data_serv(NULL);
@@ -77,6 +80,7 @@ void		iter_action(void *ptr, size_t s)
 
 void		iter_egg(void *ptr, size_t s)
 {
+  t_player	p;
   t_iter	*it;
   t_u_timeval	current;
   t_data_serv	ds;
@@ -87,12 +91,16 @@ void		iter_egg(void *ptr, size_t s)
   if (((t_egg)ptr)->status && cmp_time(&current,
 				       &(((t_egg)ptr)->timeout)) >= 0)
     {
+      p = ((t_egg)ptr)->fetus;
       stdout_serv_status("new player\n", 1);
+      put_res_egg();
       it = list_find_cmp(ds->teams, &func_cmp_team,
-			 ((t_egg)ptr)->fetus->team, 0);
+			 p->team, 0);
       ((t_team)it->data)->remaining += 1;
-      list_push_back_new(ds->player, &((t_egg)ptr)->fetus,
-			 sizeof(((t_egg)ptr)->fetus));
+      list_push_back_new(ds->player, &p,
+			 sizeof(p));
+      list_push_back_new(get_map(NULL)->map[p->pos.y]
+			 [p->pos.x]->players, &p, sizeof(p));
       ((t_egg)ptr)->status = FALSE;
       eht(ds->monitor, ((t_egg)ptr)->id);
     }

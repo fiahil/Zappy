@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:23:59 2012 ulric lefevre
-** Last update Sat Jun 23 20:24:00 2012 ulric lefevre
+** Last update Mon Jul  2 16:54:52 2012 pierre martin
 */
 
 #include	"iter.h"
@@ -37,7 +37,7 @@ t_iter		*list_find_if(t_list *this, t_predicate p)
       it = this->head;
       while (it)
 	{
-	  if (!p(it->data, it->len))
+	  if (p(it->data, it->len))
 	    return (it);
 	  it = it->next;
 	}

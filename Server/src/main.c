@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:37 2012 ulric lefevre
-** Last update Tue Jun 26 11:20:13 2012 ulric lefevre
+** Last update Mon Jul  2 16:16:37 2012 pierre martin
 */
 
 #include	<time.h>
@@ -21,6 +21,7 @@
 #include	"stdout.h"
 #include	"get_arg.h"
 #include	"network.h"
+#include	"victory.h"
 #include	"func_cmp.h"
 #include	"var_manager.h"
 #include	"func_cleaner.h"
@@ -37,7 +38,7 @@ int		run(t_data_serv data_serv)
   select_add(&sm, data_serv->sock.fd);
   get_data_serv(data_serv);
   get_select_manager(&sm);
-  while (666)
+  while (is_there_a_victorious(data_serv))
     iter_client();
   return (0);
 }

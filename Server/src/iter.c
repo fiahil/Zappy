@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Sun Jul  1 15:28:51 2012 ulric lefevre
+** Last update Mon Jul  2 16:56:29 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -21,6 +21,7 @@
 #include	"algorithm.h"
 #include	"iter_tools.h"
 #include	"msgout_cmd.h"
+#include	"res_manager.h"
 #include	"set_timeout.h"
 #include	"var_manager.h"
 #include	"func_cleaner.h"
@@ -31,7 +32,7 @@
 static t_u_timeval	g_last = {0, 0};
 static t_u_timeval	g_current = {0, 0};
 
-static int		get_dmg()
+static int	get_dmg()
 {
   t_data_serv	ds;
   double	val;
@@ -44,7 +45,7 @@ static int		get_dmg()
   return (val);
 }
 
-static void		lose_life_loop(t_player *this)
+static void	lose_life_loop(t_player *this)
 {
   int		dmg;
   int		i;
@@ -67,7 +68,7 @@ static void		lose_life_loop(t_player *this)
     }
 }
 
-static void		iter_lose_life(void *ptr, size_t s)
+static void	iter_lose_life(void *ptr, size_t s)
 {
   (void)s;
   if ((*(t_player*)ptr)->welcome)
@@ -77,6 +78,7 @@ static void		iter_lose_life(void *ptr, size_t s)
 	  && (*(t_player*)ptr)->inv.resources[FOOD] <= 0)
 	{
 	  (*(t_player*)ptr)->dead = TRUE;
+	  put_inv(&((*(t_player*)ptr)->inv));
 	  pdi(get_data_serv(NULL)->monitor, (*(t_player*)ptr)->id);
 	  msgout_mort((*(t_player*)ptr));
 	}
@@ -102,12 +104,16 @@ void		iter_client()
   t_select_manager	sm;
   t_data_serv		ds;
 
+  stdout_map(); //TMP
   sm = get_select_manager(NULL);
   ds = get_data_serv(NULL);
   select_manager(ds, sm);
   get_current_time(&g_current);
   if ((g_last.tv_sec) || (g_last.tv_usec))
-    list_for_each(ds->player, &iter_lose_life);
+    {
+      list_for_each(ds->player, &iter_lose_life);
+      put_res(get_dmg());
+    }
   if (select_r_isset(sm, ds->sock.fd))
     {
       player = create_player(-1);

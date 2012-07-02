@@ -18,8 +18,8 @@ namespace Viewer.Sources
     class Elt
     {
         SpriteBatch sb;
-
         Sprite[] tiles;
+
         Sprite[] nourriture;
         Sprite[] linemate;
         Sprite[] deraumere;
@@ -38,6 +38,7 @@ namespace Viewer.Sources
         public Elt(SpriteBatch sb)
         {
             this.tiles = new Sprite[3];
+
             this.nourriture = new Sprite[2];
             this.linemate = new Sprite[2];
             this.deraumere = new Sprite[2];
@@ -137,9 +138,11 @@ namespace Viewer.Sources
         TimeSpan Vrep;
         TimeSpan Hrep;
         uint view;
+
         Sprite square_details;
         bool square_details_on;
         TimeSpan square_setails_timer;
+        Sprite[] _wall;
 
         public Map(Game game, uint size_x, uint size_y)
             : base(game)
@@ -147,6 +150,7 @@ namespace Viewer.Sources
             this.dim = new Vector2(size_x, size_y);
             this.map = new Elt[size_x, size_y];
             this.edge = new bool[4];
+            this._wall = new Sprite[3];
 
             this.square = new Rectangle();
             this.square.Height = 58;
@@ -164,8 +168,6 @@ namespace Viewer.Sources
             this.edge[3] = false;
 
             this.view = 0;
-            this.square_details_on = false;
-            this.square_setails_timer = TimeSpan.Zero;
         }
 
         public void Load(ContentManager cm, SpriteBatch sb)
@@ -173,6 +175,9 @@ namespace Viewer.Sources
             this.sb = sb;
 
             this.square_details = new Sprite(this.Game.Content.Load<Texture2D>("Tiles/map_resources"));
+            this._wall[0] = new Sprite(cm.Load<Texture2D>("Background/wall"));
+            this._wall[1] = new Sprite(cm.Load<Texture2D>("Background/wall2"));
+            this._wall[2] = new Sprite(cm.Load<Texture2D>("Background/wall3"));
 
             for (int i = 0; i < this.dim.X; ++i)
                 for (int j = 0; j < this.dim.Y; ++j)
@@ -180,6 +185,10 @@ namespace Viewer.Sources
                     this.map[i, j] = new Elt(sb);
                     this.map[i, j].Load(cm);
                 }
+
+            this.map[0, 0].iv.setAll(1, 0, 0, 0, 0, 0, 0);
+            this.map[0, 1].iv.setAll(0, 1, 0, 0, 0, 0, 0);
+            this.map[1, 0].iv.setAll(0, 0, 1, 0, 0, 0, 0);
         }
 
         public override void Initialize()
@@ -234,11 +243,26 @@ namespace Viewer.Sources
                 this.edge[3] = false;
                 this.edge[0] = true;
             }
+
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                Point pos = new Point(Mouse.GetState().X, Mouse.GetState().Y);
+                Vector2 pos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+                Rectangle targetz = this.map[0, 0].Bounds;
+                targetz.X += this.square.X;
+                targetz.Y += this.square.Y;
 
-                if (this.map[0, 0].Bounds.Contains(pos))
+                Vector2 pp = new Vector2(2, 2);
+                Vector2 p = new Vector2(pp.X * (this.square.Width / 2) + ((pp.Y + 1) * (this.square.Width / 2)), -pp.X * (this.square.Height / 2) + ((pp.Y + 1)* (this.square.Height / 2)));
+
+                Polygon target = new Polygon(new Vector2[]
+                {
+                    new Vector2((this.square.X + p.X) + this.square.Width / 2, (this.square.Y + p.Y)),
+                    new Vector2((this.square.X + p.X) + this.square.Width, (this.square.Y + p.Y) + this.square.Height / 2),
+                    new Vector2((this.square.X + p.X) + this.square.Width / 2, (this.square.Y + p.Y) + this.square.Height),
+                    new Vector2((this.square.X + p.X), (this.square.Y + p.Y) + this.square.Height / 2)
+                });
+
+                if (target.Contains(pos))
                 {
                     this.square_details_on = true;
                     this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
@@ -257,22 +281,45 @@ namespace Viewer.Sources
             Point p = new Point(0, 0);
             Point off = new Point(0, 0);
 
-            this.view = 0;
+            double factX = (200 * (this.square.Width / 155.0));
+            double factY = (160 * (this.square.Height / 58.0));
 
-            for (int i = 0; i < this.dim.X; ++i, off.X += this.square.Width / 2, off.Y += this.square.Height / 2)
-                for (int j = 0; j < this.dim.Y; ++j)
+            this.view = 0;
+            int j = 0;
+
+            for (int i = 0; i < this.dim.X + 1; ++i, off.X += this.square.Width / 2, off.Y += this.square.Height / 2)
+            {
+                for (j = (int)this.dim.Y - 1; j >= 0; --j)
                 {
                     p.X = j * (this.square.Width / 2) + (off.X) + this.square.X;
-                    p.Y = -j * (this.square.Height /2) + (off.Y) + this.square.Y;
+                    p.Y = -j * (this.square.Height / 2) + (off.Y) + this.square.Y;
 
-                    Rectangle target = new Rectangle(p.X, p.Y, this.square.Width, this.square.Height);
+                    if (i != 0)
+                    {
+                        Rectangle target = new Rectangle(p.X, p.Y, this.square.Width, this.square.Height);
 
-                    if (this.Game.Window.ClientBounds.Contains(target))
-                        this.view += 1;
+                        if (this.Game.Window.ClientBounds.Contains(target))
+                            this.view += 1;
 
-                    this.map[i, j].Draw(target);
+                        this.map[i - 1, j].Draw(target);
+                    }
+
+                    if (i == 1)
+                    {
+                        p.X = j * (this.square.Width / 2) + this.square.X;
+                        p.Y = -j * (this.square.Height / 2) + this.square.Y;
+                        Rectangle tar = new Rectangle((int)(p.X - (int)(31 * (this.square.Width / 155.0))), (int)(p.Y - (int)(101 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                        this._wall[2].Draw(this.sb, tar);
+                    }
                 }
-
+                if (i != 0)
+                {
+                    p.X = ((int)this.dim.Y - 1 - j) * (this.square.Width / 2) + (off.X) + this.square.X;
+                    p.Y = - ((int)this.dim.Y - 1 - j) * (this.square.Height / 2) + (off.Y) + this.square.Y;
+                    Rectangle tar2 = new Rectangle((int)(p.X - (int)(31 * (this.square.Width / 155.0))), (int)(p.Y - (int)(101 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                    this._wall[i % 2].Draw(this.sb, tar2);
+                }
+            }
             if (this.square_details_on)
                 this.square_details.Draw(this.sb, new Rectangle(this.Game.Window.ClientBounds.Width - this.square_details.getBounds().Width, 0, this.square_details.getBounds().Width, this.square_details.getBounds().Height));
 

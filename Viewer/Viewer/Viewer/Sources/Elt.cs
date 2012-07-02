@@ -114,9 +114,9 @@ namespace Viewer.Sources
                 this.nourriture[1].Draw(sb, new Rectangle(square.X + (int)(98 * (square.Width / 155.0)), square.Y + (int)(16 * (square.Height / 58.0)), (int)(66.0 * (square.Width / 155.0 * 0.45)), (int)(54.0 * (square.Height / 58.0 * 0.45))));
 
             if (this.Iv.mendiane > 0 && this.Iv.mendiane < 5)
-                this.mendiane[0].Draw(sb, new Rectangle(square.X + (int)(42 * (square.Width / 155.0)), square.Y + (int)(9 * (square.Height / 58.0)), (int)(57.0 * (square.Width / 155.0 * 0.45)), (int)(50.0 * (square.Height / 58.0 * 0.45))));
+                this.mendiane[0].Draw(sb, new Rectangle(square.X + (int)(41 * (square.Width / 155.0)), square.Y + (int)(8 * (square.Height / 58.0)), (int)(57.0 * (square.Width / 155.0 * 0.45)), (int)(50.0 * (square.Height / 58.0 * 0.45))));
             if (this.Iv.mendiane >= 5)
-                this.mendiane[1].Draw(sb, new Rectangle(square.X + (int)(45 * (square.Width / 155.0)), square.Y + (int)(7 * (square.Height / 58.0)), (int)(66.0 * (square.Width / 155.0 * 0.45)), (int)(52.0 * (square.Height / 58.0 * 0.45))));
+                this.mendiane[1].Draw(sb, new Rectangle(square.X + (int)(45 * (square.Width / 155.0)), square.Y + (int)(9 * (square.Height / 58.0)), (int)(66.0 * (square.Width / 155.0 * 0.45)), (int)(52.0 * (square.Height / 58.0 * 0.45))));
 
             if (this.Iv.phiras > 0 && this.Iv.phiras < 5)
                 this.phiras[0].Draw(sb, new Rectangle(square.X + (int)(62 * (square.Width / 155.0)), square.Y + (int)(18 * (square.Height / 58.0)), (int)(54.0 * (square.Width / 155.0 * 0.45)), (int)(46.0 * (square.Height / 58.0 * 0.45))));

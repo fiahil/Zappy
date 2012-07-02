@@ -6,7 +6,7 @@ using System.Text;
 namespace Viewer.Sources
 {
 
-    private delegate void TreatCmd(string a);
+    delegate void TreatCmd(string a);
     class Treatment
     {
         Dictionary<string, TreatCmd> tab;
@@ -15,6 +15,7 @@ namespace Viewer.Sources
         public void Initialize(Map m)
         {
             map = m;
+            tab = new Dictionary<string, TreatCmd>();
             tab["msz"] = msz;
             tab["bct"] = bct;
             tab["tna"] = tna;

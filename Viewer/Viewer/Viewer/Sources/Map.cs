@@ -83,6 +83,12 @@ namespace Viewer.Sources
             return this.square;
         }
 
+        public void unplug()
+        {
+            this.map[this.square_details_pos.X, this.square_details_pos.Y].selected = false;
+            this.square_details_on = false;
+        }
+
         public void Load(ContentManager cm, SpriteBatch sb)
         {
             this.sb = sb;
@@ -183,6 +189,7 @@ namespace Viewer.Sources
                             this.map[this.square_details_pos.X, this.square_details_pos.Y].selected = false;
                             this.map[j, i].selected = true;
                             this.square_details_pos = new Point(j, i);
+                            ((Main)this.Game).unplug();
                         }
                     }
                 }

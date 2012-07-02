@@ -29,7 +29,7 @@ namespace Viewer.Sources
             this.map = new Map(this, 50, 50);
             this.Components.Add(this.map);
             server = new Network();
-            server.Initialize();
+            server.Initialize(map);
             this.plist = new List<Player>();
             this.plist.Add(new Player());
         }

@@ -93,17 +93,20 @@ namespace Viewer.Sources
     class Network
     {
         Socket s;
+        Treatment t;
         Queue<string> _out;
         Queue<string> _in;
         string tmp;
 
-        public void Initialize()
+        public void Initialize(Map m)
         {
             PopUp pop = new PopUp();
             Byte[] buff = new byte[128];
             _out = new Queue<string>();
             _in = new Queue<string>();
+            t = new Treatment();
 
+            t.Initialize(m);
             pop.Initialize();
             if (pop.isValid)
             {
@@ -143,6 +146,10 @@ namespace Viewer.Sources
                     res = res.Reverse().Skip(1).Reverse() as string[];
                 }
                 _in.Concat(res);
+            }
+            while (_in.Count > 0)
+            {
+                t.Treat(_in.Dequeue());
             }
         }
 

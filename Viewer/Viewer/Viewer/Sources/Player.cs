@@ -58,6 +58,11 @@ namespace Viewer.Sources
             Rectangle tar = new Rectangle((int)(p.X + (int)(65 * (square.Width / 155.0))), (int)(p.Y - (int)(32 * (square.Height / 58.0))), (int)(factX), (int)(factY));
             this.player[(int)this.dir].Draw(sb, tar);
         }
+
+        public Rectangle getBounds()
+        {
+            return this.player[0].getBounds();
+        }
     }
 
 }

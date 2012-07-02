@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Mon Jul  2 14:45:42 2012 ulric lefevre
+** Last update Mon Jul  2 16:01:11 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -31,7 +31,7 @@
 static t_u_timeval	g_last = {0, 0};
 static t_u_timeval	g_current = {0, 0};
 
-static int		get_dmg()
+static int	get_dmg()
 {
   t_data_serv	ds;
   double	val;
@@ -44,7 +44,7 @@ static int		get_dmg()
   return (val);
 }
 
-static void		lose_life_loop(t_player *this)
+static void	lose_life_loop(t_player *this)
 {
   int		dmg;
   int		i;
@@ -67,7 +67,7 @@ static void		lose_life_loop(t_player *this)
     }
 }
 
-static void		iter_lose_life(void *ptr, size_t s)
+static void	iter_lose_life(void *ptr, size_t s)
 {
   (void)s;
   if ((*(t_player*)ptr)->welcome)
@@ -94,7 +94,6 @@ static void	iter_lists(t_data_serv ds)
   list_remove_if(ds->egg, &egg_cleaner);
   list_sort(ds->player, &sort_player_life);
   list_remove_if(ds->player, &player_cleaner);
-  put_res();
   mn_out(ds->monitor);
 }
 
@@ -109,7 +108,10 @@ void		iter_client()
   select_manager(ds, sm);
   get_current_time(&g_current);
   if ((g_last.tv_sec) || (g_last.tv_usec))
-    list_for_each(ds->player, &iter_lose_life);
+    {
+      list_for_each(ds->player, &iter_lose_life);
+      put_res(get_dmg());
+    }
   if (select_r_isset(sm, ds->sock.fd))
     {
       player = create_player(-1);

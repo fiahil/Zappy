@@ -143,6 +143,7 @@ namespace Viewer.Sources
         bool square_details_on;
         TimeSpan square_setails_timer;
         Sprite[] _wall;
+        Point[] clouds;
 
         public Map(Game game, uint size_x, uint size_y)
             : base(game)
@@ -150,7 +151,15 @@ namespace Viewer.Sources
             this.dim = new Vector2(size_x, size_y);
             this.map = new Elt[size_x, size_y];
             this.edge = new bool[4];
-            this._wall = new Sprite[3];
+            this._wall = new Sprite[4];
+            this.clouds = new Point[5];
+
+            this.clouds[0] = new Point(300, 100);
+            this.clouds[1] = new Point(600, 350);
+            this.clouds[2] = new Point(900, 50);
+            this.clouds[3] = new Point(1200, 300);
+            this.clouds[4] = new Point(0, 250);
+
 
             this.square = new Rectangle();
             this.square.Height = 58;
@@ -170,6 +179,11 @@ namespace Viewer.Sources
             this.view = 0;
         }
 
+        public Rectangle getSquare()
+        {
+            return this.square;
+        }
+
         public void Load(ContentManager cm, SpriteBatch sb)
         {
             this.sb = sb;
@@ -178,6 +192,7 @@ namespace Viewer.Sources
             this._wall[0] = new Sprite(cm.Load<Texture2D>("Background/wall"));
             this._wall[1] = new Sprite(cm.Load<Texture2D>("Background/wall2"));
             this._wall[2] = new Sprite(cm.Load<Texture2D>("Background/wall3"));
+            this._wall[3] = new Sprite(cm.Load<Texture2D>("Background/cloud"));
 
             for (int i = 0; i < this.dim.X; ++i)
                 for (int j = 0; j < this.dim.Y; ++j)
@@ -185,10 +200,7 @@ namespace Viewer.Sources
                     this.map[i, j] = new Elt(sb);
                     this.map[i, j].Load(cm);
                 }
-
-            this.map[0, 0].iv.setAll(1, 0, 0, 0, 0, 0, 0);
-            this.map[0, 1].iv.setAll(0, 1, 0, 0, 0, 0, 0);
-            this.map[1, 0].iv.setAll(0, 0, 1, 0, 0, 0, 0);
+            this.map[0,0].iv.setAll(4,4,6,6,6,6,6);
         }
 
         public override void Initialize()
@@ -199,6 +211,14 @@ namespace Viewer.Sources
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            for (int i = 0; i < 5; ++i)
+            {
+                if (this.clouds[i].X >= 1300)
+                    this.clouds[i].X = -400;
+                else
+                    this.clouds[i].X += 1;
+            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Z) && this.square.Height < 60 && this.repeat <= gameTime.TotalGameTime)
             {
@@ -278,6 +298,17 @@ namespace Viewer.Sources
 
             this.sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
+            Rectangle tarcloud = new Rectangle(this.clouds[0].X, this.clouds[0].Y, 400, 200);
+            this._wall[3].Draw(this.sb, tarcloud);
+            tarcloud = new Rectangle(this.clouds[1].X, this.clouds[1].Y, 300, 150);
+            this._wall[3].Draw(this.sb, tarcloud);
+            tarcloud = new Rectangle(this.clouds[2].X, this.clouds[2].Y, 380, 190);
+            this._wall[3].Draw(this.sb, tarcloud);
+            tarcloud = new Rectangle(this.clouds[3].X, this.clouds[3].Y, 400, 200);
+            this._wall[3].Draw(this.sb, tarcloud);
+            tarcloud = new Rectangle(this.clouds[4].X, this.clouds[4].Y, 380, 190);
+            this._wall[3].Draw(this.sb, tarcloud);
+            
             Point p = new Point(0, 0);
             Point off = new Point(0, 0);
 
@@ -308,7 +339,7 @@ namespace Viewer.Sources
                     {
                         p.X = j * (this.square.Width / 2) + this.square.X;
                         p.Y = -j * (this.square.Height / 2) + this.square.Y;
-                        Rectangle tar = new Rectangle((int)(p.X - (int)(31 * (this.square.Width / 155.0))), (int)(p.Y - (int)(101 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                        Rectangle tar = new Rectangle((int)(p.X - (int)(33 * (this.square.Width / 155.0))), (int)(p.Y - (int)(103 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
                         this._wall[2].Draw(this.sb, tar);
                     }
                 }

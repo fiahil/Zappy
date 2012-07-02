@@ -18,8 +18,8 @@ namespace Viewer.Sources
     class Elt
     {
         SpriteBatch sb;
-
         Sprite[] tiles;
+
         Sprite[] nourriture;
         Sprite[] linemate;
         Sprite[] deraumere;
@@ -38,6 +38,7 @@ namespace Viewer.Sources
         public Elt(SpriteBatch sb)
         {
             this.tiles = new Sprite[3];
+
             this.nourriture = new Sprite[2];
             this.linemate = new Sprite[2];
             this.deraumere = new Sprite[2];
@@ -137,6 +138,7 @@ namespace Viewer.Sources
         TimeSpan Vrep;
         TimeSpan Hrep;
         uint view;
+
         Sprite square_details;
         bool square_details_on;
         TimeSpan square_setails_timer;
@@ -166,8 +168,6 @@ namespace Viewer.Sources
             this.edge[3] = false;
 
             this.view = 0;
-            this.square_details_on = false;
-            this.square_setails_timer = TimeSpan.Zero;
         }
 
         public void Load(ContentManager cm, SpriteBatch sb)
@@ -239,18 +239,6 @@ namespace Viewer.Sources
                 this.edge[3] = false;
                 this.edge[0] = true;
             }
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
-                Point pos = new Point(Mouse.GetState().X, Mouse.GetState().Y);
-
-                if (this.map[0, 0].Bounds.Contains(pos))
-                {
-                    this.square_details_on = true;
-                    this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
-                }
-            }
-            if (this.square_setails_timer <= gameTime.TotalGameTime)
-                this.square_details_on = false;
         }
 
         public override void Draw(GameTime gameTime)
@@ -292,6 +280,7 @@ namespace Viewer.Sources
                         this._wall[2].Draw(this.sb, tar);
                     }
                 }
+<<<<<<< HEAD
                 if (i != 0)
                 {
                     p.X = ((int)this.dim.Y - 1 - j) * (this.square.Width / 2) + (off.X) + this.square.X;
@@ -302,6 +291,8 @@ namespace Viewer.Sources
             }
             if (this.square_details_on)
                 this.square_details.Draw(this.sb, new Rectangle(this.Game.Window.ClientBounds.Width - this.square_details.getBounds().Width, 0, this.square_details.getBounds().Width, this.square_details.getBounds().Height));
+=======
+>>>>>>> cedece0a4a3517f8ef7cb2c7b3d8b519fb072fa6
 
             this.sb.End();
         }

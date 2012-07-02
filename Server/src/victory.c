@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Mon Jul  2 15:03:00 2012 pierre martin
-** Last update Mon Jul  2 15:59:49 2012 pierre martin
+** Last update Mon Jul  2 16:15:15 2012 pierre martin
 */
 
 #define		_GNU_SOURCE
@@ -61,7 +61,7 @@ static void	game_over(void *data, size_t len)
     }
 }
 
-int	is_there_a_victorous(t_data_serv ds)
+int	is_there_a_victorious(t_data_serv ds)
 {
   t_player winner;
 

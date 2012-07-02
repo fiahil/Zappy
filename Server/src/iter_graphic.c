@@ -114,7 +114,7 @@ static void	graphic_process(t_graphic this, t_data_serv ds)
       if (!flag)
 	printf("FAIL\n");
       else
-	printf("CMD = %s\n", g_cmd[i].cmd);
+	printf("CMD = %s - param = %s\n", g_cmd[i].cmd, list_front(this->cm.in) + 3);
       list_pop_front(this->cm.in);
     }
 }

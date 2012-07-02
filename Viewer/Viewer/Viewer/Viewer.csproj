@@ -111,11 +111,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sources\Background.cs" />
     <Compile Include="Sources\Inventory.cs" />
     <Compile Include="Sources\Map.cs" />
     <Compile Include="Sources\Network.cs" />
     <Compile Include="Sources\Player.cs" />
+    <Compile Include="Sources\Polygon.cs" />
     <Compile Include="Sources\Program.cs" />
     <Compile Include="Sources\Main.cs" />
     <Compile Include="Sources\Sprite.cs" />

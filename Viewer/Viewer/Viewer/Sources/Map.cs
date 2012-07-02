@@ -185,6 +185,10 @@ namespace Viewer.Sources
                     this.map[i, j] = new Elt(sb);
                     this.map[i, j].Load(cm);
                 }
+
+            this.map[0, 0].iv.setAll(1, 0, 0, 0, 0, 0, 0);
+            this.map[0, 1].iv.setAll(0, 1, 0, 0, 0, 0, 0);
+            this.map[1, 0].iv.setAll(0, 0, 1, 0, 0, 0, 0);
         }
 
         public override void Initialize()
@@ -239,6 +243,33 @@ namespace Viewer.Sources
                 this.edge[3] = false;
                 this.edge[0] = true;
             }
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                Vector2 pos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+                Rectangle targetz = this.map[0, 0].Bounds;
+                targetz.X += this.square.X;
+                targetz.Y += this.square.Y;
+
+                Vector2 pp = new Vector2(2, 2);
+                Vector2 p = new Vector2(pp.X * (this.square.Width / 2) + ((pp.Y + 1) * (this.square.Width / 2)), -pp.X * (this.square.Height / 2) + ((pp.Y + 1)* (this.square.Height / 2)));
+
+                Polygon target = new Polygon(new Vector2[]
+                {
+                    new Vector2((this.square.X + p.X) + this.square.Width / 2, (this.square.Y + p.Y)),
+                    new Vector2((this.square.X + p.X) + this.square.Width, (this.square.Y + p.Y) + this.square.Height / 2),
+                    new Vector2((this.square.X + p.X) + this.square.Width / 2, (this.square.Y + p.Y) + this.square.Height),
+                    new Vector2((this.square.X + p.X), (this.square.Y + p.Y) + this.square.Height / 2)
+                });
+
+                if (target.Contains(pos))
+                {
+                    this.square_details_on = true;
+                    this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
+                }
+            }
+            if (this.square_setails_timer <= gameTime.TotalGameTime)
+                this.square_details_on = false;
         }
 
         public override void Draw(GameTime gameTime)
@@ -272,15 +303,15 @@ namespace Viewer.Sources
 
                         this.map[i - 1, j].Draw(target);
                     }
+
                     if (i == 1)
                     {
-                        p.X = j * (this.square.Width / 2) + (0) + this.square.X;
-                        p.Y = -j * (this.square.Height / 2) + (0) + this.square.Y;
+                        p.X = j * (this.square.Width / 2) + this.square.X;
+                        p.Y = -j * (this.square.Height / 2) + this.square.Y;
                         Rectangle tar = new Rectangle((int)(p.X - (int)(31 * (this.square.Width / 155.0))), (int)(p.Y - (int)(101 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
                         this._wall[2].Draw(this.sb, tar);
                     }
                 }
-<<<<<<< HEAD
                 if (i != 0)
                 {
                     p.X = ((int)this.dim.Y - 1 - j) * (this.square.Width / 2) + (off.X) + this.square.X;
@@ -291,8 +322,6 @@ namespace Viewer.Sources
             }
             if (this.square_details_on)
                 this.square_details.Draw(this.sb, new Rectangle(this.Game.Window.ClientBounds.Width - this.square_details.getBounds().Width, 0, this.square_details.getBounds().Width, this.square_details.getBounds().Height));
-=======
->>>>>>> cedece0a4a3517f8ef7cb2c7b3d8b519fb072fa6
 
             this.sb.End();
         }

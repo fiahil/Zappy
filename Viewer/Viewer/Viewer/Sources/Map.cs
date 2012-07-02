@@ -19,6 +19,7 @@ namespace Viewer.Sources
     {
         Vector2 dim;
         Rectangle square;
+        Rectangle screen;
         Elt[,] map;
         bool[] edge;
         SpriteBatch sb;
@@ -43,6 +44,7 @@ namespace Viewer.Sources
             this.edge = new bool[4];
             this._wall = new Sprite[3];
 
+            this.screen = new Rectangle(0, 0, 1280, 720);
             this.square = new Rectangle();
             this.square.Height = 58;
             this.square.Width = 155;
@@ -201,7 +203,8 @@ namespace Viewer.Sources
                         if (this.Game.Window.ClientBounds.Contains(target))
                             this.view += 1;
 
-                        this.map[i - 1, j].Draw(target);
+                        if (this.screen.Intersects(target))
+                            this.map[i - 1, j].Draw(target);
 
                         if (this.map[i - 1, j].selected)
                         {
@@ -221,7 +224,8 @@ namespace Viewer.Sources
                         p.X = j * (this.square.Width / 2) + this.square.X;
                         p.Y = -j * (this.square.Height / 2) + this.square.Y;
                         Rectangle tar = new Rectangle((int)(p.X - (int)(31 * (this.square.Width / 155.0))), (int)(p.Y - (int)(101 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
-                        this._wall[2].Draw(this.sb, tar);
+                        if (this.screen.Intersects(tar))
+                            this._wall[2].Draw(this.sb, tar);
                     }
                 }
                 if (i != 0)
@@ -229,7 +233,8 @@ namespace Viewer.Sources
                     p.X = ((int)this.dim.Y - 1 - j) * (this.square.Width / 2) + (off.X) + this.square.X;
                     p.Y = - ((int)this.dim.Y - 1 - j) * (this.square.Height / 2) + (off.Y) + this.square.Y;
                     Rectangle tar2 = new Rectangle((int)(p.X - (int)(31 * (this.square.Width / 155.0))), (int)(p.Y - (int)(101 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
-                    this._wall[i % 2].Draw(this.sb, tar2);
+                    if (this.screen.Intersects(tar2))
+                        this._wall[i % 2].Draw(this.sb, tar2);
                 }
             }
             if (this.square_details_on)

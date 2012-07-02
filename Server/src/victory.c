@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Mon Jul  2 15:03:00 2012 pierre martin
-** Last update Mon Jul  2 18:12:04 2012 ulric lefevre
+** Last update Mon Jul  2 18:13:10 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -29,7 +29,7 @@ static int	is_level_height(void *data, size_t len)
   if (data)
     {
       player = *((t_player*)data);
-      if (player->lvl == 2)
+      if (player->lvl == 8)
 	return (1);
     }
   return (0);

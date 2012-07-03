@@ -21,6 +21,17 @@ namespace Viewer.Sources
         LAST
     }
 
+    public enum State
+    {
+        FORK,
+        DEAD,
+        TAKE,
+        DROP,
+        INCANT,
+        EXPULSE,
+        IDLE
+    }
+
     public class Player
     {
         Point pos;
@@ -29,6 +40,7 @@ namespace Viewer.Sources
         public int lvl;
         public int id;
         public Inventory iv;
+        public State st;
         string team;
         string broadcast;
 
@@ -43,6 +55,7 @@ namespace Viewer.Sources
             this.pos = new Point(x, y);
             this.dir = Direction.NORTH;
             this.player = new Sprite[4];
+            this.team = team;
         }
 
         public Player setPos(int x, int y)

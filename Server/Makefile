@@ -31,6 +31,7 @@ SRC	=	src/broadcast.c			\
 		src/graphic_function_5.c	\
 		src/graphic_function_6.c	\
 		src/graphic_function_all.c	\
+		src/graphic_process_tools.c	\
 		src/graphic_process_1.c		\
 		src/graphic_process_2.c		\
 		src/graphic_process_3.c		\

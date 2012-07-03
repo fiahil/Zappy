@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:47 2012 ulric lefevre
-** Last update Mon Jul  2 17:46:48 2012 ulric lefevre
+** Last update Tue Jul  3 19:24:06 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -41,6 +41,7 @@ static void	init_player(t_player player, int egg)
   player->cm.mode = UNKNOW;
   player->cm.is_processing = FALSE;
   player->cm.online = FALSE;
+  player->cm.read = FALSE;
 }
 
 t_player	create_player(int egg)

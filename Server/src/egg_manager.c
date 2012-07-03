@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:03 2012 ulric lefevre
-** Last update Sat Jun 30 16:29:33 2012 ulric lefevre
+** Last update Tue Jul  3 16:31:57 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -27,5 +27,5 @@ void		init_egg(t_egg egg, t_player this, int t)
   egg->fetus->pos.x = this->pos.x;
   egg->fetus->pos.y = this->pos.y;
   get_current_time(&egg->timeout);
-  add_time(&egg->timeout, 360, t);
+  add_time(&egg->timeout, 600, t);
 }

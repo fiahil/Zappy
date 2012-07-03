@@ -45,11 +45,11 @@ namespace Viewer.Sources
                 { // Format port invalid
                 }
 
-                if (s.Poll(100, SelectMode.SelectRead))
+                if (s.Poll(-1, SelectMode.SelectRead))
                 {
                     s.Receive(buff);
                 }
-                if (Encoding.UTF8.GetString(buff) == "BIENVENUE\n")
+                if (Encoding.UTF8.GetString(buff).CompareTo("BIENVENUE\n") == 0)
                 {
                     s.Send(Encoding.UTF8.GetBytes("GRAPHIC\n"));
                 }
@@ -67,9 +67,9 @@ namespace Viewer.Sources
                 if (buff[buff.Length - 1] != '\n')
                 {
                     tmp = res[res.Length - 1];
-                    res = res.Reverse().Skip(1).Reverse() as string[];
+                    res = res.Take(res.Length - 1).ToArray();
                 }
-                _in.Concat(res);
+                _in = new Queue<string>(_in.Concat(res.ToList()));
             }
             while (_in.Count > 0)
             {

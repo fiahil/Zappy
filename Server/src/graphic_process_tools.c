@@ -11,8 +11,8 @@ t_bool	cmp_id(void *data, size_t len)
   (void)len;
   player = *((t_player*)data);
   if (player->id == g_current_id)
-    return (0);
-  return (1);
+    return (1);
+  return (0);
 }
 
 int	get_current_id(int id)

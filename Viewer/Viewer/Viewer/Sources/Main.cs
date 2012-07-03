@@ -125,9 +125,10 @@ namespace Viewer.Sources
 
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
+                Point ppmouse = new Point(Mouse.GetState().X, Mouse.GetState().Y);
                 foreach (Player elt in this.plist)
                 {
-                    if (elt.getBounds().Contains(new Point(Mouse.GetState().X, Mouse.GetState().Y)))
+                    if (elt.getBounds().Contains(ppmouse))
                     {
                         this.inventory_details = elt;
                         this.inventory_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);

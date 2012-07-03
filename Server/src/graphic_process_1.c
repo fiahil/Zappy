@@ -6,6 +6,19 @@
 #include	"map.h"
 #include	"graphic.h"
 
+static t_bool	str_is_num(char *str)
+{
+  unsigned int	i;
+
+  i = -1;
+  if (!str)
+    return (FALSE);
+  while (str[++i] && ((str[i] >= '0') && (str[i] <= '9')));
+  if (i != strlen(str))
+    return (FALSE);
+  return (TRUE);
+}
+
 void		msz_process(t_graphic mn, char *param, t_data_serv ds)
 {
   t_map		map;
@@ -20,12 +33,20 @@ void		bct_process(t_graphic mn, char *param, t_data_serv ds)
 {
   t_u_pos	pos;
   t_map		map;
+  char		*tmp;
 
-  (void)param;
   (void)ds;
+  if (!param)
+    return ;
+  if (!str_is_num(tmp = strtok(param, " ")))
+    return ;
+  pos.x = atoi(tmp);
+  if (!str_is_num(tmp = strtok(NULL, " ")))
+    return ;
+  pos.y = atoi(tmp);
   map = get_map(NULL);
-  pos.x = atoi(param);
-  pos.y = atoi(strchr(param, ' ') + 1);
+  if ((pos.x > map->size_x - 1) || (pos.y > map->size_y - 1))
+    return ;
   bct(mn, map->map[pos.y][pos.x], &pos);
 }
 

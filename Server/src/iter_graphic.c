@@ -14,23 +14,50 @@
 static const t_u_parse_graph g_cmd[] =
   {
     {3, "msz", &msz_process},
-    {3, "bct", &bct_process},
     {3, "mct", &mct_process},
     {3, "tna", &tna_process},
-    {3, "ppo", &ppo_process},
-    {3, "plv", &plv_process},
-    {3, "pin", &pin_process},
     {3, "sgt", &sgt_process},
-    {3, "sst", &sst_process},
+    {4, "bct ", &bct_process},
+    {4, "ppo ", &ppo_process},
+    {4, "plv ", &plv_process},
+    {4, "pin ", &pin_process},
+    {4, "sst ", &sst_process},
     {0, NULL, NULL}
   };
 
-static const char *g_separator[] =
+static const char *g_separator [] =
   {
     "\r\n",
     "\n",
     "\0128"
   };
+
+static int	epur_str(char *str, char sep)
+{
+  int	i;
+  int	i2;
+  int	nb;
+
+  i = 0;
+  i2 = -1;
+  nb = 1;
+  while (str[++i2] && (str[i2] == ' ' || str[i2] == '\t' || str[i2] == sep));
+  while (str[i2])
+    if (str[i2] && str[i2] != '\t' && str[i2] != ' ' && str[i2] != sep)
+      str[i++] = str[i2++];
+    else if (str[i2])
+      {
+	while (str[i2] && (str[i2] == ' ' || str[i2] == '\t' || str[i2] == sep))
+	  i2++;
+	if (str[i2] && str[i2] != '\n')
+	  {
+	    str[i++] = sep;
+	    nb++;
+	  }
+      }
+  str[i] = '\0';
+  return (nb);
+}
 
 static void	print_stock(char **buf)
 {
@@ -50,7 +77,7 @@ static void	graphic_get_cmd(t_graphic this, t_bool *clear, char **buf)
   if (!(tmp = strstr((*buf), g_separator[this->cm.mode])) && (*buf)[0] != '\0')
     {
       if (strlen(*buf) < (BUFFER_SIZE / 2))
-  	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
+      	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
       *clear = TRUE;
       print_stock(buf);
     }
@@ -98,21 +125,32 @@ void		get_graphic_commands(t_graphic this, char *buf)
     graphic_get_cmd(this, &clear, &buf);
 }
 
+static char	*get_params(char *str)
+{
+  if (!str[0] ^ !strlen(str))
+    return (NULL);
+  epur_str(str, ' ');
+  if (!str)
+    return (NULL);
+  return (str);
+}
+
 static void	graphic_process(t_graphic this, t_data_serv ds)
 {
-  t_bool	flag;
+  char		*tmp;
   int		i;
 
   (void)ds;
   while (!(this->cm.in->empty))
     {
       i = -1;
-      flag = FALSE;
-      while (!flag && g_cmd[++i].cmd)
-	if (!strncmp(list_front(this->cm.in), g_cmd[i].cmd, g_cmd[i].size))
-	  flag = TRUE;
-      if (flag)
-	(g_cmd[i].func)(this, list_front(this->cm.in) + 4, ds);
+      tmp = strdup(list_front(this->cm.in));
+      while (g_cmd[++i].cmd && strncmp(list_front(this->cm.in), g_cmd[i].cmd, g_cmd[i].size));
+      if (g_cmd[i].cmd)
+	if (((i >= 4 && i <= 8) && ((char *)list_front(this->cm.in))[3]) ^
+	    ((i >= 0 && i <= 3) && !((char *)list_front(this->cm.in))[3]))
+	  (g_cmd[i].func)(this, get_params(tmp + 3), ds);
+      free(tmp);
       list_pop_front(this->cm.in);
     }
 }

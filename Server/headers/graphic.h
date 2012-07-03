@@ -13,6 +13,10 @@
 
 #include	"def.h"
 
+int	cmp_id(void *, size_t);
+int	get_current_id(int);
+int	str_is_num(char *);
+
 void	msz_process(t_graphic, char *, t_data_serv);
 void	bct_process(t_graphic, char *, t_data_serv);
 void	mct_process(t_graphic, char *, t_data_serv);

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Mon Jul  2 23:02:54 2012 ulric lefevre
+** Last update Tue Jul  3 13:52:47 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -13,48 +13,53 @@
 
 #include	"def.h"
 #include	"map.h"
+#include	"graphic.h"
 #include	"var_manager.h"
 
 void		put_res(int val)
 {
   static int	last_val = 0;
   int		i;
-  int		x;
-  int		y;
+  t_u_pos	pos;
   t_map		map;
+  t_data_serv	ds;
 
   last_val += val;
   i = last_val / 300;
   last_val %= 300;
   map = get_map(NULL);
+  ds = get_data_serv(NULL);
   while (i)
     {
-      x = random() % map->size_x;
-      y = random() % map->size_y;
-      map->map[y][x]->inv.resources[FOOD] += random() % 4 + 1;
-      map->map[y][x]->inv.resources[random() % (LAST - 1) + 1]
+      pos.x = random() % map->size_x;
+      pos.y = random() % map->size_y;
+      map->map[pos.y][pos.x]->inv.resources[FOOD] += random() % 4 + 1;
+      map->map[pos.y][pos.x]->inv.resources[random() % (LAST - 1) + 1]
 	+= random() % 2 + 1;
+      bct_general(ds->monitor, map->map[pos.y][pos.x], &pos);
       --i;
     }
 }
 
 void		put_inv(t_inventory inv)
 {
-  int		x;
-  int		y;
+  t_u_pos	pos;
   t_resource	res;
   t_map		map;
+  t_data_serv	ds;
 
   res = FOOD;
   map = get_map(NULL);
+  ds = get_data_serv(NULL);
   while (res != LAST)
     {
       while (inv->resources[res])
 	{
-	  x = random() % map->size_x;
-	  y = random() % map->size_y;
+	  pos.x = random() % map->size_x;
+	  pos.y = random() % map->size_y;
 	  --(inv->resources[res]);
-	  ++(map->map[y][x]->inv.resources[res]);
+	  ++(map->map[pos.y][pos.x]->inv.resources[res]);
+	  bct_general(ds->monitor, map->map[pos.y][pos.x], &pos);
 	}
       ++res;
     }
@@ -73,23 +78,25 @@ static void	init_res_tab(int (*new)[])
 
 void		put_res_egg()
 {
-  int		x;
-  int		y;
+  t_u_pos	pos;
   t_map		map;
   t_resource	res;
   int		new[LAST];
+  t_data_serv	ds;
 
   init_res_tab(&new);
   map = get_map(NULL);
+  ds = get_data_serv(NULL);
   res = FOOD;
   while (res != LAST)
     {
       while (new[res])
 	{
-	  x = random() % map->size_x;
-	  y = random() % map->size_y;
+	  pos.x = random() % map->size_x;
+	  pos.y = random() % map->size_y;
 	  --(new[res]);
-	  ++(map->map[y][x]->inv.resources[res]);
+	  ++(map->map[pos.y][pos.x]->inv.resources[res]);
+	  bct_general(ds->monitor, map->map[pos.y][pos.x], &pos);
 	}
       ++res;
     }

@@ -21,27 +21,41 @@ namespace Viewer.Sources
         LAST
     }
 
+    public enum State
+    {
+        FORK,
+        DEAD,
+        TAKE,
+        DROP,
+        INCANT,
+        EXPULSE,
+        IDLE
+    }
+
     public class Player
     {
-        Vector2 pos;
+        Point pos;
         Sprite[] player;
         public Direction dir;
         public int lvl;
         public int id;
         public Inventory iv;
+        public State st;
         string team;
+        string broadcast;
 
         public Player()
         {
-            this.pos = new Vector2(0, 0);
+            this.pos = new Point(0, 0);
             this.dir = Direction.NORTH;
             this.player = new Sprite[4];
         }
         public Player(int x, int y, Direction dir, int lvl, string team)
         {
-            this.pos = new Vector2(x, y);
+            this.pos = new Point(x, y);
             this.dir = Direction.NORTH;
             this.player = new Sprite[4];
+            this.team = team;
         }
 
         public Player setPos(int x, int y)
@@ -49,6 +63,11 @@ namespace Viewer.Sources
             this.pos.X = x;
             this.pos.Y = y;
             return this;
+        }
+
+        public void setBroadcast(string s)
+        {
+            this.broadcast = s;
         }
 
         static public Direction convertDir(int i)

@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Viewer.Sources
 {
-    class Egg
+    public class Egg
     {
         Point pos;
         Sprite[] player;

@@ -44,6 +44,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Ok";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox1
             // 
@@ -69,6 +70,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
@@ -103,7 +105,6 @@
             this.Controls.Add(this.button1);
             this.Name = "Popup";
             this.Text = "Connection";
-            this.Load += new System.EventHandler(this.Popup_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

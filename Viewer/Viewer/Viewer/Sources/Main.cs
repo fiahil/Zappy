@@ -91,7 +91,7 @@ namespace Viewer.Sources
 
             this.inventory_page = new Sprite(this.Content.Load<Texture2D>("Tiles/map_inventory"));
             this.plist[0].Load(this.Content); // TODO
-            this.map.resizeMap(20, 20);
+            this.map.resizeMap(50, 50);
         }
 
         /// <summary>
@@ -110,6 +110,7 @@ namespace Viewer.Sources
         protected override void Update(GameTime gameTime)
         {
             server.Update();
+
             base.Update(gameTime);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))

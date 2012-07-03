@@ -9,86 +9,6 @@ using System.Windows.Forms;
 
 namespace Viewer.Sources
 {
-    class PopUp
-    {
-        Form menu;
-        Button accept;
-        Button cancel;
-        Label ipLabel;
-        Label portLabel;
-        TextBox ip;
-        TextBox port;
-        public bool isValid;
-
-        private void OnAccept(object sender, System.EventArgs e)
-        {
-            isValid = true;
-            menu.Close();
-        }
-
-        private void OnCancel(object sender, System.EventArgs e)
-        {
-            isValid = false;
-            menu.Close();
-        }
-
-        public string GetIp()
-        {
-            return ip.Text;
-        }
-
-        public Int32 GetPort()
-        {
-            try
-            {
-                return Int32.Parse(port.Text);
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-
-        public void Initialize()
-        {
-            menu = new Form();
-            accept = new Button();
-            cancel = new Button();
-            ipLabel = new Label();
-            portLabel = new Label();
-            ip = new TextBox();
-            port = new TextBox();
-
-            accept.Text = "Ok";
-            accept.Location = new Point(0, 50);
-            accept.Click += OnAccept;
-
-            cancel.Text = "Cancel";
-            cancel.Location = new Point(100, 50);
-            cancel.Click += OnCancel;
-            
-
-            ipLabel.Text = "Ip";
-
-            portLabel.Text = "Port";
-            portLabel.Location = new Point(125, 0);
-
-            ip.Location = new Point(0, 20);
-            port.Location = new Point(125, 20);
-
-
-            menu.Text = "Infos Server";
-            menu.Height = 100;
-            menu.FormBorderStyle = FormBorderStyle.FixedDialog;
-            menu.Controls.Add(accept);
-            menu.Controls.Add(cancel);
-            menu.Controls.Add(ip);
-            menu.Controls.Add(port);
-            menu.Controls.Add(ipLabel);
-            menu.Controls.Add(portLabel);
-            menu.ShowDialog();
-        }
-    }
 
     class Network
     {
@@ -98,17 +18,17 @@ namespace Viewer.Sources
         Queue<string> _in;
         string tmp;
 
-        public void Initialize(Map m)
+        public void Initialize(Main p)
         {
-            PopUp pop = new PopUp();
+            Popup pop = new Popup();
             Byte[] buff = new byte[128];
             _out = new Queue<string>();
             _in = new Queue<string>();
             t = new Treatment();
 
-            t.Initialize(m);
-            pop.Initialize();
-            if (pop.isValid)
+            t.Initialize(p);
+            pop.ShowDialog();
+            if (pop.isValid())
             {
                 IPAddress[] IPs = Dns.GetHostAddresses(pop.GetIp());
 
@@ -121,11 +41,15 @@ namespace Viewer.Sources
                 {
                     Console.WriteLine("Error on Socket\nWhat: {0}", e.Message);
                 }
-                if (s.Poll(100, SelectMode.SelectRead))
+                catch (NotSupportedException e)
+                { // Format port invalid
+                }
+
+                if (s.Poll(-1, SelectMode.SelectRead))
                 {
                     s.Receive(buff);
                 }
-                if (Encoding.UTF8.GetString(buff) == "BIENVENUE\n")
+                if (Encoding.UTF8.GetString(buff).CompareTo("BIENVENUE\n") == 0)
                 {
                     s.Send(Encoding.UTF8.GetBytes("GRAPHIC\n"));
                 }
@@ -143,9 +67,9 @@ namespace Viewer.Sources
                 if (buff[buff.Length - 1] != '\n')
                 {
                     tmp = res[res.Length - 1];
-                    res = res.Reverse().Skip(1).Reverse() as string[];
+                    res = res.Take(res.Length - 1).ToArray();
                 }
-                _in.Concat(res);
+                _in = new Queue<string>(_in.Concat(res.ToList()));
             }
             while (_in.Count > 0)
             {

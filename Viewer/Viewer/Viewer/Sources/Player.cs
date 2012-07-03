@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Viewer.Sources
 {
-    enum Direction
+    public enum Direction
     {
         NORTH,
         EAST,
@@ -21,17 +21,61 @@ namespace Viewer.Sources
         LAST
     }
 
-    class Player
+    public class Player
     {
-        Vector2 pos;
+        Point pos;
         Sprite[] player;
-        Direction dir;
+        public Direction dir;
+        public int lvl;
+        public int id;
+        public Inventory iv;
+        string team;
+        string broadcast;
 
         public Player()
         {
-            this.pos = new Vector2(0, 0);
+            this.pos = new Point(0, 0);
             this.dir = Direction.NORTH;
             this.player = new Sprite[4];
+        }
+        public Player(int x, int y, Direction dir, int lvl, string team)
+        {
+            this.pos = new Point(x, y);
+            this.dir = Direction.NORTH;
+            this.player = new Sprite[4];
+        }
+
+        public Player setPos(int x, int y)
+        {
+            this.pos.X = x;
+            this.pos.Y = y;
+            return this;
+        }
+
+        public void setBroadcast(string s)
+        {
+            this.broadcast = s;
+        }
+
+        static public Direction convertDir(int i)
+        {
+            if (i == 1)
+            {
+                return Direction.NORTH;
+            }
+            if (i == 2)
+            {
+                return Direction.EAST;
+            }
+            if (i == 3)
+            {
+                return Direction.SOUTH;
+            }
+            if (i == 4)
+            {
+                return Direction.WEST;
+            }
+            return Direction.LAST;
         }
 
         public void Load(ContentManager cm)

@@ -18,9 +18,12 @@ namespace Viewer.Sources
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Map map;
-        List<Player> plist;
-        Network test;
+        public Map map;
+        public List<Player> plist;
+        public List<Egg> elist;
+        public List<string> tlist;
+        Network server;
+       
         Rectangle screen;
         Player inventory_details;
         TimeSpan inventory_timer;
@@ -30,10 +33,10 @@ namespace Viewer.Sources
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.map = new Map(this, 50, 50);
+            this.map = new Map(this);
             this.Components.Add(this.map);
-            test = new Network();
-            test.Initialize();
+            server = new Network();
+            server.Initialize(this);
             this.plist = new List<Player>();
             this.plist.Add(new Player());
             this.screen = new Rectangle(0, 0, 1280, 720);
@@ -44,6 +47,26 @@ namespace Viewer.Sources
         public void unplug()
         {
             this.inventory_details = null;
+        }
+
+        public List<Player> getPlayers()
+        {
+            return this.plist;
+        }
+
+        public List<Egg> getEggs()
+        {
+            return this.elist;
+        }
+
+        public Map getMap()
+        {
+            return this.map;
+        }
+
+        public SpriteBatch getSb()
+        {
+            return this.spriteBatch;
         }
 
         /// <summary>
@@ -72,9 +95,9 @@ namespace Viewer.Sources
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            this.map.Load(this.Content, this.spriteBatch);
             this.inventory_page = new Sprite(this.Content.Load<Texture2D>("Tiles/map_inventory"));
             this.plist[0].Load(this.Content); // TODO
+            this.map.resizeMap(20, 20);
         }
 
         /// <summary>
@@ -92,6 +115,7 @@ namespace Viewer.Sources
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            server.Update();
             base.Update(gameTime);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))

@@ -15,7 +15,7 @@ namespace Viewer.Sources
     /// <summary>
     /// Map class representing the whole terrain with cristals (Elt matrix)
     /// </summary>
-    class Map : Microsoft.Xna.Framework.DrawableGameComponent
+    public class Map : Microsoft.Xna.Framework.DrawableGameComponent
     {
         Vector2 dim;
         Rectangle square;
@@ -77,6 +77,22 @@ namespace Viewer.Sources
 
         //TODO REMOVE THIS
         static Random p = new Random();
+
+        public void resizeMap(int size_x, int size_y)
+        {
+            this.map = new Elt[size_x, size_y];
+            this.dim = new Vector2(size_x, size_y);
+        }
+
+        public Vector2 getSize()
+        {
+            return this.dim;
+        }
+
+        public Elt getCase(int x, int y)
+        {
+            return this.map[x, y];
+        }
 
         public Rectangle getSquare()
         {

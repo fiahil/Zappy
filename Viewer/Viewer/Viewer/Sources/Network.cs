@@ -98,7 +98,7 @@ namespace Viewer.Sources
         Queue<string> _in;
         string tmp;
 
-        public void Initialize(Map m)
+        public void Initialize(Main p)
         {
             PopUp pop = new PopUp();
             Byte[] buff = new byte[128];
@@ -106,7 +106,7 @@ namespace Viewer.Sources
             _in = new Queue<string>();
             t = new Treatment();
 
-            t.Initialize(m);
+            t.Initialize(p);
             pop.Initialize();
             if (pop.isValid)
             {

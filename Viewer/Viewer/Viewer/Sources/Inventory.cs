@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Viewer.Sources
 {
-    class Inventory
+    public class Inventory
     {
         public uint nourriture;
         public uint linemate;

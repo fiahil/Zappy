@@ -15,7 +15,7 @@ namespace Viewer.Sources
     /// <summary>
     /// Elt class representing an square of the map
     /// </summary>
-    class Elt
+    public class Elt
     {
         SpriteBatch sb;
 

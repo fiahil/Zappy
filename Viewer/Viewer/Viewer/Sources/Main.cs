@@ -18,8 +18,9 @@ namespace Viewer.Sources
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Map map;
-        List<Player> plist;
+        public Map map;
+        public List<Player> plist;
+        public List<string> tlist;
         Network server;
        
         Rectangle screen;
@@ -34,7 +35,7 @@ namespace Viewer.Sources
             this.map = new Map(this, 50, 50);
             this.Components.Add(this.map);
             server = new Network();
-            server.Initialize(map);
+            server.Initialize(this);
             this.plist = new List<Player>();
             this.plist.Add(new Player());
             this.screen = new Rectangle(0, 0, 1280, 720);
@@ -45,6 +46,16 @@ namespace Viewer.Sources
         public void unplug()
         {
             this.inventory_details = null;
+        }
+
+        public List<Player> getPlayers()
+        {
+            return this.plist;
+        }
+
+        public Map getMap()
+        {
+            return this.map;
         }
 
         /// <summary>

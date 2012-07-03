@@ -20,6 +20,7 @@ namespace Viewer.Sources
         SpriteBatch spriteBatch;
         public Map map;
         public List<Player> plist;
+        public List<Egg> elist;
         public List<string> tlist;
         Network server;
        
@@ -51,6 +52,11 @@ namespace Viewer.Sources
         public List<Player> getPlayers()
         {
             return this.plist;
+        }
+
+        public List<Egg> getEggs()
+        {
+            return this.elist;
         }
 
         public Map getMap()

@@ -117,6 +117,8 @@ namespace Viewer.Sources
 
         private void pbc(string[] a)
         {
+            parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
+                .setBroadcast(a[1]);
         }
         private void pic(string[] a)
         {
@@ -138,6 +140,7 @@ namespace Viewer.Sources
         }
         private void enw(string[] a)
         {
+            parent.getEggs();
         }
         private void eht(string[] a)
         {

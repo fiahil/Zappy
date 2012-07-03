@@ -202,11 +202,12 @@ namespace Viewer.Sources
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
+                Vector2 pos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
                 for (int i = 0; i < this.dim.X; ++i)
                 {
                     for (int j = 0; j < this.dim.Y; ++j)
                     {
-                        if (this.map[i, j].isInPolygon(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), this.square))
+                        if (this.map[i, j].isInPolygon(pos, this.square))
                         {
                             this.square_details_on = true;
                             this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);

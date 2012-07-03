@@ -21,19 +21,19 @@ namespace Viewer.Sources
         LAST
     }
 
-    public enum State
-    {
-        FORK,
-        DEAD,
-        TAKE,
-        DROP,
-        INCANT,
-        EXPULSE,
-        IDLE
-    }
-
     public class Player
     {
+        public enum State
+        {
+            FORK,
+            DEAD,
+            TAKE,
+            DROP,
+            INCANT,
+            EXPULSE,
+            IDLE
+        }
+
         Point pos;
         Sprite[] player;
         public Direction dir;

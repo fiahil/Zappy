@@ -22,6 +22,7 @@ namespace Viewer.Sources
         public List<Player> plist;
         public List<Egg> elist;
         public List<string> tlist;
+        public int t;
         Network server;
        
         Rectangle screen;

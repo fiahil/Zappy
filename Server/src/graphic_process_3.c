@@ -4,32 +4,17 @@
 
 #include	"def.h"
 #include	"graphic.h"
-
-static t_bool	str_is_num(char *str)
-{
-  unsigned int	i;
-
-  i = -1;
-  if (!str)
-    return (FALSE);
-  while (str[++i] && ((str[i] >= '0') && (str[i] <= '9')));
-  if (i != strlen(str))
-    return (FALSE);
-  return (TRUE);
-}
+#include	"algorithm.h"
 
 void		pin_process(t_graphic mn, char *param, t_data_serv ds)
 {
   t_iter	*it;
-  int		id;
 
-  if (!param || !str_is_num(param))
+  if (!param[0] || !str_is_num(param))
     return ;
-  id = atoi(param);
-  it = ds->player->head;
-  while (it && (((t_player)it->data)->id != id))
-    it = it->next;
-  pin(mn, ((t_player)it->data));
+  get_current_id(atoi(param));
+  if ((it = list_find_if(ds->player, &cmp_id)))
+    pin(mn, (*(t_player*)it->data));
 }
 
 void		sgt_process(t_graphic mn, char *param, t_data_serv ds)
@@ -40,7 +25,7 @@ void		sgt_process(t_graphic mn, char *param, t_data_serv ds)
 
 void		sst_process(t_graphic mn, char *param, t_data_serv ds)
 {
-  if (!param)
+  if (!param[0])
     return ;
   if (!str_is_num(param))
     return ;

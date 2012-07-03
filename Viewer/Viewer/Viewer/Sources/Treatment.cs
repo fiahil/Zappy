@@ -114,7 +114,7 @@ namespace Viewer.Sources
         private void pex(string[] a)
         {
             parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
-                   .st = State.EXPULSE;
+                   .st = Player.State.EXPULSE;
         }
 
         private void pbc(string[] a)
@@ -128,7 +128,7 @@ namespace Viewer.Sources
             foreach (string s in a.Skip(2))
             {
                 parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(s); })
-                    .st = State.INCANT;
+                    .st = Player.State.INCANT;
             }
         }
 
@@ -138,43 +138,55 @@ namespace Viewer.Sources
         private void pfk(string[] a)
         {
             parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
-                               .st = State.FORK;
+                               .st = Player.State.FORK;
         }
 
         private void pdr(string[] a)
         {
             parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
-                   .st = State.DROP;
+                   .st = Player.State.DROP;
         }
 
         private void pgt(string[] a)
         {
             parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
-                   .st = State.TAKE;
+                   .st = Player.State.TAKE;
         }
 
         private void pdi(string[] a)
         {
             parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
-                   .st = State.DEAD;
+                   .st = Player.State.DEAD;
         }
 
         private void enw(string[] a)
         {
-            parent.getEggs().Add(new Egg(int.Parse(a[2]), int.Parse(a[3])));
+            parent.getEggs().Add(new Egg(int.Parse(a[0]), int.Parse(a[2]), int.Parse(a[3])));
         }
+
         private void eht(string[] a)
         {
+            parent.getEggs().Find(delegate(Egg e) { return e.id == int.Parse(a[0]); })
+                .st = Egg.State.BROKE;
         }
+
         private void ebo(string[] a)
         {
+            parent.getEggs().Find(delegate(Egg e) { return e.id == int.Parse(a[0]); })
+                .st = Egg.State.BORN;
         }
+
         private void edi(string[] a)
         {
+            parent.getEggs().Find(delegate(Egg e) { return e.id == int.Parse(a[0]); })
+                .st = Egg.State.DEAD;
         }
+
         private void sgt(string[] a)
         {
+            parent.t = int.Parse(a[0]);
         }
+
         private void seg(string[] a)
         {
         }

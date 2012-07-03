@@ -8,12 +8,23 @@ namespace Viewer.Sources
 {
     public class Egg
     {
+        public enum State
+        {
+            BROKE,
+            BORN,
+            DEAD,
+            IDLE
+        }
+        
         Point pos;
         Sprite[] egg;
+        public State st;
+        public int id;
 
-        public Egg(int x, int y)
+        public Egg(int id, int x, int y)
         {
             pos = new Point(x, y);
+            this.id = id;
         }
     }
 }

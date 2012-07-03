@@ -32,7 +32,7 @@ namespace Viewer.Sources
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.map = new Map(this, 50, 50);
+            this.map = new Map(this);
             this.Components.Add(this.map);
             server = new Network();
             server.Initialize(this);
@@ -56,6 +56,11 @@ namespace Viewer.Sources
         public Map getMap()
         {
             return this.map;
+        }
+
+        public SpriteBatch getSb()
+        {
+            return this.spriteBatch;
         }
 
         /// <summary>
@@ -84,9 +89,9 @@ namespace Viewer.Sources
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            this.map.Load(this.Content, this.spriteBatch);
             this.inventory_page = new Sprite(this.Content.Load<Texture2D>("Tiles/map_inventory"));
             this.plist[0].Load(this.Content); // TODO
+            this.map.resizeMap(20, 20);
         }
 
         /// <summary>

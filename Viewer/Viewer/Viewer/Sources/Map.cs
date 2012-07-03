@@ -37,11 +37,11 @@ namespace Viewer.Sources
 
         SpriteFont sf;
 
-        public Map(Game game, uint size_x, uint size_y)
+        public Map(Game game)
             : base(game)
         {
-            this.dim = new Vector2(size_x, size_y);
-            this.map = new Elt[size_x, size_y];
+            this.dim = Vector2.Zero;
+            this.map = null;
             this.edge = new bool[4];
             this._wall = new Sprite[4];
             this.clouds = new Point[5];
@@ -52,13 +52,8 @@ namespace Viewer.Sources
             this.clouds[3] = new Point(1200, 300);
             this.clouds[4] = new Point(0, 250);
 
-
             this.screen = new Rectangle(0, 0, 1280, 720);
-            this.square = new Rectangle();
-            this.square.Height = 58;
-            this.square.Width = 155;
-            this.square.X = -(this.square.Width * (int)this.dim.X) / 4;
-            this.square.Y = (this.square.Height * (int)this.dim.Y) / 4;
+            this.square = Rectangle.Empty;
 
             this.repeat = TimeSpan.Zero;
             this.Hrep = TimeSpan.Zero;
@@ -82,6 +77,12 @@ namespace Viewer.Sources
         {
             this.map = new Elt[size_x, size_y];
             this.dim = new Vector2(size_x, size_y);
+            this.square = new Rectangle();
+            this.square.Height = 58;
+            this.square.Width = 155;
+            this.square.X = -(this.square.Width * (int)this.dim.X) / 4;
+            this.square.Y = (this.square.Height * (int)this.dim.Y) / 4;
+            this.Load(this.Game.Content, ((Main)this.Game).getSb());
         }
 
         public Vector2 getSize()
@@ -91,7 +92,9 @@ namespace Viewer.Sources
 
         public Elt getCase(int x, int y)
         {
-            return this.map[x, y];
+            if (this.map != null)
+                return this.map[x, y];
+            throw new InvalidOperationException("Empty map");
         }
 
         public Rectangle getSquare()
@@ -101,14 +104,16 @@ namespace Viewer.Sources
 
         public void unplug()
         {
-            this.map[this.square_details_pos.X, this.square_details_pos.Y].selected = false;
-            this.square_details_on = false;
+            if (this.map != null)
+            {
+                this.map[this.square_details_pos.X, this.square_details_pos.Y].selected = false;
+                this.square_details_on = false;
+            }
         }
 
         public void Load(ContentManager cm, SpriteBatch sb)
         {
             this.sb = sb;
-
             this.square_details = new Sprite(cm.Load<Texture2D>("Tiles/map_resources"));
             this.sf = cm.Load<SpriteFont>("Font/Classic");
             this._wall[0] = new Sprite(cm.Load<Texture2D>("Background/wall"));
@@ -139,6 +144,9 @@ namespace Viewer.Sources
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (this.map == null)
+                return;
 
             for (int i = 0; i < 5; ++i)
             {
@@ -221,6 +229,9 @@ namespace Viewer.Sources
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+
+            if (this.map == null)
+                return;
 
             this.sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 

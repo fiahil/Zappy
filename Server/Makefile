@@ -1,59 +1,29 @@
 ##
-## Fiahil
-## 06.06.2012
+## Makefile for zappy bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
+## 
+## Made by ulric lefevre
+## Login   <lefevr_u@epitech.net>
+## 
+## Started on  Tue Jul  3 13:29:53 2012 ulric lefevre
+## Last update Tue Jul  3 13:30:11 2012 ulric lefevre
 ##
 
 NAME	=	zappy
 
-MAKE=           make --no-print-directory
+MAKE	=       make --no-print-directory
 
-SRC	=	src/main.c			\
-		src/victory.c			\
+SRC	=	src/broadcast.c			\
+		src/clock.c			\
+		src/cmd_parse.c			\
+		src/egg_manager.c		\
+		src/fill_map.c			\
+		src/func_cleaner_1.c		\
+		src/func_cleaner_2.c		\
+		src/func_cmp.c			\
 		src/get_arg.c			\
 		src/get_opt_1.c			\
 		src/get_opt_2.c			\
 		src/get_opt_3.c			\
-		src/usage.c			\
-		src/stdout_serv.c		\
-		src/stdout_player.c		\
-		src/stdout_map.c		\
-		src/parse_arg.c			\
-		src/var_manager.c		\
-		src/select_manager_1.c		\
-		src/select_manager_2.c		\
-		src/select_tools.c		\
-		src/max_fd.c			\
-		src/func_cmp.c			\
-		src/server_routine.c		\
-		src/cmd_parse.c			\
-		src/map.c			\
-		src/clock.c			\
-		src/func_cleaner_1.c		\
-		src/func_cleaner_2.c		\
-		src/process_function_1.c	\
-		src/process_function_2.c	\
-		src/process_function_3.c	\
-		src/msgout_cmd_1.c		\
-		src/msgout_cmd_2.c		\
-		src/msgout_cmd_3.c		\
-		src/team_manager.c		\
-		src/string_manager.c		\
-		src/egg_manager.c		\
-		src/network.c			\
-		src/my_send.c			\
-		src/my_receive.c		\
-		src/handle_error.c		\
-		src/vision_tab.c		\
-		src/welcome_player.c		\
-		src/welcome_graphic.c		\
-		src/iter.c			\
-		src/iter_function.c		\
-		src/iter_tools.c		\
-		src/set_timeout.c		\
-		src/fill_map.c			\
-		src/res_manager.c		\
-		src/broadcast.c			\
-		src/graphic_tools.c		\
 		src/graphic_function_1.c	\
 		src/graphic_function_2.c	\
 		src/graphic_function_3.c	\
@@ -61,13 +31,48 @@ SRC	=	src/main.c			\
 		src/graphic_function_5.c	\
 		src/graphic_function_6.c	\
 		src/graphic_function_all.c	\
-		src/process_graphic_calls.c	\
-		src/incantation_manager.c	\
 		src/graphic_process_1.c		\
 		src/graphic_process_2.c		\
 		src/graphic_process_3.c		\
+		src/graphic_tools.c		\
+		src/handle_error.c		\
+		src/incantation_manager.c	\
+		src/iter.c			\
+		src/iter_function.c		\
 		src/iter_graphic.c		\
-		src/player.c
+		src/iter_tools.c		\
+		src/main.c			\
+		src/map.c			\
+		src/max_fd.c			\
+		src/msgout_cmd_1.c		\
+		src/msgout_cmd_2.c		\
+		src/msgout_cmd_3.c		\
+		src/my_receive.c		\
+		src/my_send.c			\
+		src/network.c			\
+		src/parse_arg.c			\
+		src/player.c			\
+		src/process_function_1.c	\
+		src/process_function_2.c	\
+		src/process_function_3.c	\
+		src/process_graphic_calls.c	\
+		src/res_manager.c		\
+		src/select_manager_1.c		\
+		src/select_manager_2.c		\
+		src/select_tools.c		\
+		src/server_routine.c		\
+		src/set_timeout.c		\
+		src/stdout_map.c		\
+		src/stdout_player.c		\
+		src/stdout_serv.c		\
+		src/string_manager.c		\
+		src/team_manager.c		\
+		src/usage.c			\
+		src/var_manager.c		\
+		src/victory.c			\
+		src/vision_tab.c		\
+		src/welcome_graphic.c		\
+		src/welcome_player.c
 
 OBJ	=	$(SRC:.c=.o)
 

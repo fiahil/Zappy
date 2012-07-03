@@ -84,7 +84,7 @@ namespace Viewer.Sources
 
         private void pnw(string[] a)
         {
-            parent.getPlayers().Add(new Player(int.Parse(a[0]), int.Parse(a[1]), Player.convertDir(int.Parse(a[2])), int.Parse(a[3]), a[4]));
+            parent.getPlayers().Add(new Player(this.parent.Content, int.Parse(a[0]), int.Parse(a[1]), Player.convertDir(int.Parse(a[2])), int.Parse(a[3]), a[4]));
         }
         private void ppo(string[] a)
         {

@@ -1,3 +1,13 @@
+/*
+** graphic_process_3.c for zappy bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Wed Jul  4 12:14:54 2012 ulric lefevre
+** Last update Wed Jul  4 12:14:55 2012 ulric lefevre
+*/
+
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<string.h>

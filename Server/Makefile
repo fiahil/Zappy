@@ -5,7 +5,7 @@
 ## Login   <lefevr_u@epitech.net>
 ## 
 ## Started on  Tue Jul  3 13:29:53 2012 ulric lefevre
-## Last update Tue Jul  3 13:30:11 2012 ulric lefevre
+## Last update Wed Jul  4 12:20:44 2012 ulric lefevre
 ##
 
 NAME	=	zappy
@@ -56,7 +56,8 @@ SRC	=	src/broadcast.c			\
 		src/process_function_1.c	\
 		src/process_function_2.c	\
 		src/process_function_3.c	\
-		src/process_graphic_calls.c	\
+		src/process_graphic_calls_1.c	\
+		src/process_graphic_calls_2.c	\
 		src/res_manager.c		\
 		src/select_manager_1.c		\
 		src/select_manager_2.c		\

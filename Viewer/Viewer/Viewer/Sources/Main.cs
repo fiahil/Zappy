@@ -111,7 +111,7 @@ namespace Viewer.Sources
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             this.inventory_page = new Sprite(this.Content.Load<Texture2D>("Tiles/map_inventory"));
-            this.map.resizeMap(1, 1);
+            this.map.resizeMap(50, 50);
         }
 
         /// <summary>

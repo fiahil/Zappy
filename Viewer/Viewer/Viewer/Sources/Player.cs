@@ -36,6 +36,7 @@ namespace Viewer.Sources
 
         Point pos;
         Sprite[] player;
+        Sprite[] slvl;
         public Direction dir;
         public int lvl;
         public int id;
@@ -46,18 +47,22 @@ namespace Viewer.Sources
 
         public Player(ContentManager cm)
         {
+
             this.pos = new Point(0, 0);
             this.dir = Direction.NORTH;
             this.player = new Sprite[4];
+            this.slvl = new Sprite[7];
             this.Load(cm);
+            this.lvl = 7;
         }
 
         public Player(ContentManager cm, int x, int y, Direction dir, int lvl, string team)
         {
             this.pos = new Point(x, y);
-            this.dir = Direction.NORTH;
+            this.dir = Direction.EAST;
             this.player = new Sprite[4];
             this.team = team;
+            this.lvl = lvl;
             this.Load(cm);
         }
 
@@ -105,6 +110,13 @@ namespace Viewer.Sources
             this.player[1] = new Sprite(cm.Load<Texture2D>("Players/FR"));
             this.player[2] = new Sprite(cm.Load<Texture2D>("Players/FL"));
             this.player[3] = new Sprite(cm.Load<Texture2D>("Players/BL"));
+            this.slvl[0] = new Sprite(cm.Load<Texture2D>("Level/level_1"));
+            this.slvl[1] = new Sprite(cm.Load<Texture2D>("Level/level_2"));
+            this.slvl[2] = new Sprite(cm.Load<Texture2D>("Level/level_3"));
+            this.slvl[3] = new Sprite(cm.Load<Texture2D>("Level/level_4"));
+            this.slvl[4] = new Sprite(cm.Load<Texture2D>("Level/level_5"));
+            this.slvl[5] = new Sprite(cm.Load<Texture2D>("Level/level_6"));
+            this.slvl[6] = new Sprite(cm.Load<Texture2D>("Level/level_7"));
         }
 
         public void Draw(GameTime gameTime, Rectangle square, Rectangle screen, SpriteBatch sb)
@@ -122,7 +134,12 @@ namespace Viewer.Sources
             p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
             Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
             if (screen.Intersects(tar))
+            {
                 this.player[(int)this.dir].Draw(sb, tar);
+                factX = (this.slvl[this.lvl - 1].getBounds().Width * (square.Width / 155.0));
+                factY = (this.slvl[this.lvl - 1].getBounds().Height * (square.Height / 58.0));
+                this.slvl[this.lvl - 1].Draw(sb, new Rectangle((int)(p.X + (int)(48 * (square.Width / 155.0))), (int)(p.Y - (int)(30 * (square.Height / 58.0))), (int)factX, (int)factY));
+            }
         }
 
         public Rectangle getBounds()

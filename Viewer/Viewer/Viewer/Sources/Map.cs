@@ -23,7 +23,6 @@ namespace Viewer.Sources
         Elt[,] map;
         bool[] edge;
         SpriteBatch sb;
-        TimeSpan repeat;
         TimeSpan Vrep;
         TimeSpan Hrep;
         uint view;
@@ -55,7 +54,6 @@ namespace Viewer.Sources
             this.screen = new Rectangle(0, 0, 1280, 720);
             this.square = Rectangle.Empty;
 
-            this.repeat = TimeSpan.Zero;
             this.Hrep = TimeSpan.Zero;
             this.Vrep = TimeSpan.Zero;
 
@@ -80,8 +78,8 @@ namespace Viewer.Sources
             this.square = new Rectangle();
             this.square.Height = 58;
             this.square.Width = 155;
-            this.square.X = -(this.square.Width * (int)this.dim.X) / 4;
-            this.square.Y = (this.square.Height * (int)this.dim.Y) / 4;
+            this.square.X = (int)(this.square.Height);
+            this.square.Y = (int)(this.square.Width);
             this.Load(this.Game.Content, ((Main)this.Game).getSb());
         }
 
@@ -161,29 +159,14 @@ namespace Viewer.Sources
                     this.clouds[i].X += 1;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Z) && this.square.Height < 60 && this.repeat <= gameTime.TotalGameTime)
-            {
-                this.square.Height += 1;
-                this.square.Width += 4;
-                this.square.X -= (int)this.dim.X  * 2;
-                this.repeat = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.X) && this.square.Height > 40 && this.repeat <= gameTime.TotalGameTime)
-            {
-                this.square.Height -= 1;
-                this.square.Width -= 4;
-                this.square.X += (int)this.dim.X * 2;
-                this.repeat = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
-            }
-
-            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && (this.view > 50 || edge[1]) && this.Vrep <= gameTime.TotalGameTime)
+            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && (this.view > 50 || this.edge[1]) && this.Vrep <= gameTime.TotalGameTime)
             {
                 this.square.Y += 20;
                 this.Vrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
                 this.edge[1] = false;
                 this.edge[2] = true;
             }
-            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && (this.view > 50 || edge[2]) && this.Vrep <= gameTime.TotalGameTime)
+            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && (this.view > 50 || this.edge[2]) && this.Vrep <= gameTime.TotalGameTime)
             {
                 this.square.Y -= 20;
                 this.Vrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);

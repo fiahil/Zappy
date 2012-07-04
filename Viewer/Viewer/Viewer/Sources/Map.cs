@@ -43,7 +43,7 @@ namespace Viewer.Sources
             this.dim = Vector2.Zero;
             this.map = null;
             this.edge = new bool[4];
-            this._wall = new Sprite[4];
+            this._wall = new Sprite[9];
             this.clouds = new Point[5];
 
             this.clouds[0] = new Point(300, 100);
@@ -120,6 +120,11 @@ namespace Viewer.Sources
             this._wall[1] = new Sprite(cm.Load<Texture2D>("Background/wall2"));
             this._wall[2] = new Sprite(cm.Load<Texture2D>("Background/wall3"));
             this._wall[3] = new Sprite(cm.Load<Texture2D>("Background/cloud"));
+            this._wall[4] = new Sprite(cm.Load<Texture2D>("Background/border"));
+            this._wall[5] = new Sprite(cm.Load<Texture2D>("Background/border2"));
+            this._wall[6] = new Sprite(cm.Load<Texture2D>("Background/top_border"));
+            this._wall[7] = new Sprite(cm.Load<Texture2D>("Background/top_border2"));
+            this._wall[8] = new Sprite(cm.Load<Texture2D>("Background/corner"));
 
             for (int i = 0; i < this.dim.X; ++i)
                 for (int j = 0; j < this.dim.Y; ++j)
@@ -202,11 +207,12 @@ namespace Viewer.Sources
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
+                Vector2 pos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
                 for (int i = 0; i < this.dim.X; ++i)
                 {
                     for (int j = 0; j < this.dim.Y; ++j)
                     {
-                        if (this.map[i, j].isInPolygon(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), this.square))
+                        if (this.map[i, j].isInPolygon(pos, this.square))
                         {
                             this.square_details_on = true;
                             this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
@@ -256,15 +262,16 @@ namespace Viewer.Sources
 
             this.view = 0;
             int j = 0;
+            int i = 0;
 
-            for (int i = 0; i < this.dim.X + 1; ++i, off.X += this.square.Width / 2, off.Y += this.square.Height / 2)
+            for (i = 0; i < this.dim.X + 1; ++i, off.X += this.square.Width / 2, off.Y += this.square.Height / 2)
             {
-                for (j = (int)this.dim.Y - 1; j >= 0; --j)
+                for (j = (int)this.dim.Y - 1; j >= -1; --j)
                 {
                     p.X = j * (this.square.Width / 2) + (off.X) + this.square.X;
                     p.Y = -j * (this.square.Height / 2) + (off.Y) + this.square.Y;
 
-                    if (i != 0)
+                    if (i != 0 && j != -1)
                     {
                         Rectangle target = new Rectangle(p.X, p.Y, this.square.Width, this.square.Height);
 
@@ -272,22 +279,32 @@ namespace Viewer.Sources
                             this.view += 1;
 
                         if (this.screen.Intersects(target))
-                            this.map[i - 1, j].Draw(target);
+                            this.map[i - 1, j ].Draw(target);
 
-                        if (this.map[i - 1, j].selected)
+                        if (this.map[i - 1, j ].selected)
                         {
                             inventory = new string[7];
-                            inventory[0] = this.map[i - 1, j].Iv.nourriture.ToString();
-                            inventory[1] = this.map[i - 1, j].Iv.linemate.ToString();
-                            inventory[2] = this.map[i - 1, j].Iv.deraumere.ToString();
-                            inventory[3] = this.map[i - 1, j].Iv.sibur.ToString();
-                            inventory[4] = this.map[i - 1, j].Iv.mendiane.ToString();
-                            inventory[5] = this.map[i - 1, j].Iv.phiras.ToString();
-                            inventory[6] = this.map[i - 1, j].Iv.thystame.ToString();
+                            inventory[0] = this.map[i - 1, j ].Iv.nourriture.ToString();
+                            inventory[1] = this.map[i - 1, j ].Iv.linemate.ToString();
+                            inventory[2] = this.map[i - 1, j ].Iv.deraumere.ToString();
+                            inventory[3] = this.map[i - 1, j ].Iv.sibur.ToString();
+                            inventory[4] = this.map[i - 1, j ].Iv.mendiane.ToString();
+                            inventory[5] = this.map[i - 1, j ].Iv.phiras.ToString();
+                            inventory[6] = this.map[i - 1, j ].Iv.thystame.ToString();
                         }
                     }
 
-                    if (i == 1)
+                    if (j == -1)
+                    {
+                        Rectangle tar =  new Rectangle((int)(p.X - (this.square.Width / 2) - (int)(34 * (this.square.Width / 155.0))), (int)(p.Y - (this.square.Height / 2) - (int)(0 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                        if (i == 1 && this.screen.Intersects(tar))
+                            this._wall[6].Draw(this.sb, tar);
+                        tar = new Rectangle((int)(p.X - (int)(34 * (this.square.Width / 155.0))), (int)(p.Y - (int)(0 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                        if (i != 0 && this.screen.Intersects(tar))
+                            this._wall[4].Draw(this.sb, tar);
+                    }
+
+                    if (j != -1 && i == 1)
                     {
                         p.X = j * (this.square.Width / 2) + this.square.X;
                         p.Y = -j * (this.square.Height / 2) + this.square.Y;
@@ -297,6 +314,7 @@ namespace Viewer.Sources
                             this._wall[2].Draw(this.sb, tar);
                     }
                 }
+                ++j;
                 if (i != 0)
                 {
                     p.X = ((int)this.dim.Y - 1 - j) * (this.square.Width / 2) + (off.X) + this.square.X;
@@ -306,6 +324,26 @@ namespace Viewer.Sources
                         this._wall[i % 2].Draw(this.sb, tar2);
                 }
             }
+
+            for (j = (int)this.dim.Y; j >= 0; --j)
+            {
+                p.X = j * (this.square.Width / 2) + (off.X) + this.square.X;
+                p.Y = -j * (this.square.Height / 2) + (off.Y) + this.square.Y;
+
+                Rectangle tar = new Rectangle((int)(p.X - (int)(33 * (this.square.Width / 155.0))), (int)(p.Y - (int)(0 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                if (j == (int)this.dim.Y && this.screen.Intersects(tar))
+                    this._wall[7].Draw(this.sb, tar);
+                else if (this.screen.Intersects(tar))
+                     this._wall[5].Draw(this.sb, tar);
+             }
+
+            p.X = -1 * (this.square.Width / 2) + ((this.square.Width / 2) * (int)this.dim.X) + this.square.X;
+            p.Y = 1 * (this.square.Height / 2) + ((this.square.Height / 2) * (int)this.dim.Y) + this.square.Y;
+
+            Rectangle tar3 = new Rectangle((int)(p.X + (int)(45 * (this.square.Width / 155.0))), (int)(p.Y - (int)(8 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+            if (this.screen.Intersects(tar3))
+                this._wall[8].Draw(this.sb, tar3);
+
             if (this.square_details_on)
             {
                 System.Diagnostics.Debug.Assert(inventory != null);

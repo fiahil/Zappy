@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:43 2012 ulric lefevre
-** Last update Sat Jun 30 20:31:47 2012 ulric lefevre
+** Last update Tue Jul  3 19:18:02 2012 ulric lefevre
 */
 
 #ifndef		__DEF_H__
@@ -209,6 +209,7 @@ struct			s_client_manager
   t_splitMode		mode;
   t_bool		online;
   t_bool		is_processing;
+  t_bool		read;
 };
 
 struct			s_player

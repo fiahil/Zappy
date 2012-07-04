@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Mon Jul  2 17:47:33 2012 ulric lefevre
+** Last update Tue Jul  3 19:59:30 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -34,14 +34,18 @@ void		iter_rds(void *ptr, size_t s)
   (void)s;
   sm = get_select_manager(NULL);
   ds = get_data_serv(NULL);
-  if ((*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->dead == FALSE
+  if ((*(t_player*)ptr)->cm.read
+      && (*(t_player*)ptr)->cm.online
+      && (*(t_player*)ptr)->dead == FALSE
       && select_r_isset(sm, (*(t_player*)ptr)->cm.sock.fd))
     server_routine_input(ds, *(t_player*)ptr);
-  if ((*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->deleted == FALSE
+  if ((*(t_player*)ptr)->cm.online
+      && (*(t_player*)ptr)->deleted == FALSE
       && select_w_isset(sm, (*(t_player*)ptr)->cm.sock.fd))
     server_routine_output(ds, *(t_player*)ptr);
-  if (!(*(t_player*)ptr)->cm.online && (*(t_player*)ptr)->dead == TRUE &&
-      (*(t_player*)ptr)->deleted == FALSE)
+  if (!(*(t_player*)ptr)->cm.online
+      && (*(t_player*)ptr)->dead == TRUE
+      && (*(t_player*)ptr)->deleted == FALSE)
   {
     (*(t_player*)ptr)->deleted = TRUE;
     close((*(t_player*)ptr)->cm.sock.fd);

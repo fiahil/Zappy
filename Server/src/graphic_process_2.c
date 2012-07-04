@@ -1,3 +1,13 @@
+/*
+** graphic_process_2.c for zappy bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Wed Jul  4 12:15:12 2012 ulric lefevre
+** Last update Wed Jul  4 12:15:13 2012 ulric lefevre
+*/
+
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<string.h>
@@ -5,6 +15,7 @@
 #include	"def.h"
 #include	"graphic.h"
 #include	"algorithm.h"
+#include	"graphic_tools.h"
 
 void		tna_process(t_graphic mn, char *param, t_data_serv ds)
 {

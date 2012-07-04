@@ -5,7 +5,7 @@
 ** Login   <mart_i@epitech.net>
 ** 
 ** Started on Mon Jul  2 15:03:00 2012 pierre martin
-** Last update Mon Jul  2 18:13:10 2012 ulric lefevre
+** Last update Wed Jul  4 13:46:19 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -19,7 +19,7 @@
 #include	"network.h"
 #include	"algorithm.h"
 
-static char* g_end_msg = NULL;
+static char*	g_end_msg = NULL;
 
 static int	is_level_height(void *data, size_t len)
 {

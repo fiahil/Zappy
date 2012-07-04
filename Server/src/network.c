@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:54 2012 ulric lefevre
-** Last update Mon Jun 25 18:24:34 2012 ulric lefevre
+** Last update Wed Jul  4 14:01:53 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -24,9 +24,9 @@
 #include	"handle_error.h"
 #include	"select_manager.h"
 
-int	set_connection(t_data_serv data_serv, int port)
+int		set_connection(t_data_serv data_serv, int port)
 {
-  int	op;
+  int		op;
 
   stdout_serv_status("INITIALIZING CONNECTION:\n", 0);
   stdout_serv_status("Initializing socket.\n", 0);

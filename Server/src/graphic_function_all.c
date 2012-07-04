@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 15:09:11 2012 ulric lefevre
-** Last update Mon Jun 25 15:09:19 2012 ulric lefevre
+** Last update Wed Jul  4 13:51:41 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -17,9 +17,9 @@
 #include	"graphic.h"
 #include	"def.h"
 
-void	ppo_general(t_list *mn, t_player play)
+void		ppo_general(t_list *mn, t_player play)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "ppo %d %d %d %d\n",
@@ -31,9 +31,9 @@ void	ppo_general(t_list *mn, t_player play)
   free(str);
 }
 
-void	pin_general(t_list *mn, t_player play)
+void		pin_general(t_list *mn, t_player play)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "pin %d %d %d %d %d %d %d %d %d %d\n",
@@ -51,7 +51,7 @@ void	pin_general(t_list *mn, t_player play)
   free(str);
 }
 
-void	bct_general(t_list *mn, t_square sq, t_pos p)
+void		bct_general(t_list *mn, t_square sq, t_pos p)
 {
   char		*str;
 
@@ -68,9 +68,9 @@ void	bct_general(t_list *mn, t_square sq, t_pos p)
   free(str);
 }
 
-void	plv_general(t_list *mn, int id, int lvl)
+void		plv_general(t_list *mn, int id, int lvl)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "plv %d %d\n", id, lvl);

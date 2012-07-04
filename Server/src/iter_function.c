@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Tue Jul  3 19:59:30 2012 ulric lefevre
+** Last update Wed Jul  4 13:49:21 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -26,7 +26,7 @@
 #include	"msgout_cmd.h"
 #include	"graphic.h"
 
-void		iter_rds(void *ptr, size_t s)
+void			iter_rds(void *ptr, size_t s)
 {
   t_select_manager	sm;
   t_data_serv		ds;
@@ -53,12 +53,12 @@ void		iter_rds(void *ptr, size_t s)
   }
 }
 
-void		iter_action(void *ptr, size_t s)
+void			iter_action(void *ptr, size_t s)
 {
-  t_u_timeval	current;
-  t_data_serv	ds;
-  t_bool	test;
-  t_player_action p_act;
+  t_u_timeval		current;
+  t_data_serv		ds;
+  t_bool		test;
+  t_player_action	p_act;
 
   (void)s;
   test = FALSE;
@@ -121,4 +121,17 @@ t_bool		iter_incant(t_player this, char *data, t_data_serv info)
   ((t_incant)data)->incantor->cm.is_processing = FALSE;
   incend_graphic(info, ((t_incant)data));
   return (TRUE);
+}
+
+void			iter_graphic_rds(void *ptr, size_t s)
+{
+  t_select_manager	sm;
+  t_data_serv		ds;
+
+  (void)s;
+  sm = get_select_manager(NULL);
+  ds = get_data_serv(NULL);
+  if (((t_graphic)ptr)->cm.online
+      && select_r_isset(sm, ((t_graphic)ptr)->cm.sock.fd))
+    graphic_routine_input(ds, ((t_graphic)ptr));
 }

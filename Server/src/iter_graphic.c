@@ -1,15 +1,27 @@
-#define _GNU_SOURCE
+/*
+** iter_graphic.c for zappy bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Wed Jul  4 13:55:31 2012 ulric lefevre
+** Last update Wed Jul  4 14:12:03 2012 ulric lefevre
+*/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "def.h"
-#include "var_manager.h"
-#include "select_manager.h"
-#include "network.h"
-#include "stdout.h"
-#include "msgout_cmd.h"
-#include "graphic.h"
+#define		_GNU_SOURCE
+
+#include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
+
+#include	"def.h"
+#include	"var_manager.h"
+#include	"select_manager.h"
+#include	"network.h"
+#include	"stdout.h"
+#include	"msgout_cmd.h"
+#include	"graphic.h"
+#include	"graphic_tools.h"
 
 static const t_u_parse_graph g_cmd[] =
   {
@@ -32,54 +44,16 @@ static const char *g_separator [] =
     "\0128"
   };
 
-static int	epur_str(char *str, char sep)
-{
-  int	i;
-  int	i2;
-  int	nb;
-
-  i = 0;
-  i2 = -1;
-  nb = 1;
-  while (str[++i2] && (str[i2] == ' ' || str[i2] == '\t' || str[i2] == sep));
-  while (str[i2])
-    if (str[i2] && str[i2] != '\t' && str[i2] != ' ' && str[i2] != sep)
-      str[i++] = str[i2++];
-    else if (str[i2])
-      {
-	while (str[i2] && (str[i2] == ' ' || str[i2] == '\t' || str[i2] == sep))
-	  i2++;
-	if (str[i2] && str[i2] != '\n')
-	  {
-	    str[i++] = sep;
-	    nb++;
-	  }
-      }
-  str[i] = '\0';
-  return (nb);
-}
-
-static void	print_stock(char **buf)
-{
-  char		*str;
-
-  str = NULL;
-  asprintf(&str, "add to stock = [%s]\n", (*buf));
-  stdout_serv_status(str, 1);
-  free(str);
-}
-
 static void	graphic_get_cmd(t_graphic this, t_bool *clear, char **buf)
 {
-  char	*tmp;
+  char		*tmp;
 
   tmp = NULL;
   if (!(tmp = strstr((*buf), g_separator[this->cm.mode])) && (*buf)[0] != '\0')
     {
       if (strlen(*buf) < (BUFFER_SIZE / 2))
-      	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
+	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
       *clear = TRUE;
-      print_stock(buf);
     }
   else if ((*buf)[0] != '\0')
     {
@@ -87,11 +61,8 @@ static void	graphic_get_cmd(t_graphic this, t_bool *clear, char **buf)
       tmp += (strlen(g_separator[this->cm.mode]));
       if (strlen((*buf)) < (BUFFER_SIZE / 2))
   	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
-      /* (this->cm.in->size < 10) ? */
-      /* 	(list_push_back_new(this->cm.in, this->cm.stock, */
-      /* 			    strlen(this->cm.stock) + 1)) : */
-      /* 	(msgout_fail(this)); */
-      list_push_back_new(this->cm.in, this->cm.stock, strlen(this->cm.stock) + 1);
+      list_push_back_new(this->cm.in, this->cm.stock,
+			 strlen(this->cm.stock) + 1);
       memset(this->cm.stock, '\0', BUFFER_SIZE);
       *buf = tmp;
     }
@@ -99,7 +70,7 @@ static void	graphic_get_cmd(t_graphic this, t_bool *clear, char **buf)
 
 static void	graphic_first_cmd(t_graphic this, char *buf)
 {
-  char	*tmp;
+  char		*tmp;
 
   tmp = NULL;
   if ((tmp = strstr(buf, "\n")) && buf[0] != '\0')
@@ -114,7 +85,7 @@ static void	graphic_first_cmd(t_graphic this, char *buf)
     }
 }
 
-void		get_graphic_commands(t_graphic this, char *buf)
+static void	get_graphic_commands(t_graphic this, char *buf)
 {
   t_bool	clear;
 
@@ -123,16 +94,6 @@ void		get_graphic_commands(t_graphic this, char *buf)
     graphic_first_cmd(this, buf);
   while (buf && buf[0] && !clear)
     graphic_get_cmd(this, &clear, &buf);
-}
-
-static char	*get_params(char *str)
-{
-  if (!str[0] ^ !strlen(str))
-    return (NULL);
-  epur_str(str, ' ');
-  if (!str)
-    return (NULL);
-  return (str);
 }
 
 static void	graphic_process(t_graphic this, t_data_serv ds)
@@ -145,7 +106,8 @@ static void	graphic_process(t_graphic this, t_data_serv ds)
     {
       i = -1;
       tmp = strdup(list_front(this->cm.in));
-      while (g_cmd[++i].cmd && strncmp(list_front(this->cm.in), g_cmd[i].cmd, g_cmd[i].size));
+      while (g_cmd[++i].cmd && strncmp(list_front(this->cm.in),
+				       g_cmd[i].cmd, g_cmd[i].size));
       if (g_cmd[i].cmd)
 	if (((i >= 4 && i <= 8) && ((char *)list_front(this->cm.in))[3]) ^
 	    ((i >= 0 && i <= 3) && !((char *)list_front(this->cm.in))[3]))
@@ -157,29 +119,17 @@ static void	graphic_process(t_graphic this, t_data_serv ds)
 
 void		graphic_routine_input(t_data_serv ds, t_graphic this)
 {
-  char	*buf;
+  char		*buf;
 
   if ((buf = my_receive(this->cm.sock.fd)) == (char*)(-1))
     {
       this->cm.online = FALSE;
       close(this->cm.sock.fd);
       select_del(ds, this->cm.sock.fd);
-      // stdout "disconnected" ?
+      stdout_serv_status("monitor disconnected", 0);
       return ;
     }
   get_graphic_commands(this, buf);
   graphic_process(this, ds);
   free(buf);
-}
-
-void		iter_graphic_rds(void *ptr, size_t s)
-{
-  t_select_manager	sm;
-  t_data_serv		ds;
-
-  (void)s;
-  sm = get_select_manager(NULL);
-  ds = get_data_serv(NULL);
-  if (((t_graphic)ptr)->cm.online && select_r_isset(sm, ((t_graphic)ptr)->cm.sock.fd))
-    graphic_routine_input(ds, ((t_graphic)ptr));
 }

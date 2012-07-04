@@ -62,3 +62,13 @@ int	epur_str(char *str, char sep)
   str[i] = '\0';
   return (nb);
 }
+
+char	*get_params(char *str)
+{
+  if (!str[0] ^ !strlen(str))
+    return (NULL);
+  epur_str(str, ' ');
+  if (!str)
+    return (NULL);
+  return (str);
+}

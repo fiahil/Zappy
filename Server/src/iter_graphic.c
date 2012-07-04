@@ -10,6 +10,7 @@
 #include "stdout.h"
 #include "msgout_cmd.h"
 #include "graphic.h"
+#include "graphic_tools.h"
 
 static const t_u_parse_graph g_cmd[] =
   {
@@ -32,16 +33,6 @@ static const char *g_separator [] =
     "\0128"
   };
 
-static void	print_stock(char **buf)
-{
-  char		*str;
-
-  str = NULL;
-  asprintf(&str, "add to stock = [%s]\n", (*buf));
-  stdout_serv_status(str, 1);
-  free(str);
-}
-
 static void	graphic_get_cmd(t_graphic this, t_bool *clear, char **buf)
 {
   char	*tmp;
@@ -52,7 +43,6 @@ static void	graphic_get_cmd(t_graphic this, t_bool *clear, char **buf)
       if (strlen(*buf) < (BUFFER_SIZE / 2))
       	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
       *clear = TRUE;
-      print_stock(buf);
     }
   else if ((*buf)[0] != '\0')
     {
@@ -94,16 +84,6 @@ static void	get_graphic_commands(t_graphic this, char *buf)
     graphic_get_cmd(this, &clear, &buf);
 }
 
-static char	*get_params(char *str)
-{
-  if (!str[0] ^ !strlen(str))
-    return (NULL);
-  epur_str(str, ' ');
-  if (!str)
-    return (NULL);
-  return (str);
-}
-
 static void	graphic_process(t_graphic this, t_data_serv ds)
 {
   char		*tmp;
@@ -140,4 +120,3 @@ void		graphic_routine_input(t_data_serv ds, t_graphic this)
   graphic_process(this, ds);
   free(buf);
 }
-

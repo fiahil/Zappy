@@ -5,6 +5,7 @@
 #include	"def.h"
 #include	"map.h"
 #include	"graphic.h"
+#include	"graphic_tools.h"
 
 void		msz_process(t_graphic mn, char *param, t_data_serv ds)
 {

@@ -5,6 +5,7 @@
 #include	"def.h"
 #include	"graphic.h"
 #include	"algorithm.h"
+#include	"graphic_tools.h"
 
 void		tna_process(t_graphic mn, char *param, t_data_serv ds)
 {

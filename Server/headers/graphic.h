@@ -13,9 +13,8 @@
 
 #include	"def.h"
 
-int	cmp_id(void *, size_t);
-int	get_current_id(int);
-int	str_is_num(char *);
+void	graphic_routine_input(t_data_serv, t_graphic);
+void	iter_graphic_rds(void *, size_t);
 
 void	msz_process(t_graphic, char *, t_data_serv);
 void	bct_process(t_graphic, char *, t_data_serv);

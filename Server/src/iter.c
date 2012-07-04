@@ -27,7 +27,7 @@
 #include	"func_cleaner.h"
 #include	"iter_function.h"
 #include	"select_manager.h"
-#include	"iter_graphic.h"
+#include	"graphic.h"
 
 static t_u_timeval	g_last = {0, 0};
 static t_u_timeval	g_current = {0, 0};

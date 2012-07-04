@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:12:58 2012 ulric lefevre
-** Last update Mon Jul  2 01:27:49 2012 ulric lefevre
+** Last update Wed Jul  4 15:40:05 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -73,6 +73,7 @@ static void	init_ghost(t_iter **ghost, t_player *p, int nb_c)
   (*p)->dead = TRUE;
   (*p)->deleted = TRUE;
   (*p)->cm.online = FALSE;
+  (*p)->cm.sock.fd = -1;
   (*p)->cm.out = NULL;
   (*p)->cm.in = NULL;
 }

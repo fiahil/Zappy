@@ -308,6 +308,18 @@
     </Compile>
     <Compile Include="Level\level_7.PNG">
       <Name>level_7</Name>
+	        <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  	<ItemGroup>
+    <Compile Include="Players\BroadcastL.png">
+      <Name>BroadcastL</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\BroadcastR.png">
+      <Name>BroadcastR</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

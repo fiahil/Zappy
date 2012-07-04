@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:36 2012 ulric lefevre
-** Last update Sun Jun 24 21:43:21 2012 ulric lefevre
+** Last update Wed Jul  4 13:52:45 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -49,7 +49,7 @@ void		seg(t_list *mn, int team)
 
 void		pgt(t_list *mn, int id, int res)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "pgt %d %d\n", id, res);

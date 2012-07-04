@@ -5,12 +5,13 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:29 2012 ulric lefevre
-** Last update Mon Jun 25 15:18:54 2012 ulric lefevre
+** Last update Wed Jul  4 13:46:09 2012 ulric lefevre
 */
 
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<string.h>
+
 #include	"def.h"
 
 static const	char *g_resources[8] =

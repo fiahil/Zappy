@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:20 2012 ulric lefevre
-** Last update Tue Jun 26 14:51:15 2012 pierre martin
+** Last update Wed Jul  4 13:53:26 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -94,7 +94,7 @@ static int	where_does_it_come_from(t_u_pos *dest, t_u_pos *src)
   return (ret);
 }
 
-void	message(t_player src, t_player dest, char *txt)
+void		message(t_player src, t_player dest, char *txt)
 {
   int		dir;
   char		*msg;

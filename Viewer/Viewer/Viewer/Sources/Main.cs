@@ -88,7 +88,18 @@ namespace Viewer.Sources
 
             this.plist.Add(new Player(this.Content)); //TO REMOVE
             this.plist.Add(new Player(this.Content)); //TO REMOVE
-            this.plist[0].setPos(4, 4);
+            this.plist.Add(new Player(this.Content)); //TO REMOVE
+            this.plist.Add(new Player(this.Content)); //TO REMOVE
+            this.plist.Add(new Player(this.Content)); //TO REMOVE
+            this.plist[2].setPos(2, 2);
+            this.plist[3].setPos(0, 2);
+            this.plist[4].setPos(2, 0);
+
+            this.plist[1].dir = Direction.EAST;
+            this.plist[2].dir = Direction.SOUTH;
+            this.plist[3].dir = Direction.WEST;
+            this.plist[4].dir = Direction.EAST;
+
         }
 
         /// <summary>
@@ -130,7 +141,18 @@ namespace Viewer.Sources
                 Point ppmouse = new Point(Mouse.GetState().X, Mouse.GetState().Y);
                 foreach (Player elt in this.plist)
                 {
-                    if (elt.getBounds().Contains(ppmouse))
+                    Point p;
+                    Point off;
+
+                    off.X = (elt.getPos().X + 1) * (this.map.getSquare().Width / 2);
+                    off.Y = (elt.getPos().X) * (this.map.getSquare().Height / 2);
+
+                    p.X = elt.getPos().Y * (this.map.getSquare().Width / 2) + off.X + this.map.getSquare().X;
+                    p.Y = -elt.getPos().Y * (this.map.getSquare().Height / 2) + off.Y + this.map.getSquare().Y;
+
+                    Rectangle bound = new Rectangle((int)(p.X + (int)(42 * (this.map.getSquare().Width / 155.0))), (int)(p.Y - (int)(19 * (this.map.getSquare().Height / 58.0))), (int)(elt.getBounds().Width * (this.map.getSquare().Width / 155.0)), (int)(elt.getBounds().Height * (this.map.getSquare().Height / 58.0)));
+
+                    if (bound.Contains(ppmouse))
                     {
                         this.inventory_details = elt;
                         this.inventory_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
@@ -157,7 +179,7 @@ namespace Viewer.Sources
 
             foreach (Player pelt in plist)
             {
-                pelt.Draw(gameTime, this.map.getSquare(), this.spriteBatch);
+                pelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch);
             }
 
             if (this.inventory_details != null)

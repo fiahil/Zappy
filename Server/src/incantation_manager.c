@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:54 2012 ulric lefevre
-** Last update Thu Jun 28 20:26:21 2012 ulric lefevre
+** Last update Wed Jul  4 13:49:50 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -30,7 +30,7 @@ static t_u_hash	g_hash_cmp[] =
     {6, 2, 2, 2, 2, 2, 1}
   };
 
-size_t	check_players(t_list *players, int lvl)
+size_t		check_players(t_list *players, int lvl)
 {
   t_iter	*it;
   size_t	count;
@@ -45,7 +45,7 @@ size_t	check_players(t_list *players, int lvl)
   return (count);
 }
 
-void	level_up(t_incant incant)
+void		level_up(t_incant incant)
 {
   t_iter	*it;
   t_map		map;
@@ -66,7 +66,7 @@ void	level_up(t_incant incant)
     map->map[incant->pos.y][incant->pos.x]->inv.resources[i] = 0;
 }
 
-void	fill_hashcode(t_hash hashcode, t_square cell)
+void		fill_hashcode(t_hash hashcode, t_square cell)
 {
   hashcode->nb_play = cell->players->size;
   hashcode->linemate = cell->inv.resources[LINEMATE];
@@ -77,7 +77,7 @@ void	fill_hashcode(t_hash hashcode, t_square cell)
   hashcode->thystame = cell->inv.resources[THYSTAME];
 }
 
-t_bool	incant_is_ok(t_incant incant)
+t_bool		incant_is_ok(t_incant incant)
 {
   t_u_hash	hashcode;
   t_u_pos	pos;
@@ -100,7 +100,7 @@ t_bool	incant_is_ok(t_incant incant)
   return (incant->status);
 }
 
-t_bool	init_incant(t_incant incant, t_player play, t_square cell, int t)
+t_bool		init_incant(t_incant incant, t_player play, t_square cell, int t)
 {
   memset(incant, 0, sizeof(*incant));
   incant->status = TRUE;

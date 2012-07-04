@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:30 2012 ulric lefevre
-** Last update Mon Jul  2 18:58:52 2012 ulric lefevre
+** Last update Wed Jul  4 13:52:39 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -16,9 +16,9 @@
 #include	"graphic.h"
 #include	"def.h"
 
-void	pnw(t_list *mn, t_player play)
+void		pnw(t_list *mn, t_player play)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   if (!play->cm.online)
@@ -35,9 +35,9 @@ void	pnw(t_list *mn, t_player play)
     }
 }
 
-void	ppo(t_graphic mn, t_player play)
+void		ppo(t_graphic mn, t_player play)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "ppo %d %d %d %d\n",
@@ -49,9 +49,9 @@ void	ppo(t_graphic mn, t_player play)
   free(str);
 }
 
-void	plv(t_graphic mn, int id, int lvl)
+void		plv(t_graphic mn, int id, int lvl)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "plv %d %d\n", id, lvl);
@@ -59,9 +59,9 @@ void	plv(t_graphic mn, int id, int lvl)
   free(str);
 }
 
-void	pin(t_graphic mn, t_player play)
+void		pin(t_graphic mn, t_player play)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "pin %d %d %d %d %d %d %d %d %d %d\n",
@@ -79,9 +79,9 @@ void	pin(t_graphic mn, t_player play)
   free(str);
 }
 
-void	pex(t_list *mn, int id)
+void		pex(t_list *mn, int id)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "pex %d\n", id);

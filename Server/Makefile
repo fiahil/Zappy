@@ -5,7 +5,7 @@
 ## Login   <lefevr_u@epitech.net>
 ## 
 ## Started on  Tue Jul  3 13:29:53 2012 ulric lefevre
-## Last update Tue Jul  3 13:30:11 2012 ulric lefevre
+## Last update Wed Jul  4 13:45:30 2012 ulric lefevre
 ##
 
 NAME	=	zappy
@@ -31,10 +31,10 @@ SRC	=	src/broadcast.c			\
 		src/graphic_function_5.c	\
 		src/graphic_function_6.c	\
 		src/graphic_function_all.c	\
-		src/graphic_process_tools.c	\
 		src/graphic_process_1.c		\
 		src/graphic_process_2.c		\
 		src/graphic_process_3.c		\
+		src/graphic_process_tools.c	\
 		src/graphic_tools.c		\
 		src/handle_error.c		\
 		src/incantation_manager.c	\
@@ -56,7 +56,8 @@ SRC	=	src/broadcast.c			\
 		src/process_function_1.c	\
 		src/process_function_2.c	\
 		src/process_function_3.c	\
-		src/process_graphic_calls.c	\
+		src/process_graphic_calls_1.c	\
+		src/process_graphic_calls_2.c	\
 		src/res_manager.c		\
 		src/select_manager_1.c		\
 		src/select_manager_2.c		\

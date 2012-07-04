@@ -36,3 +36,29 @@ t_bool	str_is_num(char *str)
   return (TRUE);
 }
 
+int	epur_str(char *str, char sep)
+{
+  int	i;
+  int	i2;
+  int	nb;
+
+  i = 0;
+  i2 = -1;
+  nb = 1;
+  while (str[++i2] && (str[i2] == ' ' || str[i2] == '\t' || str[i2] == sep));
+  while (str[i2])
+    if (str[i2] && str[i2] != '\t' && str[i2] != ' ' && str[i2] != sep)
+      str[i++] = str[i2++];
+    else if (str[i2])
+      {
+	while (str[i2] && (str[i2] == ' ' || str[i2] == '\t' || str[i2] == sep))
+	  i2++;
+	if (str[i2] && str[i2] != '\n')
+	  {
+	    str[i++] = sep;
+	    nb++;
+	  }
+      }
+  str[i] = '\0';
+  return (nb);
+}

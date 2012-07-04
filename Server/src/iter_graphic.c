@@ -32,33 +32,6 @@ static const char *g_separator [] =
     "\0128"
   };
 
-static int	epur_str(char *str, char sep)
-{
-  int	i;
-  int	i2;
-  int	nb;
-
-  i = 0;
-  i2 = -1;
-  nb = 1;
-  while (str[++i2] && (str[i2] == ' ' || str[i2] == '\t' || str[i2] == sep));
-  while (str[i2])
-    if (str[i2] && str[i2] != '\t' && str[i2] != ' ' && str[i2] != sep)
-      str[i++] = str[i2++];
-    else if (str[i2])
-      {
-	while (str[i2] && (str[i2] == ' ' || str[i2] == '\t' || str[i2] == sep))
-	  i2++;
-	if (str[i2] && str[i2] != '\n')
-	  {
-	    str[i++] = sep;
-	    nb++;
-	  }
-      }
-  str[i] = '\0';
-  return (nb);
-}
-
 static void	print_stock(char **buf)
 {
   char		*str;
@@ -87,10 +60,6 @@ static void	graphic_get_cmd(t_graphic this, t_bool *clear, char **buf)
       tmp += (strlen(g_separator[this->cm.mode]));
       if (strlen((*buf)) < (BUFFER_SIZE / 2))
   	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
-      /* (this->cm.in->size < 10) ? */
-      /* 	(list_push_back_new(this->cm.in, this->cm.stock, */
-      /* 			    strlen(this->cm.stock) + 1)) : */
-      /* 	(msgout_fail(this)); */
       list_push_back_new(this->cm.in, this->cm.stock, strlen(this->cm.stock) + 1);
       memset(this->cm.stock, '\0', BUFFER_SIZE);
       *buf = tmp;
@@ -114,7 +83,7 @@ static void	graphic_first_cmd(t_graphic this, char *buf)
     }
 }
 
-void		get_graphic_commands(t_graphic this, char *buf)
+static void	get_graphic_commands(t_graphic this, char *buf)
 {
   t_bool	clear;
 
@@ -172,14 +141,3 @@ void		graphic_routine_input(t_data_serv ds, t_graphic this)
   free(buf);
 }
 
-void		iter_graphic_rds(void *ptr, size_t s)
-{
-  t_select_manager	sm;
-  t_data_serv		ds;
-
-  (void)s;
-  sm = get_select_manager(NULL);
-  ds = get_data_serv(NULL);
-  if (((t_graphic)ptr)->cm.online && select_r_isset(sm, ((t_graphic)ptr)->cm.sock.fd))
-    graphic_routine_input(ds, ((t_graphic)ptr));
-}

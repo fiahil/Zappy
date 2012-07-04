@@ -118,3 +118,15 @@ t_bool		iter_incant(t_player this, char *data, t_data_serv info)
   incend_graphic(info, ((t_incant)data));
   return (TRUE);
 }
+
+void		iter_graphic_rds(void *ptr, size_t s)
+{
+  t_select_manager	sm;
+  t_data_serv		ds;
+
+  (void)s;
+  sm = get_select_manager(NULL);
+  ds = get_data_serv(NULL);
+  if (((t_graphic)ptr)->cm.online && select_r_isset(sm, ((t_graphic)ptr)->cm.sock.fd))
+    graphic_routine_input(ds, ((t_graphic)ptr));
+}

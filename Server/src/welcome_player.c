@@ -111,9 +111,11 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
       if ((ghost = list_find_cmp(server->player, &team_ghost, data, 0)))
 	{
 	  init_ghost(&ghost, &player, nb_client);
+	  player_graphic(server->monitor, (*(t_player*)ghost->data));
 	  return (TRUE);
 	}
       first_contact(&player, nb_client, data);
     }
+  player_graphic(server->monitor, player);
   return (TRUE);
 }

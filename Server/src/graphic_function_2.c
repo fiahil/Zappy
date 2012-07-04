@@ -21,18 +21,15 @@ void		pnw(t_list *mn, t_player play)
   char		*str;
 
   str = NULL;
-  if (!play->cm.online)
-    {
-      asprintf(&str, "pnw %d %d %d %d %d %s\n",
+  asprintf(&str, "pnw %d %d %d %d %d %s\n",
 	   play->id,
 	   play->pos.x,
 	   play->pos.y,
 	   play->dir + 1,
 	   play->lvl,
 	   play->team);
-      mn_push(mn, str);
-      free(str);
-    }
+  mn_push(mn, str);
+  free(str);
 }
 
 void		ppo(t_graphic mn, t_player play)

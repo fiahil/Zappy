@@ -81,7 +81,7 @@ t_bool		fork_process(t_player this, char *data, t_data_serv info)
   init_egg(&egg, this, info->t);
   list_push_back_new(info->egg, &egg, sizeof(egg));
   msgout_fork(this);
-  pfk(info->monitor, this->id);
+  enw(info->monitor, egg.id, this->id, &this->pos);
   return (TRUE);
 }
 

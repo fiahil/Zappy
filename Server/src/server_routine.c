@@ -51,6 +51,8 @@ static void		init_act(t_data_serv ds, t_player this)
 	  act.player = this;
 	  act.param = strdup(list_front(this->cm.in) + off);
 	  pqueue_push(ds->action, &(act), sizeof(act));
+	  if (!strcmp(list_front(this->cm.in), "fork"))
+	    pfk(ds->monitor, this->id);
 	  this->cm.is_processing = TRUE;
 	}
       list_pop_front(this->cm.in);
@@ -66,8 +68,6 @@ static t_bool	welcome_new_player(t_data_serv ds, t_player this, char *buf)
 	  this->dead = TRUE;
 	  msgout_fail(this);
 	}
-      else
-	player_graphic(ds->monitor, this);
       free(buf);
       return (0);
     }

@@ -72,9 +72,9 @@ namespace Viewer.Sources
                                                                            uint.Parse(a[3]),
                                                                            uint.Parse(a[4]),
                                                                            uint.Parse(a[5]),
-                                                                           uint.Parse(a[5]),
                                                                            uint.Parse(a[6]),
-                                                                           uint.Parse(a[7]));
+                                                                           uint.Parse(a[7]),
+                                                                           uint.Parse(a[8]));
         }
 
         private void tna(string[] a)

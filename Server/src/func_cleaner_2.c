@@ -39,6 +39,7 @@ void		clean_all(t_data_serv ds)
   int		x;
   int		y;
 
+  delete_list(ds->monitor);
   delete_list(ds->player);
   delete_list(ds->teams);
   delete_pqueue(ds->action);

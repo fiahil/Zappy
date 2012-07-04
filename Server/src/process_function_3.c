@@ -94,6 +94,8 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
   ti = list_find_cmp(players, &cmp_player_list, this, sizeof(*this));
   list_extract(players, ti);
   msgout_expulse(this, players->size ? TRUE : FALSE);
+  expulse_graphic(info->monitor, this,
+		  get_map(NULL)->map[this->pos.y][this->pos.x]->players);
   while (players->size)
     {
       p = list_front(players);
@@ -101,8 +103,6 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
 		      g_dir[this->dir][1]);
     }
   list_push_back(players, ti);
-  expulse_graphic(info->monitor, this,
-		  get_map(NULL)->map[this->pos.y][this->pos.x]->players);
   return (TRUE);
 }
 

@@ -78,3 +78,20 @@ int		player_cleaner(void *ptr, size_t s)
     }
   return (0);
 }
+
+int	monitor_cleaner(void *ptr, size_t s)
+{
+  t_graphic	mn;
+
+  (void)s;
+  mn = (t_graphic)ptr;
+  if (!mn->cm.online)
+    {
+      if (mn->cm.in)
+	delete_list(mn->cm.in);
+      if (mn->cm.out)
+	delete_list(mn->cm.out);
+      return (1);
+    }
+  return (0);
+}

@@ -32,6 +32,8 @@
 static t_u_timeval	g_last = {0, 0};
 static t_u_timeval	g_current = {0, 0};
 
+int	monitor_cleaner(void *ptr, size_t s);
+
 static int	get_dmg()
 {
   t_data_serv	ds;
@@ -88,6 +90,7 @@ static void	iter_lose_life(void *ptr, size_t s)
 static void	iter_lists(t_data_serv ds)
 {
   list_for_each(ds->monitor, &iter_graphic_rds);
+  list_remove_if(ds->monitor, &monitor_cleaner);
   list_for_each(ds->player, &iter_rds);
   list_for_each(&(ds->action->queue), &iter_action);
   list_remove_if(&(ds->action->queue), &action_cleaner);

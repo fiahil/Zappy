@@ -1,3 +1,13 @@
+/*
+** iter_graphic.h for zappy bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Wed Jul  4 12:14:44 2012 ulric lefevre
+** Last update Wed Jul  4 12:14:46 2012 ulric lefevre
+*/
+
 #ifndef __ITER_GRAPHIC_H__
 #define __ITER_GRAPHIC_H__
 

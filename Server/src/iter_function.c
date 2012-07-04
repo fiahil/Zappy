@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Tue Jul  3 19:59:30 2012 ulric lefevre
+** Last update Wed Jul  4 12:17:04 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -131,6 +131,7 @@ void		iter_graphic_rds(void *ptr, size_t s)
   (void)s;
   sm = get_select_manager(NULL);
   ds = get_data_serv(NULL);
-  if (((t_graphic)ptr)->cm.online && select_r_isset(sm, ((t_graphic)ptr)->cm.sock.fd))
+  if (((t_graphic)ptr)->cm.online
+      && select_r_isset(sm, ((t_graphic)ptr)->cm.sock.fd))
     graphic_routine_input(ds, ((t_graphic)ptr));
 }

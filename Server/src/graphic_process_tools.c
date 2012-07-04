@@ -1,3 +1,13 @@
+/*
+** graphic_process_tools.c for zappy bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Wed Jul  4 12:15:33 2012 ulric lefevre
+** Last update Wed Jul  4 12:15:35 2012 ulric lefevre
+*/
+
 #include <unistd.h>
 #include <string.h>
 #include "def.h"

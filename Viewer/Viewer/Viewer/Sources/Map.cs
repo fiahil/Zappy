@@ -15,7 +15,7 @@ namespace Viewer.Sources
     /// <summary>
     /// Map class representing the whole terrain with cristals (Elt matrix)
     /// </summary>
-    class Map : Microsoft.Xna.Framework.DrawableGameComponent
+    public class Map : Microsoft.Xna.Framework.DrawableGameComponent
     {
         Vector2 dim;
         Rectangle square;
@@ -37,13 +37,13 @@ namespace Viewer.Sources
 
         SpriteFont sf;
 
-        public Map(Game game, uint size_x, uint size_y)
+        public Map(Game game)
             : base(game)
         {
-            this.dim = new Vector2(size_x, size_y);
-            this.map = new Elt[size_x, size_y];
+            this.dim = Vector2.Zero;
+            this.map = null;
             this.edge = new bool[4];
-            this._wall = new Sprite[4];
+            this._wall = new Sprite[9];
             this.clouds = new Point[5];
 
             this.clouds[0] = new Point(300, 100);
@@ -52,13 +52,8 @@ namespace Viewer.Sources
             this.clouds[3] = new Point(1200, 300);
             this.clouds[4] = new Point(0, 250);
 
-
             this.screen = new Rectangle(0, 0, 1280, 720);
-            this.square = new Rectangle();
-            this.square.Height = 58;
-            this.square.Width = 155;
-            this.square.X = -(this.square.Width * (int)this.dim.X) / 4;
-            this.square.Y = (this.square.Height * (int)this.dim.Y) / 4;
+            this.square = Rectangle.Empty;
 
             this.repeat = TimeSpan.Zero;
             this.Hrep = TimeSpan.Zero;
@@ -78,21 +73,58 @@ namespace Viewer.Sources
         //TODO REMOVE THIS
         static Random p = new Random();
 
+        public void resizeMap(int size_x, int size_y)
+        {
+            this.map = new Elt[size_x, size_y];
+            this.dim = new Vector2(size_x, size_y);
+            this.square = new Rectangle();
+            this.square.Height = 58;
+            this.square.Width = 155;
+            this.square.X = -(this.square.Width * (int)this.dim.X) / 4;
+            this.square.Y = (this.square.Height * (int)this.dim.Y) / 4;
+            this.Load(this.Game.Content, ((Main)this.Game).getSb());
+        }
+
+        public Vector2 getSize()
+        {
+            return this.dim;
+        }
+
+        public Elt getCase(int x, int y)
+        {
+            if (this.map != null)
+                return this.map[x, y];
+            throw new InvalidOperationException("Empty map");
+        }
+
         public Rectangle getSquare()
         {
             return this.square;
         }
 
+        public void unplug()
+        {
+            if (this.map != null)
+            {
+                this.map[this.square_details_pos.X, this.square_details_pos.Y].selected = false;
+                this.square_details_on = false;
+            }
+        }
+
         public void Load(ContentManager cm, SpriteBatch sb)
         {
             this.sb = sb;
-
             this.square_details = new Sprite(cm.Load<Texture2D>("Tiles/map_resources"));
             this.sf = cm.Load<SpriteFont>("Font/Classic");
             this._wall[0] = new Sprite(cm.Load<Texture2D>("Background/wall"));
             this._wall[1] = new Sprite(cm.Load<Texture2D>("Background/wall2"));
             this._wall[2] = new Sprite(cm.Load<Texture2D>("Background/wall3"));
             this._wall[3] = new Sprite(cm.Load<Texture2D>("Background/cloud"));
+            this._wall[4] = new Sprite(cm.Load<Texture2D>("Background/border"));
+            this._wall[5] = new Sprite(cm.Load<Texture2D>("Background/border2"));
+            this._wall[6] = new Sprite(cm.Load<Texture2D>("Background/top_border"));
+            this._wall[7] = new Sprite(cm.Load<Texture2D>("Background/top_border2"));
+            this._wall[8] = new Sprite(cm.Load<Texture2D>("Background/corner"));
 
             for (int i = 0; i < this.dim.X; ++i)
                 for (int j = 0; j < this.dim.Y; ++j)
@@ -117,6 +149,9 @@ namespace Viewer.Sources
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (this.map == null)
+                return;
 
             for (int i = 0; i < 5; ++i)
             {
@@ -183,6 +218,7 @@ namespace Viewer.Sources
                             this.map[this.square_details_pos.X, this.square_details_pos.Y].selected = false;
                             this.map[j, i].selected = true;
                             this.square_details_pos = new Point(j, i);
+                            ((Main)this.Game).unplug();
                         }
                     }
                 }
@@ -198,6 +234,9 @@ namespace Viewer.Sources
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+
+            if (this.map == null)
+                return;
 
             this.sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
@@ -222,15 +261,16 @@ namespace Viewer.Sources
 
             this.view = 0;
             int j = 0;
+            int i = 0;
 
-            for (int i = 0; i < this.dim.X + 1; ++i, off.X += this.square.Width / 2, off.Y += this.square.Height / 2)
+            for (i = 0; i < this.dim.X + 1; ++i, off.X += this.square.Width / 2, off.Y += this.square.Height / 2)
             {
-                for (j = (int)this.dim.Y - 1; j >= 0; --j)
+                for (j = (int)this.dim.Y - 1; j >= -1; --j)
                 {
                     p.X = j * (this.square.Width / 2) + (off.X) + this.square.X;
                     p.Y = -j * (this.square.Height / 2) + (off.Y) + this.square.Y;
 
-                    if (i != 0)
+                    if (i != 0 && j != -1)
                     {
                         Rectangle target = new Rectangle(p.X, p.Y, this.square.Width, this.square.Height);
 
@@ -238,22 +278,32 @@ namespace Viewer.Sources
                             this.view += 1;
 
                         if (this.screen.Intersects(target))
-                            this.map[i - 1, j].Draw(target);
+                            this.map[i - 1, j ].Draw(target);
 
-                        if (this.map[i - 1, j].selected)
+                        if (this.map[i - 1, j ].selected)
                         {
                             inventory = new string[7];
-                            inventory[0] = this.map[i - 1, j].Iv.nourriture.ToString();
-                            inventory[1] = this.map[i - 1, j].Iv.linemate.ToString();
-                            inventory[2] = this.map[i - 1, j].Iv.deraumere.ToString();
-                            inventory[3] = this.map[i - 1, j].Iv.sibur.ToString();
-                            inventory[4] = this.map[i - 1, j].Iv.mendiane.ToString();
-                            inventory[5] = this.map[i - 1, j].Iv.phiras.ToString();
-                            inventory[6] = this.map[i - 1, j].Iv.thystame.ToString();
+                            inventory[0] = this.map[i - 1, j ].Iv.nourriture.ToString();
+                            inventory[1] = this.map[i - 1, j ].Iv.linemate.ToString();
+                            inventory[2] = this.map[i - 1, j ].Iv.deraumere.ToString();
+                            inventory[3] = this.map[i - 1, j ].Iv.sibur.ToString();
+                            inventory[4] = this.map[i - 1, j ].Iv.mendiane.ToString();
+                            inventory[5] = this.map[i - 1, j ].Iv.phiras.ToString();
+                            inventory[6] = this.map[i - 1, j ].Iv.thystame.ToString();
                         }
                     }
 
-                    if (i == 1)
+                    if (j == -1)
+                    {
+                        Rectangle tar =  new Rectangle((int)(p.X - (this.square.Width / 2) - (int)(34 * (this.square.Width / 155.0))), (int)(p.Y - (this.square.Height / 2) - (int)(0 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                        if (i == 1 && this.screen.Intersects(tar))
+                            this._wall[6].Draw(this.sb, tar);
+                        tar = new Rectangle((int)(p.X - (int)(34 * (this.square.Width / 155.0))), (int)(p.Y - (int)(0 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                        if (i != 0 && this.screen.Intersects(tar))
+                            this._wall[4].Draw(this.sb, tar);
+                    }
+
+                    if (j != -1 && i == 1)
                     {
                         p.X = j * (this.square.Width / 2) + this.square.X;
                         p.Y = -j * (this.square.Height / 2) + this.square.Y;
@@ -263,6 +313,7 @@ namespace Viewer.Sources
                             this._wall[2].Draw(this.sb, tar);
                     }
                 }
+                ++j;
                 if (i != 0)
                 {
                     p.X = ((int)this.dim.Y - 1 - j) * (this.square.Width / 2) + (off.X) + this.square.X;
@@ -272,6 +323,26 @@ namespace Viewer.Sources
                         this._wall[i % 2].Draw(this.sb, tar2);
                 }
             }
+
+            for (j = (int)this.dim.Y; j >= 0; --j)
+            {
+                p.X = j * (this.square.Width / 2) + (off.X) + this.square.X;
+                p.Y = -j * (this.square.Height / 2) + (off.Y) + this.square.Y;
+
+                Rectangle tar = new Rectangle((int)(p.X - (int)(33 * (this.square.Width / 155.0))), (int)(p.Y - (int)(0 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                if (j == (int)this.dim.Y && this.screen.Intersects(tar))
+                    this._wall[7].Draw(this.sb, tar);
+                else if (this.screen.Intersects(tar))
+                     this._wall[5].Draw(this.sb, tar);
+             }
+
+            p.X = -1 * (this.square.Width / 2) + ((this.square.Width / 2) * (int)this.dim.X) + this.square.X;
+            p.Y = 1 * (this.square.Height / 2) + ((this.square.Height / 2) * (int)this.dim.Y) + this.square.Y;
+
+            Rectangle tar3 = new Rectangle((int)(p.X + (int)(45 * (this.square.Width / 155.0))), (int)(p.Y - (int)(8 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+            if (this.screen.Intersects(tar3))
+                this._wall[8].Draw(this.sb, tar3);
+
             if (this.square_details_on)
             {
                 System.Diagnostics.Debug.Assert(inventory != null);

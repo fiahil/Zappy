@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Viewer.Sources
 {
-    enum Direction
+    public enum Direction
     {
         NORTH,
         EAST,
@@ -21,17 +21,55 @@ namespace Viewer.Sources
         LAST
     }
 
-    class Player
+    public class Player
     {
         Vector2 pos;
         Sprite[] player;
-        Direction dir;
+        public Direction dir;
+        public int lvl;
+        public int id;
+        public Inventory iv;
+        string team;
 
         public Player()
         {
             this.pos = new Vector2(0, 0);
             this.dir = Direction.NORTH;
             this.player = new Sprite[4];
+        }
+        public Player(int x, int y, Direction dir, int lvl, string team)
+        {
+            this.pos = new Vector2(x, y);
+            this.dir = Direction.NORTH;
+            this.player = new Sprite[4];
+        }
+
+        public Player setPos(int x, int y)
+        {
+            this.pos.X = x;
+            this.pos.Y = y;
+            return this;
+        }
+
+        static public Direction convertDir(int i)
+        {
+            if (i == 1)
+            {
+                return Direction.NORTH;
+            }
+            if (i == 2)
+            {
+                return Direction.EAST;
+            }
+            if (i == 3)
+            {
+                return Direction.SOUTH;
+            }
+            if (i == 4)
+            {
+                return Direction.WEST;
+            }
+            return Direction.LAST;
         }
 
         public void Load(ContentManager cm)
@@ -57,6 +95,11 @@ namespace Viewer.Sources
             p.Y = -(int)this.pos.Y * (square.Height / 2) + (off.Y) + square.Y;
             Rectangle tar = new Rectangle((int)(p.X + (int)(65 * (square.Width / 155.0))), (int)(p.Y - (int)(32 * (square.Height / 58.0))), (int)(factX), (int)(factY));
             this.player[(int)this.dir].Draw(sb, tar);
+        }
+
+        public Rectangle getBounds()
+        {
+            return this.player[0].getBounds();
         }
     }
 

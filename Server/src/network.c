@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:54 2012 ulric lefevre
-** Last update Wed Jul  4 13:47:42 2012 ulric lefevre
+** Last update Wed Jul  4 14:01:53 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -51,7 +51,7 @@ int		set_connection(t_data_serv data_serv, int port)
   return (0);
 }
 
-int		accept_connection(t_select_manager sm, t_data_serv d_serv, t_player p)
+int	accept_connection(t_select_manager sm, t_data_serv d_serv, t_player p)
 {
   socklen_t	len;
 

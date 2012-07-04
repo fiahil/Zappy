@@ -5,10 +5,10 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Wed Jul  4 13:55:31 2012 ulric lefevre
-** Last update Wed Jul  4 13:55:46 2012 ulric lefevre
+** Last update Wed Jul  4 14:12:03 2012 ulric lefevre
 */
 
-#define _GNU_SOURCE
+#define		_GNU_SOURCE
 
 #include	<stdio.h>
 #include	<stdlib.h>
@@ -52,7 +52,7 @@ static void	graphic_get_cmd(t_graphic this, t_bool *clear, char **buf)
   if (!(tmp = strstr((*buf), g_separator[this->cm.mode])) && (*buf)[0] != '\0')
     {
       if (strlen(*buf) < (BUFFER_SIZE / 2))
-      	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
+	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
       *clear = TRUE;
     }
   else if ((*buf)[0] != '\0')
@@ -61,7 +61,8 @@ static void	graphic_get_cmd(t_graphic this, t_bool *clear, char **buf)
       tmp += (strlen(g_separator[this->cm.mode]));
       if (strlen((*buf)) < (BUFFER_SIZE / 2))
   	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
-      list_push_back_new(this->cm.in, this->cm.stock, strlen(this->cm.stock) + 1);
+      list_push_back_new(this->cm.in, this->cm.stock,
+			 strlen(this->cm.stock) + 1);
       memset(this->cm.stock, '\0', BUFFER_SIZE);
       *buf = tmp;
     }
@@ -105,7 +106,8 @@ static void	graphic_process(t_graphic this, t_data_serv ds)
     {
       i = -1;
       tmp = strdup(list_front(this->cm.in));
-      while (g_cmd[++i].cmd && strncmp(list_front(this->cm.in), g_cmd[i].cmd, g_cmd[i].size));
+      while (g_cmd[++i].cmd && strncmp(list_front(this->cm.in),
+				       g_cmd[i].cmd, g_cmd[i].size));
       if (g_cmd[i].cmd)
 	if (((i >= 4 && i <= 8) && ((char *)list_front(this->cm.in))[3]) ^
 	    ((i >= 0 && i <= 3) && !((char *)list_front(this->cm.in))[3]))
@@ -124,7 +126,7 @@ void		graphic_routine_input(t_data_serv ds, t_graphic this)
       this->cm.online = FALSE;
       close(this->cm.sock.fd);
       select_del(ds, this->cm.sock.fd);
-      // stdout "disconnected" ?
+      stdout_serv_status("monitor disconnected", 0);
       return ;
     }
   get_graphic_commands(this, buf);

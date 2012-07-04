@@ -46,7 +46,7 @@ namespace Viewer.Sources
 
         public Player(ContentManager cm)
         {
-            this.pos = new Point(1, 1);
+            this.pos = new Point(0, 0);
             this.dir = Direction.NORTH;
             this.player = new Sprite[4];
             this.Load(cm);
@@ -66,6 +66,11 @@ namespace Viewer.Sources
             this.pos.X = x;
             this.pos.Y = y;
             return this;
+        }
+
+        public Point getPos()
+        {
+            return this.pos;
         }
 
         public void setBroadcast(string s)
@@ -102,7 +107,7 @@ namespace Viewer.Sources
             this.player[3] = new Sprite(cm.Load<Texture2D>("Players/BL"));
         }
 
-        public void Draw(GameTime gameTime, Rectangle square, SpriteBatch sb)
+        public void Draw(GameTime gameTime, Rectangle square, Rectangle screen, SpriteBatch sb)
         {
             Point p;
             Point off;
@@ -110,13 +115,14 @@ namespace Viewer.Sources
             double factX = (this.player[(int)this.dir].getBounds().Width * (square.Width / 155.0));
             double factY = (this.player[(int)this.dir].getBounds().Height * (square.Height / 58.0));
 
-            off.X = (int)(this.pos.X + 1) * (square.Width / 2);
-            off.Y = (int)(this.pos.Y) * (square.Height / 2);
+            off.X = (this.pos.X + 1) * (square.Width / 2);
+            off.Y = (this.pos.X) * (square.Height / 2);
 
-            p.X = (int)this.pos.Y  * (square.Width / 2) + (off.X) + square.X;
-            p.Y = -(int)this.pos.Y * (square.Height / 2) + (off.Y) + square.Y;
-            Rectangle tar = new Rectangle((int)(p.X + (int)(0 * (square.Width / 155.0))), (int)(p.Y - (int)(0 * (square.Height / 58.0))), (int)(factX), (int)(factY));
-            this.player[(int)this.dir].Draw(sb, tar);
+            p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
+            p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+            Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+            if (screen.Intersects(tar))
+                this.player[(int)this.dir].Draw(sb, tar);
         }
 
         public Rectangle getBounds()

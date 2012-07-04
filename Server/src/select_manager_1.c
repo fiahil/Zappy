@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:14 2012 ulric lefevre
-** Last update Fri Jun 29 13:03:20 2012 ulric lefevre
+** Last update Tue Jul  3 19:50:33 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -26,6 +26,7 @@ static void	select_set(void *ptr, size_t s)
   (void)s;
   if ((*(t_player*)ptr)->cm.online)
   {
+    (*(t_player*)ptr)->cm.read = TRUE;
     FD_SET((*(t_player*)ptr)->cm.sock.fd, &g_sm->rds);
     if (!(*(t_player*)ptr)->cm.out->empty)
       FD_SET((*(t_player*)ptr)->cm.sock.fd, &g_sm->wds);

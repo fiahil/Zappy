@@ -195,8 +195,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Background\border.png">
       <Name>border</Name>
+=======
+    <Compile Include="Tiles\base_highlited.png">
+      <Name>base_highlited</Name>
+>>>>>>> 30fe86b2a087ff097fcba53d38831e9a2a3d9ee3
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -216,15 +221,60 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Background\top_border2.png">
       <Name>top_border2</Name>
+=======
+    <Compile Include="Background\cloud.png">
+      <Name>cloud</Name>
+>>>>>>> 30fe86b2a087ff097fcba53d38831e9a2a3d9ee3
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Background\corner.png">
       <Name>corner</Name>
+=======
+    <Compile Include="Players\BL.png">
+      <Name>BL</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\BL_2.png">
+      <Name>BL_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\BR.png">
+      <Name>BR</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\BR_2.png">
+      <Name>BR_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\FL.png">
+      <Name>FL</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\FL_2.png">
+      <Name>FL_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\FR.png">
+      <Name>FR</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\FR_2.png">
+      <Name>FR_2</Name>
+>>>>>>> 30fe86b2a087ff097fcba53d38831e9a2a3d9ee3
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

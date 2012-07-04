@@ -84,7 +84,7 @@ namespace Viewer.Sources
 
         private void pnw(string[] a)
         {
-            parent.getPlayers().Add(new Player(int.Parse(a[0]), int.Parse(a[1]), Player.convertDir(int.Parse(a[2])), int.Parse(a[3]), a[4]));
+            parent.getPlayers().Add(new Player(this.parent.Content, int.Parse(a[0]), int.Parse(a[1]), Player.convertDir(int.Parse(a[2])), int.Parse(a[3]), a[4]));
         }
         private void ppo(string[] a)
         {
@@ -113,44 +113,80 @@ namespace Viewer.Sources
 
         private void pex(string[] a)
         {
+            parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
+                   .st = Player.State.EXPULSE;
         }
 
         private void pbc(string[] a)
         {
+            parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
+                .setBroadcast(a[1]);
         }
+
         private void pic(string[] a)
         {
+            foreach (string s in a.Skip(2))
+            {
+                parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(s); })
+                    .st = Player.State.INCANT;
+            }
         }
+
         private void pie(string[] a)
         {
         }
         private void pfk(string[] a)
         {
+            parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
+                               .st = Player.State.FORK;
         }
+
         private void pdr(string[] a)
         {
+            parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
+                   .st = Player.State.DROP;
         }
+
         private void pgt(string[] a)
         {
+            parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
+                   .st = Player.State.TAKE;
         }
+
         private void pdi(string[] a)
         {
+            parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
+                   .st = Player.State.DEAD;
         }
+
         private void enw(string[] a)
         {
+            parent.getEggs().Add(new Egg(int.Parse(a[0]), int.Parse(a[2]), int.Parse(a[3])));
         }
+
         private void eht(string[] a)
         {
+            parent.getEggs().Find(delegate(Egg e) { return e.id == int.Parse(a[0]); })
+                .st = Egg.State.BROKE;
         }
+
         private void ebo(string[] a)
         {
+            parent.getEggs().Find(delegate(Egg e) { return e.id == int.Parse(a[0]); })
+                .st = Egg.State.BORN;
         }
+
         private void edi(string[] a)
         {
+            parent.getEggs().Find(delegate(Egg e) { return e.id == int.Parse(a[0]); })
+                .st = Egg.State.DEAD;
         }
+
         private void sgt(string[] a)
         {
+            parent.t = int.Parse(a[0]);
         }
+
         private void seg(string[] a)
         {
         }

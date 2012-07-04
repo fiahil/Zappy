@@ -5,16 +5,18 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:18 2012 ulric lefevre
-** Last update Sun Jul  1 17:34:35 2012 ulric lefevre
+** Last update Tue Jul  3 18:34:04 2012 ulric lefevre
 */
 
 #include	<time.h>
 #include	<stdio.h>
 #include	<stdlib.h>
+#include	<arpa/inet.h>
 
 #include	"def.h"
 #include	"get_arg.h"
 #include	"algorithm.h"
+#include	"var_manager.h"
 
 void            stdout_logo()
 {
@@ -54,10 +56,11 @@ static void	print_list(void *data, size_t size)
          ((t_team)data)->name, ((t_team)data)->remaining);
 }
 
-void            stdout_data_serv(t_arg *args)
+void            stdout_data_serv(t_arg *args, t_data_serv ds)
 {
   printf("\033[1;33m");
   printf("Server Infos :\n");
+  printf("\t\tIP : %s\n", inet_ntoa(ds->sock.addr.sin_addr));
   printf("\t\tPort : %d\n", args->port);
   printf("\t\tExecution time : %d\n", args->exec_time);
   printf("World Infos : \n");

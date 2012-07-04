@@ -20,7 +20,9 @@ namespace Viewer.Sources
         SpriteBatch spriteBatch;
         public Map map;
         public List<Player> plist;
+        public List<Egg> elist;
         public List<string> tlist;
+        public int t;
         Network server;
        
         Rectangle screen;
@@ -37,7 +39,6 @@ namespace Viewer.Sources
             server = new Network();
             server.Initialize(this);
             this.plist = new List<Player>();
-            this.plist.Add(new Player());
             this.screen = new Rectangle(0, 0, 1280, 720);
             this.inventory_details = null;
             this.inventory_timer = TimeSpan.Zero;
@@ -51,6 +52,11 @@ namespace Viewer.Sources
         public List<Player> getPlayers()
         {
             return this.plist;
+        }
+
+        public List<Egg> getEggs()
+        {
+            return this.elist;
         }
 
         public Map getMap()
@@ -79,6 +85,8 @@ namespace Viewer.Sources
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
             this.graphics.ApplyChanges();
+
+            this.plist.Add(new Player(this.Content)); //TO REMOVE
         }
 
         /// <summary>
@@ -90,8 +98,7 @@ namespace Viewer.Sources
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             this.inventory_page = new Sprite(this.Content.Load<Texture2D>("Tiles/map_inventory"));
-            this.plist[0].Load(this.Content); // TODO
-            this.map.resizeMap(20, 20);
+            this.map.resizeMap(50, 50);
         }
 
         /// <summary>
@@ -110,6 +117,7 @@ namespace Viewer.Sources
         protected override void Update(GameTime gameTime)
         {
             server.Update();
+
             base.Update(gameTime);
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -117,9 +125,10 @@ namespace Viewer.Sources
 
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
+                Point ppmouse = new Point(Mouse.GetState().X, Mouse.GetState().Y);
                 foreach (Player elt in this.plist)
                 {
-                    if (elt.getBounds().Contains(new Point(Mouse.GetState().X, Mouse.GetState().Y)))
+                    if (elt.getBounds().Contains(ppmouse))
                     {
                         this.inventory_details = elt;
                         this.inventory_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
@@ -143,7 +152,12 @@ namespace Viewer.Sources
             GraphicsDevice.Clear(Color.AliceBlue);
             base.Draw(gameTime);
             this.spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend);
-            this.plist[0].Draw(gameTime, this.map.getSquare(), this.spriteBatch);
+
+            foreach (Player pelt in plist)
+            {
+                pelt.Draw(gameTime, this.map.getSquare(), this.spriteBatch);
+            }
+
             if (this.inventory_details != null)
                 this.inventory_page.Draw(this.spriteBatch, new Rectangle(this.Window.ClientBounds.Width - this.inventory_page.getBounds().Width, 0, this.inventory_page.getBounds().Width, this.inventory_page.getBounds().Height));
             this.spriteBatch.End();

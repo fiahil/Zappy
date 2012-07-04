@@ -96,9 +96,10 @@ namespace Viewer.Sources
             this.plist[4].setPos(2, 0);
 
             this.plist[1].dir = Direction.EAST;
-            this.plist[2].dir = Direction.EAST;
-            this.plist[3].dir = Direction.EAST;
+            this.plist[2].dir = Direction.SOUTH;
+            this.plist[3].dir = Direction.WEST;
             this.plist[4].dir = Direction.EAST;
+
         }
 
         /// <summary>

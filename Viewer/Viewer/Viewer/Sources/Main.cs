@@ -87,6 +87,8 @@ namespace Viewer.Sources
             this.graphics.ApplyChanges();
 
             this.plist.Add(new Player(this.Content)); //TO REMOVE
+            this.plist.Add(new Player(this.Content)); //TO REMOVE
+            this.plist[0].setPos(4, 4);
         }
 
         /// <summary>

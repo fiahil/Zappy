@@ -47,7 +47,7 @@ namespace Viewer.Sources
         public Player(ContentManager cm)
         {
             this.pos = new Point(1, 1);
-            this.dir = Direction.NORTH;
+            this.dir = Direction.WEST;
             this.player = new Sprite[4];
             this.Load(cm);
         }
@@ -55,7 +55,7 @@ namespace Viewer.Sources
         public Player(ContentManager cm, int x, int y, Direction dir, int lvl, string team)
         {
             this.pos = new Point(x, y);
-            this.dir = Direction.NORTH;
+            this.dir = Direction.EAST;
             this.player = new Sprite[4];
             this.team = team;
             this.Load(cm);
@@ -115,7 +115,7 @@ namespace Viewer.Sources
 
             p.X = (int)this.pos.Y  * (square.Width / 2) + (off.X) + square.X;
             p.Y = -(int)this.pos.Y * (square.Height / 2) + (off.Y) + square.Y;
-            Rectangle tar = new Rectangle((int)(p.X + (int)(0 * (square.Width / 155.0))), (int)(p.Y - (int)(0 * (square.Height / 58.0))), (int)(factX), (int)(factY));
+            Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)(factX), (int)(factY));
             this.player[(int)this.dir].Draw(sb, tar);
         }
 

@@ -147,11 +147,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Players\player1.png">
-      <Name>player1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Font\Classic.spritefont">
@@ -163,11 +158,6 @@
   <ItemGroup>
     <Compile Include="Tiles\map_inventory.png">
       <Name>map_inventory</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Players\player2.png">
-      <Name>player2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -195,13 +185,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Background\border.png">
       <Name>border</Name>
-=======
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Tiles\base_highlited.png">
       <Name>base_highlited</Name>
->>>>>>> 30fe86b2a087ff097fcba53d38831e9a2a3d9ee3
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -221,22 +213,27 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Background\top_border2.png">
       <Name>top_border2</Name>
-=======
-    <Compile Include="Background\cloud.png">
-      <Name>cloud</Name>
->>>>>>> 30fe86b2a087ff097fcba53d38831e9a2a3d9ee3
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
+    <Compile Include="Background\cloud.png">
+      <Name>cloud</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Background\corner.png">
       <Name>corner</Name>
-=======
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Players\BL.png">
       <Name>BL</Name>
       <Importer>TextureImporter</Importer>
@@ -274,7 +271,6 @@
     </Compile>
     <Compile Include="Players\FR_2.png">
       <Name>FR_2</Name>
->>>>>>> 30fe86b2a087ff097fcba53d38831e9a2a3d9ee3
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

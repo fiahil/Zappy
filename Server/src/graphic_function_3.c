@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 15:09:36 2012 ulric lefevre
-** Last update Tue Jun 26 16:31:10 2012 ulric lefevre
+** Last update Wed Jul  4 13:52:06 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -20,7 +20,7 @@
 
 void		pbc(t_list *mn, int id, char *msg)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "pbc %d %s\n", id, msg);
@@ -58,7 +58,7 @@ void		pic(t_list *mn, t_incant inc, t_list *play)
 
 void		pie(t_list *mn, t_incant inc)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "pie %d %d %d\n", inc->pos.x, inc->pos.y, inc->status);
@@ -68,7 +68,7 @@ void		pie(t_list *mn, t_incant inc)
 
 void		pfk(t_list *mn, int id)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "pfk %d\n", id);
@@ -78,7 +78,7 @@ void		pfk(t_list *mn, int id)
 
 void		pdr(t_list *mn, int id, int res)
 {
-  char	*str;
+  char		*str;
 
   str = NULL;
   asprintf(&str, "pdr %d %d\n", id, res);

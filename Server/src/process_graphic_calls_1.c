@@ -5,12 +5,12 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Tue Jun 26 11:13:01 2012 ulric lefevre
-** Last update Wed Jul  4 12:19:31 2012 ulric lefevre
+** Last update Wed Jul  4 13:54:54 2012 ulric lefevre
 */
 
-#include "graphic.h"
-#include "c_lists.h"
-#include "def.h"
+#include	"graphic.h"
+#include	"c_lists.h"
+#include	"def.h"
 
 void		drop_graphic(t_list *monitor, t_player this, t_square pos, int res)
 {

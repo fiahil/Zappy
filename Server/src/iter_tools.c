@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:41 2012 ulric lefevre
-** Last update Tue Jun 26 17:41:42 2012 ulric lefevre
+** Last update Wed Jul  4 13:48:20 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -25,8 +25,8 @@
 
 int		sort_player_life(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
 {
-  int	val1;
-  int	val2;
+  int		val1;
+  int		val2;
 
   (void)sz1;
   (void)sz2;
@@ -45,7 +45,7 @@ int		sort_player_life(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
   return (0);
 }
 
-void		push_new_action(t_player_action pa)
+void			push_new_action(t_player_action pa)
 {
   int			off;
   t_proc_func		ret;

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Wed Jul  4 12:16:22 2012 ulric lefevre
+** Last update Wed Jul  4 13:49:30 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -98,7 +98,7 @@ static void	iter_lists(t_data_serv ds)
   mn_out(ds->monitor);
 }
 
-void		iter_client()
+void			iter_client()
 {
   t_player		player;
   t_select_manager	sm;

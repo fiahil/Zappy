@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:27 2012 ulric lefevre
-** Last update Sat Jun 30 14:56:03 2012 ulric lefevre
+** Last update Wed Jul  4 13:47:22 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -45,7 +45,7 @@ t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
-t_bool		incantation_process(t_player this, char *data, t_data_serv info)
+t_bool			incantation_process(t_player this, char *data, t_data_serv info)
 {
   t_u_player_action	act;
   t_incant		incant;

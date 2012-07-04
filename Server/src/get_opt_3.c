@@ -1,11 +1,11 @@
-/*
+x/*
 ** get_opt_3.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server/src
 ** 
 ** Made by ulric lefevre
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:42 2012 ulric lefevre
-** Last update Sat Jun 23 20:16:43 2012 ulric lefevre
+** Last update Wed Jul  4 13:56:50 2012 ulric lefevre
 */
 
 #include	<stdio.h>

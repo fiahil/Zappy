@@ -5,16 +5,17 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Wed Jul  4 12:15:33 2012 ulric lefevre
-** Last update Wed Jul  4 12:15:35 2012 ulric lefevre
+** Last update Wed Jul  4 13:56:11 2012 ulric lefevre
 */
 
-#include <unistd.h>
-#include <string.h>
-#include "def.h"
+#include	<unistd.h>
+#include	<string.h>
+
+#include	"def.h"
 
 static int	g_current_id;
 
-t_bool	cmp_id(void *data, size_t len)
+t_bool		cmp_id(void *data, size_t len)
 {
   t_player	player;
 
@@ -25,7 +26,7 @@ t_bool	cmp_id(void *data, size_t len)
   return (0);
 }
 
-int	get_current_id(int id)
+int		get_current_id(int id)
 {
   if (id < 0)
     return (g_current_id);
@@ -33,7 +34,7 @@ int	get_current_id(int id)
   return (g_current_id);
 }
 
-t_bool	str_is_num(char *str)
+t_bool		str_is_num(char *str)
 {
   unsigned int	i;
 
@@ -46,11 +47,11 @@ t_bool	str_is_num(char *str)
   return (TRUE);
 }
 
-int	epur_str(char *str, char sep)
+int		epur_str(char *str, char sep)
 {
-  int	i;
-  int	i2;
-  int	nb;
+  int		i;
+  int		i2;
+  int		nb;
 
   i = 0;
   i2 = -1;
@@ -73,7 +74,7 @@ int	epur_str(char *str, char sep)
   return (nb);
 }
 
-char	*get_params(char *str)
+char		*get_params(char *str)
 {
   if (!str[0] ^ !strlen(str))
     return (NULL);

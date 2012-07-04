@@ -1,16 +1,27 @@
+/*
+** iter_graphic.c for zappy bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** 
+** Made by ulric lefevre
+** Login   <lefevr_u@epitech.net>
+** 
+** Started on  Wed Jul  4 13:55:31 2012 ulric lefevre
+** Last update Wed Jul  4 13:55:46 2012 ulric lefevre
+*/
+
 #define _GNU_SOURCE
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "def.h"
-#include "var_manager.h"
-#include "select_manager.h"
-#include "network.h"
-#include "stdout.h"
-#include "msgout_cmd.h"
-#include "graphic.h"
-#include "graphic_tools.h"
+#include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
+
+#include	"def.h"
+#include	"var_manager.h"
+#include	"select_manager.h"
+#include	"network.h"
+#include	"stdout.h"
+#include	"msgout_cmd.h"
+#include	"graphic.h"
+#include	"graphic_tools.h"
 
 static const t_u_parse_graph g_cmd[] =
   {
@@ -35,7 +46,7 @@ static const char *g_separator [] =
 
 static void	graphic_get_cmd(t_graphic this, t_bool *clear, char **buf)
 {
-  char	*tmp;
+  char		*tmp;
 
   tmp = NULL;
   if (!(tmp = strstr((*buf), g_separator[this->cm.mode])) && (*buf)[0] != '\0')
@@ -58,7 +69,7 @@ static void	graphic_get_cmd(t_graphic this, t_bool *clear, char **buf)
 
 static void	graphic_first_cmd(t_graphic this, char *buf)
 {
-  char	*tmp;
+  char		*tmp;
 
   tmp = NULL;
   if ((tmp = strstr(buf, "\n")) && buf[0] != '\0')
@@ -106,7 +117,7 @@ static void	graphic_process(t_graphic this, t_data_serv ds)
 
 void		graphic_routine_input(t_data_serv ds, t_graphic this)
 {
-  char	*buf;
+  char		*buf;
 
   if ((buf = my_receive(this->cm.sock.fd)) == (char*)(-1))
     {

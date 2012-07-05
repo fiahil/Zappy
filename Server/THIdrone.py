@@ -64,7 +64,7 @@ while flag:
   if rlist.count(sys.stdin) > 0:
     data = getcmd(sys.stdin.read(1), cmds, cmdr)
     if data == None:
-      print s.recv(32768)
+      continue
     if data[1] != "":
       print " -", data[0], data[1]
       s.send(data[0] + " " + data[1] + "\n")

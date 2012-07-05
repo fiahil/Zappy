@@ -80,7 +80,7 @@ namespace Viewer.Sources
             this.square.Width = 155;
             this.square.X = (int)(this.square.Height);
             this.square.Y = (int)(this.square.Width);
-            this.Load(this.Game.Content, ((Main)this.Game).getSb());
+            this.Load(this.Game.Content, ((Main)this.Game).getSb(), ((Main)this.Game).sf);
         }
 
         public Vector2 getSize()
@@ -109,11 +109,11 @@ namespace Viewer.Sources
             }
         }
 
-        public void Load(ContentManager cm, SpriteBatch sb)
+        public void Load(ContentManager cm, SpriteBatch sb, SpriteFont sf)
         {
             this.sb = sb;
             this.square_details = new Sprite(cm.Load<Texture2D>("Tiles/map_resources"));
-            this.sf = cm.Load<SpriteFont>("Font/Classic");
+            this.sf = sf;
             this._wall[0] = new Sprite(cm.Load<Texture2D>("Background/wall"));
             this._wall[1] = new Sprite(cm.Load<Texture2D>("Background/wall2"));
             this._wall[2] = new Sprite(cm.Load<Texture2D>("Background/wall3"));

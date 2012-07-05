@@ -3,6 +3,16 @@
  * 25.06.2012
  *)
 
+type resources =
+  | Nourriture
+  | Linemate
+  | Deraumere
+  | Sibur
+  | Mendiane
+  | Phiras
+  | Thystame
+
+
 type command =
   | Connect_nbr
   | Voir
@@ -14,8 +24,8 @@ type command =
   | Fork
   | Incantation
   | Broadcast of string
-  | Prend of string
-  | Pose of string
+  | Prend of resources
+  | Pose of resources
   | Team of string
 
 let bat_re = Array.make 10 (Str.regexp ".*")
@@ -42,8 +52,20 @@ let push = function
   | Fork                -> Socket.send "fork\n"
   | Incantation         -> Socket.send "incantation\n"
   | Broadcast value     -> Socket.send ("broadcast " ^ value ^ "\n")
-  | Prend value         -> Socket.send ("prend " ^ value ^ "\n")
-  | Pose value          -> Socket.send ("pose " ^ value ^ "\n")
+  | Prend Nourriture    -> Socket.send ("prend nourriture\n")
+  | Prend Linemate      -> Socket.send ("prend linemate\n")
+  | Prend Deraumere     -> Socket.send ("prend deraumere\n")
+  | Prend Sibur         -> Socket.send ("prend sibur\n")
+  | Prend Mendiane      -> Socket.send ("prend mendiane\n")
+  | Prend Phiras        -> Socket.send ("prend phiras\n")
+  | Prend Thystame      -> Socket.send ("prend thystame\n")
+  | Pose Nourriture    -> Socket.send ("prend nourriture\n")
+  | Pose Linemate      -> Socket.send ("prend linemate\n")
+  | Pose Deraumere     -> Socket.send ("prend deraumere\n")
+  | Pose Sibur         -> Socket.send ("prend sibur\n")
+  | Pose Mendiane      -> Socket.send ("prend mendiane\n")
+  | Pose Phiras        -> Socket.send ("prend phiras\n")
+  | Pose Thystame      -> Socket.send ("prend thystame\n")
   | Team value          -> Socket.send (value ^ "\n")
 
 let pull () =
@@ -91,16 +113,16 @@ let unitest () =
     push (Broadcast "Poney");
     ignore (Unix.select [] [] [] 0.5);
     pull ();
-    push (Prend "nourriture");
+    push (Prend Nourriture);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
-    push (Pose "linemate");
+    push (Pose Linemate);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
-    push (Prend "phiras");
+    push (Prend Phiras);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
-    push (Pose "mendiane");
+    push (Pose Mendiane);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
   end

@@ -12,6 +12,16 @@ type resources =
   | Phiras
   | Thystame
 
+type inventory =
+    {
+      nourriture : int;
+      linemate : int;
+      deraumere : int;
+      sibur : int;
+      mendiane : int;
+      phiras : int;
+      thystame : int
+    }
 
 type command =
   | Connect_nbr
@@ -28,18 +38,40 @@ type command =
   | Pose of resources
   | Team of string
 
-let bat_re = Array.make 10 (Str.regexp ".*")
+type response_param =
+  | RP_empty
+  | RP_inventaire of inventory
+  | RP_voir of inventory array
+  | RP_incantation of int
+  | RP_expulse of int
+  | RP_broadcast of (int * string)
+  | RP_map_size of (int * int)
+  | RP_connect of int
 
-let _ = bat_re.(0) <- Str.regexp "^[0-9]+\n"
-let _ = bat_re.(1) <- Str.regexp "^ok\n"
-let _ = bat_re.(2) <- Str.regexp "^ko\n"
-let _ = bat_re.(3) <- Str.regexp "^message [0-8],.*\n"
-let _ = bat_re.(4) <- Str.regexp "^deplacement: [1-8]\n"
-let _ = bat_re.(5) <- Str.regexp "^elevation en cours\n"
-let _ = bat_re.(6) <- Str.regexp "^niveau actuel : [2-8]\n"
-let _ = bat_re.(7) <- Str.regexp "^{nourriture [0-9]+,linemate [0-9]+,deraumere [0-9]+,sibur [0-9]+,mendiane [0-9]+,phiras [0-9]+,thystame [0-9]+}\n"
-let _ = bat_re.(8) <- Str.regexp "^{\\(\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*,\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*\\)*}\n"
-let _ = bat_re.(9) <- Str.regexp "^[0-9]+ [0-9]+\n"
+type response =
+  | R_map_size of response_param
+  | R_connect_nbr of response_param
+  | R_ok of response_param
+  | R_ko of response_param
+  | R_broadcast of response_param
+  | R_expulse of response_param
+  | R_elevation of response_param
+  | R_end_incant of response_param
+  | R_inventaire of response_param
+  | R_voir of response_param
+
+let bat_re = Array.make 10 (Str.regexp ".*", R_ko RP_empty)
+
+let _ = bat_re.(0) <- (Str.regexp "^[0-9]+\n", R_connect_nbr RP_empty)
+let _ = bat_re.(1) <- (Str.regexp "^ok\n", R_ok RP_empty)
+let _ = bat_re.(2) <- (Str.regexp "^ko\n", R_ko RP_empty)
+let _ = bat_re.(3) <- (Str.regexp "^message [0-8],.*\n", R_broadcast RP_empty)
+let _ = bat_re.(4) <- (Str.regexp "^deplacement: [1-8]\n", R_broadcast RP_empty)
+let _ = bat_re.(5) <- (Str.regexp "^elevation en cours\n", R_elevation RP_empty)
+let _ = bat_re.(6) <- (Str.regexp "^niveau actuel : [2-8]\n", R_end_incant RP_empty)
+let _ = bat_re.(7) <- (Str.regexp "^{nourriture [0-9]+,linemate [0-9]+,deraumere [0-9]+,sibur [0-9]+,mendiane [0-9]+,phiras [0-9]+,thystame [0-9]+}\n", R_inventaire RP_empty)
+let _ = bat_re.(8) <- (Str.regexp "^{\\(\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*,\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*\\)*}\n", R_voir RP_empty)
+let _ = bat_re.(9) <- (Str.regexp "^[0-9]+ [0-9]+\n", R_map_size RP_empty)
 
 let push = function
   | Connect_nbr         -> Socket.send "connect_nbr\n"
@@ -59,18 +91,18 @@ let push = function
   | Prend Mendiane      -> Socket.send ("prend mendiane\n")
   | Prend Phiras        -> Socket.send ("prend phiras\n")
   | Prend Thystame      -> Socket.send ("prend thystame\n")
-  | Pose Nourriture    -> Socket.send ("prend nourriture\n")
-  | Pose Linemate      -> Socket.send ("prend linemate\n")
-  | Pose Deraumere     -> Socket.send ("prend deraumere\n")
-  | Pose Sibur         -> Socket.send ("prend sibur\n")
-  | Pose Mendiane      -> Socket.send ("prend mendiane\n")
-  | Pose Phiras        -> Socket.send ("prend phiras\n")
-  | Pose Thystame      -> Socket.send ("prend thystame\n")
+  | Pose Nourriture     -> Socket.send ("prend nourriture\n")
+  | Pose Linemate       -> Socket.send ("prend linemate\n")
+  | Pose Deraumere      -> Socket.send ("prend deraumere\n")
+  | Pose Sibur          -> Socket.send ("prend sibur\n")
+  | Pose Mendiane       -> Socket.send ("prend mendiane\n")
+  | Pose Phiras         -> Socket.send ("prend phiras\n")
+  | Pose Thystame       -> Socket.send ("prend thystame\n")
   | Team value          -> Socket.send (value ^ "\n")
 
 let pull () =
   let rec aux idx str =
-    if idx < 10 && Str.string_match bat_re.(idx) str 0 then
+    if idx < 10 && Str.string_match (fst bat_re.(idx)) str 0 then
       print_endline str
     else if idx < 10 then
       aux (idx + 1) str

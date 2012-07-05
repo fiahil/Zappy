@@ -38,6 +38,6 @@ int		cmp_action(void *e1, size_t s1, void *e2, size_t s2)
 {
   (void)s1;
   (void)s2;
-  return (cmp_time(&((*((t_player_action*)e1))->time),
-		   &((*((t_player_action*)e2))->time)));
+  return (cmp_time(&((t_player_action)e1)->time,
+		   &((t_player_action)e2)->time));
 }

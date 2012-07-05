@@ -5,7 +5,7 @@
 ## Fri Mar 16 2012
 ##
 
-NAME	=	socktest
+NAME	=	drone
 
 ML	=	socket.ml	\
 		bridge.ml	\

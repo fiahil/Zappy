@@ -3,6 +3,15 @@
  * 25.06.2012
  *)
 
+type resources =
+  | Nourriture
+  | Linemate
+  | Deraumere
+  | Sibur
+  | Mendiane
+  | Phiras
+  | Thystame
+
 type command =
   | Connect_nbr
   | Voir
@@ -14,8 +23,8 @@ type command =
   | Fork
   | Incantation
   | Broadcast of string
-  | Prend of string
-  | Pose of string
+  | Prend of resources
+  | Pose of resources
   | Team of string
 
 val push : command -> unit

@@ -62,8 +62,9 @@ namespace Viewer.Sources
             this.team = "Poney";
         }
 
-        public Player(ContentManager cm, int x, int y, Direction dir, int lvl, string team, int idTeam)
+        public Player(ContentManager cm, int id, int x, int y, Direction dir, int lvl, string team, int idTeam)
         {
+            this.id = id;
             this.pos = new Point(x, y);
             this.dir = Direction.EAST;
             this.player = new Sprite[4];

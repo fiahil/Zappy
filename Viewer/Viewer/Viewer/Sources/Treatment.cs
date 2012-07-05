@@ -84,7 +84,7 @@ namespace Viewer.Sources
 
         private void pnw(string[] a)
         {
-            parent.getPlayers().Add(new Player(this.parent.Content, int.Parse(a[0]), int.Parse(a[1]), Player.convertDir(int.Parse(a[2])), int.Parse(a[3]), a[4], this.parent.tlist.FindIndex(delegate(string n) { return n == a[4]; })));
+            parent.getPlayers().Add(new Player(this.parent.Content, int.Parse(a[0]), int.Parse(a[1]), int.Parse(a[2]), Player.convertDir(int.Parse(a[3])), int.Parse(a[4]), a[5], this.parent.tlist.FindIndex(delegate(string n) { return n == a[5]; })));
         }
         private void ppo(string[] a)
         {

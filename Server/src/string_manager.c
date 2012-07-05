@@ -78,6 +78,13 @@ static void	treatment_first_cmd(t_player this, char *buf)
 	  else
 	    this->cm.mode = LF;
 	}
+      else
+	{
+	  if (this->cm.stock[strlen(this->cm.stock) - 1] == '\r')
+	    this->cm.mode = CRLF;
+	  else
+	    this->cm.mode = LF;
+	}
     }
 }
 

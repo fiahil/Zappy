@@ -22,7 +22,7 @@ void		monitor_graphic(t_graphic mn, t_data_serv ds, t_player p)
   bct_all(mn, get_map(NULL));
   tna(mn, ds->teams);
   pnw(ds->monitor, p);
-  it = ds->monitor->head;
+  it = ds->egg->head;
   while (it)
     {
       enw(ds->monitor, ((t_egg)it->data)->id, p->lvl, &p->pos);

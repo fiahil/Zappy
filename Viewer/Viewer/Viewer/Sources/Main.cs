@@ -145,6 +145,8 @@ namespace Viewer.Sources
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
+            this.plist.RemoveAll(delegate(Player p) { return p.st == Player.State.FINISHED; });
+
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
                 Point ppmouse = new Point(Mouse.GetState().X, Mouse.GetState().Y);

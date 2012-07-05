@@ -86,19 +86,17 @@ namespace Viewer.Sources
             this.graphics.PreferredBackBufferHeight = 720;
             this.graphics.ApplyChanges();
 
-            this.plist.Add(new Player(this.Content)); //TO REMOVE
-            this.plist.Add(new Player(this.Content)); //TO REMOVE
-            this.plist.Add(new Player(this.Content)); //TO REMOVE
-            this.plist.Add(new Player(this.Content)); //TO REMOVE
-            this.plist.Add(new Player(this.Content)); //TO REMOVE
-            this.plist[2].setPos(2, 2);
-            this.plist[3].setPos(0, 2);
-            this.plist[4].setPos(2, 0);
+            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            this.plist[1].setPos(2, 2);
+            this.plist[2].setPos(0, 2);
+            this.plist[3].setPos(2, 0);
 
-            this.plist[1].dir = Direction.EAST;
-            this.plist[2].dir = Direction.SOUTH;
-            this.plist[3].dir = Direction.WEST;
-            this.plist[4].dir = Direction.EAST;
+            this.plist[1].dir = Direction.SOUTH;
+            this.plist[2].dir = Direction.WEST;
+            this.plist[3].dir = Direction.EAST;
 
         }
 

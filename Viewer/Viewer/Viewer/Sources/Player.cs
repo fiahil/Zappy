@@ -42,7 +42,7 @@ namespace Viewer.Sources
         public int id;
         public Inventory iv;
         public State st;
-        string team;
+        public string team;
         string broadcast;
         TimeSpan broacastTimer;
         Sprite[] sbroadcast;
@@ -55,9 +55,11 @@ namespace Viewer.Sources
             this.slvl = new Sprite[7];
             this.sbroadcast = new Sprite[2];
             this.Load(cm, idTeam);
-            this.lvl = 1;
             this.broadcast = null;
             this.broacastTimer = TimeSpan.Zero;
+            this.lvl = 7;
+            this.iv = new Inventory();
+            this.team = "Poney";
         }
 
         public Player(ContentManager cm, int x, int y, Direction dir, int lvl, string team, int idTeam)

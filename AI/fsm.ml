@@ -18,7 +18,7 @@ let launch () =
         begin
           Bridge.push Bridge.Avance;
           timeout 0.1;
-          aux (Bridge.Prend "nourriture")
+          aux (Bridge.Prend Bridge.Nourriture)
         end
   in
     aux (Bridge.Avance)

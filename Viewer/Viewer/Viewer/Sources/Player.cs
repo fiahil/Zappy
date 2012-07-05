@@ -27,6 +27,7 @@ namespace Viewer.Sources
         {
             FORK,
             DEAD,
+            FINISHED,
             TAKE,
             DROP,
             INCANT,
@@ -46,6 +47,9 @@ namespace Viewer.Sources
         string broadcast;
         TimeSpan broacastTimer;
         Sprite[] sbroadcast;
+        TimeSpan deadTimer;
+        bool     dead;
+        Sprite   sdead;
 
         public Player(ContentManager cm, int idTeam)
         {
@@ -57,6 +61,8 @@ namespace Viewer.Sources
             this.Load(cm, idTeam);
             this.broadcast = null;
             this.broacastTimer = TimeSpan.Zero;
+            this.deadTimer = TimeSpan.Zero;
+            this.dead = false;
             this.lvl = 7;
             this.iv = new Inventory();
             this.team = "Poney";
@@ -73,6 +79,8 @@ namespace Viewer.Sources
             this.team = team;
             this.lvl = (lvl < 1 ? 1 : lvl);
             this.Load(cm, idTeam);
+            this.deadTimer = TimeSpan.Zero;
+            this.dead = false;
             this.broadcast = null;
             this.broacastTimer = TimeSpan.Zero;
         }
@@ -117,7 +125,7 @@ namespace Viewer.Sources
 
         public void Load(ContentManager cm, int teamId)
         {
-            if ((teamId % 2) == 0)
+            if ((teamId % 2) != 0)
             {
                 this.player[0] = new Sprite(cm.Load<Texture2D>("Players/FL"));
                 this.player[1] = new Sprite(cm.Load<Texture2D>("Players/FR"));
@@ -126,9 +134,9 @@ namespace Viewer.Sources
             }
             else
             {
-                this.player[0] = new Sprite(cm.Load<Texture2D>("Players/BR_2"));
+                this.player[0] = new Sprite(cm.Load<Texture2D>("Players/FL_2"));
                 this.player[1] = new Sprite(cm.Load<Texture2D>("Players/FR_2"));
-                this.player[2] = new Sprite(cm.Load<Texture2D>("Players/FL_2"));
+                this.player[2] = new Sprite(cm.Load<Texture2D>("Players/BR_2"));
                 this.player[3] = new Sprite(cm.Load<Texture2D>("Players/BL_2"));
             }
             this.slvl[0] = new Sprite(cm.Load<Texture2D>("Level/level_1"));
@@ -138,6 +146,7 @@ namespace Viewer.Sources
             this.slvl[4] = new Sprite(cm.Load<Texture2D>("Level/level_5"));
             this.slvl[5] = new Sprite(cm.Load<Texture2D>("Level/level_6"));
             this.slvl[6] = new Sprite(cm.Load<Texture2D>("Level/level_7"));
+            this.sdead = new Sprite(cm.Load<Texture2D>("Players/dead"));
             this.sbroadcast[0] = new Sprite(cm.Load<Texture2D>("Players/BroadcastL"));
             this.sbroadcast[1] = new Sprite(cm.Load<Texture2D>("Players/BroadcastR"));
         }
@@ -147,38 +156,65 @@ namespace Viewer.Sources
             Point p;
             Point off;
 
-            double factX = (this.player[(int)this.dir].getBounds().Width * (square.Width / 155.0));
-            double factY = (this.player[(int)this.dir].getBounds().Height * (square.Height / 58.0));
-
-            off.X = (this.pos.X + 1) * (square.Width / 2);
-            off.Y = (this.pos.X) * (square.Height / 2);
-
-            p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
-            p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
-            Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
-            if (screen.Intersects(tar))
+            if (this.st == State.DEAD && this.dead == false)
             {
-                this.player[(int)this.dir].Draw(sb, tar);
-                factX = (this.slvl[this.lvl - 1].getBounds().Width * (square.Width / 155.0));
-                factY = (this.slvl[this.lvl - 1].getBounds().Height * (square.Height / 58.0));
-                if (this.dir == Direction.SOUTH || dir == Direction.WEST)
-                    this.slvl[this.lvl - 1].Draw(sb, new Rectangle((int)(p.X + (int)(35 * (square.Width / 155.0))), (int)(p.Y - (int)(30 * (square.Height / 58.0))), (int)factX, (int)factY));
-                else
-                    this.slvl[this.lvl - 1].Draw(sb, new Rectangle((int)(p.X + (int)(48 * (square.Width / 155.0))), (int)(p.Y - (int)(30 * (square.Height / 58.0))), (int)factX, (int)factY));
-                if (this.broadcast != null)
+                this.deadTimer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
+                this.dead = true;
+            }
+            if (this.st == State.DEAD || this.st == State.FINISHED)
+            {
+                if (this.deadTimer >= gameTime.TotalGameTime)
                 {
-                    this.broacastTimer = gameTime.TotalGameTime + TimeSpan.FromSeconds(2);
-                    this.broadcast = null;
-                }
-                if (this.broacastTimer >= gameTime.TotalGameTime)
-                {
-                    factX = (this.sbroadcast[0].getBounds().Width * (square.Width / 155.0));
-                    factY = (this.sbroadcast[0].getBounds().Height * (square.Height / 58.0));
-                    if (this.dir == Direction.SOUTH || dir == Direction.WEST)
-                        this.sbroadcast[0].Draw(sb, new Rectangle((int)(p.X + (int)(78 * (square.Width / 155.0))), (int)(p.Y - (int)(25 * (square.Height / 58.0))), (int)factX, (int)factY));
-                    else
-                        this.sbroadcast[1].Draw(sb, new Rectangle((int)(p.X + (int)(35 * (square.Width / 155.0))), (int)(p.Y - (int)(25 * (square.Height / 58.0))), (int)factX, (int)factY));
+                    double factX = (this.sdead.getBounds().Width * (square.Width / 155.0));
+                    double factY = (this.sdead.getBounds().Height * (square.Height / 58.0));
 
+                    off.X = (this.pos.X + 1) * (square.Width / 2);
+                    off.Y = (this.pos.X) * (square.Height / 2);
+
+                    p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
+                    p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                    Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+                    if (screen.Intersects(tar))
+                        this.sdead.Draw(sb, tar);
+                }
+                else
+                    this.st = State.FINISHED;
+            }
+            else
+            {
+                double factX = (this.player[(int)this.dir].getBounds().Width * (square.Width / 155.0));
+                double factY = (this.player[(int)this.dir].getBounds().Height * (square.Height / 58.0));
+
+                off.X = (this.pos.X + 1) * (square.Width / 2);
+                off.Y = (this.pos.X) * (square.Height / 2);
+
+                p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
+                p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+                if (screen.Intersects(tar))
+                {
+                    this.player[(int)this.dir].Draw(sb, tar);
+                    factX = (this.slvl[this.lvl - 1].getBounds().Width * (square.Width / 155.0));
+                    factY = (this.slvl[this.lvl - 1].getBounds().Height * (square.Height / 58.0));
+                    if (this.dir == Direction.NORTH || dir == Direction.WEST)
+                        this.slvl[this.lvl - 1].Draw(sb, new Rectangle((int)(p.X + (int)(35 * (square.Width / 155.0))), (int)(p.Y - (int)(30 * (square.Height / 58.0))), (int)factX, (int)factY));
+                    else
+                        this.slvl[this.lvl - 1].Draw(sb, new Rectangle((int)(p.X + (int)(48 * (square.Width / 155.0))), (int)(p.Y - (int)(30 * (square.Height / 58.0))), (int)factX, (int)factY));
+                    if (this.broadcast != null)
+                    {
+                        this.broacastTimer = gameTime.TotalGameTime + TimeSpan.FromSeconds(2);
+                        this.broadcast = null;
+                    }
+                    if (this.broacastTimer >= gameTime.TotalGameTime)
+                    {
+                        factX = (this.sbroadcast[0].getBounds().Width * (square.Width / 155.0));
+                        factY = (this.sbroadcast[0].getBounds().Height * (square.Height / 58.0));
+                        if (this.dir == Direction.NORTH || dir == Direction.WEST)
+                            this.sbroadcast[0].Draw(sb, new Rectangle((int)(p.X + (int)(78 * (square.Width / 155.0))), (int)(p.Y - (int)(25 * (square.Height / 58.0))), (int)factX, (int)factY));
+                        else
+                            this.sbroadcast[1].Draw(sb, new Rectangle((int)(p.X + (int)(35 * (square.Width / 155.0))), (int)(p.Y - (int)(25 * (square.Height / 58.0))), (int)factX, (int)factY));
+
+                    }
                 }
             }
         }

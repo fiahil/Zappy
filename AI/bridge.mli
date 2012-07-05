@@ -27,7 +27,17 @@ type command =
   | Pose of resources
   | Team of string
 
+(*
+ * Send a command to the connected server via socket
+ *)
 val push : command -> unit
+
+(*
+ * Receive a command to the connected server via socket
+ *)
 val pull : unit -> unit
 
+(*
+ * Unitest
+ *)
 val unitest : unit -> unit

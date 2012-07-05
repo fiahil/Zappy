@@ -31,6 +31,8 @@ namespace Viewer.Sources
             TAKE,
             DROP,
             INCANT,
+            INCANT_SUCCESS,
+            INCANT_FAIL,
             EXPULSE,
             IDLE
         }

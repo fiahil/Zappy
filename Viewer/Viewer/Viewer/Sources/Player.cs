@@ -42,7 +42,7 @@ namespace Viewer.Sources
         public int id;
         public Inventory iv;
         public State st;
-        string team;
+        public string team;
         string broadcast;
 
         public Player(ContentManager cm)
@@ -54,6 +54,8 @@ namespace Viewer.Sources
             this.slvl = new Sprite[7];
             this.Load(cm);
             this.lvl = 7;
+            this.iv = new Inventory();
+            this.team = "Poney";
         }
 
         public Player(ContentManager cm, int x, int y, Direction dir, int lvl, string team)

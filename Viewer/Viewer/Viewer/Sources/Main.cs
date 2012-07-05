@@ -22,6 +22,7 @@ namespace Viewer.Sources
         public List<Player> plist;
         public List<Egg> elist;
         public List<string> tlist;
+        public SpriteFont sf;
         public int t;
         Network server;
        
@@ -111,6 +112,8 @@ namespace Viewer.Sources
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             this.inventory_page = new Sprite(this.Content.Load<Texture2D>("Tiles/map_inventory"));
+            this.sf = this.Content.Load<SpriteFont>("Font/Classic");
+
             this.map.resizeMap(50, 50);
         }
 
@@ -183,7 +186,18 @@ namespace Viewer.Sources
             }
 
             if (this.inventory_details != null)
+            {
                 this.inventory_page.Draw(this.spriteBatch, new Rectangle(this.Window.ClientBounds.Width - this.inventory_page.getBounds().Width, 0, this.inventory_page.getBounds().Width, this.inventory_page.getBounds().Height));
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.nourriture.ToString(), new Vector2(1200, 100), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.linemate.ToString(), new Vector2(1200, 155), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.deraumere.ToString(), new Vector2(1200, 210), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.sibur.ToString(), new Vector2(1200, 265), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.mendiane.ToString(), new Vector2(1200, 325), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.phiras.ToString(), new Vector2(1200, 380), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.thystame.ToString(), new Vector2(1200, 440), Color.Black);
+				this.spriteBatch.DrawString(this.sf, this.inventory_details.lvl.ToString(), new Vector2(1120, 492), Color.Black);
+				this.spriteBatch.DrawString(this.sf, this.inventory_details.team, new Vector2(1120, 532), Color.Black);
+            }
             this.spriteBatch.End();
         }
     }

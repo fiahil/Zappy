@@ -16,8 +16,8 @@ namespace Viewer.Sources
     {
         NORTH,
         EAST,
-        WEST,
         SOUTH,
+        WEST,
         LAST
     }
 
@@ -66,7 +66,7 @@ namespace Viewer.Sources
         {
             this.id = id;
             this.pos = new Point(x, y);
-            this.dir = Direction.EAST;
+            this.dir = dir;
             this.player = new Sprite[4];
             this.slvl = new Sprite[7];
             this.sbroadcast = new Sprite[2];
@@ -119,9 +119,9 @@ namespace Viewer.Sources
         {
             if ((teamId % 2) == 0)
             {
-                this.player[0] = new Sprite(cm.Load<Texture2D>("Players/BR"));
+                this.player[0] = new Sprite(cm.Load<Texture2D>("Players/FL"));
                 this.player[1] = new Sprite(cm.Load<Texture2D>("Players/FR"));
-                this.player[2] = new Sprite(cm.Load<Texture2D>("Players/FL"));
+                this.player[2] = new Sprite(cm.Load<Texture2D>("Players/BR"));
                 this.player[3] = new Sprite(cm.Load<Texture2D>("Players/BL"));
             }
             else

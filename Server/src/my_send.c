@@ -18,6 +18,11 @@
 int		my_send(int fd, char *msg)
 {
   if (send(fd, msg, strlen(msg), MSG_NOSIGNAL) == -1)
-    return (handle_error("my_send", strerror(errno), -1));
+    {
+      if (errno != EPIPE)
+	return (handle_error("my_send", strerror(errno), -1));
+      else
+      	return (-2);
+    }
   return (0);
 }

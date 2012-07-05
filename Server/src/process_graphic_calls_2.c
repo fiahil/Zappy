@@ -15,12 +15,19 @@
 
 void		monitor_graphic(t_graphic mn, t_data_serv ds, t_player p)
 {
+  t_iter	*it;
+
   msz(mn, get_map(NULL)->size_x, get_map(NULL)->size_y);
   sgt(mn, ds->t);
   bct_all(mn, get_map(NULL));
   tna(mn, ds->teams);
   pnw(ds->monitor, p);
-  enw(ds->monitor, ds->egg->size, p->lvl, &p->pos);
+  it = ds->monitor->head;
+  while (it)
+    {
+      enw(ds->monitor, ((t_egg)it->data)->id, p->lvl, &p->pos);
+      it = it->next;
+    }
 }
 
 void		player_graphic(t_list *mn, t_player this)

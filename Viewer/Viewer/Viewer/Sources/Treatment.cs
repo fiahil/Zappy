@@ -134,6 +134,10 @@ namespace Viewer.Sources
 
         private void pie(string[] a)
         {
+            foreach (Player p in parent.getPlayers().FindAll(delegate(Player p) { return p.getPos().X == int.Parse(a[0]) && p.getPos().Y == int.Parse(a[1]); }))
+            {
+                p.st = int.Parse(a[2]) == 0 ? Player.State.INCANT_FAIL : Player.State.INCANT_SUCCESS;
+            }
         }
         private void pfk(string[] a)
         {

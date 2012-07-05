@@ -38,8 +38,9 @@ namespace Viewer.Sources
             this.map = new Map(this);
             this.Components.Add(this.map);
             server = new Network();
-            server.Initialize(this);
             this.plist = new List<Player>();
+            this.elist = new List<Egg>();
+            this.tlist = new List<string>();
             this.screen = new Rectangle(0, 0, 1280, 720);
             this.inventory_details = null;
             this.inventory_timer = TimeSpan.Zero;
@@ -86,18 +87,19 @@ namespace Viewer.Sources
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
             this.graphics.ApplyChanges();
+            server.Initialize(this);
 
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist[1].setPos(2, 2);
-            this.plist[2].setPos(0, 2);
-            this.plist[3].setPos(2, 0);
+            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            //this.plist[1].setPos(2, 2);
+            //this.plist[2].setPos(0, 2);
+            //this.plist[3].setPos(2, 0);
 
-            this.plist[1].dir = Direction.SOUTH;
-            this.plist[2].dir = Direction.WEST;
-            this.plist[3].dir = Direction.EAST;
+            //this.plist[1].dir = Direction.SOUTH;
+            //this.plist[2].dir = Direction.WEST;
+            //this.plist[3].dir = Direction.EAST;
 
         }
 

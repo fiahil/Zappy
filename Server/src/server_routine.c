@@ -115,7 +115,13 @@ void		server_routine_output(t_data_serv ds, t_player this)
 {
   (void)ds;
   assert(!this->cm.out->empty);
-  my_send(this->cm.sock.fd, list_front(this->cm.out));
+  if (my_send(this->cm.sock.fd, list_front(this->cm.out)) == -2)
+    {
+      this->dead = TRUE;
+      get_current(this);
+      list_remove_if(&(ds->action->queue), &del_player_action);
+      stdout_player_status("disconnected", this->id);
+    }
   list_pop_front(this->cm.out);
   if (this->dead == TRUE && this->deleted == FALSE)
   {

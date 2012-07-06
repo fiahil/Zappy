@@ -3,26 +3,6 @@
  * 25.06.2012
  *)
 
-type resources =
-  | Nourriture
-  | Linemate
-  | Deraumere
-  | Sibur
-  | Mendiane
-  | Phiras
-  | Thystame
-
-type inventory =
-    {
-      nourriture : int;
-      linemate : int;
-      deraumere : int;
-      sibur : int;
-      mendiane : int;
-      phiras : int;
-      thystame : int
-    }
-
 type command =
   | Connect_nbr
   | Voir
@@ -100,10 +80,97 @@ let push = function
   | Pose Thystame       -> Socket.send "pose thystame\n"
   | Team value          -> Socket.send (value ^ "\n")
 
+let voir_cmd str =
+  let rec re = Str.regexp "[{}, ]"
+  and
+          aux bat = function
+    | []                        -> Array.of_list (List.rev bat)
+    | (Str.Delim "{")::tail     -> aux bat tail
+    | (Str.Delim " ")::tail     -> aux bat tail
+    | (Str.Delim "}")::tail     -> aux bat tail
+    | (Str.Delim ",")::tail     ->
+        aux ({nourriture = 0;
+              linemate = 0;
+              deraumere = 0;
+              sibur = 0;
+              mendiane = 0;
+              phiras = 0;
+              thystame = 0}::bat) tail
+    | (Str.Text "nourriture")::tail ->
+        aux ({nourriture = (List.hd bat).nourriture + 1;
+              linemate = (List.hd bat).linemate;
+              deraumere = (List.hd bat).deraumere;
+              sibur = (List.hd bat).sibur;
+              mendiane = (List.hd bat).mendiane;
+              phiras = (List.hd bat).phiras;
+              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+    | (Str.Text "linemate")::tail ->
+        aux ({nourriture = (List.hd bat).nourriture;
+              linemate = (List.hd bat).linemate + 1;
+              deraumere = (List.hd bat).deraumere;
+              sibur = (List.hd bat).sibur;
+              mendiane = (List.hd bat).mendiane;
+              phiras = (List.hd bat).phiras;
+              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+    | (Str.Text "deraumere")::tail ->
+        aux ({nourriture = (List.hd bat).nourriture;
+              linemate = (List.hd bat).linemate;
+              deraumere = (List.hd bat).deraumere + 1;
+              sibur = (List.hd bat).sibur;
+              mendiane = (List.hd bat).mendiane;
+              phiras = (List.hd bat).phiras;
+              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+    | (Str.Text "sibur")::tail ->
+        aux ({nourriture = (List.hd bat).nourriture;
+              linemate = (List.hd bat).linemate;
+              deraumere = (List.hd bat).deraumere;
+              sibur = (List.hd bat).sibur + 1;
+              mendiane = (List.hd bat).mendiane;
+              phiras = (List.hd bat).phiras;
+              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+    | (Str.Text "mendiane")::tail ->
+        aux ({nourriture = (List.hd bat).nourriture;
+              linemate = (List.hd bat).linemate;
+              deraumere = (List.hd bat).deraumere;
+              sibur = (List.hd bat).sibur;
+              mendiane = (List.hd bat).mendiane + 1;
+              phiras = (List.hd bat).phiras;
+              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+    | (Str.Text "phiras")::tail ->
+        aux ({nourriture = (List.hd bat).nourriture;
+              linemate = (List.hd bat).linemate;
+              deraumere = (List.hd bat).deraumere;
+              sibur = (List.hd bat).sibur;
+              mendiane = (List.hd bat).mendiane;
+              phiras = (List.hd bat).phiras + 1;
+              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+    | (Str.Text "thystame")::tail ->
+        aux ({nourriture = (List.hd bat).nourriture;
+              linemate = (List.hd bat).linemate;
+              deraumere = (List.hd bat).deraumere;
+              sibur = (List.hd bat).sibur;
+              mendiane = (List.hd bat).mendiane;
+              phiras = (List.hd bat).phiras;
+              thystame = (List.hd bat).thystame + 1}::(List.tl bat)) tail
+    | (Str.Text _)::tail        -> aux bat tail
+    | _::tail                   -> aux bat tail
+  in
+    aux [{nourriture = 0;
+          linemate = 0;
+          deraumere = 0;
+          sibur = 0;
+          mendiane = 0;
+          phiras = 0;
+          thystame = 0}] (Str.full_split re str)
+
+let fill raw = function
+  | R_voir _            -> R_voir (RP_voir (voir_cmd raw))
+  | _                   -> R_ko RP_empty
+
 let pull () =
   let rec aux idx str =
     if Str.string_match (fst (bat_re.(idx))) str 0 then
-      snd bat_re.(idx)
+      fill str (snd bat_re.(idx))
     else if idx < 9 then
       aux (idx + 1) str
     else
@@ -115,73 +182,63 @@ let pull () =
  * Unitest
  *)
 let unitest () =
-  let check v t =
-    if v = t then
-      print_endline "-- SUCCESS"
-    else
-      print_endline "-- FAIL"
+  let check v = function
+    | R_voir (RP_voir [|{
+        nourriture = 0;
+        linemate = 0;
+        deraumere = 0;
+        sibur = 0;
+        mendiane = 0;
+        phiras = 0;
+        thystame = 0
+      }|])              -> print_endline "-- SUCCESS"
+    | t                 ->
+        if v = t then
+          print_endline "-- SUCCESS"
+        else
+          print_endline "-- FAIL"
   in
-  begin
-    Socket.connect "127.0.0.1" 4242;
-    push (Team "Poney");
-    ignore (Unix.select [] [] [] 0.5);
-    check (pull ()) (R_connect_nbr (RP_connect 0));
-    check (pull ()) (R_map_size (RP_map_size (20, 20)));
-    print_endline "voir";
-    push (Voir);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "connect_nbr";
-    push (Connect_nbr);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "expulse";
-    push (Expulse);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "gauche";
-    push (Gauche);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "droite";
-    push (Droite);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "avance";
-    push (Avance);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "fork";
-    push (Fork);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "incantation";
-    push (Incantation);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "broadcast poney";
-    push (Broadcast "Poney");
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "prend nourriture";
-    push (Prend Nourriture);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "pose linemate";
-    push (Pose Linemate);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "prend phiras";
-    push (Prend Phiras);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "pose mendiane";
-    push (Pose Mendiane);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-    print_endline "inventaire";
-    push (Inventaire);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
-  end
+    begin
+      Socket.connect "127.0.0.1" 4242;
+      push (Team "Poney");
+      ignore (Unix.select [] [] [] 0.5);
+      check (pull ()) (R_connect_nbr (RP_connect 0));
+      check (pull ()) (R_map_size (RP_map_size (20, 20)));
+      push (Inventaire);
+      ignore (Unix.select [] [] [] 0.5);
+      check (pull ()) (R_inventaire (RP_inventaire {nourriture = 10;
+                                                    linemate = 0;
+                                                    deraumere = 0;
+                                                    sibur = 0;
+                                                    mendiane = 0;
+                                                    phiras = 0;
+                                                    thystame = 0}));
+      push (Voir);
+      ignore (Unix.select [] [] [] 0.5);
+      check (pull ()) (R_voir (RP_voir [|{nourriture = 0;
+                                        linemate = 0;
+                                        deraumere = 0;
+                                        sibur = 0;
+                                        mendiane = 0;
+                                        phiras = 0;
+                                        thystame = 0}|]));
+      push (Connect_nbr);
+      ignore (Unix.select [] [] [] 0.5);
+      check (pull ()) (R_connect_nbr (RP_connect 0));
+      push (Expulse);
+      ignore (Unix.select [] [] [] 0.5);
+      check (pull ()) (R_ko (RP_empty));
+      push (Gauche);
+      ignore (Unix.select [] [] [] 0.5);
+      check (pull ()) (R_ok (RP_empty));
+      push (Droite);
+      ignore (Unix.select [] [] [] 0.5);
+      check (pull ()) (R_ok (RP_empty));
+      push (Avance);
+      ignore (Unix.select [] [] [] 0.5);
+      check (pull ()) (R_ok (RP_empty));
+      push (Fork);
+      ignore (Unix.select [] [] [] 0.5);
+      check (pull ()) (R_ok (RP_empty))
+    end
 

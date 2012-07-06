@@ -12,6 +12,7 @@
 #include	<string.h>
 #include	<sys/types.h>
 #include	<sys/socket.h>
+#include	<errno.h>
 
 #include	"def.h"
 
@@ -32,10 +33,10 @@ char*		my_receive(int fd)
   test = 1;
   if ((ret = malloc(8)) == NULL)
     return (NULL);
-  ret[0] = '\0';
+  ret = memset(ret, 0, 8);
   while (test)
     {
-      if ((test = recv(fd, buff, BUFFER_SIZE - 1, 0)) == 0)
+      if ((test = recv(fd, buff, BUFFER_SIZE - 1, 0)) <= 0)
 	return (cleaner(ret, ret[0] ? ret : (char*)-1));
       buff[test] = '\0';
       if ((tmp = malloc(strlen(ret) + test + 1)) == NULL)

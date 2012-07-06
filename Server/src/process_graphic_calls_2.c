@@ -36,7 +36,7 @@ void		monitor_graphic(t_graphic mn, t_data_serv ds, t_player p)
   it2 = ds->egg->head;
   while (it2)
     {
-      enw(ds->monitor, ((t_egg)it2->data)->id, p->lvl, &p->pos);
+      enw(ds->monitor, ((t_egg)it2->data)->id, p->lvl, &((t_egg)it2->data)->fetus->pos);
       it2 = it2->next;
     }
 }
@@ -58,9 +58,10 @@ void		incend_graphic(t_data_serv ds, t_incant inc)
   it = map->map[inc->pos.y][inc->pos.x]->players->head;
   while (it)
     {
-      plv_general(ds->monitor,
-		  (*(t_player*)(it->data))->id,
-		  (*(t_player*)(it->data))->lvl);
+      if ((*(t_player*)(it->data))->cm.online)
+	plv_general(ds->monitor,
+		    (*(t_player*)(it->data))->id,
+		    (*(t_player*)(it->data))->lvl);
       it = it->next;
     }
   bct_general(ds->monitor, map->map[inc->pos.y][inc->pos.x], &inc->pos);

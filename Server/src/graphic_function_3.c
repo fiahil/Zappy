@@ -41,7 +41,8 @@ void		pic(t_list *mn, t_incant inc, t_list *play)
   it = play->head;
   while (it)
     {
-      if ((*(t_player*)(it->data))->id != inc->incantor->id)
+      if ((*(t_player*)(it->data))->cm.online &&
+	  (*(t_player*)(it->data))->id != inc->incantor->id)
 	{
 	  asprintf(&tmp, " %d", (*(t_player*)(it->data))->id);
 	  str = realloc(str, strlen(str) + strlen(tmp) + 1);

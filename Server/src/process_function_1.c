@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:32 2012 ulric lefevre
-** Last update Tue Jun 26 15:52:29 2012 ulric lefevre
+** Last update Fri Jul  6 13:06:45 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -15,9 +15,9 @@
 #include	<string.h>
 
 #include	"map.h"
+#include	"graphic.h"
 #include	"msgout_cmd.h"
 #include	"process_function.h"
-#include	"graphic.h"
 
 static char	*g_resources[] =
   {

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:41 2012 ulric lefevre
-** Last update Wed Jul  4 13:48:20 2012 ulric lefevre
+** Last update Fri Jul  6 13:07:06 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -16,12 +16,12 @@
 #include	"map.h"
 #include	"clock.h"
 #include	"player.h"
-#include	"process_function.h"
 #include	"cmd_parse.h"
 #include	"msgout_cmd.h"
 #include	"var_manager.h"
 #include	"handle_error.h"
 #include	"iter_function.h"
+#include	"process_function.h"
 
 int		sort_player_life(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
 {

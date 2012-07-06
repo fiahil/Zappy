@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:14 2012 ulric lefevre
-** Last update Tue Jul  3 19:50:33 2012 ulric lefevre
+** Last update Fri Jul  6 13:03:15 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -16,37 +16,42 @@
 
 #include	"def.h"
 #include	"algorithm.h"
+#include	"var_manager.h"
 #include	"handle_error.h"
 #include	"select_manager.h"
 
-static t_select_manager		g_sm = 0;
-
 static void	select_set(void *ptr, size_t s)
 {
+  t_select_manager sm;
+
   (void)s;
+  sm = get_select_manager(NULL);
   if ((*(t_player*)ptr)->cm.online)
   {
     (*(t_player*)ptr)->cm.read = TRUE;
-    FD_SET((*(t_player*)ptr)->cm.sock.fd, &g_sm->rds);
+    FD_SET((*(t_player*)ptr)->cm.sock.fd, &sm->rds);
     if (!(*(t_player*)ptr)->cm.out->empty)
-      FD_SET((*(t_player*)ptr)->cm.sock.fd, &g_sm->wds);
+      FD_SET((*(t_player*)ptr)->cm.sock.fd, &sm->wds);
   }
 }
 
 static void	select_mset(void *ptr, size_t s)
 {
+  t_select_manager sm;
+
   (void)s;
+  sm = get_select_manager(NULL);
   if (((t_graphic)ptr)->cm.online)
   {
-    FD_SET(((t_graphic)ptr)->cm.sock.fd, &g_sm->rds);
+    FD_SET(((t_graphic)ptr)->cm.sock.fd, &sm->rds);
     if (!((t_graphic)ptr)->cm.out->empty)
-      FD_SET(((t_graphic)ptr)->cm.sock.fd, &g_sm->wds);
+      FD_SET(((t_graphic)ptr)->cm.sock.fd, &sm->wds);
   }
 }
 
 void		select_manager(t_data_serv ds, t_select_manager sm)
 {
-  g_sm = sm;
+  get_select_manager(sm);
   FD_ZERO(&sm->rds);
   FD_ZERO(&sm->wds);
   FD_SET(ds->sock.fd, &sm->rds);

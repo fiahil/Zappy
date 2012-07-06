@@ -7,6 +7,19 @@ import socket
 import sys
 import os
 
+def print_recp(data):
+  i = 0
+  while (i < len(data)):
+    if (data[i] == ','):
+      sys.stdout.write('\n')
+    elif (data[i] == '{'):
+      sys.stdout.write('{\n')
+    elif (data[i] == '}'):
+      sys.stdout.write('\n}')
+    else:
+      sys.stdout.write(data[i])
+    i += 1
+
 def getcmd(data, cmds, cmdr):
   for elt in cmdr:
     if elt[0] == data:
@@ -18,7 +31,8 @@ def getcmd(data, cmds, cmdr):
     if elt[0] == data:
       return (elt[1], "")
 
-host = '127.0.0.1'
+host = '10.19.252.96'
+#host = '127.0.0.1'
 port = 4242
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
@@ -74,7 +88,7 @@ while flag:
   if rlist.count(s) > 0:
     data = s.recv(32768)
     if data != "":
-      print data
+      print_recp(data)
     else:
       flag = False
 

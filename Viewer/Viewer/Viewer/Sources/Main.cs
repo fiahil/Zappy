@@ -100,6 +100,12 @@ namespace Viewer.Sources
             //this.plist[1].dir = Direction.SOUTH;
             //this.plist[2].dir = Direction.WEST;
             //this.plist[3].dir = Direction.EAST;
+            //this.plist[0].setBroadcast("bite");
+            //this.plist[1].setBroadcast("bite");
+            //this.plist[2].setBroadcast("bite");
+            //this.plist[3].setBroadcast("bite");
+
+            //this.plist[2].st = Player.State.DEAD;
 
         }
 
@@ -138,6 +144,8 @@ namespace Viewer.Sources
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
+
+            this.plist.RemoveAll(delegate(Player p) { return p.st == Player.State.FINISHED; });
 
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {

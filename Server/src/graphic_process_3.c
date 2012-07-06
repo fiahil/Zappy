@@ -42,7 +42,7 @@ void		sst_process(t_graphic mn, char *param, t_data_serv ds)
     return ;
   if (str_is_num(param))
     {
-      if (val = atoi(param))
+      if ((val = atoi(param)))
 	ds->t = val;
     }
   sgt(mn, ds->t);

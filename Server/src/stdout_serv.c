@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:18 2012 ulric lefevre
-** Last update Tue Jul  3 18:34:04 2012 ulric lefevre
+** Last update Fri Jul  6 11:50:16 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -38,13 +38,13 @@ void            stdout_serv_status(const char *str, int flag)
   if (flag)
     {
       printf("\033[1;35m");
-      printf("%d\t\tServer : %s", (int)time(NULL), str);
+      printf("%d\t\tServeur : %s", (int)time(NULL), str);
       printf("\033[0m");
     }
   else
     {
       printf("\033[1;33m");
-      printf("%d\t\tServer : %s", (int)time(NULL), str);
+      printf("%d\t\tServeur : %s", (int)time(NULL), str);
       printf("\033[0m");
     }
 }
@@ -52,21 +52,21 @@ void            stdout_serv_status(const char *str, int flag)
 static void	print_list(void *data, size_t size)
 {
   (void)size;
-  printf("\t\tname : %s -> size : %d\n",
+  printf("\t\tNom : %s -> taille : %d\n",
          ((t_team)data)->name, ((t_team)data)->remaining);
 }
 
 void            stdout_data_serv(t_arg *args, t_data_serv ds)
 {
   printf("\033[1;33m");
-  printf("Server Infos :\n");
+  printf("Infos du Serveur :\n");
   printf("\t\tIP : %s\n", inet_ntoa(ds->sock.addr.sin_addr));
   printf("\t\tPort : %d\n", args->port);
-  printf("\t\tExecution time : %d\n", args->exec_time);
-  printf("World Infos : \n");
-  printf("\t\tWidth : %d\n", args->width);
-  printf("\t\tHeight : %d\n", args->height);
-  printf("Teams Infos : \n");
+  printf("\t\tTemps d'execution : %d\n", args->exec_time);
+  printf("Infos sur la map : \n");
+  printf("\t\tLargeur : %d\n", args->width);
+  printf("\t\tHauteur : %d\n", args->height);
+  printf("Infos sur les équipes: \n");
   list_for_each(args->teams, &print_list);
-  printf("\t\tClients per team : %d\033[0m\n\n", args->nb_per_team);
+  printf("\t\tClients par équipe : %d\033[0m\n\n", args->nb_per_team);
 }

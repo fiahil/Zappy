@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Fri Jul  6 13:03:40 2012 ulric lefevre
+** Last update Fri Jul  6 17:58:33 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -18,11 +18,11 @@
 #include	"stdout.h"
 #include	"graphic.h"
 #include	"network.h"
+#include	"func_cmp.h"
 #include	"algorithm.h"
 #include	"cmd_parse.h"
 #include	"msgout_cmd.h"
 #include	"func_cleaner.h"
-#include	"team_manager.h"
 #include	"select_manager.h"
 #include	"server_routine.h"
 #include	"string_manager.h"
@@ -92,7 +92,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
       this->cm.online = FALSE;
       if (this->team)
 	{
-	  it = list_find_cmp(ds->teams, &func_cmp_team, this->team, 0);
+	  it = list_find_cmp(ds->teams, &cmp_team, this->team, 0);
 	  assert(it != NULL);
 	  ((t_team)it->data)->remaining += 1;
 	}
@@ -100,7 +100,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
       list_remove_if(&(ds->action->queue), &del_player_action);
       close(this->cm.sock.fd);
       select_del(ds, this->cm.sock.fd);
-      stdout_player_status("disconnected", this->id);
+      stdout_player_status("deconnexion", this->id);
       return ;
     }
   get_commands(this, buf);
@@ -120,7 +120,7 @@ void		server_routine_output(t_data_serv ds, t_player this)
       this->dead = TRUE;
       get_current(this);
       list_remove_if(&(ds->action->queue), &del_player_action);
-      stdout_player_status("disconnected", this->id);
+      stdout_player_status("deconnexion", this->id);
     }
   list_pop_front(this->cm.out);
   if (this->dead == TRUE && this->deleted == FALSE)

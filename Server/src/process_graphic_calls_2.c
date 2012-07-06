@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Wed Jul  4 12:18:31 2012 ulric lefevre
-** Last update Fri Jul  6 13:05:47 2012 ulric lefevre
+** Last update Fri Jul  6 16:12:30 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -20,10 +20,12 @@ void		monitor_graphic(t_graphic mn, t_data_serv ds, t_player p)
 {
   t_iter	*it;
   t_iter	*it2;
+  t_map		map;
 
-  msz(mn, get_map(NULL)->size_x, get_map(NULL)->size_y);
+  map = get_map(NULL);
+  msz(mn, map->size_x, map->size_y);
   sgt(mn, ds->t);
-  bct_all(mn, get_map(NULL));
+  bct_all(mn, map);
   tna(mn, ds->teams);
   it = ds->player->head;
   while (it)

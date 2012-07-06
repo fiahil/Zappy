@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:36 2012 ulric lefevre
-** Last update Fri Jul  6 13:53:07 2012 ulric lefevre
+** Last update Fri Jul  6 16:18:12 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -36,17 +36,6 @@ void		smg(t_list *mn, char const *msg)
   mn_push(mn, str);
   free(str);
 }
-
-// Jamais utilisé a supprimer
-/* void		seg(t_list *mn, int team) */
-/* { */
-/*   char		*str; */
-
-/*   str = NULL; */
-/*   asprintf(&str, "seg %d\n", team); */
-/*   mn_push(mn, str); */
-/*   free(str); */
-/* } */
 
 void		pgt(t_list *mn, int id, int res)
 {

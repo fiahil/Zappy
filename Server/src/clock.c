@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:14 2012 ulric lefevre
-** Last update Sat Jun 30 20:32:04 2012 ulric lefevre
+** Last update Fri Jul  6 16:38:30 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -70,33 +70,4 @@ double		convert_to_u(t_timeval time)
   ret = time->tv_sec * 1000000;
   ret += time->tv_usec;
   return (ret);
-}
-
-void		unitest_clock() // TODO tmp
-{
-  t_u_timeval	time;
-  t_u_timeval	time2;
-
-  get_current_time(&time);
-  sleep(1);
-  get_current_time(&time2);
-  puts(".:::: Unitest clock.c ::::.\n");
-  puts(".:: value ::.");
-  printf("# t1 sec = %d, usec = %d\n", (int)time.tv_sec, (int)time.tv_usec);
-  printf("# t2 sec = %d, usec = %d\n", (int)time2.tv_sec, (int)time2.tv_usec);
-  puts(".:: cmp_time ::.");
-  printf("# cmp t1 and t2 : %d, expected : -1\n",
-	 (int)cmp_time(&time, &time2));
-  printf("# cmp t2 and t1 : %d, expected : 1\n",
-	 (int)cmp_time(&time2, &time));
-  printf("# cmp t1 and t1 : %d, expected : 0\n",
-	 (int)cmp_time(&time, &time));
-  puts(".:: get_time_per_function ::.");
-  get_time_per_function(&time2, &move_process, 300);
-  printf("# get t2 move [300] : sec = %d, usec = %d\n",
-	 (int)time2.tv_sec, (int)time2.tv_usec);
-  puts(".:: add_time ::.");
-  add_time(&time, 7, 300);
-  printf("# add t1 [7] [300] : sec = %d, usec = %d\n",
-	 (int)time.tv_sec, (int)time.tv_usec);
 }

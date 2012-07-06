@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:21:47 2012 ulric lefevre
-** Last update Sun Jun 24 21:36:05 2012 ulric lefevre
+** Last update Fri Jul  6 16:06:00 2012 ulric lefevre
 */
 
 #ifndef		__CLOCK_H__

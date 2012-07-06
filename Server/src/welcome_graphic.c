@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Tue Jun 26 11:26:32 2012 ulric lefevre
-** Last update Fri Jul  6 13:11:16 2012 ulric lefevre
+** Last update Fri Jul  6 19:02:14 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -13,13 +13,14 @@
 #include	<string.h>
 
 #include	"def.h"
+#include	"stdout.h"
 #include	"graphic.h"
 
 void		welcome_graphic(t_data_serv ds, t_player p)
 {
   t_u_graphic	mn;
 
-  puts("Connection d'un Moniteur");
+  stdout_serv_status("Connexion d'un moniteur", 0);
   memcpy(&mn.cm, &p->cm, sizeof(mn));
   memset(&mn.cm.stock, '\0', sizeof(mn.cm.stock));
   mn.cm.in = new_list(NULL, NULL, NULL);

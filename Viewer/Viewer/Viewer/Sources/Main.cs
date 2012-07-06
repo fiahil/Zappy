@@ -97,7 +97,6 @@ namespace Viewer.Sources
             //this.plist[2].setPos(0, 2);
             //this.plist[3].setPos(2, 0);
 
-            //this.plist[1].dir = Direction.SOUTH;
             //this.plist[2].dir = Direction.WEST;
             //this.plist[3].dir = Direction.EAST;
             //this.plist[0].setBroadcast("bite");
@@ -106,7 +105,6 @@ namespace Viewer.Sources
             //this.plist[3].setBroadcast("bite");
 
             //this.plist[2].st = Player.State.DEAD;
-
         }
 
         /// <summary>

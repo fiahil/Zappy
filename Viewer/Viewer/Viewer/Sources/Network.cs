@@ -69,6 +69,10 @@ namespace Viewer.Sources
                     tmp = res[res.Length - 1];
                     res = res.Take(res.Length - 1).ToArray();
                 }
+                else
+                {
+                    tmp = "";
+                }
                 _in = new Queue<string>(_in.Concat(res.ToList()));
             }
             while (_in.Count > 0)

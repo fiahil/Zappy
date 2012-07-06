@@ -36,12 +36,14 @@ void		sgt_process(t_graphic mn, char *param, t_data_serv ds)
 
 void		sst_process(t_graphic mn, char *param, t_data_serv ds)
 {
+  int	val;
+
   if (!param[0])
     return ;
-  if (!str_is_num(param))
-    return ;
-  ds->t = atoi(param);
-  if (!ds->t)
-    ds->t = 1;
+  if (str_is_num(param))
+    {
+      if ((val = atoi(param)))
+	ds->t = val;
+    }
   sgt(mn, ds->t);
 }

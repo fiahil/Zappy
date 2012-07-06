@@ -20,6 +20,7 @@
 #include	"algorithm.h"
 #include	"msgout_cmd.h"
 #include	"process_function.h"
+#include	"var_manager.h"
 
 static const int	g_dir[4][2] =
   {
@@ -64,6 +65,7 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
 		      &cmp_player_list, this, sizeof(*this));
   list_extract(map->map[prec.y][prec.x]->players, tmp);
   list_push_back(map->map[this->pos.y][this->pos.x]->players, tmp);
+  ppo_general(get_data_serv(NULL)->monitor, this);
 }
 
 t_bool		move_process(t_player this, char *data, t_data_serv info)
@@ -72,7 +74,6 @@ t_bool		move_process(t_player this, char *data, t_data_serv info)
   (void)info;
   do_move_process(this, g_dir[this->dir][0], g_dir[this->dir][1]);
   msgout_avance(this);
-  ppo_general(info->monitor, this);
   return (TRUE);
 }
 
@@ -95,8 +96,7 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
   ti = list_find_cmp(players, &cmp_player_list, this, sizeof(*this));
   list_extract(players, ti);
   msgout_expulse(this, players->size ? TRUE : FALSE);
-  expulse_graphic(info->monitor, this,
-		  map->map[this->pos.y][this->pos.x]->players);
+  pex(info->monitor, this->id);
   while (players->size)
     {
       p = list_front(players);

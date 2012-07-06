@@ -36,7 +36,8 @@ let main () =
         check_all;
         Socket.connect !host !port;
         Bridge.push (Bridge.Team !team);
-        Fsm.launch ()
+        (* Fsm.launch (); *)
+	FsmBase.unitest ()
       end
     with
       | Invalid_argument v      -> prerr_endline v

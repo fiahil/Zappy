@@ -5,9 +5,19 @@
 
 type pattern = int;;
 
+let timeout t =
+    ignore (Unix.select [] [] [] t)
+
+let find rcs =
+  1
+;;
+
+let gather_all rcs =
+  ()
+;;
 
 let move off =
-  let forward = function
+  let rec forward = function
     | 0 -> ()
     | it ->
       begin
@@ -20,12 +30,12 @@ let move off =
       ()
     else if (off - midd) < 0 then
       begin
-	gauche;
+	Bridge.push Bridge.Gauche;
 	forward ((off - midd) * -1)
       end
     else
       begin
-	droite;
+	Bridge.push Bridge.Droite;
 	forward (off - midd)
       end
   in
@@ -71,14 +81,29 @@ let move off =
 ;;
 
 let gather rcs nb =
-  let in_gather = function
+  let rec in_gather = function
     | 0 -> ()
     | it ->
       begin
 	Bridge.push (Bridge.Prend rcs);
-	gather elt nb (it - 1)
+	in_gather (it - 1)
       end
   in
   in_gather nb
 ;;
 
+let unitest () =
+  gather Bridge.Nourriture 5;
+  timeout 0.1;
+  gather Bridge.Linemate 1;
+  timeout 0.1;
+  move 4;
+  timeout 0.1;
+  gather Bridge.Nourriture 3;
+  timeout 0.1;
+  move 12;
+  timeout 0.1;
+  gather Bridge.Linemate 2;
+  timeout 0.1;
+  gather Bridge.Nourriture 6
+;;

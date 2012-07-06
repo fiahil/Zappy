@@ -94,16 +94,16 @@ let gather rcs nb =
 
 let unitest () =
   gather Bridge.Nourriture 5;
-  timeout 0.1;
+  (* timeout 0.1; *)
   gather Bridge.Linemate 1;
-  timeout 0.1;
+  (* timeout 0.1; *)
   move 4;
-  timeout 0.1;
+  (* timeout 0.1; *)
   gather Bridge.Nourriture 3;
-  timeout 0.1;
+  (* timeout 0.1; *)
   move 12;
-  timeout 0.1;
+  (* timeout 0.1; *)
   gather Bridge.Linemate 2;
-  timeout 0.1;
+  (* timeout 0.1; *)
   gather Bridge.Nourriture 6
 ;;

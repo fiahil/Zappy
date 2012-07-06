@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Wed Jul  4 13:49:30 2012 ulric lefevre
+** Last update Fri Jul  6 13:07:58 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -27,7 +27,6 @@
 #include	"func_cleaner.h"
 #include	"iter_function.h"
 #include	"select_manager.h"
-#include	"graphic.h"
 
 static t_u_timeval	g_last = {0, 0};
 static t_u_timeval	g_current = {0, 0};

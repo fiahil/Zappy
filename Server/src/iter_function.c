@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Wed Jul  4 13:49:21 2012 ulric lefevre
+** Last update Fri Jul  6 13:07:50 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -16,15 +16,15 @@
 #include	"clock.h"
 #include	"incant.h"
 #include	"stdout.h"
+#include	"graphic.h"
 #include	"algorithm.h"
 #include	"iter_tools.h"
+#include	"msgout_cmd.h"
 #include	"res_manager.h"
 #include	"var_manager.h"
 #include	"team_manager.h"
 #include	"select_manager.h"
 #include	"server_routine.h"
-#include	"msgout_cmd.h"
-#include	"graphic.h"
 
 void			iter_rds(void *ptr, size_t s)
 {

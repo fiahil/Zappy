@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:33 2012 ulric lefevre
-** Last update Sun Jul  1 14:23:44 2012 ulric lefevre
+** Last update Fri Jul  6 13:37:05 2012 ulric lefevre
 */
 
 #ifndef		__FUNC_CLEANER_H__
@@ -17,6 +17,7 @@ int		action_cleaner(void *, size_t);
 int		player_cleaner(void *, size_t);
 int		egg_cleaner(void *, size_t);
 int		incant_cleaner(void *, size_t);
+void		io_cleaner(void *, size_t);
 void		clean_all(t_data_serv);
 
 #endif		/* !__FUNC_CLEANER_H__ */

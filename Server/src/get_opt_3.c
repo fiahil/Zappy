@@ -5,16 +5,16 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:42 2012 ulric lefevre
-** Last update Wed Jul  4 14:04:37 2012 ulric lefevre
+** Last update Fri Jul  6 13:08:49 2012 ulric lefevre
 */
 
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<string.h>
 
-#include	"handle_error.h"
-#include	"get_arg.h"
 #include	"def.h"
+#include	"get_arg.h"
+#include	"handle_error.h"
 
 static void	get_default_names(t_arg *args)
 {

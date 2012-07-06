@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 15:09:11 2012 ulric lefevre
-** Last update Wed Jul  4 13:51:41 2012 ulric lefevre
+** Last update Fri Jul  6 13:08:18 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -13,9 +13,9 @@
 #include	<stdio.h>
 #include	<stdlib.h>
 
+#include	"def.h"
 #include	"c_lists.h"
 #include	"graphic.h"
-#include	"def.h"
 
 void		ppo_general(t_list *mn, t_player play)
 {

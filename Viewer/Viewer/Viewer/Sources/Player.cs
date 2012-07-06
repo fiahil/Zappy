@@ -39,6 +39,7 @@ namespace Viewer.Sources
 
         Point pos;
         Sprite[] player;
+        Sprite   sincant;
         Sprite[] slvl;
         public Direction dir;
         public int lvl;
@@ -85,6 +86,7 @@ namespace Viewer.Sources
             this.dead = false;
             this.broadcast = null;
             this.broacastTimer = TimeSpan.Zero;
+            this.iv = new Inventory();
         }
 
         public Player setPos(int x, int y)
@@ -127,12 +129,13 @@ namespace Viewer.Sources
 
         public void Load(ContentManager cm, int teamId)
         {
-            if ((teamId % 2) != 0)
+            if ((teamId % 2) == 0)
             {
                 this.player[0] = new Sprite(cm.Load<Texture2D>("Players/FL"));
                 this.player[1] = new Sprite(cm.Load<Texture2D>("Players/FR"));
                 this.player[2] = new Sprite(cm.Load<Texture2D>("Players/BR"));
                 this.player[3] = new Sprite(cm.Load<Texture2D>("Players/BL"));
+                this.sincant = new Sprite(cm.Load<Texture2D>("Players/incant"));
             }
             else
             {
@@ -140,6 +143,7 @@ namespace Viewer.Sources
                 this.player[1] = new Sprite(cm.Load<Texture2D>("Players/FR_2"));
                 this.player[2] = new Sprite(cm.Load<Texture2D>("Players/BR_2"));
                 this.player[3] = new Sprite(cm.Load<Texture2D>("Players/BL_2"));
+                this.sincant = new Sprite(cm.Load<Texture2D>("Players/incant_2"));
             }
             this.slvl[0] = new Sprite(cm.Load<Texture2D>("Level/level_1"));
             this.slvl[1] = new Sprite(cm.Load<Texture2D>("Level/level_2"));
@@ -181,6 +185,20 @@ namespace Viewer.Sources
                 }
                 else
                     this.st = State.FINISHED;
+            }
+            else if (this.st == State.INCANT)
+            {
+                double factX = (this.sincant.getBounds().Width * (square.Width / 155.0));
+                double factY = (this.sincant.getBounds().Height * (square.Height / 58.0));
+
+                off.X = (this.pos.X + 1) * (square.Width / 2);
+                off.Y = (this.pos.X) * (square.Height / 2);
+
+                p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
+                p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+                if (screen.Intersects(tar))
+                    this.sincant.Draw(sb, tar);
             }
             else
             {

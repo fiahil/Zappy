@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Wed Jul  4 23:09:49 2012 ulric lefevre
+** Last update Fri Jul  6 13:03:40 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -16,6 +16,7 @@
 #include	"def.h"
 #include	"clock.h"
 #include	"stdout.h"
+#include	"graphic.h"
 #include	"network.h"
 #include	"algorithm.h"
 #include	"cmd_parse.h"
@@ -23,10 +24,9 @@
 #include	"func_cleaner.h"
 #include	"team_manager.h"
 #include	"select_manager.h"
-#include	"process_function.h"
 #include	"server_routine.h"
 #include	"string_manager.h"
-#include	"graphic.h"
+#include	"process_function.h"
 
 static void		init_act(t_data_serv ds, t_player this)
 {

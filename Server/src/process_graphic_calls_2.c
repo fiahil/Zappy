@@ -5,28 +5,37 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Wed Jul  4 12:18:31 2012 ulric lefevre
-** Last update Wed Jul  4 13:54:44 2012 ulric lefevre
+** Last update Fri Jul  6 13:05:47 2012 ulric lefevre
 */
 
+#include	<stdio.h>
+#include	<stdlib.h>
+
+#include	"def.h"
+#include	"map.h"
 #include	"graphic.h"
 #include	"c_lists.h"
-#include	"map.h"
-#include	"def.h"
 
 void		monitor_graphic(t_graphic mn, t_data_serv ds, t_player p)
 {
   t_iter	*it;
+  t_iter	*it2;
 
   msz(mn, get_map(NULL)->size_x, get_map(NULL)->size_y);
   sgt(mn, ds->t);
   bct_all(mn, get_map(NULL));
   tna(mn, ds->teams);
-  pnw(ds->monitor, p);
-  it = ds->egg->head;
+  it = ds->player->head;
   while (it)
     {
-      enw(ds->monitor, ((t_egg)it->data)->id, p->lvl, &p->pos);
+      pnw(ds->monitor, (*(t_player*)it->data));
       it = it->next;
+    }
+  it2 = ds->egg->head;
+  while (it2)
+    {
+      enw(ds->monitor, ((t_egg)it2->data)->id, p->lvl, &p->pos);
+      it2 = it2->next;
     }
 }
 

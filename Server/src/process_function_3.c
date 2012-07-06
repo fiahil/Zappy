@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Wed Jul  4 13:47:15 2012 ulric lefevre
+** Last update Fri Jul  6 13:06:12 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -15,10 +15,10 @@
 #include	<string.h>
 
 #include	"map.h"
+#include	"graphic.h"
 #include	"algorithm.h"
 #include	"msgout_cmd.h"
 #include	"process_function.h"
-#include	"graphic.h"
 
 static const int	g_dir[4][2] =
   {

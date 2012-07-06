@@ -22,6 +22,7 @@ let move off =
     | it ->
       begin
 	Bridge.push Bridge.Avance;
+	(* timeout 0.1; (\* TODO *\) *)
 	forward (it - 1)
       end
   in
@@ -31,11 +32,13 @@ let move off =
     else if (off - midd) < 0 then
       begin
 	Bridge.push Bridge.Gauche;
+	(* timeout 0.1; (\* TODO *\) *)
 	forward ((off - midd) * -1)
       end
     else
       begin
 	Bridge.push Bridge.Droite;
+	(* timeout 0.1; (\* TODO *\) *)
 	forward (off - midd)
       end
   in
@@ -86,15 +89,16 @@ let gather rcs nb =
     | it ->
       begin
 	Bridge.push (Bridge.Prend rcs);
+	(* timeout 0.1; (\* TODO *\) *)
 	in_gather (it - 1)
       end
   in
   in_gather nb
 ;;
 
-let unitest () =
+let rec unitest () =
   gather Bridge.Nourriture 5;
-  (* timeout 0.1; *)
+  (* timeout 0.1; (\* TODO *\) *)
   gather Bridge.Linemate 1;
   (* timeout 0.1; *)
   move 4;
@@ -105,5 +109,6 @@ let unitest () =
   (* timeout 0.1; *)
   gather Bridge.Linemate 2;
   (* timeout 0.1; *)
-  gather Bridge.Nourriture 6
+  gather Bridge.Nourriture 6;
+  unitest ()
 ;;

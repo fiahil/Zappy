@@ -5,14 +5,13 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:08 2012 ulric lefevre
-** Last update Tue Jun 26 11:30:16 2012 pierre martin
+** Last update Fri Jul  6 12:02:08 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
 
 #include	<stdio.h>
 #include	<string.h>
-#include	<assert.h>
 
 #include	"def.h"
 #include	"graphic.h"

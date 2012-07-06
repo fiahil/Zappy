@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:57 2012 ulric lefevre
-** Last update Fri Jul  6 12:01:57 2012 ulric lefevre
+** Last update Fri Jul  6 16:19:24 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -17,10 +17,10 @@
 #include	"map.h"
 #include	"stdout.h"
 #include	"player.h"
+#include	"func_cmp.h"
 #include	"algorithm.h"
 #include	"res_manager.h"
 #include	"var_manager.h"
-#include	"team_manager.h"
 #include	"process_function.h"
 
 static t_player	g_current = NULL;
@@ -36,10 +36,12 @@ int		del_player_action(void *ptr, size_t s)
 void		map_cleaner(t_player p)
 {
   t_iter	*tmp;
+  t_map		map;
 
-  tmp = list_find_cmp(get_map(NULL)->map[p->pos.y][p->pos.x]->players,
+  map = get_map(NULL);
+  tmp = list_find_cmp(map->map[p->pos.y][p->pos.x]->players,
       &cmp_player_list, p, sizeof(*p));
-  list_extract(get_map(NULL)->map[p->pos.y][p->pos.x]->players, tmp);
+  list_extract(map->map[p->pos.y][p->pos.x]->players, tmp);
   delete_iter(tmp, NULL);
 }
 
@@ -68,7 +70,7 @@ int		player_cleaner(void *ptr, size_t s)
       g_current = p;
       list_remove_if(&(ds->action->queue), &del_player_action);
       if (p->team)
-	++(((t_team)(list_find_cmp(ds->teams, &func_cmp_team,
+	++(((t_team)(list_find_cmp(ds->teams, &cmp_team,
 				   p->team, 0))->data)->remaining);
       map_cleaner(p);
       delete_player(p);

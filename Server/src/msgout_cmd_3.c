@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:13 2012 ulric lefevre
-** Last update Fri Jul  6 11:55:38 2012 ulric lefevre
+** Last update Fri Jul  6 16:33:12 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -49,5 +49,5 @@ void		msgout_moved(t_player this, int dir)
   asprintf(&str, "deplacement %d\n", dir);
   list_push_back_new(this->cm.out, str, strlen(str) + 1);
   free(str);
-  stdout_player_output("a bougé\n", this->id);
+  stdout_player_output("a ete expulse\n", this->id);
 }

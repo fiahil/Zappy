@@ -5,11 +5,12 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:49:18 2012 ulric lefevre
-** Last update Thu Jun 28 20:18:27 2012 ulric lefevre
+** Last update Fri Jul  6 15:54:59 2012 ulric lefevre
 */
 
 #include	<stdio.h>
 #include	<stdlib.h>
+#include	<string.h>
 
 #include	"def.h"
 
@@ -24,6 +25,13 @@ char		cmp_time(t_timeval fst, t_timeval scd)
   if (fst->tv_usec < scd->tv_usec)
     return (-1);
   return (0);
+}
+
+int		cmp_team(void *s1, size_t s1len, void *s2, size_t s2len)
+{
+  (void)s1len;
+  (void)s2len;
+  return (strcmp(((t_team)s1)->name, (char*)s2));
 }
 
 int		cmp_incant(void *e1, size_t s1, void *e2, size_t s2)

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Fri Jul  6 16:10:42 2012 ulric lefevre
+** Last update Fri Jul  6 17:58:33 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -100,7 +100,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
       list_remove_if(&(ds->action->queue), &del_player_action);
       close(this->cm.sock.fd);
       select_del(ds, this->cm.sock.fd);
-      stdout_player_status("disconnected", this->id);
+      stdout_player_status("deconnexion", this->id);
       return ;
     }
   get_commands(this, buf);

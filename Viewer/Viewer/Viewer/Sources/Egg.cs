@@ -35,16 +35,16 @@ namespace Viewer.Sources
             Point p;
             Point off;
 
-            double factX = (this.egg.getBounds().Width * (square.Width / 155.0));
-            double factY = (this.egg.getBounds().Height * (square.Height / 58.0));
+            double factX = ((this.egg.getBounds().Width * 0.45) * (square.Width / 155.0));
+            double factY = ((this.egg.getBounds().Height * 0.45) * (square.Height / 58.0));
 
             off.X = (this.pos.X + 1) * (square.Width / 2);
-            off.Y = this.pos.X * (square.Height / 2);
+            off.Y = (this.pos.X) * (square.Height / 2);
 
             p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
-            p.Y = this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+            p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
 
-            Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+            Rectangle tar = new Rectangle((int)(p.X + (int)(117 * (square.Width / 155.0))), (int)(p.Y + (int)(38 * (square.Height / 58.0))), (int)factX, (int)factY);
             if (screen.Intersects(tar))
                 this.egg.Draw(sb, tar);
         }

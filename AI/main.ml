@@ -42,4 +42,4 @@ let main () =
       | Invalid_argument v      -> prerr_endline v
 (*    | _                       -> prerr_endline "BOUM BOUM BOUM" *)
 
-let _ = Bridge.unitest ()
+let _ = main ()

@@ -72,4 +72,4 @@ while flag:
       print data
     else:
       flag = False
-  time.sleep(0.05)
+#  time.sleep(0.05)

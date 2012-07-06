@@ -39,7 +39,8 @@ namespace Viewer.Sources
 
         Point pos;
         Sprite[] player;
-        Sprite   sincant;
+        Sprite[] stake;
+        Sprite sincant;
         Sprite[] slvl;
         public Direction dir;
         public int lvl;
@@ -59,6 +60,7 @@ namespace Viewer.Sources
             this.pos = new Point(0, 0);
             this.dir = Direction.NORTH;
             this.player = new Sprite[4];
+            this.stake = new Sprite[4];
             this.slvl = new Sprite[7];
             this.sbroadcast = new Sprite[2];
             this.Load(cm, idTeam);
@@ -77,6 +79,7 @@ namespace Viewer.Sources
             this.pos = new Point(x, y);
             this.dir = dir;
             this.player = new Sprite[4];
+            this.stake = new Sprite[4];
             this.slvl = new Sprite[7];
             this.sbroadcast = new Sprite[2];
             this.team = team;
@@ -135,6 +138,10 @@ namespace Viewer.Sources
                 this.player[1] = new Sprite(cm.Load<Texture2D>("Players/FR"));
                 this.player[2] = new Sprite(cm.Load<Texture2D>("Players/BR"));
                 this.player[3] = new Sprite(cm.Load<Texture2D>("Players/BL"));
+                this.stake[0] = new Sprite(cm.Load<Texture2D>("Players/FL_prend"));
+                this.stake[1] = new Sprite(cm.Load<Texture2D>("Players/FR_prend"));
+                this.stake[2] = new Sprite(cm.Load<Texture2D>("Players/BR_prend"));
+                this.stake[3] = new Sprite(cm.Load<Texture2D>("Players/BL_prend"));
                 this.sincant = new Sprite(cm.Load<Texture2D>("Players/incant"));
             }
             else
@@ -143,6 +150,10 @@ namespace Viewer.Sources
                 this.player[1] = new Sprite(cm.Load<Texture2D>("Players/FR_2"));
                 this.player[2] = new Sprite(cm.Load<Texture2D>("Players/BR_2"));
                 this.player[3] = new Sprite(cm.Load<Texture2D>("Players/BL_2"));
+                this.stake[0] = new Sprite(cm.Load<Texture2D>("Players/FL_prend_2"));
+                this.stake[1] = new Sprite(cm.Load<Texture2D>("Players/FR_prend_2"));
+                this.stake[2] = new Sprite(cm.Load<Texture2D>("Players/BR_prend_2"));
+                this.stake[3] = new Sprite(cm.Load<Texture2D>("Players/BL_prend_2"));
                 this.sincant = new Sprite(cm.Load<Texture2D>("Players/incant_2"));
             }
             this.slvl[0] = new Sprite(cm.Load<Texture2D>("Level/level_1"));
@@ -199,6 +210,20 @@ namespace Viewer.Sources
                 Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
                 if (screen.Intersects(tar))
                     this.sincant.Draw(sb, tar);
+            }
+            else if (this.st == State.TAKE)
+            {
+                double factX = (this.stake[(int)this.dir].getBounds().Width * (square.Width / 155.0));
+                double factY = (this.stake[(int)this.dir].getBounds().Height * (square.Height / 58.0));
+
+                off.X = (this.pos.X + 1) * (square.Width / 2);
+                off.Y = (this.pos.X) * (square.Height / 2);
+
+                p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
+                p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+                if (screen.Intersects(tar))
+                    this.stake[(int)this.dir].Draw(sb, tar);            
             }
             else
             {

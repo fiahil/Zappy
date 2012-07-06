@@ -42,6 +42,76 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Players\BL.png">
+      <Name>BL</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\BL_2.png">
+      <Name>BL_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\BR.png">
+      <Name>BR</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\BroadcastL.png">
+      <Name>BroadcastL</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\BroadcastR.png">
+      <Name>BroadcastR</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\BR_2.png">
+      <Name>BR_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\dead.png">
+      <Name>dead</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\FL.png">
+      <Name>FL</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\FL_2.png">
+      <Name>FL_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\FR.png">
+      <Name>FR</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\FR_2.png">
+      <Name>FR_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\FR_prend.png">
+      <Name>FR_prend</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\incant.png">
+      <Name>incant</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Players\incant_2.png">
+      <Name>incant_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Tiles\base1.png">
       <Name>base1</Name>
       <Importer>TextureImporter</Importer>
@@ -234,48 +304,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Players\BL.png">
-      <Name>BL</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Players\BL_2.png">
-      <Name>BL_2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Players\BR.png">
-      <Name>BR</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Players\BR_2.png">
-      <Name>BR_2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Players\FL.png">
-      <Name>FL</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Players\FL_2.png">
-      <Name>FL_2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Players\FR.png">
-      <Name>FR</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Players\FR_2.png">
-      <Name>FR_2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Level\level_1.PNG">
       <Name>level_1</Name>
       <Importer>TextureImporter</Importer>
@@ -313,34 +341,50 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Players\BroadcastL.png">
-      <Name>BroadcastL</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Players\BroadcastR.png">
-      <Name>BroadcastR</Name>
+    <Compile Include="Players\BR_prend.png">
+      <Name>BR_prend</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Players\dead.png">
-      <Name>dead</Name>
+    <Compile Include="Players\BR_prend_2.png">
+      <Name>BR_prend_2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Players\incant_2.png">
-      <Name>incant_2</Name>
+    <Compile Include="Players\FR_prend_2.png">
+      <Name>FR_prend_2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Players\incant.png">
-      <Name>incant</Name>
+    <Compile Include="Players\FL_prend.png">
+      <Name>FL_prend</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Players\BL_prend.png">
+      <Name>BL_prend</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Players\FL_prend_2.png">
+      <Name>FL_prend_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Players\BL_prend_2.png">
+      <Name>BL_prend_2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -10,11 +10,9 @@ let timeout t =
 
 let find rcs =
   1
-;;
 
 let gather_all rcs =
   ()
-;;
 
 let move off =
   let rec forward = function
@@ -81,7 +79,6 @@ let move off =
     end
   else
     ()
-;;
 
 let gather rcs nb =
   let rec in_gather = function
@@ -94,21 +91,19 @@ let gather rcs nb =
       end
   in
   in_gather nb
-;;
 
 let rec unitest () =
-  gather Bridge.Nourriture 5;
+  gather Inventory.Nourriture 5;
   (* timeout 0.1; (\* TODO *\) *)
-  gather Bridge.Linemate 1;
+  gather Inventory.Linemate 1;
   (* timeout 0.1; *)
   move 4;
   (* timeout 0.1; *)
-  gather Bridge.Nourriture 3;
+  gather Inventory.Nourriture 3;
   (* timeout 0.1; *)
   move 12;
   (* timeout 0.1; *)
-  gather Bridge.Linemate 2;
+  gather Inventory.Linemate 2;
   (* timeout 0.1; *)
-  gather Bridge.Nourriture 6;
+  gather Inventory.Nourriture 6;
   unitest ()
-;;

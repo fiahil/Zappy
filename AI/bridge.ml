@@ -14,14 +14,14 @@ type command =
   | Fork
   | Incantation
   | Broadcast of string
-  | Prend of resources
-  | Pose of resources
+  | Prend of Inventory.resources
+  | Pose of Inventory.resources
   | Team of string
 
 type response_param =
   | RP_empty
-  | RP_inventaire of inventory
-  | RP_voir of inventory array
+  | RP_inventaire of Inventory.t
+  | RP_voir of Inventory.t array
   | RP_incantation of int
   | RP_expulse of int
   | RP_broadcast of (int * string)
@@ -64,20 +64,20 @@ let push = function
   | Fork                -> Socket.send "fork\n"
   | Incantation         -> Socket.send "incantation\n"
   | Broadcast value     -> Socket.send ("broadcast " ^ value ^ "\n")
-  | Prend Nourriture    -> Socket.send "prend nourriture\n"
-  | Prend Linemate      -> Socket.send "prend linemate\n"
-  | Prend Deraumere     -> Socket.send "prend deraumere\n"
-  | Prend Sibur         -> Socket.send "prend sibur\n"
-  | Prend Mendiane      -> Socket.send "prend mendiane\n"
-  | Prend Phiras        -> Socket.send "prend phiras\n"
-  | Prend Thystame      -> Socket.send "prend thystame\n"
-  | Pose Nourriture     -> Socket.send "pose nourriture\n"
-  | Pose Linemate       -> Socket.send "pose linemate\n"
-  | Pose Deraumere      -> Socket.send "pose deraumere\n"
-  | Pose Sibur          -> Socket.send "pose sibur\n"
-  | Pose Mendiane       -> Socket.send "pose mendiane\n"
-  | Pose Phiras         -> Socket.send "pose phiras\n"
-  | Pose Thystame       -> Socket.send "pose thystame\n"
+  | Prend Inventory.Nourriture    -> Socket.send "prend nourriture\n"
+  | Prend Inventory.Linemate      -> Socket.send "prend linemate\n"
+  | Prend Inventory.Deraumere     -> Socket.send "prend deraumere\n"
+  | Prend Inventory.Sibur         -> Socket.send "prend sibur\n"
+  | Prend Inventory.Mendiane      -> Socket.send "prend mendiane\n"
+  | Prend Inventory.Phiras        -> Socket.send "prend phiras\n"
+  | Prend Inventory.Thystame      -> Socket.send "prend thystame\n"
+  | Pose Inventory.Nourriture     -> Socket.send "pose nourriture\n"
+  | Pose Inventory.Linemate       -> Socket.send "pose linemate\n"
+  | Pose Inventory.Deraumere      -> Socket.send "pose deraumere\n"
+  | Pose Inventory.Sibur          -> Socket.send "pose sibur\n"
+  | Pose Inventory.Mendiane       -> Socket.send "pose mendiane\n"
+  | Pose Inventory.Phiras         -> Socket.send "pose phiras\n"
+  | Pose Inventory.Thystame       -> Socket.send "pose thystame\n"
   | Team value          -> Socket.send (value ^ "\n")
 
 let voir_cmd str =
@@ -88,80 +88,25 @@ let voir_cmd str =
     | (Str.Delim "{")::tail     -> aux bat tail
     | (Str.Delim " ")::tail     -> aux bat tail
     | (Str.Delim "}")::tail     -> aux bat tail
-    | (Str.Delim ",")::tail     ->
-        aux ({nourriture = 0;
-              linemate = 0;
-              deraumere = 0;
-              sibur = 0;
-              mendiane = 0;
-              phiras = 0;
-              thystame = 0}::bat) tail
+    | (Str.Delim ",")::tail     -> aux ((Inventory.empty ())::bat) tail
     | (Str.Text "nourriture")::tail ->
-        aux ({nourriture = (List.hd bat).nourriture + 1;
-              linemate = (List.hd bat).linemate;
-              deraumere = (List.hd bat).deraumere;
-              sibur = (List.hd bat).sibur;
-              mendiane = (List.hd bat).mendiane;
-              phiras = (List.hd bat).phiras;
-              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+        aux ((Inventory.inc (List.hd bat) Inventory.Nourriture)::(List.tl bat)) tail
     | (Str.Text "linemate")::tail ->
-        aux ({nourriture = (List.hd bat).nourriture;
-              linemate = (List.hd bat).linemate + 1;
-              deraumere = (List.hd bat).deraumere;
-              sibur = (List.hd bat).sibur;
-              mendiane = (List.hd bat).mendiane;
-              phiras = (List.hd bat).phiras;
-              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+        aux ((Inventory.inc (List.hd bat) Inventory.Linemate)::(List.tl bat)) tail
     | (Str.Text "deraumere")::tail ->
-        aux ({nourriture = (List.hd bat).nourriture;
-              linemate = (List.hd bat).linemate;
-              deraumere = (List.hd bat).deraumere + 1;
-              sibur = (List.hd bat).sibur;
-              mendiane = (List.hd bat).mendiane;
-              phiras = (List.hd bat).phiras;
-              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+        aux ((Inventory.inc (List.hd bat) Inventory.Deraumere)::(List.tl bat)) tail
     | (Str.Text "sibur")::tail ->
-        aux ({nourriture = (List.hd bat).nourriture;
-              linemate = (List.hd bat).linemate;
-              deraumere = (List.hd bat).deraumere;
-              sibur = (List.hd bat).sibur + 1;
-              mendiane = (List.hd bat).mendiane;
-              phiras = (List.hd bat).phiras;
-              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+        aux ((Inventory.inc (List.hd bat) Inventory.Sibur)::(List.tl bat)) tail
     | (Str.Text "mendiane")::tail ->
-        aux ({nourriture = (List.hd bat).nourriture;
-              linemate = (List.hd bat).linemate;
-              deraumere = (List.hd bat).deraumere;
-              sibur = (List.hd bat).sibur;
-              mendiane = (List.hd bat).mendiane + 1;
-              phiras = (List.hd bat).phiras;
-              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+        aux ((Inventory.inc (List.hd bat) Inventory.Mendiane)::(List.tl bat)) tail
     | (Str.Text "phiras")::tail ->
-        aux ({nourriture = (List.hd bat).nourriture;
-              linemate = (List.hd bat).linemate;
-              deraumere = (List.hd bat).deraumere;
-              sibur = (List.hd bat).sibur;
-              mendiane = (List.hd bat).mendiane;
-              phiras = (List.hd bat).phiras + 1;
-              thystame = (List.hd bat).thystame}::(List.tl bat)) tail
+        aux ((Inventory.inc (List.hd bat) Inventory.Phiras)::(List.tl bat)) tail
     | (Str.Text "thystame")::tail ->
-        aux ({nourriture = (List.hd bat).nourriture;
-              linemate = (List.hd bat).linemate;
-              deraumere = (List.hd bat).deraumere;
-              sibur = (List.hd bat).sibur;
-              mendiane = (List.hd bat).mendiane;
-              phiras = (List.hd bat).phiras;
-              thystame = (List.hd bat).thystame + 1}::(List.tl bat)) tail
+        aux ((Inventory.inc (List.hd bat) Inventory.Thystame)::(List.tl bat)) tail
     | (Str.Text _)::tail        -> aux bat tail
     | _::tail                   -> aux bat tail
   in
-    aux [{nourriture = 0;
-          linemate = 0;
-          deraumere = 0;
-          sibur = 0;
-          mendiane = 0;
-          phiras = 0;
-          thystame = 0}] (Str.full_split re str)
+    aux [Inventory.empty ()] (Str.full_split re str)
 
 let fill raw = function
   | R_voir _            -> R_voir (RP_voir (voir_cmd raw))
@@ -182,63 +127,34 @@ let pull () =
  * Unitest
  *)
 let unitest () =
-  let check v = function
-    | R_voir (RP_voir [|{
-        nourriture = 0;
-        linemate = 0;
-        deraumere = 0;
-        sibur = 0;
-        mendiane = 0;
-        phiras = 0;
-        thystame = 0
-      }|])              -> print_endline "-- SUCCESS"
-    | t                 ->
-        if v = t then
-          print_endline "-- SUCCESS"
-        else
-          print_endline "-- FAIL"
+  let see (R_voir (RP_voir bat)) =
+    let rec print_nourriture bat =
+      begin
+        Printf.printf "Nourriture %d\n" bat.Inventory.nourriture;
+        Printf.printf "Linemate %d\n" bat.Inventory.linemate;
+        Printf.printf "Deraumere %d\n" bat.Inventory.deraumere;
+        Printf.printf "Sibur %d\n" bat.Inventory.sibur;
+        Printf.printf "Mendiane %d\n" bat.Inventory.mendiane;
+        Printf.printf "Phiras %d\n" bat.Inventory.phiras;
+        Printf.printf "Thystame %d\n" bat.Inventory.thystame
+      end
+    and
+            aux bat idx =
+      if (idx != Array.length bat) then
+        begin
+          print_nourriture bat.(idx);
+          aux bat (idx + 1)
+        end
+    in
+      aux bat 0
   in
-    begin
-      Socket.connect "127.0.0.1" 4242;
-      push (Team "Poney");
-      ignore (Unix.select [] [] [] 0.5);
-      check (pull ()) (R_connect_nbr (RP_connect 0));
-      check (pull ()) (R_map_size (RP_map_size (20, 20)));
-      push (Inventaire);
-      ignore (Unix.select [] [] [] 0.5);
-      check (pull ()) (R_inventaire (RP_inventaire {nourriture = 10;
-                                                    linemate = 0;
-                                                    deraumere = 0;
-                                                    sibur = 0;
-                                                    mendiane = 0;
-                                                    phiras = 0;
-                                                    thystame = 0}));
-      push (Voir);
-      ignore (Unix.select [] [] [] 0.5);
-      check (pull ()) (R_voir (RP_voir [|{nourriture = 0;
-                                        linemate = 0;
-                                        deraumere = 0;
-                                        sibur = 0;
-                                        mendiane = 0;
-                                        phiras = 0;
-                                        thystame = 0}|]));
-      push (Connect_nbr);
-      ignore (Unix.select [] [] [] 0.5);
-      check (pull ()) (R_connect_nbr (RP_connect 0));
-      push (Expulse);
-      ignore (Unix.select [] [] [] 0.5);
-      check (pull ()) (R_ko (RP_empty));
-      push (Gauche);
-      ignore (Unix.select [] [] [] 0.5);
-      check (pull ()) (R_ok (RP_empty));
-      push (Droite);
-      ignore (Unix.select [] [] [] 0.5);
-      check (pull ()) (R_ok (RP_empty));
-      push (Avance);
-      ignore (Unix.select [] [] [] 0.5);
-      check (pull ()) (R_ok (RP_empty));
-      push (Fork);
-      ignore (Unix.select [] [] [] 0.5);
-      check (pull ()) (R_ok (RP_empty))
-    end
-
+  begin
+    Socket.connect "127.0.0.1" 4242;
+    push (Team "Poney");
+    ignore (Unix.select [] [] [] 0.5);
+    ignore (pull ()); 
+    ignore (pull ());
+    push (Voir);
+    ignore (Unix.select [] [] [] 0.5);
+    see (pull ())
+  end

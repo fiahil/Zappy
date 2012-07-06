@@ -3,26 +3,6 @@
  * 25.06.2012
  *)
 
-type resources =
-  | Nourriture
-  | Linemate
-  | Deraumere
-  | Sibur
-  | Mendiane
-  | Phiras
-  | Thystame
-
-type inventory =
-    {
-      nourriture : int;
-      linemate : int;
-      deraumere : int;
-      sibur : int;
-      mendiane : int;
-      phiras : int;
-      thystame : int
-    }
-
 type command =
   | Connect_nbr
   | Voir
@@ -34,14 +14,14 @@ type command =
   | Fork
   | Incantation
   | Broadcast of string
-  | Prend of resources
-  | Pose of resources
+  | Prend of Inventory.resources
+  | Pose of Inventory.resources
   | Team of string
 
 type response_param =
   | RP_empty
-  | RP_inventaire of inventory
-  | RP_voir of inventory array
+  | RP_inventaire of Inventory.t
+  | RP_voir of Inventory.t array
   | RP_incantation of int
   | RP_expulse of int
   | RP_broadcast of (int * string)
@@ -68,7 +48,7 @@ val push : command -> unit
 (*
  * Receive a command to the connected server via socket
  *)
-val pull : unit -> unit
+val pull : unit -> response
 
 (*
  * Unitest

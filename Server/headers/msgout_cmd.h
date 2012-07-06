@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:19:43 2012 ulric lefevre
-** Last update Mon Jun 25 15:27:18 2012 ulric lefevre
+** Last update Fri Jul  6 11:43:38 2012 ulric lefevre
 */
 
 #ifndef		__MSGOUT_CMD_H__
@@ -27,5 +27,6 @@ void		msgout_fork(t_player);
 void		msgout_connect_nbr(t_player, char*);
 void		msgout_mort(t_player);
 void		msgout_fail(t_player);
+void		msgout_moved(t_player, int);
 
 #endif		/* !__MSGOUT_CMD_H__ */

@@ -89,23 +89,24 @@ namespace Viewer.Sources
             this.graphics.ApplyChanges();
             server.Initialize(this);
 
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist[1].setPos(2, 2);
-            this.plist[2].setPos(0, 2);
-            this.plist[3].setPos(2, 0);
+            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            //this.plist[1].setPos(2, 2);
+            //this.plist[2].setPos(0, 2);
+            //this.plist[3].setPos(2, 0);
 
-            this.plist[1].dir = Direction.SOUTH;
-            this.plist[2].dir = Direction.WEST;
-            this.plist[3].dir = Direction.EAST;
-            this.plist[0].setBroadcast("bite");
-            this.plist[1].setBroadcast("bite");
-            this.plist[2].setBroadcast("bite");
-            this.plist[3].setBroadcast("bite");
+           // this.plist[1].dir = Direction.SOUTH;
+           // this.plist[2].dir = Direction.WEST;
+           // this.plist[3].dir = Direction.EAST;
+           // this.plist[0].setBroadcast("bite");
+           // this.plist[1].setBroadcast("bite");
+           // this.plist[2].setBroadcast("bite");
+           // this.plist[3].setBroadcast("bite");
 
-            this.plist[2].st = Player.State.DEAD;
+           // this.plist[3].st = Player.State.INCANT;
+            this.plist[1].st = Player.State.INCANT;
 
         }
 

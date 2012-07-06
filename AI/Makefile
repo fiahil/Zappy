@@ -10,10 +10,12 @@ NAME	=	drone
 ML	=	socket.ml	\
 		bridge.ml	\
 		fsm.ml		\
+		fsmBase.ml	\
 		main.ml
 
 MLI	=	socket.mli	\
-		bridge.mli
+		bridge.mli	\
+		fsmBase.mli
 
 CMO	=	$(ML:.ml=.cmo)
 

@@ -14,7 +14,9 @@ val find : Bridge.resources -> pattern
 val move : pattern -> unit
 
 (* gather the specified quantity of the ressources at the current position *)
-val gather : Bridge.resources -> int -> unit;
+val gather : Bridge.resources -> int -> unit
 
 (* gather all of the resources at the current position *)
-val gather_all : Bridge.ressources -> unit;
+val gather_all : Bridge.resources -> unit
+
+val unitest : unit -> unit

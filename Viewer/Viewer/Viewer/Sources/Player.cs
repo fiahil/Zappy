@@ -31,6 +31,8 @@ namespace Viewer.Sources
             TAKE,
             DROP,
             INCANT,
+            INCANT_SUCCESS,
+            INCANT_FAIL,
             EXPULSE,
             IDLE
         }
@@ -84,6 +86,7 @@ namespace Viewer.Sources
             this.dead = false;
             this.broadcast = null;
             this.broacastTimer = TimeSpan.Zero;
+            this.iv = new Inventory();
         }
 
         public Player setPos(int x, int y)

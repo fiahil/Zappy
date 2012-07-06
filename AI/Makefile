@@ -8,8 +8,8 @@
 NAME	=	drone
 
 ML	=	socket.ml	\
+		inventory.ml	\
 		bridge.ml	\
-		fsm.ml		\
 		fsmBase.ml	\
 		main.ml
 

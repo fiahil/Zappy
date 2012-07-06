@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:49:18 2012 ulric lefevre
-** Last update Fri Jul  6 15:54:59 2012 ulric lefevre
+** Last update Fri Jul  6 19:17:57 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -13,6 +13,16 @@
 #include	<string.h>
 
 #include	"def.h"
+
+int		cmp_player_list(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
+{
+  (void)sz1;
+  (void)sz2;
+  if ((*((t_player*)ptr1)) == ((t_player)(ptr2)))
+    return (0);
+  else
+    return (1);
+}
 
 char		cmp_time(t_timeval fst, t_timeval scd)
 {

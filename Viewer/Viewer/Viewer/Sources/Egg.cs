@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace Viewer.Sources
 {
@@ -17,14 +19,34 @@ namespace Viewer.Sources
         }
         
         Point pos;
-        Sprite[] egg;
+        Sprite egg;
         public State st;
         public int id;
 
-        public Egg(int id, int x, int y)
+        public Egg(ContentManager cm,int id, int x, int y)
         {
             pos = new Point(x, y);
             this.id = id;
+            this.egg = new Sprite(cm.Load<Texture2D>("Players/Egg"));
+        }
+
+        public void Draw(GameTime gameTime, Rectangle square, Rectangle screen, SpriteBatch sb)
+        {
+            Point p;
+            Point off;
+
+            double factX = (this.egg.getBounds().Width * (square.Width / 155.0));
+            double factY = (this.egg.getBounds().Height * (square.Height / 58.0));
+
+            off.X = (this.pos.X + 1) * (square.Width / 2);
+            off.Y = this.pos.X * (square.Height / 2);
+
+            p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
+            p.Y = this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+
+            Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+            if (screen.Intersects(tar))
+                this.egg.Draw(sb, tar);
         }
     }
 }

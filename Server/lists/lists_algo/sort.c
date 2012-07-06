@@ -16,7 +16,8 @@ static t_iter	*get_head(t_list *this)
   t_iter	*e;
 
   e = this->head;
-  this->head = e->next;
+  if (e)
+	this->head = e->next;
   if (this->head)
     this->head->prev = NULL;
   --this->size;

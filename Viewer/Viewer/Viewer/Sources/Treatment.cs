@@ -88,8 +88,11 @@ namespace Viewer.Sources
         }
         private void ppo(string[] a)
         {
-            parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
-                .setPos(int.Parse(a[1]), int.Parse(a[2])).dir = Player.convertDir(int.Parse(a[3]));
+            Player P;
+
+            P = parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); });
+            P.setPos(int.Parse(a[1]), int.Parse(a[2])).dir = Player.convertDir(int.Parse(a[3]));
+            P.st = Player.State.IDLE;
         }
 
         private void plv(string[] a)
@@ -165,7 +168,7 @@ namespace Viewer.Sources
 
         private void enw(string[] a)
         {
-            parent.getEggs().Add(new Egg(int.Parse(a[0]), int.Parse(a[2]), int.Parse(a[3])));
+            parent.getEggs().Add(new Egg(this.parent.Content, int.Parse(a[0]), int.Parse(a[2]), int.Parse(a[3])));
         }
 
         private void eht(string[] a)

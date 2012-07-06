@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Fri Jul  6 16:24:23 2012 ulric lefevre
+** Last update Fri Jul  6 20:07:17 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -16,6 +16,7 @@
 
 #include	"map.h"
 #include	"graphic.h"
+#include	"func_cmp.h"
 #include	"algorithm.h"
 #include	"msgout_cmd.h"
 #include	"process_function.h"
@@ -28,6 +29,9 @@ static const int	g_dir[4][2] =
     {-1, 0}
   };
 
+static const int	g_moved_dir[16] =
+  {5, 7, 1, 3, 3, 5, 7, 1, 1, 3, 5, 7, 7, 1, 3, 5};
+
 static const int	g_src[4][4] =
   {
     {5, 7, 1, 3},
@@ -35,16 +39,6 @@ static const int	g_src[4][4] =
     {1, 3, 5, 7},
     {7, 1, 3, 5}
   };
-
-int		cmp_player_list(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
-{
-  (void)sz1;
-  (void)sz2;
-  if ((*((t_player*)ptr1)) == ((t_player)(ptr2)))
-    return (0);
-  else
-    return (1);
-}
 
 static void	do_move_process(t_player this, int coef_x, int coef_y)
 {
@@ -82,6 +76,11 @@ t_bool		move_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
+static int	get_moved_dir(int bandit, int victim)
+{
+  return (g_moved_dir[bandit * 4 + victim]);
+}
+
 t_bool		expulse_process(t_player this, char *data, t_data_serv info)
 {
   t_list	*players;
@@ -103,6 +102,7 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
       p = list_front(players);
       do_move_process(*p, g_dir[this->dir][0],
 		      g_dir[this->dir][1]);
+      msgout_moved(*p, get_moved_dir(this->dir, (*p)->dir));
     }
   list_push_back(players, ti);
   return (TRUE);

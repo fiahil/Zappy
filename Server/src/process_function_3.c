@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Fri Jul  6 13:06:12 2012 ulric lefevre
+** Last update Fri Jul  6 16:24:23 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -22,18 +22,18 @@
 
 static const int	g_dir[4][2] =
   {
-    { 0, -1},
-    { 1, 0},
-    { 0, 1},
-    { -1, 0}
+    {0, -1},
+    {1, 0},
+    {0, 1},
+    {-1, 0}
   };
 
 static const int	g_src[4][4] =
   {
-    { 5, 7, 1, 3},
-    { 3, 5, 7, 1},
-    { 1, 3, 5, 7},
-    { 7, 1, 3, 5}
+    {5, 7, 1, 3},
+    {3, 5, 7, 1},
+    {1, 3, 5, 7},
+    {7, 1, 3, 5}
   };
 
 int		cmp_player_list(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
@@ -66,10 +66,10 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
     this->pos.y = 0;
   if (this->pos.y < 0)
     this->pos.y = map->size_y - 1;
-  tmp = list_find_cmp(get_map(NULL)->map[prec.y][prec.x]->players,
+  tmp = list_find_cmp(map->map[prec.y][prec.x]->players,
 		      &cmp_player_list, this, sizeof(*this));
-  list_extract(get_map(NULL)->map[prec.y][prec.x]->players, tmp);
-  list_push_back(get_map(NULL)->map[this->pos.y][this->pos.x]->players, tmp);
+  list_extract(map->map[prec.y][prec.x]->players, tmp);
+  list_push_back(map->map[this->pos.y][this->pos.x]->players, tmp);
 }
 
 t_bool		move_process(t_player this, char *data, t_data_serv info)
@@ -87,15 +87,17 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
   t_list	*players;
   t_iter	*ti;
   t_player	*p;
+  t_map		map;
 
   (void)data;
   (void)info;
-  players = get_map(NULL)->map[this->pos.y][this->pos.x]->players;
+  map = get_map(NULL);
+  players = map->map[this->pos.y][this->pos.x]->players;
   ti = list_find_cmp(players, &cmp_player_list, this, sizeof(*this));
   list_extract(players, ti);
   msgout_expulse(this, players->size ? TRUE : FALSE);
   expulse_graphic(info->monitor, this,
-		  get_map(NULL)->map[this->pos.y][this->pos.x]->players);
+		  map->map[this->pos.y][this->pos.x]->players);
   while (players->size)
     {
       p = list_front(players);

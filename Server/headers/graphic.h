@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:25 2012 ulric lefevre
-** Last update Tue Jun 26 11:31:08 2012 ulric lefevre
+** Last update Fri Jul  6 16:18:01 2012 ulric lefevre
 */
 
 #ifndef		__GRAPHIC_H__
@@ -55,7 +55,6 @@ void	pdi(t_list *, int);
 void	sbp(t_list*);
 void	suc(t_list*);
 void	smg(t_list*, char const*);
-void	seg(t_list*, int);
 void	edi(t_list*, int);
 void	ebo(t_list*, int);
 void	eht(t_list*, int);

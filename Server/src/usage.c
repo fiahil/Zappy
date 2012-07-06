@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:40 2012 ulric lefevre
-** Last update Sat Jun 23 20:13:41 2012 ulric lefevre
+** Last update Fri Jul  6 16:07:12 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -13,7 +13,7 @@
 
 void		usage()
 {
-  fprintf(stderr, "./server ");
+  fprintf(stderr, "./zappy ");
   fprintf(stderr, "[-p port] ");
   fprintf(stderr, "[-x width] ");
   fprintf(stderr, "[-y height] ");

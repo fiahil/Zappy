@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 14:08:08 2012 ulric lefevre
-** Last update Tue Jun 26 11:41:31 2012 ulric lefevre
+** Last update Fri Jul  6 16:30:21 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -40,12 +40,10 @@ static void	display(t_map map, int x, int y)
 
 void		stdout_map()
 {
-  t_map		map;
   int		x;
   int		y;
 
   x = -1;
   y = -1;
-  map = get_map(NULL);
-  display(map, x, y);
+  display(get_map(NULL), x, y);
 }

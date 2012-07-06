@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:27 2012 ulric lefevre
-** Last update Fri Jul  6 13:06:38 2012 ulric lefevre
+** Last update Fri Jul  6 16:04:23 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -20,11 +20,11 @@
 #include	"clock.h"
 #include	"incant.h"
 #include	"graphic.h"
+#include	"func_cmp.h"
 #include	"algorithm.h"
 #include	"iter_tools.h"
 #include	"msgout_cmd.h"
 #include	"egg_manager.h"
-#include	"team_manager.h"
 #include	"iter_function.h"
 #include	"process_function.h"
 
@@ -91,7 +91,7 @@ t_bool		connect_nbr_process(t_player this, char *data, t_data_serv info)
   char		*str;
 
   (void)data;
-  if ((it = list_find_cmp(info->teams, &func_cmp_team, this->team, 0)) == NULL)
+  if ((it = list_find_cmp(info->teams, &cmp_team, this->team, 0)) == NULL)
     return (FALSE);
   asprintf(&str, "%d\n", ((t_team)it->data)->remaining);
   msgout_connect_nbr(this, str);

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:20 2012 ulric lefevre
-** Last update Wed Jul  4 13:53:26 2012 ulric lefevre
+** Last update Fri Jul  6 16:23:43 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -21,22 +21,22 @@
 
 static const int	g_quarter[4][3] =
   {
-    { 6, 5, 4 },
-    { 2, 3, 4 },
-    { 6, 7, 0 },
-    { 2, 1, 0 }
+    {6, 5, 4},
+    {2, 3, 4},
+    {6, 7, 0},
+    {2, 1, 0}
   };
 
 static const t_u_pos	g_out_pos[8] =
   {
-    { 1, 0 },
-    { 0, 1 },
-    { 1, 1 },
-    { -1, 0 },
-    { 0, -1 },
-    { -1, 1 },
-    { 1, -1 },
-    { -1, -1 }
+    {1, 0},
+    {0, 1},
+    {1, 1},
+    {-1, 0},
+    {0, -1},
+    {-1, 1},
+    {1, -1},
+    {-1, -1}
   };
 
 static void	get_closest_pos(t_u_pos *src, t_u_pos *dest, t_u_pos *close)

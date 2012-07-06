@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:18 2012 ulric lefevre
-** Last update Fri Jul  6 11:50:16 2012 ulric lefevre
+** Last update Fri Jul  6 16:23:52 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -66,7 +66,7 @@ void            stdout_data_serv(t_arg *args, t_data_serv ds)
   printf("Infos sur la map : \n");
   printf("\t\tLargeur : %d\n", args->width);
   printf("\t\tHauteur : %d\n", args->height);
-  printf("Infos sur les équipes: \n");
+  printf("Infos sur les equipes: \n");
   list_for_each(args->teams, &print_list);
-  printf("\t\tClients par équipe : %d\033[0m\n\n", args->nb_per_team);
+  printf("\t\tClients par equipe : %d\033[0m\n\n", args->nb_per_team);
 }

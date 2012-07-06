@@ -85,6 +85,7 @@ namespace Viewer.Sources
             this.dead = false;
             this.broadcast = null;
             this.broacastTimer = TimeSpan.Zero;
+            this.iv = new Inventory();
         }
 
         public Player setPos(int x, int y)

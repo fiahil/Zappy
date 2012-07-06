@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Fri Jul  6 13:07:50 2012 ulric lefevre
+** Last update Fri Jul  6 16:03:13 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -17,12 +17,12 @@
 #include	"incant.h"
 #include	"stdout.h"
 #include	"graphic.h"
+#include	"func_cmp.h"
 #include	"algorithm.h"
 #include	"iter_tools.h"
 #include	"msgout_cmd.h"
 #include	"res_manager.h"
 #include	"var_manager.h"
-#include	"team_manager.h"
 #include	"select_manager.h"
 #include	"server_routine.h"
 
@@ -98,7 +98,7 @@ void		iter_egg(void *ptr, size_t s)
       p = ((t_egg)ptr)->fetus;
       stdout_serv_status("new player\n", 1);
       put_res_egg();
-      it = list_find_cmp(ds->teams, &func_cmp_team,
+      it = list_find_cmp(ds->teams, &cmp_team,
 			 p->team, 0);
       ((t_team)it->data)->remaining += 1;
       list_push_back_new(ds->player, &p,

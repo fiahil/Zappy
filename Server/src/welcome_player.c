@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:12:58 2012 ulric lefevre
-** Last update Fri Jul  6 13:49:21 2012 ulric lefevre
+** Last update Fri Jul  6 16:01:35 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -18,8 +18,8 @@
 #include	"map.h"
 #include	"stdout.h"
 #include	"graphic.h"
+#include	"func_cmp.h"
 #include	"algorithm.h"
-#include	"team_manager.h"
 
 static int	chk_team(t_data_serv server, char *data)
 {
@@ -28,10 +28,10 @@ static int	chk_team(t_data_serv server, char *data)
 
   if (!strcmp(data, "GRAPHIC"))
     return (-2);
-  if ((it = list_find_cmp(server->teams, &func_cmp_team, data, 0)) == NULL)
+  if ((it = list_find_cmp(server->teams, &cmp_team, data, 0)) == NULL)
     return (-1);
   str = NULL;
-  asprintf(&str, "Demande de connexion a l'équipe : %s\n", ((t_team)it->data)->name);
+  asprintf(&str, "Demande de connexion a l'equipe : %s\n", ((t_team)it->data)->name);
   stdout_serv_status(str, 0);
   free(str);
   if (((t_team)it->data)->remaining > 0)
@@ -102,10 +102,8 @@ t_bool		welcome_player(t_data_serv server, t_player player, char *data)
     {
       if ((nb_client = chk_team(server, data)) < 0)
 	{
-	  if (nb_client == -2)
-	    welcome_graphic(server, player);
-	  else
-	    stdout_serv_status("Team full or Team unknown\n", 0);
+	  (nb_client == -2) ? (welcome_graphic(server, player)) :
+	    (stdout_serv_status("Equipe complete ou equipe inconnue\n", 0));
 	  return (FALSE);
 	}
       if ((ghost = list_find_cmp(server->player, &team_ghost, data, 0)))

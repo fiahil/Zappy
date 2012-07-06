@@ -5,13 +5,16 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Wed Jul  4 12:18:31 2012 ulric lefevre
-** Last update Wed Jul  4 13:54:44 2012 ulric lefevre
+** Last update Fri Jul  6 13:05:47 2012 ulric lefevre
 */
 
+#include	<stdio.h>
+#include	<stdlib.h>
+
+#include	"def.h"
+#include	"map.h"
 #include	"graphic.h"
 #include	"c_lists.h"
-#include	"map.h"
-#include	"def.h"
 
 void		monitor_graphic(t_graphic mn, t_data_serv ds, t_player p)
 {

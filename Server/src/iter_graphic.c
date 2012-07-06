@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Wed Jul  4 13:55:31 2012 ulric lefevre
-** Last update Wed Jul  4 15:42:26 2012 ulric lefevre
+** Last update Fri Jul  6 13:07:31 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -15,13 +15,13 @@
 #include	<string.h>
 
 #include	"def.h"
-#include	"var_manager.h"
-#include	"select_manager.h"
-#include	"network.h"
 #include	"stdout.h"
-#include	"msgout_cmd.h"
 #include	"graphic.h"
+#include	"network.h"
+#include	"msgout_cmd.h"
+#include	"var_manager.h"
 #include	"graphic_tools.h"
+#include	"select_manager.h"
 
 static const t_u_parse_graph g_cmd[] =
   {

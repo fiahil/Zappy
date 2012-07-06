@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:30 2012 ulric lefevre
-** Last update Wed Jul  4 13:52:39 2012 ulric lefevre
+** Last update Fri Jul  6 13:08:35 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -13,8 +13,8 @@
 #include	<stdio.h>
 #include	<stdlib.h>
 
-#include	"graphic.h"
 #include	"def.h"
+#include	"graphic.h"
 
 void		pnw(t_list *mn, t_player play)
 {

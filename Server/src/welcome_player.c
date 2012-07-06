@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:12:58 2012 ulric lefevre
-** Last update Wed Jul  4 15:40:05 2012 ulric lefevre
+** Last update Fri Jul  6 13:49:21 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -31,7 +31,7 @@ static int	chk_team(t_data_serv server, char *data)
   if ((it = list_find_cmp(server->teams, &func_cmp_team, data, 0)) == NULL)
     return (-1);
   str = NULL;
-  asprintf(&str, "Connection query to : %s\n", ((t_team)it->data)->name);
+  asprintf(&str, "Demande de connexion a l'équipe : %s\n", ((t_team)it->data)->name);
   stdout_serv_status(str, 0);
   free(str);
   if (((t_team)it->data)->remaining > 0)

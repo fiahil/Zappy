@@ -4,13 +4,16 @@
  *)
 
 let sock = Unix.socket Unix.PF_INET Unix.SOCK_STREAM 0
-let buffer = ref ""
+let buffer = ref (String.create 4096)
 
 let connect addr port =
-  begin
-    Unix.connect sock (Unix.ADDR_INET ((Unix.inet_addr_of_string addr), port));
-    ()(*Unix.setsockopt_float sock Unix.SO_RCVTIMEO 5.0001*)
-  end
+  let recv_buf = String.create 4096
+  in
+    begin
+      Unix.connect sock (Unix.ADDR_INET ((Unix.inet_addr_of_string addr), port));
+      ignore (Unix.recv sock recv_buf 0 (String.length recv_buf) []);
+      Unix.setsockopt_float sock Unix.SO_RCVTIMEO 0.0001
+    end
 
 let send data =
   ignore (Unix.send sock data 0 (String.length data) [])
@@ -34,8 +37,10 @@ let recv () =
     try
       if Unix.recv sock buf 0 (String.length buf) [] = (String.length buf) then
         aux (ret ^ buf) (String.create 4096)
-      else
+      else if !buffer.[0] != Char.chr(0) then
         split (!buffer ^ ret ^ buf)
+      else
+        split (ret ^ buf)
     with
       | Unix.Unix_error (t, w, r)       -> ""
   in
@@ -52,9 +57,9 @@ let unitest () =
   in
   let _ = print_endline ((recv ()) ^ " == END")
   and
-      _ = print_endline ((recv ()) ^ " == END")
+            _ = print_endline ((recv ()) ^ " == END")
   and
-      _ = print_endline ((recv ()) ^ " == END")
+                  _ = print_endline ((recv ()) ^ " == END")
   in
     send "Je vais au royaume du poney fringuant!"
 

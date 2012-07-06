@@ -66,7 +66,7 @@ let _ = bat_re.(0) <- (Str.regexp "^[0-9]+\n", R_connect_nbr RP_empty)
 let _ = bat_re.(1) <- (Str.regexp "^ok\n", R_ok RP_empty)
 let _ = bat_re.(2) <- (Str.regexp "^ko\n", R_ko RP_empty)
 let _ = bat_re.(3) <- (Str.regexp "^message [0-8],.*\n", R_broadcast RP_empty)
-let _ = bat_re.(4) <- (Str.regexp "^deplacement: [1-8]\n", R_broadcast RP_empty)
+let _ = bat_re.(4) <- (Str.regexp "^deplacement [1357]\n", R_broadcast RP_empty)
 let _ = bat_re.(5) <- (Str.regexp "^elevation en cours\n", R_elevation RP_empty)
 let _ = bat_re.(6) <- (Str.regexp "^niveau actuel : [2-8]\n", R_end_incant RP_empty)
 let _ = bat_re.(7) <- (Str.regexp "^{nourriture [0-9]+,linemate [0-9]+,deraumere [0-9]+,sibur [0-9]+,mendiane [0-9]+,phiras [0-9]+,thystame [0-9]+}\n", R_inventaire RP_empty)
@@ -84,77 +84,103 @@ let push = function
   | Fork                -> Socket.send "fork\n"
   | Incantation         -> Socket.send "incantation\n"
   | Broadcast value     -> Socket.send ("broadcast " ^ value ^ "\n")
-  | Prend Nourriture    -> Socket.send ("prend nourriture\n")
-  | Prend Linemate      -> Socket.send ("prend linemate\n")
-  | Prend Deraumere     -> Socket.send ("prend deraumere\n")
-  | Prend Sibur         -> Socket.send ("prend sibur\n")
-  | Prend Mendiane      -> Socket.send ("prend mendiane\n")
-  | Prend Phiras        -> Socket.send ("prend phiras\n")
-  | Prend Thystame      -> Socket.send ("prend thystame\n")
-  | Pose Nourriture     -> Socket.send ("prend nourriture\n")
-  | Pose Linemate       -> Socket.send ("prend linemate\n")
-  | Pose Deraumere      -> Socket.send ("prend deraumere\n")
-  | Pose Sibur          -> Socket.send ("prend sibur\n")
-  | Pose Mendiane       -> Socket.send ("prend mendiane\n")
-  | Pose Phiras         -> Socket.send ("prend phiras\n")
-  | Pose Thystame       -> Socket.send ("prend thystame\n")
+  | Prend Nourriture    -> Socket.send "prend nourriture\n"
+  | Prend Linemate      -> Socket.send "prend linemate\n"
+  | Prend Deraumere     -> Socket.send "prend deraumere\n"
+  | Prend Sibur         -> Socket.send "prend sibur\n"
+  | Prend Mendiane      -> Socket.send "prend mendiane\n"
+  | Prend Phiras        -> Socket.send "prend phiras\n"
+  | Prend Thystame      -> Socket.send "prend thystame\n"
+  | Pose Nourriture     -> Socket.send "pose nourriture\n"
+  | Pose Linemate       -> Socket.send "pose linemate\n"
+  | Pose Deraumere      -> Socket.send "pose deraumere\n"
+  | Pose Sibur          -> Socket.send "pose sibur\n"
+  | Pose Mendiane       -> Socket.send "pose mendiane\n"
+  | Pose Phiras         -> Socket.send "pose phiras\n"
+  | Pose Thystame       -> Socket.send "pose thystame\n"
   | Team value          -> Socket.send (value ^ "\n")
 
 let pull () =
   let rec aux idx str =
-    if idx < 10 && Str.string_match (fst bat_re.(idx)) str 0 then
-      print_endline str
-    else if idx < 10 then
+    if Str.string_match (fst (bat_re.(idx))) str 0 then
+      snd bat_re.(idx)
+    else if idx < 9 then
       aux (idx + 1) str
+    else
+      R_ko RP_empty
   in
     aux 0 (Socket.recv ())
 
+(*
+ * Unitest
+ *)
 let unitest () =
+  let check v t =
+    if v = t then
+      print_endline "-- SUCCESS"
+    else
+      print_endline "-- FAIL"
+  in
   begin
     Socket.connect "127.0.0.1" 4242;
     push (Team "Poney");
-    pull ();
-    pull ();
+    ignore (Unix.select [] [] [] 0.5);
+    check (pull ()) (R_connect_nbr (RP_connect 0));
+    check (pull ()) (R_map_size (RP_map_size (20, 20)));
+    print_endline "voir";
     push (Voir);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
+    print_endline "connect_nbr";
     push (Connect_nbr);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
-    push (Inventaire);
-    ignore (Unix.select [] [] [] 0.5);
-    pull ();
+    print_endline "expulse";
     push (Expulse);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
+    print_endline "gauche";
     push (Gauche);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
+    print_endline "droite";
     push (Droite);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
+    print_endline "avance";
     push (Avance);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
+    print_endline "fork";
     push (Fork);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
+    print_endline "incantation";
     push (Incantation);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
+    print_endline "broadcast poney";
     push (Broadcast "Poney");
     ignore (Unix.select [] [] [] 0.5);
     pull ();
+    print_endline "prend nourriture";
     push (Prend Nourriture);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
+    print_endline "pose linemate";
     push (Pose Linemate);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
+    print_endline "prend phiras";
     push (Prend Phiras);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
+    print_endline "pose mendiane";
     push (Pose Mendiane);
+    ignore (Unix.select [] [] [] 0.5);
+    pull ();
+    print_endline "inventaire";
+    push (Inventaire);
     ignore (Unix.select [] [] [] 0.5);
     pull ();
   end

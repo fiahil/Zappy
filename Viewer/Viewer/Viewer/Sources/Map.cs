@@ -27,8 +27,9 @@ namespace Viewer.Sources
         TimeSpan Hrep;
         uint view;
 
-        Sprite square_details;
-        bool square_details_on;
+        public Sprite square_details;
+        public bool square_details_on;
+        public string[] inventory;
         Point square_details_pos;
         TimeSpan square_setails_timer;
         Sprite[] _wall;
@@ -238,8 +239,6 @@ namespace Viewer.Sources
             Point p = new Point(0, 0);
             Point off = new Point(0, 0);
 
-            string[] inventory = null;
-
             double factX = (200 * (this.square.Width / 155.0));
             double factY = (160 * (this.square.Height / 58.0));
 
@@ -326,19 +325,6 @@ namespace Viewer.Sources
             Rectangle tar3 = new Rectangle((int)(p.X + (int)(45 * (this.square.Width / 155.0))), (int)(p.Y - (int)(8 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
             if (this.screen.Intersects(tar3))
                 this._wall[8].Draw(this.sb, tar3);
-
-            if (this.square_details_on)
-            {
-                System.Diagnostics.Debug.Assert(inventory != null);
-                this.square_details.Draw(this.sb, new Rectangle(this.Game.Window.ClientBounds.Width - this.square_details.getBounds().Width, 0, this.square_details.getBounds().Width, this.square_details.getBounds().Height));
-                this.sb.DrawString(this.sf, inventory[0], new Vector2(1200, 100), Color.Black);
-                this.sb.DrawString(this.sf, inventory[1], new Vector2(1200, 155), Color.Black);
-                this.sb.DrawString(this.sf, inventory[2], new Vector2(1200, 210), Color.Black);
-                this.sb.DrawString(this.sf, inventory[3], new Vector2(1200, 265), Color.Black);
-                this.sb.DrawString(this.sf, inventory[4], new Vector2(1200, 325), Color.Black);
-                this.sb.DrawString(this.sf, inventory[5], new Vector2(1200, 380), Color.Black);
-                this.sb.DrawString(this.sf, inventory[6], new Vector2(1200, 440), Color.Black);
-            }
 
             this.sb.End();
         }

@@ -30,19 +30,23 @@ namespace Viewer.Sources
             pop.ShowDialog();
             if (pop.isValid())
             {
-                IPAddress[] IPs = Dns.GetHostAddresses(pop.GetIp());
-
-                s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 try
                 {
+                    IPAddress[] IPs = Dns.GetHostAddresses(pop.GetIp());
+
+                    s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     s.Connect(IPs[0], pop.GetPort());
                 }
                 catch (SocketException e)
                 {
                     Console.WriteLine("Error on Socket\nWhat: {0}", e.Message);
+                    MessageBox.Show(e.Message, "Connection failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
                 }
-                catch (NotSupportedException e)
-                { // Format port invalid
+                catch (FormatException e)
+                {
+                    MessageBox.Show(e.Message, "Invalid port.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
                 }
 
                 if (s.Poll(-1, SelectMode.SelectRead))

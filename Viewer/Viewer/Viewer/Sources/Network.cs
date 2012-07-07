@@ -12,12 +12,13 @@ namespace Viewer.Sources
 
     class Network
     {
-        public bool connected;
         Socket s;
         Treatment t;
         Queue<string> _out;
         Queue<string> _in;
         string tmp;
+
+        bool connected;
 
         public void Initialize(Main p)
         {
@@ -101,6 +102,11 @@ namespace Viewer.Sources
             {
                 t.Treat(_in.Dequeue());
             }
+        }
+
+        public bool IsConnected()
+        {
+            return connected;
         }
 
         public void SendDatas(string msg)

@@ -80,45 +80,45 @@ namespace Viewer.Sources
         private void pnw(string[] a)
         {
             parent.getPlayers().Add(new Player(this.parent.Content, int.Parse(a[0]), int.Parse(a[1]), int.Parse(a[2]), Player.convertDir(int.Parse(a[3])), int.Parse(a[4]), a[5], this.parent.tlist.FindIndex(delegate(string n) { return n == a[5]; })));
-            parent.getPlayers()[parent.getPlayers().Count - 1].iv.nourriture = 10;
+            parent.getPlayers()[parent.getPlayers().Count - 1].Inventory.nourriture = 10;
         }
         private void ppo(string[] a)
         {
             Player P;
 
-            P = parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); });
-            P.setPos(int.Parse(a[1]), int.Parse(a[2])).dir = Player.convertDir(int.Parse(a[3]));
-            P.st = Player.State.IDLE;
+            P = parent.getPlayers().Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
+            P.setPos(int.Parse(a[1]), int.Parse(a[2])).Dir = Player.convertDir(int.Parse(a[3]));
+            P.State = Player.States.IDLE;
         }
 
         private void plv(string[] a)
         {
-            parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); })
-                .lvl = int.Parse(a[1]);
+            parent.getPlayers().Find(delegate(Player p) { return p.Id == int.Parse(a[0]); })
+                .Level = int.Parse(a[1]);
         }
 
         private void pin(string[] a)
         {
-            Player pl = parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); });
+            Player pl = parent.getPlayers().Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
             pl.setPos(int.Parse(a[1]), int.Parse(a[2]));
-            pl.iv.nourriture    = uint.Parse(a[3]);
-            pl.iv.linemate      = uint.Parse(a[4]);
-            pl.iv.deraumere     = uint.Parse(a[5]);
-            pl.iv.sibur         = uint.Parse(a[6]);
-            pl.iv.mendiane      = uint.Parse(a[7]);
-            pl.iv.phiras        = uint.Parse(a[8]);
-            pl.iv.thystame      = uint.Parse(a[9]);
+            pl.Inventory.nourriture    = uint.Parse(a[3]);
+            pl.Inventory.linemate      = uint.Parse(a[4]);
+            pl.Inventory.deraumere     = uint.Parse(a[5]);
+            pl.Inventory.sibur         = uint.Parse(a[6]);
+            pl.Inventory.mendiane      = uint.Parse(a[7]);
+            pl.Inventory.phiras        = uint.Parse(a[8]);
+            pl.Inventory.thystame      = uint.Parse(a[9]);
         }
 
         private void pex(string[] a)
         {
-            Player P = parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); });
-            P.st = Player.State.EXPULSE;
+            Player P = parent.getPlayers().Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
+            P.State = Player.States.EXPULSE;
         }
 
         private void pbc(string[] a)
         {
-            Player P = parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); });
+            Player P = parent.getPlayers().Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
             P.setBroadcast(a[1]);
         }
 
@@ -126,8 +126,8 @@ namespace Viewer.Sources
         {
             foreach (string s in a.Skip(3))
             {
-                Player P = parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(s); });
-                P.st = Player.State.INCANT;
+                Player P = parent.getPlayers().Find(delegate(Player p) { return p.Id == int.Parse(s); });
+                P.State = Player.States.INCANT;
             }
         }
 
@@ -135,31 +135,31 @@ namespace Viewer.Sources
         {
             foreach (Player p in parent.getPlayers().FindAll(delegate(Player p) { return p.getPos().X == int.Parse(a[0]) && p.getPos().Y == int.Parse(a[1]); }))
             {
-                p.st = int.Parse(a[2]) == 0 ? Player.State.INCANT_FAIL : Player.State.INCANT_SUCCESS;
+                p.State = int.Parse(a[2]) == 0 ? Player.States.INCANT_FAIL : Player.States.INCANT_SUCCESS;
             }
         }
         private void pfk(string[] a)
         {
-            Player P = parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); });
-            P.st = Player.State.FORK;
+            Player P = parent.getPlayers().Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
+            P.State = Player.States.FORK;
         }
 
         private void pdr(string[] a)
         {
-            Player P = parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); });
-            P.st = Player.State.DROP;
+            Player P = parent.getPlayers().Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
+            P.State = Player.States.DROP;
         }
 
         private void pgt(string[] a)
         {
-            Player P = parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); });
-            P.st = Player.State.TAKE;
+            Player P = parent.getPlayers().Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
+            P.State = Player.States.TAKE;
         }
 
         private void pdi(string[] a)
         {
-            Player P = parent.getPlayers().Find(delegate(Player p) { return p.id == int.Parse(a[0]); });
-            P.st = Player.State.DEAD;
+            Player P = parent.getPlayers().Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
+            P.State = Player.States.DEAD;
         }
 
         private void enw(string[] a)

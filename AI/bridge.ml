@@ -84,32 +84,65 @@ let voir_cmd str =
   let rec re = Str.regexp "[{}, ]"
   and
           aux bat = function
-    | []                        -> Array.of_list (List.rev bat)
-    | (Str.Delim "{")::tail     -> aux bat tail
-    | (Str.Delim " ")::tail     -> aux bat tail
-    | (Str.Delim "}")::tail     -> aux bat tail
-    | (Str.Delim ",")::tail     -> aux ((Inventory.empty ())::bat) tail
-    | (Str.Text "nourriture")::tail ->
+    | []                                -> Array.of_list (List.rev bat)
+    | (Str.Delim "{")::tail             -> aux bat tail
+    | (Str.Delim " ")::tail             -> aux bat tail
+    | (Str.Delim "}")::tail             -> aux bat tail
+    | (Str.Delim ",")::tail             -> aux ((Inventory.empty ())::bat) tail
+    | (Str.Text "nourriture")::tail     ->
         aux ((Inventory.inc (List.hd bat) Inventory.Nourriture)::(List.tl bat)) tail
-    | (Str.Text "linemate")::tail ->
+    | (Str.Text "linemate")::tail       ->
         aux ((Inventory.inc (List.hd bat) Inventory.Linemate)::(List.tl bat)) tail
-    | (Str.Text "deraumere")::tail ->
+    | (Str.Text "deraumere")::tail      ->
         aux ((Inventory.inc (List.hd bat) Inventory.Deraumere)::(List.tl bat)) tail
-    | (Str.Text "sibur")::tail ->
+    | (Str.Text "sibur")::tail          ->
         aux ((Inventory.inc (List.hd bat) Inventory.Sibur)::(List.tl bat)) tail
-    | (Str.Text "mendiane")::tail ->
+    | (Str.Text "mendiane")::tail       ->
         aux ((Inventory.inc (List.hd bat) Inventory.Mendiane)::(List.tl bat)) tail
-    | (Str.Text "phiras")::tail ->
+    | (Str.Text "phiras")::tail         ->
         aux ((Inventory.inc (List.hd bat) Inventory.Phiras)::(List.tl bat)) tail
-    | (Str.Text "thystame")::tail ->
+    | (Str.Text "thystame")::tail       ->
         aux ((Inventory.inc (List.hd bat) Inventory.Thystame)::(List.tl bat)) tail
-    | (Str.Text _)::tail        -> aux bat tail
-    | _::tail                   -> aux bat tail
+    | (Str.Text _)::tail                -> aux bat tail
+    | _::tail                           -> aux bat tail
   in
     aux [Inventory.empty ()] (Str.full_split re str)
 
+let inventaire_cmd str =
+  let rec re = Str.regexp "[{}, ]"
+  and
+          aux target iv = function
+    | []                                -> iv
+    | (Str.Delim "{")::tail             -> aux target iv tail
+    | (Str.Delim " ")::tail             -> aux target iv tail
+    | (Str.Delim "}")::tail             -> aux target iv tail
+    | (Str.Delim ",")::tail             -> aux target iv tail
+    | (Str.Text "nourriture")::tail     -> aux Inventory.Nourriture iv tail
+    | (Str.Text "linemate")::tail       -> aux Inventory.Linemate iv tail
+    | (Str.Text "deraumere")::tail      -> aux Inventory.Deraumere iv tail
+    | (Str.Text "sibur")::tail          -> aux Inventory.Sibur iv tail
+    | (Str.Text "mendiane")::tail       -> aux Inventory.Mendiane iv tail
+    | (Str.Text "phiras")::tail         -> aux Inventory.Phiras iv tail
+    | (Str.Text "thystame")::tail       -> aux Inventory.Thystame iv tail
+    | (Str.Text value)::tail            ->
+        (try
+           aux target (Inventory.set iv (int_of_string value) target) tail
+         with
+           | Failure "int_of_string"     -> aux target iv tail)
+    | _::tail                            -> aux target iv tail
+  in
+    aux Inventory.Nourriture (Inventory.empty ()) (Str.full_split re str)
+
+let incantation_cmd str =
+  try
+    int_of_string str
+  with
+    | Failure "int_of_string"   -> 0
+
 let fill raw = function
   | R_voir _            -> R_voir (RP_voir (voir_cmd raw))
+  | R_inventaire _      -> R_inventaire (RP_inventaire (inventaire_cmd raw))
+  | R_end_incant _      -> R_end_incant (RP_incantation  (incantation_cmd raw))
   | _                   -> R_ko RP_empty
 
 let pull () =
@@ -127,8 +160,8 @@ let pull () =
  * Unitest
  *)
 let unitest () =
-  let see (R_voir (RP_voir bat)) =
-    let rec print_nourriture bat =
+  let see (R_inventaire (RP_inventaire bat)) =
+    let rec print_iv bat =
       begin
         Printf.printf "Nourriture %d\n" bat.Inventory.nourriture;
         Printf.printf "Linemate %d\n" bat.Inventory.linemate;
@@ -138,15 +171,8 @@ let unitest () =
         Printf.printf "Phiras %d\n" bat.Inventory.phiras;
         Printf.printf "Thystame %d\n" bat.Inventory.thystame
       end
-    and
-            aux bat idx =
-      if (idx != Array.length bat) then
-        begin
-          print_nourriture bat.(idx);
-          aux bat (idx + 1)
-        end
     in
-      aux bat 0
+      print_iv bat
   in
   begin
     Socket.connect "127.0.0.1" 4242;
@@ -154,7 +180,7 @@ let unitest () =
     ignore (Unix.select [] [] [] 0.5);
     ignore (pull ()); 
     ignore (pull ());
-    push (Voir);
+    push (Inventaire);
     ignore (Unix.select [] [] [] 0.5);
     see (pull ())
   end

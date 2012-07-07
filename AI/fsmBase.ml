@@ -3,7 +3,7 @@
   * 05.07.2012
   *)
 
-type pattern = int;;
+(* type pattern = int;; *)
 
 let timeout t =
     ignore (Unix.select [] [] [] t)
@@ -11,7 +11,7 @@ let timeout t =
 let find rcs =
   Bridge.push (Bridge.Voir);
   let rec in_find (Bridge.R_voir (Bridge.RP_voir tab)) idx rcs =
-    if (idx > (Array.lenght tab)) then
+    if (idx >= (Array.length tab)) then
       (-1)
     else
       let find_rcs = function
@@ -27,7 +27,7 @@ let find rcs =
 	| Inventory.Phiras     -> find_rcs tab.(idx).Inventory.phiras
 	| Inventory.Thystame   -> find_rcs tab.(idx).Inventory.thystame
   in
-  in_find (Bridge.pull ()) 0 rcs
+  in_find (Bridge.pull Bridge.Voir) 0 rcs
 
 let move off =
   let rec forward = function
@@ -114,11 +114,9 @@ let gather_all rcs =
     | Inventory.Phiras     -> gather Inventory.Phiras tab.(0).Inventory.phiras
     | Inventory.Thystame   -> gather Inventory.Thystame tab.(0).Inventory.thystame
   in
-  in_gather_all (Bridge.pull ()) rcs
+  in_gather_all (Bridge.pull Bridge.Voir) rcs
 
 let rec unitest () =
-  ignore (Bridge.pull ());
-  ignore (Bridge.pull ());
   gather_all Inventory.Nourriture;
   gather Inventory.Linemate 1;
   move 4;

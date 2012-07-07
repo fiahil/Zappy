@@ -178,3 +178,75 @@ let dec iv = function
         phiras = iv.phiras;
         thystame = iv.thystame - 1
       }
+
+let set iv nb = function
+  | Nourriture          ->
+      {
+        nourriture = nb;
+        linemate = iv.linemate;
+        deraumere = iv.deraumere;
+        sibur = iv.sibur;
+        mendiane = iv.mendiane;
+        phiras = iv.phiras;
+        thystame = iv.thystame
+      }
+  | Linemate            ->
+      {
+        nourriture = iv.nourriture;
+        linemate = nb;
+        deraumere = iv.deraumere;
+        sibur = iv.sibur;
+        mendiane = iv.mendiane;
+        phiras = iv.phiras;
+        thystame = iv.thystame
+      }
+  | Deraumere           ->
+      {
+        nourriture = iv.nourriture;
+        linemate = iv.linemate;
+        deraumere = nb;
+        sibur = iv.sibur;
+        mendiane = iv.mendiane;
+        phiras = iv.phiras;
+        thystame = iv.thystame
+      }
+  | Sibur               ->
+      {
+        nourriture = iv.nourriture;
+        linemate = iv.linemate;
+        deraumere = iv.deraumere;
+        sibur = nb;
+        mendiane = iv.mendiane;
+        phiras = iv.phiras;
+        thystame = iv.thystame
+      }
+  | Mendiane            ->    
+      {
+        nourriture = iv.nourriture;
+        linemate = iv.linemate;
+        deraumere = iv.deraumere;
+        sibur = iv.sibur;
+        mendiane = nb;
+        phiras = iv.phiras;
+        thystame = iv.thystame
+      }
+  | Phiras              ->          
+      {
+        nourriture = iv.nourriture;
+        linemate = iv.linemate;
+        deraumere = iv.deraumere;
+        sibur = iv.sibur;
+        mendiane = iv.mendiane;
+        phiras = nb;
+        thystame = iv.thystame
+      }
+  | Thystame            ->
+      {
+        nourriture = iv.nourriture;
+        linemate = iv.linemate;
+        deraumere = iv.deraumere;
+        sibur = iv.sibur;
+        mendiane = iv.mendiane;
+        phiras = iv.phiras;
+        thystame = nb
+      }

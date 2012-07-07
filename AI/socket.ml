@@ -25,6 +25,7 @@ let recv () =
       if Str.string_match re str 0 then
         begin
           buffer := Str.string_after str (Str.match_end ());
+	  Printf.printf "send split = %s\n" (Str.matched_string str);
           Str.matched_string str
         end
       else

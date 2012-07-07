@@ -7,16 +7,19 @@
 
 NAME	=	drone
 
-ML	=	socket.ml	\
+ML	=	map.ml		\
+		socket.ml	\
 		inventory.ml	\
 		bridge.ml	\
 		fsmBase.ml	\
+		fsmSurvival.ml	\
 		main.ml
 
 MLI	=	socket.mli	\
 		inventory.mli	\
 		bridge.mli	\
-		fsmBase.mli
+		fsmBase.mli	\
+		fsmSurvival.mli
 
 CMO	=	$(ML:.ml=.cmo)
 

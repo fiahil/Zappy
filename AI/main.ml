@@ -36,7 +36,9 @@ let main () =
         check_all;
         Socket.connect !host !port;
         Bridge.push (Bridge.Team !team);
-	FsmBase.unitest ()
+	Map.storage ();
+	Random.self_init;
+	FsmSurvival.survival ()
       end
     with
       | Invalid_argument v      -> prerr_endline v

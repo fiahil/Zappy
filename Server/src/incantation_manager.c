@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:54 2012 ulric lefevre
-** Last update Thu Jul  5 19:54:54 2012 ulric lefevre
+** Last update Sat Jul  7 12:07:18 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -99,7 +99,8 @@ t_bool		incant_is_ok(t_incant incant)
   map = get_map(NULL);
   pos.x = incant->pos.x;
   pos.y = incant->pos.y;
-  if (!(nb = check_players(map->map[pos.y][pos.x]->players, incant->incantor->lvl)))
+  if (!(nb = check_players(map->map[pos.y][pos.x]->players,
+			   incant->incantor->lvl)))
     {
       incant->status = FALSE;
       return (FALSE);

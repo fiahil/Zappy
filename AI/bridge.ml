@@ -152,7 +152,7 @@ let unitest () =
     Socket.connect "127.0.0.1" 4242;
     push (Team "Poney");
     ignore (Unix.select [] [] [] 0.5);
-    ignore (pull ()); 
+    ignore (pull ());
     ignore (pull ());
     push (Voir);
     ignore (Unix.select [] [] [] 0.5);

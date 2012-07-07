@@ -9,10 +9,26 @@ let timeout t =
     ignore (Unix.select [] [] [] t)
 
 let find rcs =
-  1
-
-let gather_all rcs =
-  ()
+  Bridge.push (Bridge.Voir);
+  timeout 0.5; (* TODO *)
+  let rec in_find (Bridge.R_voir (Bridge.RP_voir tab)) idx rcs =
+    if (idx > 3) then
+      (-1)
+    else
+      let find_rcs = function
+	| 0 -> in_find (Bridge.R_voir (Bridge.RP_voir tab)) (idx + 1) rcs
+	| _ -> idx
+      in
+      match rcs with
+	| Inventory.Nourriture -> find_rcs tab.(idx).Inventory.nourriture
+	| Inventory.Linemate   -> find_rcs tab.(idx).Inventory.linemate
+	| Inventory.Deraumere  -> find_rcs tab.(idx).Inventory.deraumere
+	| Inventory.Sibur      -> find_rcs tab.(idx).Inventory.sibur
+	| Inventory.Mendiane   -> find_rcs tab.(idx).Inventory.mendiane
+	| Inventory.Phiras     -> find_rcs tab.(idx).Inventory.phiras
+	| Inventory.Thystame   -> find_rcs tab.(idx).Inventory.thystame
+  in
+  in_find (Bridge.pull ()) 0 rcs
 
 let move off =
   let rec forward = function
@@ -20,7 +36,7 @@ let move off =
     | it ->
       begin
 	Bridge.push Bridge.Avance;
-	(* timeout 0.1; (\* TODO *\) *)
+	timeout 0.5; (* TODO *)
 	forward (it - 1)
       end
   in
@@ -30,13 +46,13 @@ let move off =
     else if (off - midd) < 0 then
       begin
 	Bridge.push Bridge.Gauche;
-	(* timeout 0.1; (\* TODO *\) *)
+	timeout 0.5; (* TODO *)
 	forward ((off - midd) * -1)
       end
     else
       begin
 	Bridge.push Bridge.Droite;
-	(* timeout 0.1; (\* TODO *\) *)
+	timeout 0.5; (* TODO *)
 	forward (off - midd)
       end
   in
@@ -86,24 +102,41 @@ let gather rcs nb =
     | it ->
       begin
 	Bridge.push (Bridge.Prend rcs);
-	(* timeout 0.1; (\* TODO *\) *)
+	timeout 0.5; (* TODO *)
 	in_gather (it - 1)
       end
   in
   in_gather nb
 
+let gather_all rcs =
+  Bridge.push (Bridge.Voir);
+  timeout 0.5; (* TODO *)
+  let in_gather_all (Bridge.R_voir (Bridge.RP_voir tab)) = function
+    | Inventory.Nourriture -> gather Inventory.Nourriture tab.(0).Inventory.nourriture
+    | Inventory.Linemate   -> gather Inventory.Linemate tab.(0).Inventory.linemate
+    | Inventory.Deraumere  -> gather Inventory.Deraumere tab.(0).Inventory.deraumere
+    | Inventory.Sibur      -> gather Inventory.Sibur tab.(0).Inventory.sibur
+    | Inventory.Mendiane   -> gather Inventory.Mendiane tab.(0).Inventory.mendiane
+    | Inventory.Phiras     -> gather Inventory.Phiras tab.(0).Inventory.phiras
+    | Inventory.Thystame   -> gather Inventory.Thystame tab.(0).Inventory.thystame
+  in
+  in_gather_all (Bridge.pull ()) rcs
+
 let rec unitest () =
-  gather Inventory.Nourriture 5;
-  (* timeout 0.1; (\* TODO *\) *)
+  ignore (Bridge.pull ());
+  ignore (Bridge.pull ());
+  gather_all Inventory.Nourriture;
+  timeout 0.5; (* TODO *)
   gather Inventory.Linemate 1;
-  (* timeout 0.1; *)
+  timeout 0.5; (* TODO *)
   move 4;
-  (* timeout 0.1; *)
-  gather Inventory.Nourriture 3;
-  (* timeout 0.1; *)
+  timeout 0.5; (* TODO *)
+  gather_all Inventory.Nourriture;
+  timeout 0.5; (* TODO *)
   move 12;
-  (* timeout 0.1; *)
+  timeout 0.5; (* TODO *)
   gather Inventory.Linemate 2;
-  (* timeout 0.1; *)
-  gather Inventory.Nourriture 6;
+  timeout 0.5; (* TODO *)
+  gather_all Inventory.Nourriture;
+  timeout 0.5; (* TODO *)
   unitest ()

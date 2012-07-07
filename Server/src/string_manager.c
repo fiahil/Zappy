@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:51 2012 ulric lefevre
-** Last update Fri Jul  6 16:23:51 2012 ulric lefevre
+** Last update Sat Jul  7 11:01:47 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -54,10 +54,9 @@ static void	treatment_get_cmd(t_player this, t_bool *clear, char **buf)
       tmp += (strlen(g_separator[this->cm.mode]));
       if (strlen((*buf)) < (BUFFER_SIZE / 2))
 	memcpy(this->cm.stock + strlen(this->cm.stock), (*buf), strlen(*buf));
-      (this->cm.in->size < 10) ?
+      if (this->cm.in->size < 10)
 	(list_push_back_new(this->cm.in, this->cm.stock,
-			    strlen(this->cm.stock) + 1)) :
-	(msgout_fail(this));
+			    strlen(this->cm.stock) + 1));
       memset(this->cm.stock, '\0', BUFFER_SIZE);
       *buf = tmp;
     }

@@ -139,14 +139,64 @@ let inventaire_cmd str =
   in
   aux Inventory.Nourriture (Inventory.empty ()) (Str.full_split re str)
 
-let incantation_cmd str = (* PAS FINI *)
+let incantation_cmd str =
+  let rec re = Str.regexp "[2-8]"
+  and
+      aux = function
+        | []                    -> 0
+        | (Str.Delim v)::tail   ->
+            (try
+              int_of_string v
+            with
+              | Failure "int_of_string" -> 0)
+        | _::tail               -> aux tail
+  in
+    aux (Str.full_split re str)
+
+let expulse_cmd str =
+  let rec re = Str.regexp "[1357]"
+  and
+      aux = function
+        | []                    -> 0
+        | (Str.Delim v)::tail   ->
+            (try
+               int_of_string v
+             with
+               | Failure "int_of_string" -> 0)
+        | _::tail               -> aux tail
+  in
+    aux (Str.full_split re str)
+
+let broadcast_cmd str =
+  let rec re = Str.regexp ","
+  and
+      extract_dir str =
+    print_endline str;
+    try
+      int_of_string (String.sub str (String.length str - 1) 1)
+    with
+      | _       -> 0
+  and
+      aux l = (extract_dir (List.hd l)), (List.hd (List.tl l))
+  in
+    aux (Str.bounded_split re str 2)
+
+let map_cmd str =
+  let rec re = Str.regexp " "
+  and
+      aux l =
+    try
+      (int_of_string (List.hd l)), (int_of_string (List.hd (List.tl l)))
+    with
+      | _       -> (0, 0)
+  in
+    aux (Str.bounded_split re str 2)
+
+let connect_cmd str =
   try
     int_of_string str
   with
-    | Failure "int_of_string"   -> 0
-
-let expulse_cmd str =
-  0
+    | _         -> 0
 
 let fill raw = function
   | R_voir _            ->
@@ -158,9 +208,13 @@ let fill raw = function
   | R_end_incant _      -> R_end_incant (RP_incantation  (incantation_cmd raw))
   | R_elevation _       -> R_elevation RP_empty
   | R_expulse _         -> R_expulse (RP_expulse (expulse_cmd raw))
-  | _                   -> R_ko RP_empty
+  | R_broadcast _       -> R_broadcast (RP_broadcast (broadcast_cmd raw))
+  | R_ko _              -> R_ko RP_empty
+  | R_ok _              -> R_ok RP_empty
+  | R_map_size _        -> R_map_size (RP_map_size (map_cmd raw))
+  | R_connect_nbr _     -> R_connect_nbr (RP_connect (connect_cmd raw))
 
-let pull v = 
+let pull v =
   let rec aux str = function
     | Voir      ->
         if Str.string_match (fst (bat_re.(8))) str 0 then
@@ -175,6 +229,7 @@ let pull v =
  * Unitest
  *)
 let unitest () =
+  (*
   let see (R_voir (RP_voir bat)) =
     let rec print_iv bat =
       begin
@@ -188,10 +243,11 @@ let unitest () =
       end
     in
       print_iv bat.(0)
-  in
-  begin
-    Socket.connect "127.0.0.1" 4242;
-    push (Team "Poney");
-    push (Voir);
-    see (pull Voir)
-  end
+  in*)
+    begin
+      Socket.connect "127.0.0.1" 4242;
+      push (Team "Poney");
+      push (Voir);
+      (*see (pull Voir);*)
+      Printf.printf "%d\n" (fst (map_cmd "666 888"))
+    end

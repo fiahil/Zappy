@@ -5,11 +5,10 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Sat Jul  7 12:15:27 2012 ulric lefevre
+** Last update Sat Jul  7 17:44:12 2012 ulric lefevre
 */
 
 #include	<stdio.h>
-#include	<assert.h>
 #include	<stdlib.h>
 #include	<string.h>
 
@@ -93,12 +92,12 @@ void		server_routine_input(t_data_serv ds, t_player this)
       if (this->team)
 	{
 	  it = list_find_cmp(ds->teams, &cmp_team, this->team, 0);
-	  assert(it != NULL);
 	  ((t_team)it->data)->remaining += 1;
 	}
       get_current(this);
       list_remove_if(&(ds->action->queue), &del_player_action);
       close(this->cm.sock.fd);
+      this->cm.sock.fd = -1;
       select_del(ds, this->cm.sock.fd);
       stdout_player_status("deconnexion", this->id);
       return ;
@@ -126,6 +125,7 @@ void		server_routine_output(t_data_serv ds, t_player this)
   {
     this->deleted = TRUE;
     close(this->cm.sock.fd);
+    this->cm.sock.fd = -1;
     select_del(ds, this->cm.sock.fd);
     this->cm.online = FALSE;
   }

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:27 2012 ulric lefevre
-** Last update Fri Jul  6 19:10:48 2012 ulric lefevre
+** Last update Sat Jul  7 18:05:12 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -45,6 +45,19 @@ t_bool		broadcast_process(t_player this, char *data, t_data_serv info)
   return (TRUE);
 }
 
+static void	init_act(t_player_action act,
+			 t_player this,
+			 t_data_serv info,
+			 t_incant incant)
+{
+  act->action = &iter_incant;
+  get_time_per_function(&act->time, &incantation_process, info->t);
+  act->player = this;
+  act->param = ((char *)(incant));
+  act->done = FALSE;
+  pqueue_push(info->action, act, sizeof(*act));
+}
+
 t_bool		incantation_process(t_player this, char *data, t_data_serv info)
 {
   t_u_player_action	act;
@@ -53,23 +66,23 @@ t_bool		incantation_process(t_player this, char *data, t_data_serv info)
 
   (void)data;
   map = get_map(NULL);
-  incant = malloc(sizeof(*incant));
+  if (!(incant = malloc(sizeof(*incant))))
+    {
+      msgout_incantation(this, -1);
+      return (TRUE);
+    }
   init_incant(incant, this, map->map[this->pos.y][this->pos.x], info->t);
   pic(info->monitor, incant, map->map[this->pos.y][this->pos.x]->players);
   if (incant->status == FALSE)
     msgout_incantation(this, -1);
   else
     {
-      act.action = &iter_incant;
-      get_time_per_function(&act.time, &incantation_process, info->t);
-      act.player = this;
-      act.param = ((char *)(incant));
-      act.done = FALSE;
-      pqueue_push(info->action, &(act), sizeof(act));
+      init_act(&act, this, info, incant);
       msgout_incantation(this, 0);
       return (FALSE);
     }
   incend_graphic(info, incant);
+  free(incant);
   return (TRUE);
 }
 

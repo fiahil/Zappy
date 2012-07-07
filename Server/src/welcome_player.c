@@ -60,9 +60,6 @@ static void	init_ghost(t_iter **ghost, t_player *p, int nb_c)
 
   delete_list((*(t_player*)(*ghost)->data)->cm.in);
   delete_list((*(t_player*)(*ghost)->data)->cm.out);
-  (*(t_player*)(*ghost)->data)->cm.in = (*p)->cm.in;
-  (*(t_player*)(*ghost)->data)->cm.out = (*p)->cm.out;
-  (*(t_player*)(*ghost)->data)->cm.online = TRUE;
   memcpy(&((*(t_player*)(*ghost)->data)->cm), &((*p)->cm), sizeof((*p)->cm));
   (*(t_player*)(*ghost)->data)->welcome = TRUE;
   map = get_map(NULL);

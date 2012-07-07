@@ -242,6 +242,10 @@ let dr = function
   | R_inventaire t      -> t
   | R_voir t            -> t
 
+let voir = function
+  | R_voir (RP_voir t)  -> t
+  | _                   -> [||]
+
 (*
  * Unitest
  *)

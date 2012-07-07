@@ -58,6 +58,7 @@ static char	*get_victorious(t_data_serv ds)
   int		count;
 
   ret = NULL;
+  count = 0;
   it = ds->teams->head;
   while (it && (count != 6))
     {

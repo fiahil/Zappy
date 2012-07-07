@@ -14,6 +14,7 @@ ML	=	socket.ml	\
 		main.ml
 
 MLI	=	socket.mli	\
+		inventory.mli	\
 		bridge.mli	\
 		fsmBase.mli
 

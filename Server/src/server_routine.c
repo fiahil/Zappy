@@ -99,6 +99,7 @@ void		server_routine_input(t_data_serv ds, t_player this)
       get_current(this);
       list_remove_if(&(ds->action->queue), &del_player_action);
       close(this->cm.sock.fd);
+      this->cm.sock.fd = -1;
       select_del(ds, this->cm.sock.fd);
       stdout_player_status("deconnexion", this->id);
       return ;
@@ -126,6 +127,7 @@ void		server_routine_output(t_data_serv ds, t_player this)
   {
     this->deleted = TRUE;
     close(this->cm.sock.fd);
+    this->cm.sock.fd = -1;
     select_del(ds, this->cm.sock.fd);
     this->cm.online = FALSE;
   }

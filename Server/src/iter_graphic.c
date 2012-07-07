@@ -132,6 +132,7 @@ void		graphic_routine_input(t_data_serv ds, t_graphic this)
     {
       this->cm.online = FALSE;
       close(this->cm.sock.fd);
+      this->cm.sock.fd = -1;
       select_del(ds, this->cm.sock.fd);
       stdout_serv_status("deconnexion du monitor\n", 0);
       return ;

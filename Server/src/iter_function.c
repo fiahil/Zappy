@@ -49,6 +49,7 @@ void			iter_rds(void *ptr, size_t s)
   {
     (*(t_player*)ptr)->deleted = TRUE;
     close((*(t_player*)ptr)->cm.sock.fd);
+    (*(t_player*)ptr)->cm.sock.fd = -1;
     (*(t_player*)ptr)->cm.online = FALSE;
   }
 }

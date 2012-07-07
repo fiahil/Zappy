@@ -33,9 +33,20 @@ namespace Viewer.Sources
         int off;
         Point p;
 
-        public bool selected;
-        public Inventory Iv;
-        public Rectangle Bounds;
+        bool selected;
+        Inventory Iv;
+        Rectangle Bounds;
+        
+        public bool Selected
+        {
+            get { return selected; }
+            set { selected = value; }
+        }
+
+        public Inventory Inventory
+        {
+            get { return Iv; }
+        }
 
         static Random rd = new Random();
 

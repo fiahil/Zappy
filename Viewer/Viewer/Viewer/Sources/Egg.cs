@@ -10,7 +10,7 @@ namespace Viewer.Sources
 {
     public class Egg
     {
-        public enum State
+        public enum States
         {
             BROKE,
             BORN,
@@ -20,8 +20,19 @@ namespace Viewer.Sources
         
         Point pos;
         Sprite egg;
-        public State st;
-        public int id;
+        States st;
+        int id;
+
+        public int Id
+        {
+            get { return id; }
+        }
+
+        public States State
+        {
+            get { return st; }
+            set { st = value; }
+        }
 
         public Egg(ContentManager cm,int id, int x, int y)
         {

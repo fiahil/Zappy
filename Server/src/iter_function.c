@@ -117,7 +117,6 @@ t_bool		iter_incant(t_player this, char *data, t_data_serv info)
     msgout_incantation(this, -1);
   ((t_incant)data)->incantor->cm.is_processing = FALSE;
   incend_graphic(info, ((t_incant)data));
-  free(data);
   return (TRUE);
 }
 

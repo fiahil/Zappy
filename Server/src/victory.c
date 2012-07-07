@@ -12,6 +12,7 @@
 
 #include	<stdio.h>
 #include	<stdlib.h>
+#include	<string.h>
 
 #include	"def.h"
 #include	"stdout.h"
@@ -20,20 +21,6 @@
 #include	"algorithm.h"
 
 static char*	g_end_msg = NULL;
-
-static int	is_level_height(void *data, size_t len)
-{
-  t_player	player;
-
-  (void)len;
-  if (data)
-    {
-      player = *((t_player*)data);
-      if (player->lvl == 8)
-	return (1);
-    }
-  return (0);
-}
 
 static void	finishing(void *data, size_t len)
 {
@@ -63,20 +50,41 @@ static void	game_over(void *data, size_t len)
     }
 }
 
+static char	*get_victorious(t_data_serv ds)
+{
+  t_iter	*it;
+  t_iter	*it2;
+  char		*ret;
+  int		count;
+
+  ret = NULL;
+  it = ds->teams->head;
+  while (it && (count != 6))
+    {
+      count = 0;
+      it2 = ds->player->head;
+      while (it2 && (count != 6))
+	if (!strcmp((*(t_player*)it2->data)->team, ((t_team)it->data)->name)
+	    && (*(t_player*)it2->data)->lvl == 8)
+	  ++count;
+    }
+  if (count == 6)
+    ret = ((t_team)it->data)->name;
+  return (ret);
+}
+
 int		is_there_a_victorious(t_data_serv ds)
 {
-  t_iter	*ret;
-  t_player	*winner;
+  char		*ret;
   char		*buf;
 
-  if ((ret = list_find_if(ds->player, &is_level_height)))
+  if ((ret = get_victorious(ds)))
     {
-      winner = (t_player*)ret->data;
       buf = NULL;
-      asprintf(&buf, "L'equipe victorieuse est %s\n", (*winner)->team);
+      asprintf(&buf, "L'equipe victorieuse est %s\n", ret);
       stdout_serv_status(buf, 0);
       free(buf);
-      asprintf(&g_end_msg, "seg %s\n", (*winner)->team);
+      asprintf(&g_end_msg, "seg %s\n", ret);
       list_for_each(ds->player, &finishing);
       list_for_each(ds->monitor, &game_over);
       free(g_end_msg);

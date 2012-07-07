@@ -57,11 +57,11 @@ namespace Viewer.Sources
                 if (s.Poll(1000, SelectMode.SelectRead))
                 {
                     connected = true;
-                    MessageBox.Show("Connection impossible with the server.", "Connection timeout.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     s.Receive(buff);
                 }
                 else
                 {
+                    MessageBox.Show("Connection impossible with the server.", "Connection timeout.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     connected = false;
                     return;
                 }

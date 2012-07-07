@@ -66,7 +66,9 @@ static char	*get_victorious(t_data_serv ds)
       it2 = ds->player->head;
       while (it2 && (count != 6))
 	{
-	  if (!strcmp((*(t_player*)it2->data)->team, ((t_team)it->data)->name)
+	  if ((*(t_player*)it2->data)->cm.online &&
+	      (*(t_player*)it2->data)->welcome &&
+	      !strcmp((*(t_player*)it2->data)->team, ((t_team)it->data)->name)
 	      && (*(t_player*)it2->data)->lvl == 8)
 	    ++count;
 	  it2 = it2->next;

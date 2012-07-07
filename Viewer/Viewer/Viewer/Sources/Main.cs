@@ -157,6 +157,7 @@ namespace Viewer.Sources
                     Point p;
                     Point off;
 
+                    server.SendDatas("pin " + elt.id + "\n");
                     off.X = (elt.getPos().X + 1) * (this.map.getSquare().Width / 2);
                     off.Y = (elt.getPos().X) * (this.map.getSquare().Height / 2);
 

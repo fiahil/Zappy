@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:43 2012 ulric lefevre
-** Last update Tue Jul  3 19:18:02 2012 ulric lefevre
+** Last update Sat Jul  7 11:09:56 2012 ulric lefevre
 */
 
 #ifndef		__DEF_H__
@@ -271,6 +271,7 @@ struct			s_data_serv
   t_pqueue		*action;
   t_list		*send_q;
   t_list		*egg;
+  t_bool		verbose;
 };
 
 struct			s_team

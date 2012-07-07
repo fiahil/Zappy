@@ -139,11 +139,12 @@ namespace Viewer.Sources
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            server.Update();
+            if (server.connected)
+                server.Update();
 
             base.Update(gameTime);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || !server.connected)
                 this.Exit();
 
             this.plist.RemoveAll(delegate(Player p) { return p.st == Player.State.FINISHED; });

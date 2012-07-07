@@ -5,13 +5,15 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 14:08:08 2012 ulric lefevre
-** Last update Fri Jul  6 16:30:21 2012 ulric lefevre
+** Last update Sat Jul  7 11:17:28 2012 ulric lefevre
 */
 
 #include	<stdio.h>
 #include	<stdlib.h>
 
+#include	"def.h"
 #include	"map.h"
+#include	"var_manager.h"
 
 static void	display(t_map map, int x, int y)
 {
@@ -42,8 +44,11 @@ void		stdout_map()
 {
   int		x;
   int		y;
+  t_data_serv	ds;
 
   x = -1;
   y = -1;
-  display(get_map(NULL), x, y);
+  ds = get_data_serv(NULL);
+  if (ds->verbose)
+    display(get_map(NULL), x, y);
 }

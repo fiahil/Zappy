@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Fri Jul  6 17:58:33 2012 ulric lefevre
+** Last update Sat Jul  7 12:15:27 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -114,7 +114,6 @@ void		server_routine_input(t_data_serv ds, t_player this)
 void		server_routine_output(t_data_serv ds, t_player this)
 {
   (void)ds;
-  assert(!this->cm.out->empty);
   if (my_send(this->cm.sock.fd, list_front(this->cm.out)) == -2)
     {
       this->dead = TRUE;

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:29 2012 ulric lefevre
-** Last update Sat Jul  7 22:42:14 2012 ulric lefevre
+** Last update Sun Jul  8 00:12:59 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -13,6 +13,7 @@
 #include	<string.h>
 
 #include	"def.h"
+#include	"player.h"
 
 static const	char *g_resources[8] =
   {
@@ -393,12 +394,14 @@ static void	add_to_str(char **dest, const char *src)
 
 static void	add_players(t_square s, char **look)
 {
+  size_t	nb_player;
   size_t	i;
 
   if (s->players && s->players->size)
     {
+      nb_player = get_nb_player(s);
       i = 0;
-      while (i < s->players->size)
+      while (i < nb_player)
 	{
 	  add_to_str(look, " joueur");
 	  ++i;

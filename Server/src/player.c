@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:47 2012 ulric lefevre
-** Last update Fri Jul  6 21:32:58 2012 ulric lefevre
+** Last update Sun Jul  8 00:13:30 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -45,6 +45,26 @@ static void	init_player(t_player player, int egg)
   player->cm.is_processing = FALSE;
   player->cm.online = FALSE;
   player->cm.read = FALSE;
+}
+
+size_t		get_nb_player(t_square s)
+{
+  t_iter	*it;
+  size_t	count;
+
+  count = 0;
+  if (s->players && s->players->size)
+    {
+      it = s->players->head;
+      while (it)
+	{
+	  if ((*(t_player*)(it->data))->cm.online
+	      && !(*(t_player*)(it->data))->dead)
+	    ++count;
+	  it = it->next;
+	}
+    }
+  return (count);
 }
 
 t_player	create_player(int egg)

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:44 2012 ulric lefevre
-** Last update Fri Jul  6 16:03:13 2012 ulric lefevre
+** Last update Sat Jul  7 17:40:24 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -28,30 +28,26 @@
 
 void			iter_rds(void *ptr, size_t s)
 {
+  t_player		p;
   t_select_manager	sm;
   t_data_serv		ds;
 
   (void)s;
+  p = *(t_player*)ptr;
   sm = get_select_manager(NULL);
   ds = get_data_serv(NULL);
-  if ((*(t_player*)ptr)->cm.read
-      && (*(t_player*)ptr)->cm.online
-      && (*(t_player*)ptr)->dead == FALSE
-      && select_r_isset(sm, (*(t_player*)ptr)->cm.sock.fd))
-    server_routine_input(ds, *(t_player*)ptr);
-  if ((*(t_player*)ptr)->cm.online
-      && (*(t_player*)ptr)->deleted == FALSE
-      && select_w_isset(sm, (*(t_player*)ptr)->cm.sock.fd))
-    server_routine_output(ds, *(t_player*)ptr);
-  if (!(*(t_player*)ptr)->cm.online
-      && (*(t_player*)ptr)->dead == TRUE
-      && (*(t_player*)ptr)->deleted == FALSE)
-  {
-    (*(t_player*)ptr)->deleted = TRUE;
-    close((*(t_player*)ptr)->cm.sock.fd);
-    (*(t_player*)ptr)->cm.sock.fd = -1;
-    (*(t_player*)ptr)->cm.online = FALSE;
-  }
+  if (p->cm.read && p->cm.online && p->dead == FALSE
+      && select_r_isset(sm, p->cm.sock.fd))
+    server_routine_input(ds, p);
+  if (p->cm.online && p->deleted == FALSE && select_w_isset(sm, p->cm.sock.fd))
+    server_routine_output(ds, p);
+  if (!p->cm.online && p->dead == TRUE && p->deleted == FALSE)
+    {
+      p->deleted = TRUE;
+      close(p->cm.sock.fd);
+      p->cm.sock.fd = -1;
+      p->cm.online = FALSE;
+    }
 }
 
 void			iter_action(void *ptr, size_t s)
@@ -121,6 +117,7 @@ t_bool		iter_incant(t_player this, char *data, t_data_serv info)
     msgout_incantation(this, -1);
   ((t_incant)data)->incantor->cm.is_processing = FALSE;
   incend_graphic(info, ((t_incant)data));
+  free(data);
   return (TRUE);
 }
 

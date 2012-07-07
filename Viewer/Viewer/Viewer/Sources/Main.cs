@@ -87,7 +87,6 @@ namespace Viewer.Sources
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
             this.graphics.ApplyChanges();
-            server.Initialize(this);
 
             //this.elist.Add(new Egg(this.Content, 0, 2, 2));
 
@@ -122,6 +121,7 @@ namespace Viewer.Sources
             this.sf = this.Content.Load<SpriteFont>("Font/Classic");
 
             this.map.resizeMap(50, 50);
+            server.Initialize(this);
         }
 
         /// <summary>
@@ -211,6 +211,18 @@ namespace Viewer.Sources
                 this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.thystame.ToString(), new Vector2(1200, 440), Color.Black);
 				this.spriteBatch.DrawString(this.sf, this.inventory_details.lvl.ToString(), new Vector2(1120, 492), Color.Black);
 				this.spriteBatch.DrawString(this.sf, this.inventory_details.team, new Vector2(1120, 532), Color.Black);
+            }
+            if (this.map.square_details_on)
+            {
+                System.Diagnostics.Debug.Assert(this.map.inventory != null);
+                this.map.square_details.Draw(this.spriteBatch, new Rectangle(base.Window.ClientBounds.Width - this.map.square_details.getBounds().Width, 0, this.map.square_details.getBounds().Width, this.map.square_details.getBounds().Height));
+                this.spriteBatch.DrawString(this.sf, this.map.inventory[0], new Vector2(1200, 100), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.inventory[1], new Vector2(1200, 155), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.inventory[2], new Vector2(1200, 210), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.inventory[3], new Vector2(1200, 265), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.inventory[4], new Vector2(1200, 325), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.inventory[5], new Vector2(1200, 380), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.inventory[6], new Vector2(1200, 440), Color.Black);
             }
             this.spriteBatch.End();
         }

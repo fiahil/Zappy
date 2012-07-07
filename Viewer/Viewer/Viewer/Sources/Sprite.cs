@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Viewer.Sources
 {
-    class Sprite
+    public class Sprite
     {
         Texture2D texture;
 

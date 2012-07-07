@@ -34,15 +34,22 @@ size_t		check_players(t_list *players, int lvl)
 {
   t_iter	*it;
   size_t	count;
+  size_t	ref;
 
   count = 0;
+  ref = 0;
   it = players->head;
-  while ((it != NULL) && (((*(t_player*)(it->data)))->lvl == lvl))
+  while (it)
     {
-      ++count;
+      if ((*(t_player*)(it->data))->cm.online)
+	{
+	  ++ref;
+	  if ((*(t_player*)(it->data))->lvl == lvl)
+	    ++count;
+	}
       it = it->next;
     }
-  return (count);
+  return ((count == ref) ? ref : 0);
 }
 
 void		level_up(t_incant incant)
@@ -55,10 +62,13 @@ void		level_up(t_incant incant)
   it = map->map[incant->pos.y][incant->pos.x]->players->head;
   while (it)
     {
-      ++(*(t_player*)(it->data))->lvl;
-      stdout_player_action("Level up", (*(t_player*)(it->data))->id);
-      msgout_incantation((*(t_player*)(it->data)),
-			 (*(t_player*)(it->data))->lvl);
+      if ((*(t_player*)(it->data))->cm.online)
+	{
+	  ++(*(t_player*)(it->data))->lvl;
+	  stdout_player_action("Level up", (*(t_player*)(it->data))->id);
+	  msgout_incantation((*(t_player*)(it->data)),
+			     (*(t_player*)(it->data))->lvl);
+	}
       it = it->next;
     }
   i = 0;
@@ -66,9 +76,9 @@ void		level_up(t_incant incant)
     map->map[incant->pos.y][incant->pos.x]->inv.resources[i] = 0;
 }
 
-void		fill_hashcode(t_hash hashcode, t_square cell)
+void		fill_hashcode(t_hash hashcode, t_square cell, int nb)
 {
-  hashcode->nb_play = cell->players->size;
+  hashcode->nb_play = nb;
   hashcode->linemate = cell->inv.resources[LINEMATE];
   hashcode->deraumere = cell->inv.resources[DERAUMERE];
   hashcode->sibur = cell->inv.resources[SIBUR];
@@ -82,19 +92,19 @@ t_bool		incant_is_ok(t_incant incant)
   t_u_hash	hashcode;
   t_u_pos	pos;
   t_map		map;
+  int		nb;
 
   if (incant->status == FALSE)
     return (FALSE);
   map = get_map(NULL);
   pos.x = incant->pos.x;
   pos.y = incant->pos.y;
-  if (check_players(map->map[pos.y][pos.x]->players, incant->incantor->lvl) !=
-      map->map[pos.y][pos.x]->players->size)
+  if (!(nb = check_players(map->map[pos.y][pos.x]->players, incant->incantor->lvl)))
     {
       incant->status = FALSE;
       return (FALSE);
     }
-  fill_hashcode(&hashcode, map->map[pos.y][pos.x]);
+  fill_hashcode(&hashcode, map->map[pos.y][pos.x], nb);
   if (memcmp(&incant->hashcode, &hashcode, sizeof(hashcode)))
     incant->status = FALSE;
   return (incant->status);
@@ -102,15 +112,17 @@ t_bool		incant_is_ok(t_incant incant)
 
 t_bool		init_incant(t_incant incant, t_player play, t_square cell, int t)
 {
+  int	nb;
+
   memset(incant, 0, sizeof(*incant));
   incant->status = TRUE;
-  if (check_players(cell->players, play->lvl) != cell->players->size)
+  if (!(nb = check_players(cell->players, play->lvl)))
     incant->status = FALSE;
   incant->pos.x = play->pos.x;
   incant->pos.y = play->pos.y;
   incant->incantor = play;
   get_time_per_function(&incant->timeout, &incantation_process, t);
-  fill_hashcode(&incant->hashcode, cell);
+  fill_hashcode(&incant->hashcode, cell, nb);
   if (memcmp(&incant->hashcode, &g_hash_cmp[play->lvl - 1],
 	     sizeof(incant->hashcode)))
     incant->status = FALSE;

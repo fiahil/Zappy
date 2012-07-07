@@ -36,11 +36,10 @@ let main () =
         check_all;
         Socket.connect !host !port;
         Bridge.push (Bridge.Team !team);
-        (* Fsm.launch (); *)
 	FsmBase.unitest ()
       end
     with
       | Invalid_argument v      -> prerr_endline v
 (*    | _                       -> prerr_endline "BOUM BOUM BOUM" *)
 
-let _ = main ()
+let _ = Bridge.unitest ()

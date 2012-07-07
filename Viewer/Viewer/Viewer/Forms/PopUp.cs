@@ -37,14 +37,7 @@ namespace Viewer.Sources
 
         public Int32 GetPort()
         {
-            try
-            {
                 return Int32.Parse(this.textBox2.Text);
-            }
-            catch
-            {
-                return 0;
-            }
         }
 
         public bool isValid()

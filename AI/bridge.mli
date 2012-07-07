@@ -51,6 +51,11 @@ val push : command -> unit
 val pull : command -> response
 
 (*
+ * Deconstruct type
+ *)
+val dr : response -> response_param
+
+(*
  * Unitest
  *)
 val unitest : unit -> unit

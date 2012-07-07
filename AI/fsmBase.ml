@@ -10,9 +10,8 @@ let timeout t =
 
 let find rcs =
   Bridge.push (Bridge.Voir);
-  timeout 0.5; (* TODO *)
   let rec in_find (Bridge.R_voir (Bridge.RP_voir tab)) idx rcs =
-    if (idx > 3) then
+    if (idx > (Array.lenght tab)) then
       (-1)
     else
       let find_rcs = function
@@ -36,7 +35,6 @@ let move off =
     | it ->
       begin
 	Bridge.push Bridge.Avance;
-	timeout 0.5; (* TODO *)
 	forward (it - 1)
       end
   in
@@ -46,13 +44,11 @@ let move off =
     else if (off - midd) < 0 then
       begin
 	Bridge.push Bridge.Gauche;
-	timeout 0.5; (* TODO *)
 	forward ((off - midd) * -1)
       end
     else
       begin
 	Bridge.push Bridge.Droite;
-	timeout 0.5; (* TODO *)
 	forward (off - midd)
       end
   in
@@ -102,7 +98,6 @@ let gather rcs nb =
     | it ->
       begin
 	Bridge.push (Bridge.Prend rcs);
-	timeout 0.5; (* TODO *)
 	in_gather (it - 1)
       end
   in
@@ -110,7 +105,6 @@ let gather rcs nb =
 
 let gather_all rcs =
   Bridge.push (Bridge.Voir);
-  timeout 0.5; (* TODO *)
   let in_gather_all (Bridge.R_voir (Bridge.RP_voir tab)) = function
     | Inventory.Nourriture -> gather Inventory.Nourriture tab.(0).Inventory.nourriture
     | Inventory.Linemate   -> gather Inventory.Linemate tab.(0).Inventory.linemate
@@ -126,17 +120,10 @@ let rec unitest () =
   ignore (Bridge.pull ());
   ignore (Bridge.pull ());
   gather_all Inventory.Nourriture;
-  timeout 0.5; (* TODO *)
   gather Inventory.Linemate 1;
-  timeout 0.5; (* TODO *)
   move 4;
-  timeout 0.5; (* TODO *)
   gather_all Inventory.Nourriture;
-  timeout 0.5; (* TODO *)
   move 12;
-  timeout 0.5; (* TODO *)
   gather Inventory.Linemate 2;
-  timeout 0.5; (* TODO *)
   gather_all Inventory.Nourriture;
-  timeout 0.5; (* TODO *)
   unitest ()

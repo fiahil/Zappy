@@ -53,96 +53,107 @@ let _ = bat_re.(7) <- (Str.regexp "^{nourriture [0-9]+,linemate [0-9]+,deraumere
 let _ = bat_re.(8) <- (Str.regexp "^{\\(\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*,\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*\\)*}\n", R_voir RP_empty)
 let _ = bat_re.(9) <- (Str.regexp "^[0-9]+ [0-9]+\n", R_map_size RP_empty)
 
-let push = function
-  | Connect_nbr         -> Socket.send "connect_nbr\n"
-  | Voir                -> Socket.send "voir\n"
-  | Inventaire          -> Socket.send "inventaire\n"
-  | Expulse             -> Socket.send "expulse\n"
-  | Gauche              -> Socket.send "gauche\n"
-  | Droite              -> Socket.send "droite\n"
-  | Avance              -> Socket.send "avance\n"
-  | Fork                -> Socket.send "fork\n"
-  | Incantation         -> Socket.send "incantation\n"
-  | Broadcast value     -> Socket.send ("broadcast " ^ value ^ "\n")
-  | Prend Inventory.Nourriture    -> Socket.send "prend nourriture\n"
-  | Prend Inventory.Linemate      -> Socket.send "prend linemate\n"
-  | Prend Inventory.Deraumere     -> Socket.send "prend deraumere\n"
-  | Prend Inventory.Sibur         -> Socket.send "prend sibur\n"
-  | Prend Inventory.Mendiane      -> Socket.send "prend mendiane\n"
-  | Prend Inventory.Phiras        -> Socket.send "prend phiras\n"
-  | Prend Inventory.Thystame      -> Socket.send "prend thystame\n"
-  | Pose Inventory.Nourriture     -> Socket.send "pose nourriture\n"
-  | Pose Inventory.Linemate       -> Socket.send "pose linemate\n"
-  | Pose Inventory.Deraumere      -> Socket.send "pose deraumere\n"
-  | Pose Inventory.Sibur          -> Socket.send "pose sibur\n"
-  | Pose Inventory.Mendiane       -> Socket.send "pose mendiane\n"
-  | Pose Inventory.Phiras         -> Socket.send "pose phiras\n"
-  | Pose Inventory.Thystame       -> Socket.send "pose thystame\n"
-  | Team value          -> Socket.send (value ^ "\n")
+let push v = 
+  let aux = function
+    | Connect_nbr         -> Socket.send "connect_nbr\n"
+    | Voir                -> Socket.send "voir\n"
+    | Inventaire          -> Socket.send "inventaire\n"
+    | Expulse             -> Socket.send "expulse\n"
+    | Gauche              -> Socket.send "gauche\n"
+    | Droite              -> Socket.send "droite\n"
+    | Avance              -> Socket.send "avance\n"
+    | Fork                -> Socket.send "fork\n"
+    | Incantation         -> Socket.send "incantation\n"
+    | Broadcast value     -> Socket.send ("broadcast " ^ value ^ "\n")
+    | Prend Inventory.Nourriture    -> Socket.send "prend nourriture\n"
+    | Prend Inventory.Linemate      -> Socket.send "prend linemate\n"
+    | Prend Inventory.Deraumere     -> Socket.send "prend deraumere\n"
+    | Prend Inventory.Sibur         -> Socket.send "prend sibur\n"
+    | Prend Inventory.Mendiane      -> Socket.send "prend mendiane\n"
+    | Prend Inventory.Phiras        -> Socket.send "prend phiras\n"
+    | Prend Inventory.Thystame      -> Socket.send "prend thystame\n"
+    | Pose Inventory.Nourriture     -> Socket.send "pose nourriture\n"
+    | Pose Inventory.Linemate       -> Socket.send "pose linemate\n"
+    | Pose Inventory.Deraumere      -> Socket.send "pose deraumere\n"
+    | Pose Inventory.Sibur          -> Socket.send "pose sibur\n"
+    | Pose Inventory.Mendiane       -> Socket.send "pose mendiane\n"
+    | Pose Inventory.Phiras         -> Socket.send "pose phiras\n"
+    | Pose Inventory.Thystame       -> Socket.send "pose thystame\n"
+    | Team value          -> Socket.send (value ^ "\n")
+  in
+  begin
+    aux v;
+    ignore (Unix.select [] [] [] 0.5)
+  end
 
 let voir_cmd str =
   let rec re = Str.regexp "[{}, ]"
   and
-          aux bat = function
-    | []                                -> Array.of_list (List.rev bat)
-    | (Str.Delim "{")::tail             -> aux bat tail
-    | (Str.Delim " ")::tail             -> aux bat tail
-    | (Str.Delim "}")::tail             -> aux bat tail
-    | (Str.Delim ",")::tail             -> aux ((Inventory.empty ())::bat) tail
-    | (Str.Text "nourriture")::tail     ->
-        aux ((Inventory.inc (List.hd bat) Inventory.Nourriture)::(List.tl bat)) tail
-    | (Str.Text "linemate")::tail       ->
-        aux ((Inventory.inc (List.hd bat) Inventory.Linemate)::(List.tl bat)) tail
-    | (Str.Text "deraumere")::tail      ->
-        aux ((Inventory.inc (List.hd bat) Inventory.Deraumere)::(List.tl bat)) tail
-    | (Str.Text "sibur")::tail          ->
-        aux ((Inventory.inc (List.hd bat) Inventory.Sibur)::(List.tl bat)) tail
-    | (Str.Text "mendiane")::tail       ->
-        aux ((Inventory.inc (List.hd bat) Inventory.Mendiane)::(List.tl bat)) tail
-    | (Str.Text "phiras")::tail         ->
-        aux ((Inventory.inc (List.hd bat) Inventory.Phiras)::(List.tl bat)) tail
-    | (Str.Text "thystame")::tail       ->
-        aux ((Inventory.inc (List.hd bat) Inventory.Thystame)::(List.tl bat)) tail
-    | (Str.Text _)::tail                -> aux bat tail
-    | _::tail                           -> aux bat tail
+      aux bat = function
+        | []                                -> Array.of_list (List.rev bat)
+        | (Str.Delim "{")::tail             -> aux bat tail
+        | (Str.Delim " ")::tail             -> aux bat tail
+        | (Str.Delim "}")::tail             -> aux bat tail
+        | (Str.Delim ",")::tail             -> aux ((Inventory.empty ())::bat) tail
+        | (Str.Text "nourriture")::tail     ->
+          aux ((Inventory.inc (List.hd bat) Inventory.Nourriture)::(List.tl bat)) tail
+        | (Str.Text "linemate")::tail       ->
+          aux ((Inventory.inc (List.hd bat) Inventory.Linemate)::(List.tl bat)) tail
+        | (Str.Text "deraumere")::tail      ->
+          aux ((Inventory.inc (List.hd bat) Inventory.Deraumere)::(List.tl bat)) tail
+        | (Str.Text "sibur")::tail          ->
+          aux ((Inventory.inc (List.hd bat) Inventory.Sibur)::(List.tl bat)) tail
+        | (Str.Text "mendiane")::tail       ->
+          aux ((Inventory.inc (List.hd bat) Inventory.Mendiane)::(List.tl bat)) tail
+        | (Str.Text "phiras")::tail         ->
+          aux ((Inventory.inc (List.hd bat) Inventory.Phiras)::(List.tl bat)) tail
+        | (Str.Text "thystame")::tail       ->
+          aux ((Inventory.inc (List.hd bat) Inventory.Thystame)::(List.tl bat)) tail
+        | (Str.Text _)::tail                -> aux bat tail
+        | _::tail                           -> aux bat tail
   in
-    aux [Inventory.empty ()] (Str.full_split re str)
+  aux [Inventory.empty ()] (Str.full_split re str)
 
 let inventaire_cmd str =
   let rec re = Str.regexp "[{}, ]"
   and
-          aux target iv = function
-    | []                                -> iv
-    | (Str.Delim "{")::tail             -> aux target iv tail
-    | (Str.Delim " ")::tail             -> aux target iv tail
-    | (Str.Delim "}")::tail             -> aux target iv tail
-    | (Str.Delim ",")::tail             -> aux target iv tail
-    | (Str.Text "nourriture")::tail     -> aux Inventory.Nourriture iv tail
-    | (Str.Text "linemate")::tail       -> aux Inventory.Linemate iv tail
-    | (Str.Text "deraumere")::tail      -> aux Inventory.Deraumere iv tail
-    | (Str.Text "sibur")::tail          -> aux Inventory.Sibur iv tail
-    | (Str.Text "mendiane")::tail       -> aux Inventory.Mendiane iv tail
-    | (Str.Text "phiras")::tail         -> aux Inventory.Phiras iv tail
-    | (Str.Text "thystame")::tail       -> aux Inventory.Thystame iv tail
-    | (Str.Text value)::tail            ->
-        (try
-           aux target (Inventory.set iv (int_of_string value) target) tail
-         with
-           | Failure "int_of_string"     -> aux target iv tail)
-    | _::tail                            -> aux target iv tail
+      aux target iv = function
+        | []                                -> iv
+        | (Str.Delim "{")::tail             -> aux target iv tail
+        | (Str.Delim " ")::tail             -> aux target iv tail
+        | (Str.Delim "}")::tail             -> aux target iv tail
+        | (Str.Delim ",")::tail             -> aux target iv tail
+        | (Str.Text "nourriture")::tail     -> aux Inventory.Nourriture iv tail
+        | (Str.Text "linemate")::tail       -> aux Inventory.Linemate iv tail
+        | (Str.Text "deraumere")::tail      -> aux Inventory.Deraumere iv tail
+        | (Str.Text "sibur")::tail          -> aux Inventory.Sibur iv tail
+        | (Str.Text "mendiane")::tail       -> aux Inventory.Mendiane iv tail
+        | (Str.Text "phiras")::tail         -> aux Inventory.Phiras iv tail
+        | (Str.Text "thystame")::tail       -> aux Inventory.Thystame iv tail
+        | (Str.Text value)::tail            ->
+          (try
+             aux target (Inventory.set iv (int_of_string value) target) tail
+           with
+             | Failure "int_of_string"     -> aux target iv tail)
+        | _::tail                            -> aux target iv tail
   in
-    aux Inventory.Nourriture (Inventory.empty ()) (Str.full_split re str)
+  aux Inventory.Nourriture (Inventory.empty ()) (Str.full_split re str)
 
-let incantation_cmd str =
+let incantation_cmd str = (* PAS FINI *)
   try
     int_of_string str
   with
     | Failure "int_of_string"   -> 0
 
+let expulse_cmd str =
+  0
+
 let fill raw = function
   | R_voir _            -> R_voir (RP_voir (voir_cmd raw))
   | R_inventaire _      -> R_inventaire (RP_inventaire (inventaire_cmd raw))
   | R_end_incant _      -> R_end_incant (RP_incantation  (incantation_cmd raw))
+  | R_elevation _       -> R_elevation RP_empty
+  | R_expulse _         -> R_expulse (RP_expulse (expulse_cmd raw))
   | _                   -> R_ko RP_empty
 
 let pull () =
@@ -154,7 +165,7 @@ let pull () =
     else
       R_ko RP_empty
   in
-    aux 0 (Socket.recv ())
+  aux 0 (Socket.recv ())
 
 (*
  * Unitest
@@ -172,13 +183,13 @@ let unitest () =
         Printf.printf "Thystame %d\n" bat.Inventory.thystame
       end
     in
-      print_iv bat
+    print_iv bat
   in
   begin
     Socket.connect "127.0.0.1" 4242;
     push (Team "Poney");
     ignore (Unix.select [] [] [] 0.5);
-    ignore (pull ()); 
+    ignore (pull ());
     ignore (pull ());
     push (Inventaire);
     ignore (Unix.select [] [] [] 0.5);

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:53 2012 ulric lefevre
-** Last update Sat Jul  7 11:30:20 2012 ulric lefevre
+** Last update Sat Jul  7 11:38:46 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -16,11 +16,11 @@
 
 static const	t_opt g_ptrtab_opt[6] =
   {
+    {'v', &get_opt_v},
     {'c', &get_opt_c},
     {'p', &get_opt_p},
     {'t', &get_opt_t},
     {'x', &get_opt_x},
-    {'v', &get_opt_v},
     {'y', &get_opt_y}
   };
 
@@ -43,7 +43,7 @@ int		get_arg(int ac, char **av, t_arg *args)
 
   init_arg(args);
   opterr = 0;
-  while ((opt = getopt(ac, av, "c:n:p:t:x:vy:")) != EOF)
+  while ((opt = getopt(ac, av, "vc:n:p:t:x:y:")) != EOF)
     if (opt != 'n' && opt == '?')
       {
 	usage();
@@ -52,7 +52,7 @@ int		get_arg(int ac, char **av, t_arg *args)
     else
       {
 	i = 0;
-	while (i < 5)
+	while (i < 6)
 	  {
 	    if (g_ptrtab_opt[i].opt == opt)
 	      g_ptrtab_opt[i].ptr_func(args);

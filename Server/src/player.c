@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:47 2012 ulric lefevre
-** Last update Tue Jul  3 19:24:06 2012 ulric lefevre
+** Last update Fri Jul  6 21:32:58 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -21,11 +21,14 @@ static int	g_id_player = 0;
 
 static void	init_player(t_player player, int egg)
 {
+  t_map		map;
+
+  map = get_map(NULL);
   player->id = g_id_player++;
   player->lvl = 1;
   player->team = NULL;
-  player->pos.x = random() % get_map(NULL)->size_x;
-  player->pos.y = random() % get_map(NULL)->size_y;
+  player->pos.x = random() % map->size_x;
+  player->pos.y = random() % map->size_y;
   player->dir = random() % 4;
   player->dead = FALSE;
   player->deleted = FALSE;

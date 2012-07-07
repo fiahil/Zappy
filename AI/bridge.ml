@@ -217,33 +217,50 @@ let pull v =
           fill str (snd bat_re.(8))
         else
           aux (Socket.recv ()) Voir
+    | Team _    ->
+        if Str.string_match (fst (bat_re.(9))) str 0 then
+          fill str (snd bat_re.(9))
+        else
+          aux (Socket.recv ()) (Team "")
     | _         -> R_ok RP_empty
   in
     aux (Socket.recv ()) v
+
+let dr = function
+  | R_map_size t        -> t
+  | R_connect_nbr t     -> t
+  | R_ok t              -> t
+  | R_ko t              -> t
+  | R_broadcast t       -> t
+  | R_expulse t         -> t
+  | R_elevation t       -> t
+  | R_end_incant t      -> t
+  | R_inventaire t      -> t
+  | R_voir t            -> t
 
 (*
  * Unitest
  *)
 let unitest () =
   (*
-  let see (R_voir (RP_voir bat)) =
-    let rec print_iv bat =
-      begin
-        Printf.printf "Nourriture %d\n" bat.Inventory.nourriture;
-        Printf.printf "Linemate %d\n" bat.Inventory.linemate;
-        Printf.printf "Deraumere %d\n" bat.Inventory.deraumere;
-        Printf.printf "Sibur %d\n" bat.Inventory.sibur;
-        Printf.printf "Mendiane %d\n" bat.Inventory.mendiane;
-        Printf.printf "Phiras %d\n" bat.Inventory.phiras;
-        Printf.printf "Thystame %d\n" bat.Inventory.thystame
-      end
-    in
-      print_iv bat.(0)
-  in*)
-    begin
-      Socket.connect "127.0.0.1" 4242;
-      push (Team "Poney");
-      push (Voir);
-      (*see (pull Voir);*)
-      Printf.printf "%d\n" (fst (map_cmd "666 888"))
-    end
+   let see (R_voir (RP_voir bat)) =
+   let rec print_iv bat =
+   begin
+   Printf.printf "Nourriture %d\n" bat.Inventory.nourriture;
+   Printf.printf "Linemate %d\n" bat.Inventory.linemate;
+   Printf.printf "Deraumere %d\n" bat.Inventory.deraumere;
+   Printf.printf "Sibur %d\n" bat.Inventory.sibur;
+   Printf.printf "Mendiane %d\n" bat.Inventory.mendiane;
+   Printf.printf "Phiras %d\n" bat.Inventory.phiras;
+   Printf.printf "Thystame %d\n" bat.Inventory.thystame
+   end
+   in
+   print_iv bat.(0)
+   in*)
+  begin
+    Socket.connect "127.0.0.1" 4242;
+    push (Team "Poney");
+    push (Voir);
+    (*see (pull Voir);*)
+    Printf.printf "%d\n" (fst (map_cmd "666 888"))
+  end

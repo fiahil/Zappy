@@ -156,22 +156,22 @@ let fill raw = function
   | R_expulse _         -> R_expulse (RP_expulse (expulse_cmd raw))
   | _                   -> R_ko RP_empty
 
-let pull () =
-  let rec aux idx str =
-    if Str.string_match (fst (bat_re.(idx))) str 0 then
-      fill str (snd bat_re.(idx))
-    else if idx < 9 then
-      aux (idx + 1) str
-    else
-      R_ko RP_empty
+let pull v = 
+  let rec aux str = function
+    | Voir      ->
+        if Str.string_match (fst (bat_re.(8))) str 0 then
+          fill str (snd bat_re.(8))
+        else
+          aux (Socket.recv ()) Voir
+    | _         -> R_ok RP_empty
   in
-  aux 0 (Socket.recv ())
+    aux (Socket.recv ()) v
 
 (*
  * Unitest
  *)
 let unitest () =
-  let see (R_inventaire (RP_inventaire bat)) =
+  let see (R_voir (RP_voir bat)) =
     let rec print_iv bat =
       begin
         Printf.printf "Nourriture %d\n" bat.Inventory.nourriture;
@@ -183,15 +183,11 @@ let unitest () =
         Printf.printf "Thystame %d\n" bat.Inventory.thystame
       end
     in
-    print_iv bat
+      print_iv bat.(0)
   in
-  begin
-    Socket.connect "127.0.0.1" 4242;
-    push (Team "Poney");
-    ignore (Unix.select [] [] [] 0.5);
-    ignore (pull ());
-    ignore (pull ());
-    push (Inventaire);
-    ignore (Unix.select [] [] [] 0.5);
-    see (pull ())
-  end
+    begin
+      Socket.connect "127.0.0.1" 4242;
+      push (Team "Poney");
+      push (Voir);
+      see (pull Voir)
+    end

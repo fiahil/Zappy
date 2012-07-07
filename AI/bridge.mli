@@ -48,7 +48,7 @@ val push : command -> unit
 (*
  * Receive a command to the connected server via socket
  *)
-val pull : unit -> response
+val pull : command -> response
 
 (*
  * Unitest

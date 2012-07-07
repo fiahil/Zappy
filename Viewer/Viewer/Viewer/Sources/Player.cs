@@ -211,34 +211,42 @@ namespace Viewer.Sources
                 if (screen.Intersects(tar))
                     this.sincant.Draw(sb, tar);
             }
-            else if (this.st == State.TAKE)
-            {
-                double factX = (this.stake[(int)this.dir].getBounds().Width * (square.Width / 155.0));
-                double factY = (this.stake[(int)this.dir].getBounds().Height * (square.Height / 58.0));
-
-                off.X = (this.pos.X + 1) * (square.Width / 2);
-                off.Y = (this.pos.X) * (square.Height / 2);
-
-                p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
-                p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
-                Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
-                if (screen.Intersects(tar))
-                    this.stake[(int)this.dir].Draw(sb, tar);            
-            }
             else
-            {
-                double factX = (this.player[(int)this.dir].getBounds().Width * (square.Width / 155.0));
-                double factY = (this.player[(int)this.dir].getBounds().Height * (square.Height / 58.0));
+            {    
+                Rectangle tar = Rectangle.Empty;
+                double factX = 0.0;
+                double factY = 0.0;
 
-                off.X = (this.pos.X + 1) * (square.Width / 2);
-                off.Y = (this.pos.X) * (square.Height / 2);
+                if (this.st == State.TAKE)
+                {
+                    factX = (this.stake[(int)this.dir].getBounds().Width * (square.Width / 155.0));
+                    factY = (this.stake[(int)this.dir].getBounds().Height * (square.Height / 58.0));
 
-                p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
-                p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
-                Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+                    off.X = (this.pos.X + 1) * (square.Width / 2);
+                    off.Y = (this.pos.X) * (square.Height / 2);
+
+                    p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
+                    p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                    tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+                    if (screen.Intersects(tar))
+                        this.stake[(int)this.dir].Draw(sb, tar);
+                }
+                else
+                {
+                    factX = (this.player[(int)this.dir].getBounds().Width * (square.Width / 155.0));
+                    factY = (this.player[(int)this.dir].getBounds().Height * (square.Height / 58.0));
+
+                    off.X = (this.pos.X + 1) * (square.Width / 2);
+                    off.Y = (this.pos.X) * (square.Height / 2);
+
+                    p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
+                    p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                    tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+                    if (screen.Intersects(tar))
+                        this.player[(int)this.dir].Draw(sb, tar);
+                }
                 if (screen.Intersects(tar))
                 {
-                    this.player[(int)this.dir].Draw(sb, tar);
                     factX = (this.slvl[this.lvl - 1].getBounds().Width * (square.Width / 155.0));
                     factY = (this.slvl[this.lvl - 1].getBounds().Height * (square.Height / 58.0));
                     if (this.dir == Direction.NORTH || dir == Direction.WEST)

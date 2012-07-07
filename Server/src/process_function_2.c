@@ -53,7 +53,11 @@ t_bool		incantation_process(t_player this, char *data, t_data_serv info)
 
   (void)data;
   map = get_map(NULL);
-  incant = malloc(sizeof(*incant));
+  if (!(incant = malloc(sizeof(*incant))))
+    {
+      msgout_incantation(this, -1);
+      return (TRUE);
+    }
   init_incant(incant, this, map->map[this->pos.y][this->pos.x], info->t);
   pic(info->monitor, incant, map->map[this->pos.y][this->pos.x]->players);
   if (incant->status == FALSE)
@@ -70,6 +74,7 @@ t_bool		incantation_process(t_player this, char *data, t_data_serv info)
       return (FALSE);
     }
   incend_graphic(info, incant);
+  free(incant);
   return (TRUE);
 }
 

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:29 2012 ulric lefevre
-** Last update Wed Jul  4 13:46:09 2012 ulric lefevre
+** Last update Sat Jul  7 22:42:14 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -436,10 +436,11 @@ char		*get_look(t_player this, t_map map)
   i = 0;
   while (i <= nbcases)
     {
-      cur = map->map[(this->pos.y + g_vtab[this->dir][i].y
-		      + map->size_y) % map->size_y]
+      cur = map->map
+	[(this->pos.y + g_vtab[this->dir][i].y
+	  + map->size_y * this->lvl) % map->size_y]
 	[(this->pos.x + g_vtab[this->dir][i].x
-	  + map->size_x) % map->size_x];
+	  + map->size_x * this->lvl) % map->size_x];
       add_players(cur, &look);
       add_resources(cur, &look);
       ++i;

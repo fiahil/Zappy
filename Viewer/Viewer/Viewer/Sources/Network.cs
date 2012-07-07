@@ -54,7 +54,7 @@ namespace Viewer.Sources
                     return;
                 }
 
-                if (s.Poll(1000, SelectMode.SelectRead))
+                if (s.Poll(1000000, SelectMode.SelectRead))
                 {
                     connected = true;
                     s.Receive(buff);

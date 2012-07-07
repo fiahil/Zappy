@@ -68,13 +68,8 @@ namespace Viewer.Sources
 
         private void bct(string[] a)
         {
-            parent.getMap().getCase(int.Parse(a[0]), int.Parse(a[1])).Iv.setAll(uint.Parse(a[2]),
-                                                                           uint.Parse(a[3]),
-                                                                           uint.Parse(a[4]),
-                                                                           uint.Parse(a[5]),
-                                                                           uint.Parse(a[6]),
-                                                                           uint.Parse(a[7]),
-                                                                           uint.Parse(a[8]));
+            parent.getMap().getCase(int.Parse(a[0]), int.Parse(a[1])).Inventory.setAll(uint.Parse(a[2]),
+                uint.Parse(a[3]), uint.Parse(a[4]), uint.Parse(a[5]), uint.Parse(a[6]), uint.Parse(a[7]), uint.Parse(a[8]));
         }
 
         private void tna(string[] a)
@@ -174,20 +169,20 @@ namespace Viewer.Sources
 
         private void eht(string[] a)
         {
-            Egg P = parent.getEggs().Find(delegate(Egg e) { return e.id == int.Parse(a[0]); });
-            P.st = Egg.State.BROKE;
+            Egg P = parent.getEggs().Find(delegate(Egg e) { return e.Id == int.Parse(a[0]); });
+            P.State = Egg.States.BROKE;
         }
 
         private void ebo(string[] a)
         {
-            Egg P = parent.getEggs().Find(delegate(Egg e) { return e.id == int.Parse(a[0]); });
-            P.st = Egg.State.BORN;
+            Egg P = parent.getEggs().Find(delegate(Egg e) { return e.Id == int.Parse(a[0]); });
+            P.State = Egg.States.BORN;
         }
 
         private void edi(string[] a)
         {
-            Egg P = parent.getEggs().Find(delegate(Egg e) { return e.id == int.Parse(a[0]); });
-            P.st = Egg.State.DEAD;
+            Egg P = parent.getEggs().Find(delegate(Egg e) { return e.Id == int.Parse(a[0]); });
+            P.State = Egg.States.DEAD;
         }
 
         private void sgt(string[] a)

@@ -214,17 +214,17 @@ namespace Viewer.Sources
 				this.spriteBatch.DrawString(this.sf, this.inventory_details.lvl.ToString(), new Vector2(1120, 492), Color.Black);
 				this.spriteBatch.DrawString(this.sf, this.inventory_details.team, new Vector2(1120, 532), Color.Black);
             }
-            if (this.map.square_details_on)
+            if (this.map.SquareDetailsOn)
             {
-                System.Diagnostics.Debug.Assert(this.map.inventory != null);
-                this.map.square_details.Draw(this.spriteBatch, new Rectangle(base.Window.ClientBounds.Width - this.map.square_details.getBounds().Width, 0, this.map.square_details.getBounds().Width, this.map.square_details.getBounds().Height));
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[0], new Vector2(1200, 100), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[1], new Vector2(1200, 155), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[2], new Vector2(1200, 210), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[3], new Vector2(1200, 265), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[4], new Vector2(1200, 325), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[5], new Vector2(1200, 380), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[6], new Vector2(1200, 440), Color.Black);
+                System.Diagnostics.Debug.Assert(this.map.Inventory != null);
+                this.map.SquareDetails.Draw(this.spriteBatch, new Rectangle(base.Window.ClientBounds.Width - this.map.SquareDetails.getBounds().Width, 0, this.map.SquareDetails.getBounds().Width, this.map.SquareDetails.getBounds().Height));
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[0], new Vector2(1200, 100), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[1], new Vector2(1200, 155), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[2], new Vector2(1200, 210), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[3], new Vector2(1200, 265), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[4], new Vector2(1200, 325), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[5], new Vector2(1200, 380), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[6], new Vector2(1200, 440), Color.Black);
             }
             this.spriteBatch.End();
         }

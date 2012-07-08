@@ -18,12 +18,12 @@ namespace Viewer.Sources
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        public Map map;
-        public List<Player> plist;
-        public List<Egg> elist;
-        public List<string> tlist;
-        public SpriteFont sf;
-        public int t;
+        Map map;
+        List<Player> plist;
+        List<Egg> elist;
+        List<string> tlist;
+        SpriteFont sf;
+        int t;
         Network server;
        
         Rectangle screen;
@@ -51,24 +51,39 @@ namespace Viewer.Sources
             this.inventory_details = null;
         }
 
-        public List<Player> getPlayers()
+        public List<Player> Players
         {
-            return this.plist;
+            get { return this.plist; }
         }
 
-        public List<Egg> getEggs()
+        public List<string> Teams
         {
-            return this.elist;
+            get { return this.tlist; }
         }
 
-        public Map getMap()
+        public List<Egg> Eggs
         {
-            return this.map;
+            get { return this.elist; }
         }
 
-        public SpriteBatch getSb()
+        public Map Map
         {
-            return this.spriteBatch;
+            get { return this.map; }
+        }
+
+        public SpriteBatch SpriteBatch
+        {
+            get { return this.spriteBatch; }
+        }
+
+        public SpriteFont SpriteFont
+        {
+            get { return this.sf; }
+        }
+
+        public int Time
+        {
+            set { this.t = value; }
         }
 
         /// <summary>

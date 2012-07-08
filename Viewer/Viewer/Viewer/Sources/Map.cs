@@ -96,7 +96,7 @@ namespace Viewer.Sources
             this.square.Width = 155;
             this.square.X = (int)(this.square.Height);
             this.square.Y = (int)(this.square.Width);
-            this.Load(this.Game.Content, ((Main)this.Game).getSb(), ((Main)this.Game).sf);
+            this.Load(this.Game.Content, ((Main)this.Game).SpriteBatch, ((Main)this.Game).SpriteFont);
         }
 
         public Vector2 getSize()

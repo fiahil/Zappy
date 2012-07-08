@@ -12,7 +12,6 @@ let connect addr port =
     begin
       Unix.connect sock (Unix.ADDR_INET ((Unix.inet_addr_of_string addr), port));
       ignore (Unix.recv sock recv_buf 0 (String.length recv_buf) [])
-      (*Unix.setsockopt_float sock Unix.SO_RCVTIMEO 0.0001*)
     end
 
 let send data =

@@ -210,22 +210,6 @@ let fill raw = function
   | R_map_size _        -> R_map_size (RP_map_size (map_cmd raw))
   | R_connect_nbr _     -> R_connect_nbr (RP_connect (connect_cmd raw))
 
-let pull v = 
-  let rec aux str = function
-    | Voir      ->
-        if Str.string_match (fst (bat_re.(8))) str 0 then
-          fill str (snd bat_re.(8))
-        else
-          aux (Socket.recv ()) Voir
-    | Team _    ->
-        if Str.string_match (fst (bat_re.(9))) str 0 then
-          fill str (snd bat_re.(9))
-        else
-          aux (Socket.recv ()) (Team "")
-    | _         -> R_ok RP_empty
-  in
-    aux (Socket.recv ()) v
-
 let dr = function
   | R_map_size t        -> t
   | R_connect_nbr t     -> t
@@ -266,29 +250,186 @@ let connect = function
   | R_connect_nbr (RP_connect t)        -> t
   | _                                   -> 0
 
+let connect_s = Stack.create ()
+let voir_s  = Stack.create ()
+let inventaire_s = Stack.create ()
+let expulse_q = Queue.create ()
+let incantation_s = Stack.create ()
+let broadcast_q = Queue.create ()
+let history_s = Stack.create ()
+let map_s = Stack.create ()
+
+let punch v = function
+  | 0           -> Stack.push v connect_s
+  | 1           -> Stack.push v history_s
+  | 2           -> Stack.push v history_s
+  | 3           -> Queue.push v broadcast_q
+  | 4           -> Queue.push v expulse_q
+  | 5           -> Stack.push v history_s
+  | 6           -> Stack.push v incantation_s
+  | 7           -> Stack.push v inventaire_s
+  | 8           -> Stack.push v voir_s
+  | 9           -> Stack.push v map_s
+  | _           -> ()
+
+let match_me str =
+  let rec aux str idx =
+    if idx = 10 then
+      failwith "Unmatched string"
+    else if Str.string_match (fst bat_re.(idx)) str 0 then
+      punch (fill str (snd bat_re.(idx))) idx
+    else
+      aux str (idx + 1)
+  in
+    aux str 0
+
+let rec gather = function
+  | Connect_nbr         ->
+      begin
+        match_me (Socket.recv ());
+        if Stack.is_empty connect_s then
+          gather Connect_nbr
+        else
+          Stack.pop connect_s
+      end
+  | Voir                ->
+      begin
+        match_me (Socket.recv ());
+        if Stack.is_empty voir_s then
+          gather Voir
+        else
+          Stack.pop voir_s
+      end
+  | Inventaire          ->
+      begin
+        match_me (Socket.recv ());
+        if Stack.is_empty inventaire_s then
+          gather Inventaire
+        else
+          Stack.pop inventaire_s
+      end
+  | Expulse             ->
+      begin
+        match_me (Socket.recv ());
+        if Queue.is_empty expulse_q then
+          gather Expulse
+        else
+          Queue.pop expulse_q
+      end
+  | Incantation         ->
+      begin
+        match_me (Socket.recv ());
+        if Stack.is_empty incantation_s then
+          gather Incantation
+        else  
+          Stack.pop incantation_s
+      end
+  | Broadcast t         ->
+      begin
+        match_me (Socket.recv ());
+        if Queue.is_empty broadcast_q then
+          gather (Broadcast t)
+        else                                  
+          Queue.pop broadcast_q
+      end
+  | Prend t             ->
+      begin
+        match_me (Socket.recv ());
+        if Stack.is_empty history_s then
+          gather (Prend t)
+        else
+          Stack.pop history_s
+      end
+  | Pose t              ->
+      begin
+        match_me (Socket.recv ());
+        if Stack.is_empty history_s then
+          gather (Pose t) 
+        else                                  
+          Stack.pop history_s
+      end
+  | Team t              ->
+      begin
+        match_me (Socket.recv ());
+        if Stack.is_empty map_s then
+          gather (Team t) 
+        else
+          Stack.pop map_s
+      end
+  | _                   -> R_ko RP_empty
+
+let pull = function
+  | Connect_nbr         -> gather Connect_nbr
+  | Voir                -> gather Voir
+  | Inventaire          -> gather Inventaire
+  | Expulse             -> gather Expulse
+  | Gauche              -> R_ok RP_empty
+  | Droite              -> R_ok RP_empty
+  | Avance              -> R_ok RP_empty
+  | Fork                -> R_ok RP_empty
+  | Incantation         -> gather Incantation
+  | Broadcast t         -> gather (Broadcast t)
+  | Prend t             -> gather (Prend t)
+  | Pose t              -> gather (Pose t)
+  | Team t              -> gather (Team t)
+
 (*
  * Unitest
  *)
 let unitest () =
-  (*
-   let see (R_voir (RP_voir bat)) =
-   let rec print_iv bat =
-   begin
-   Printf.printf "Nourriture %d\n" bat.Inventory.nourriture;
-   Printf.printf "Linemate %d\n" bat.Inventory.linemate;
-   Printf.printf "Deraumere %d\n" bat.Inventory.deraumere;
-   Printf.printf "Sibur %d\n" bat.Inventory.sibur;
-   Printf.printf "Mendiane %d\n" bat.Inventory.mendiane;
-   Printf.printf "Phiras %d\n" bat.Inventory.phiras;
-   Printf.printf "Thystame %d\n" bat.Inventory.thystame
-   end
-   in
-   print_iv bat.(0)
-   in*)
-  begin
-    Socket.connect "127.0.0.1" 4242;
-    push (Team "Poney");
-    push (Voir);
-    (*see (pull Voir);*)
-    Printf.printf "%d\n" (fst (map_cmd "666 888"))
-  end
+  let rec see (R_voir (RP_voir bat)) =
+    let rec print_iv bat =
+      begin
+        Printf.printf " = Voir = \n";
+        Printf.printf "Nourriture %d\n" bat.Inventory.nourriture;
+        Printf.printf "Linemate %d\n" bat.Inventory.linemate;
+        Printf.printf "Deraumere %d\n" bat.Inventory.deraumere;
+        Printf.printf "Sibur %d\n" bat.Inventory.sibur;
+        Printf.printf "Mendiane %d\n" bat.Inventory.mendiane;
+        Printf.printf "Phiras %d\n" bat.Inventory.phiras;
+        Printf.printf "Thystame %d\n" bat.Inventory.thystame
+      end
+    in print_iv bat.(0)
+  and
+      inventory (R_inventaire (RP_inventaire bat)) =
+    let rec print_iv bat =
+      begin
+        Printf.printf " = Inventaire = \n";
+        Printf.printf "Nourriture %d\n" bat.Inventory.nourriture;
+        Printf.printf "Linemate %d\n" bat.Inventory.linemate;
+        Printf.printf "Deraumere %d\n" bat.Inventory.deraumere;
+        Printf.printf "Sibur %d\n" bat.Inventory.sibur;
+        Printf.printf "Mendiane %d\n" bat.Inventory.mendiane;
+        Printf.printf "Phiras %d\n" bat.Inventory.phiras;
+        Printf.printf "Thystame %d\n" bat.Inventory.thystame
+      end
+    in print_iv bat
+  and
+      mapSize (R_map_size (RP_map_size (x, y))) =
+    begin
+      Printf.printf " = Map Size = \n";
+      Printf.printf "%d %d\n" x y
+    end
+  and
+      pok (R_ok (RP_empty)) =
+    Printf.printf " = OK BBQ = \n"
+  and
+      connection (R_connect_nbr (RP_connect cn)) =
+    begin
+      Printf.printf " = Connect nbr = \n";
+      Printf.printf "%d\n" cn
+    end
+  in
+    begin
+      Socket.connect "127.0.0.1" 4242;
+      push (Team "Poney");
+      push (Voir);
+      push (Inventaire);
+      push (Avance);
+      inventory (pull Inventaire);
+      see (pull Voir);
+      mapSize (pull (Team ""));
+      pok (pull Avance);
+      connection (pull Connect_nbr);
+      flush stdout;
+    end

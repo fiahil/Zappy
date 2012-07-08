@@ -23,7 +23,7 @@ namespace Viewer.Sources
 
     public class Player
     {
-        public enum State
+        public enum States
         {
             FORK,
             DEAD,
@@ -42,18 +42,50 @@ namespace Viewer.Sources
         Sprite[] stake;
         Sprite sincant;
         Sprite[] slvl;
-        public Direction dir;
-        public int lvl;
-        public int id;
-        public Inventory iv;
-        public State st;
-        public string team;
         string broadcast;
         TimeSpan broacastTimer;
         Sprite[] sbroadcast;
         TimeSpan deadTimer;
         bool     dead;
         Sprite   sdead;
+
+        Direction dir;
+        public Direction Dir
+        {
+            set { dir = value; }
+        }
+
+        int lvl;
+        public int Level
+        {
+            get { return lvl; }
+            set { lvl = value; }
+        }
+
+        int id;
+        public int Id
+        {
+            get { return id; }
+        }
+
+        Inventory iv;
+        public Inventory Inventory
+        {
+            get { return iv; }
+        }
+
+        States st;
+        public States State
+        {
+            get { return st; }
+            set { st = value; }
+        }
+
+        string team;
+        public string Team
+        {
+            get { return team; }
+        }
 
         public Player(ContentManager cm, int idTeam)
         {
@@ -174,12 +206,12 @@ namespace Viewer.Sources
             Point p;
             Point off;
 
-            if (this.st == State.DEAD && this.dead == false)
+            if (this.st == States.DEAD && this.dead == false)
             {
                 this.deadTimer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
                 this.dead = true;
             }
-            if (this.st == State.DEAD || this.st == State.FINISHED)
+            if (this.st == States.DEAD || this.st == States.FINISHED)
             {
                 if (this.deadTimer >= gameTime.TotalGameTime)
                 {
@@ -196,9 +228,9 @@ namespace Viewer.Sources
                         this.sdead.Draw(sb, tar);
                 }
                 else
-                    this.st = State.FINISHED;
+                    this.st = States.FINISHED;
             }
-            else if (this.st == State.INCANT)
+            else if (this.st == States.INCANT)
             {
                 double factX = (this.sincant.getBounds().Width * (square.Width / 155.0));
                 double factY = (this.sincant.getBounds().Height * (square.Height / 58.0));
@@ -218,7 +250,7 @@ namespace Viewer.Sources
                 double factX = 0.0;
                 double factY = 0.0;
 
-                if (this.st == State.TAKE)
+                if (this.st == States.TAKE)
                 {
                     factX = (this.stake[(int)this.dir].getBounds().Width * (square.Width / 155.0));
                     factY = (this.stake[(int)this.dir].getBounds().Height * (square.Height / 58.0));

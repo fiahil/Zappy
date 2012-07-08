@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:40 2012 ulric lefevre
-** Last update Sat Jun 23 20:14:41 2012 ulric lefevre
+** Last update Sat Jul  7 23:21:08 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -15,7 +15,7 @@
 
 int		parse_arg(t_arg *args)
 {
-  if (args->port < 0 ||
+  if (args->port < 1 ||
       args->width < 1 ||
       args->height < 1 ||
       args->nb_per_team < 1 ||

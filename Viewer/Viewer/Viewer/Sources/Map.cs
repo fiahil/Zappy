@@ -27,13 +27,28 @@ namespace Viewer.Sources
         TimeSpan Hrep;
         uint view;
 
-        public Sprite square_details;
-        public bool square_details_on;
-        public string[] inventory;
         Point square_details_pos;
         TimeSpan square_setails_timer;
         Sprite[] _wall;
         Point[] clouds;
+
+        string[] inventory;
+        public string[] Inventory
+        {
+            get { return inventory; }
+        }
+
+        bool square_details_on;
+        public bool SquareDetailsOn
+        {
+            get { return square_details_on; }
+        }
+
+        Sprite square_details;
+        public Sprite SquareDetails
+        {
+            get { return square_details; }
+        }
 
         SpriteFont sf;
 
@@ -81,7 +96,7 @@ namespace Viewer.Sources
             this.square.Width = 155;
             this.square.X = (int)(this.square.Height);
             this.square.Y = (int)(this.square.Width);
-            this.Load(this.Game.Content, ((Main)this.Game).getSb(), ((Main)this.Game).sf);
+            this.Load(this.Game.Content, ((Main)this.Game).SpriteBatch, ((Main)this.Game).SpriteFont);
         }
 
         public Vector2 getSize()
@@ -105,7 +120,7 @@ namespace Viewer.Sources
         {
             if (this.map != null)
             {
-                this.map[this.square_details_pos.X, this.square_details_pos.Y].selected = false;
+                this.map[this.square_details_pos.X, this.square_details_pos.Y].Selected = false;
                 this.square_details_on = false;
             }
         }
@@ -136,7 +151,7 @@ namespace Viewer.Sources
             foreach (Elt element in this.map)
             {
                 if (p.Next(3) == 0)
-                    element.Iv.setAll((uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10));
+                    element.Inventory.setAll((uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10));
             }
         }
 
@@ -200,8 +215,8 @@ namespace Viewer.Sources
                         {
                             this.square_details_on = true;
                             this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
-                            this.map[this.square_details_pos.X, this.square_details_pos.Y].selected = false;
-                            this.map[j, i].selected = true;
+                            this.map[this.square_details_pos.X, this.square_details_pos.Y].Selected = false;
+                            this.map[j, i].Selected = true;
                             this.square_details_pos = new Point(j, i);
                             ((Main)this.Game).unplug();
                         }
@@ -211,7 +226,7 @@ namespace Viewer.Sources
 
             if (this.square_setails_timer <= gameTime.TotalGameTime)
             {
-                this.map[this.square_details_pos.X, this.square_details_pos.Y].selected = false;
+                this.map[this.square_details_pos.X, this.square_details_pos.Y].Selected = false;
                 this.square_details_on = false;
             }
         }
@@ -263,16 +278,16 @@ namespace Viewer.Sources
                         if (this.screen.Intersects(target))
                             this.map[i - 1, j ].Draw(target);
 
-                        if (this.map[i - 1, j ].selected)
+                        if (this.map[i - 1, j ].Selected)
                         {
                             inventory = new string[7];
-                            inventory[0] = this.map[i - 1, j ].Iv.nourriture.ToString();
-                            inventory[1] = this.map[i - 1, j ].Iv.linemate.ToString();
-                            inventory[2] = this.map[i - 1, j ].Iv.deraumere.ToString();
-                            inventory[3] = this.map[i - 1, j ].Iv.sibur.ToString();
-                            inventory[4] = this.map[i - 1, j ].Iv.mendiane.ToString();
-                            inventory[5] = this.map[i - 1, j ].Iv.phiras.ToString();
-                            inventory[6] = this.map[i - 1, j ].Iv.thystame.ToString();
+                            inventory[0] = this.map[i - 1, j ].Inventory.nourriture.ToString();
+                            inventory[1] = this.map[i - 1, j ].Inventory.linemate.ToString();
+                            inventory[2] = this.map[i - 1, j ].Inventory.deraumere.ToString();
+                            inventory[3] = this.map[i - 1, j ].Inventory.sibur.ToString();
+                            inventory[4] = this.map[i - 1, j ].Inventory.mendiane.ToString();
+                            inventory[5] = this.map[i - 1, j ].Inventory.phiras.ToString();
+                            inventory[6] = this.map[i - 1, j ].Inventory.thystame.ToString();
                         }
                     }
 

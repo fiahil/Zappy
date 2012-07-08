@@ -79,7 +79,7 @@ namespace Viewer.Sources
 
         private void pnw(string[] a)
         {
-            parent.Players.Add(new Player(this.parent.Content, int.Parse(a[0]), int.Parse(a[1]), int.Parse(a[2]), Player.convertDir(int.Parse(a[3])), int.Parse(a[4]), a[5], this.parent.Teams.FindIndex(delegate(string n) { return n == a[5]; })));
+            parent.Players.Add(new Player(this.parent.Sprites, int.Parse(a[0]), int.Parse(a[1]), int.Parse(a[2]), Player.convertDir(int.Parse(a[3])), int.Parse(a[4]), a[5], this.parent.Teams.FindIndex(delegate(string n) { return n == a[5]; })));
             parent.Players[parent.Players.Count - 1].Inventory.nourriture = 10;
         }
         private void ppo(string[] a)
@@ -164,7 +164,7 @@ namespace Viewer.Sources
 
         private void enw(string[] a)
         {
-            parent.Eggs.Add(new Egg(this.parent.Content, int.Parse(a[0]), int.Parse(a[2]), int.Parse(a[3])));
+            parent.Eggs.Add(new Egg(this.parent.Sprites, int.Parse(a[0]), int.Parse(a[2]), int.Parse(a[3])));
         }
 
         private void eht(string[] a)

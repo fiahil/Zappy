@@ -5,7 +5,7 @@
 ## Login   <lefevr_u@epitech.net>
 ## 
 ## Started on  Tue Jul  3 13:29:53 2012 ulric lefevre
-## Last update Fri Jul  6 16:25:38 2012 ulric lefevre
+## Last update Sun Jul  8 13:09:33 2012 ulric lefevre
 ##
 
 NAME	=	zappy
@@ -20,6 +20,8 @@ SRC	=	src/broadcast.c			\
 		src/func_cleaner_1.c		\
 		src/func_cleaner_2.c		\
 		src/func_cmp.c			\
+		src/func_ctor_dtor_1.c		\
+		src/func_ctor_dtor_2.c		\
 		src/get_arg.c			\
 		src/get_opt_1.c			\
 		src/get_opt_2.c			\

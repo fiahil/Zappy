@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:42 2012 ulric lefevre
-** Last update Fri Jul  6 13:08:49 2012 ulric lefevre
+** Last update Sun Jul  8 11:55:37 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -15,31 +15,11 @@
 #include	"def.h"
 #include	"get_arg.h"
 #include	"handle_error.h"
+#include	"func_ctor_dtor.h"
 
 static void	get_default_names(t_arg *args)
 {
   list_push_front_ctor(args->teams, "Poney", args->nb_per_team);
-}
-
-static void	*ctor_team(va_list va)
-{
-  t_team	team;
-
-  if ((team = malloc(sizeof(*team))) == NULL)
-    crash_error("malloc", "out_of_memory");
-  team->name = strdup(va_arg(va, char*));
-  team->remaining = va_arg(va, int);
-  return (team);
-}
-
-static void	dtor_team(void *data)
-{
-  if (data)
-    {
-      if (((t_team)data)->name)
-	free(((t_team)data)->name);
-      free(data);
-    }
 }
 
 void		get_opt_n(char **av, t_arg *args)

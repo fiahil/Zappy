@@ -47,7 +47,7 @@ cmds = ["connect_nbr",
         "prend nourriture",
         "pose nourriture",
 	"incantation",
-#	"fork",
+	"fork",
 	"broadcast PONEEEYYYY!"]
 
 cmdr = ["nourriture",

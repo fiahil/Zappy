@@ -18,12 +18,12 @@ namespace Viewer.Sources
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        public Map map;
-        public List<Player> plist;
-        public List<Egg> elist;
-        public List<string> tlist;
-        public SpriteFont sf;
-        public int t;
+        Map map;
+        List<Player> plist;
+        List<Egg> elist;
+        List<string> tlist;
+        SpriteFont sf;
+        int t;
         Network server;
        
         Rectangle screen;
@@ -51,24 +51,39 @@ namespace Viewer.Sources
             this.inventory_details = null;
         }
 
-        public List<Player> getPlayers()
+        public List<Player> Players
         {
-            return this.plist;
+            get { return this.plist; }
         }
 
-        public List<Egg> getEggs()
+        public List<string> Teams
         {
-            return this.elist;
+            get { return this.tlist; }
         }
 
-        public Map getMap()
+        public List<Egg> Eggs
         {
-            return this.map;
+            get { return this.elist; }
         }
 
-        public SpriteBatch getSb()
+        public Map Map
         {
-            return this.spriteBatch;
+            get { return this.map; }
+        }
+
+        public SpriteBatch SpriteBatch
+        {
+            get { return this.spriteBatch; }
+        }
+
+        public SpriteFont SpriteFont
+        {
+            get { return this.sf; }
+        }
+
+        public int Time
+        {
+            set { this.t = value; }
         }
 
         /// <summary>
@@ -88,25 +103,22 @@ namespace Viewer.Sources
             this.graphics.PreferredBackBufferHeight = 720;
             this.graphics.ApplyChanges();
 
-            //this.elist.Add(new Egg(this.Content, 0, 2, 2));
+            /*
+            this.elist.Add(new Egg(this.Content, 0, 2, 2));
 
-            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            //this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            //this.plist[0].setPos(2, 2);
-            //this.plist[2].setPos(1, 2);
-            //this.plist[3].setPos(2, 0);
+            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
+            this.plist[0].setPos(2, 2);
+            this.plist[2].setPos(1, 2);
+            this.plist[3].setPos(2, 0);
 
-            //this.plist[2].dir = Direction.WEST;
-            //this.plist[3].dir = Direction.EAST;
-            //this.plist[1].dir = Direction.SOUTH;
-            //this.plist[0].setBroadcast("bite");
-            //this.plist[1].setBroadcast("bite");
-            //this.plist[2].setBroadcast("bite");
-            //this.plist[3].setBroadcast("bite");
-
-            //this.plist[0].st = Player.State.TAKE;
+            this.plist[0].setBroadcast("bite");
+            this.plist[1].setBroadcast("bite");
+            this.plist[2].setBroadcast("bite");
+            this.plist[3].setBroadcast("bite");
+            */
         }
 
         /// <summary>
@@ -120,7 +132,7 @@ namespace Viewer.Sources
             this.inventory_page = new Sprite(this.Content.Load<Texture2D>("Tiles/map_inventory"));
             this.sf = this.Content.Load<SpriteFont>("Font/Classic");
 
-            this.map.resizeMap(50, 50);
+            this.map.resizeMap(10, 7);
             server.Initialize(this);
         }
 
@@ -139,15 +151,15 @@ namespace Viewer.Sources
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (server.connected)
+            if (server.IsConnected())
                 server.Update();
 
             base.Update(gameTime);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || !server.connected)
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || !server.IsConnected())
                 this.Exit();
 
-            this.plist.RemoveAll(delegate(Player p) { return p.st == Player.State.FINISHED; });
+            this.plist.RemoveAll(delegate(Player p) { return p.State == Player.States.FINISHED; });
 
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
@@ -157,7 +169,7 @@ namespace Viewer.Sources
                     Point p;
                     Point off;
 
-                    server.SendDatas("pin " + elt.id + "\n");
+                    server.SendDatas("pin " + elt.Id + "\n");
                     off.X = (elt.getPos().X + 1) * (this.map.getSquare().Width / 2);
                     off.Y = (elt.getPos().X) * (this.map.getSquare().Height / 2);
 
@@ -204,27 +216,27 @@ namespace Viewer.Sources
             if (this.inventory_details != null)
             {
                 this.inventory_page.Draw(this.spriteBatch, new Rectangle(this.Window.ClientBounds.Width - this.inventory_page.getBounds().Width, 0, this.inventory_page.getBounds().Width, this.inventory_page.getBounds().Height));
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.nourriture.ToString(), new Vector2(1200, 100), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.linemate.ToString(), new Vector2(1200, 155), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.deraumere.ToString(), new Vector2(1200, 210), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.sibur.ToString(), new Vector2(1200, 265), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.mendiane.ToString(), new Vector2(1200, 325), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.phiras.ToString(), new Vector2(1200, 380), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.iv.thystame.ToString(), new Vector2(1200, 440), Color.Black);
-				this.spriteBatch.DrawString(this.sf, this.inventory_details.lvl.ToString(), new Vector2(1120, 492), Color.Black);
-				this.spriteBatch.DrawString(this.sf, this.inventory_details.team, new Vector2(1120, 532), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.nourriture.ToString(), new Vector2(1200, 100), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.linemate.ToString(), new Vector2(1200, 155), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.deraumere.ToString(), new Vector2(1200, 210), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.sibur.ToString(), new Vector2(1200, 265), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.mendiane.ToString(), new Vector2(1200, 325), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.phiras.ToString(), new Vector2(1200, 380), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.thystame.ToString(), new Vector2(1200, 440), Color.Black);
+				this.spriteBatch.DrawString(this.sf, this.inventory_details.Level.ToString(), new Vector2(1120, 492), Color.Black);
+				this.spriteBatch.DrawString(this.sf, this.inventory_details.Team, new Vector2(1120, 532), Color.Black);
             }
-            if (this.map.square_details_on)
+            if (this.map.SquareDetailsOn)
             {
-                System.Diagnostics.Debug.Assert(this.map.inventory != null);
-                this.map.square_details.Draw(this.spriteBatch, new Rectangle(base.Window.ClientBounds.Width - this.map.square_details.getBounds().Width, 0, this.map.square_details.getBounds().Width, this.map.square_details.getBounds().Height));
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[0], new Vector2(1200, 100), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[1], new Vector2(1200, 155), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[2], new Vector2(1200, 210), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[3], new Vector2(1200, 265), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[4], new Vector2(1200, 325), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[5], new Vector2(1200, 380), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.inventory[6], new Vector2(1200, 440), Color.Black);
+                System.Diagnostics.Debug.Assert(this.map.Inventory != null);
+                this.map.SquareDetails.Draw(this.spriteBatch, new Rectangle(base.Window.ClientBounds.Width - this.map.SquareDetails.getBounds().Width, 0, this.map.SquareDetails.getBounds().Width, this.map.SquareDetails.getBounds().Height));
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[0], new Vector2(1200, 100), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[1], new Vector2(1200, 155), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[2], new Vector2(1200, 210), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[3], new Vector2(1200, 265), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[4], new Vector2(1200, 325), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[5], new Vector2(1200, 380), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.map.Inventory[6], new Vector2(1200, 440), Color.Black);
             }
             this.spriteBatch.End();
         }

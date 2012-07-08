@@ -12,12 +12,13 @@ namespace Viewer.Sources
 
     class Network
     {
-        public bool connected;
         Socket s;
         Treatment t;
         Queue<string> _out;
         Queue<string> _in;
         string tmp;
+
+        bool connected;
 
         public void Initialize(Main p)
         {
@@ -54,7 +55,7 @@ namespace Viewer.Sources
                     return;
                 }
 
-                if (s.Poll(1000, SelectMode.SelectRead))
+                if (s.Poll(1000000, SelectMode.SelectRead))
                 {
                     connected = true;
                     s.Receive(buff);
@@ -62,7 +63,7 @@ namespace Viewer.Sources
                 else
                 {
                     MessageBox.Show("Connection impossible with the server.", "Connection timeout.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    connected = false;
+                    connected = true;
                     return;
                 }
                 if (Encoding.UTF8.GetString(buff).CompareTo("BIENVENUE\n") == 0)
@@ -70,16 +71,15 @@ namespace Viewer.Sources
                     s.Send(Encoding.UTF8.GetBytes("GRAPHIC\n"));
                 }
             }
+            else
+            {
+                connected = true;
+            }
         }
 
         public void Update()
         {
-            if (!s.Connected)
-            {
-                this.connected = false;
-                MessageBox.Show("You have been deconnected.", "Server error.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            
             if (s!= null && s.Available > 0)
             {
                 Byte[] buff = new byte[s.Available];
@@ -97,10 +97,21 @@ namespace Viewer.Sources
                 }
                 _in = new Queue<string>(_in.Concat(res.ToList()));
             }
+            if (s != null && !s.Connected)
+            {
+                this.connected = false;
+                MessageBox.Show("You have been deconnected.", "Server error.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             while (_in.Count > 0)
             {
                 t.Treat(_in.Dequeue());
             }
+        }
+
+        public bool IsConnected()
+        {
+            return connected;
         }
 
         public void SendDatas(string msg)

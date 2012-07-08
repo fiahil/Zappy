@@ -246,6 +246,30 @@ let voir = function
   | R_voir (RP_voir t)  -> t
   | _                   -> [||]
 
+let inventaire = function
+  | R_inventaire (RP_inventaire t)      -> t
+  | _                                   -> Inventory.empty ()
+
+let incantation = function
+  | R_end_incant (RP_incantation t)     -> t
+  | _                                   -> 0
+
+let expulse = function
+  | R_expulse (RP_expulse t)            -> t
+  | _                                   -> 0
+
+let broadcast = function
+  | R_broadcast (RP_broadcast t)        -> t
+  | _                                   -> (0, "")
+
+let map_size = function
+  | R_map_size (RP_map_size t)          -> t
+  | _                                   -> (0, 0)
+
+let connect = function
+  | R_connect_nbr (RP_connect t)        -> t
+  | _                                   -> 0
+
 (*
  * Unitest
  *)

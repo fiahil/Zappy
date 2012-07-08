@@ -59,6 +59,12 @@ val dr : response -> response_param
  * Return params within a type
  *)
 val voir : response -> Inventory.t array
+val inventaire : response -> Inventory.t
+val incantation : response -> int
+val expulse : response -> int
+val broadcast : response -> (int * string)
+val map_size : response -> (int * int)
+val connect : response -> int
 
 (*
  * Unitest

@@ -5,12 +5,13 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:19:29 2012 ulric lefevre
-** Last update Sun Jun 24 21:30:45 2012 ulric lefevre
+** Last update Sun Jul  8 00:13:58 2012 ulric lefevre
 */
 
 #ifndef		__PLAYER_H__
 # define	__PLAYER_H__
 
+size_t		get_nb_player(t_square);
 t_player	create_player();
 void		delete_player(t_player);
 

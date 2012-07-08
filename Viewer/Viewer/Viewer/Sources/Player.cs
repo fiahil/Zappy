@@ -23,7 +23,7 @@ namespace Viewer.Sources
 
     public class Player
     {
-        public enum State
+        public enum States
         {
             FORK,
             DEAD,
@@ -42,12 +42,7 @@ namespace Viewer.Sources
         Sprite[] stake;
         Sprite sincant;
         Sprite[] slvl;
-        public Direction dir;
-        public int lvl;
-        public int id;
-        public Inventory iv;
-        public State st;
-        public string team;
+        Sprite[] sfork;
         string broadcast;
         TimeSpan broacastTimer;
         Sprite[] sbroadcast;
@@ -55,32 +50,74 @@ namespace Viewer.Sources
         bool     dead;
         Sprite   sdead;
 
+        Direction dir;
+        public Direction Dir
+        {
+            set { dir = value; }
+        }
+
+        int lvl;
+        public int Level
+        {
+            get { return lvl; }
+            set { lvl = value; }
+        }
+
+        int id;
+        public int Id
+        {
+            get { return id; }
+        }
+
+        Inventory iv;
+        public Inventory Inventory
+        {
+            get { return iv; }
+        }
+
+        States st;
+        public States State
+        {
+            get { return st; }
+            set { st = value; }
+        }
+
+        string team;
+        public string Team
+        {
+            get { return team; }
+        }
+
         public Player(ContentManager cm, int idTeam)
         {
+            this.st = States.IDLE;
             this.pos = new Point(0, 0);
             this.dir = Direction.NORTH;
             this.player = new Sprite[4];
             this.stake = new Sprite[4];
-            this.slvl = new Sprite[7];
+            this.slvl = new Sprite[8];
+            this.sfork = new Sprite[4];
             this.sbroadcast = new Sprite[2];
             this.Load(cm, idTeam);
             this.broadcast = null;
             this.broacastTimer = TimeSpan.Zero;
             this.deadTimer = TimeSpan.Zero;
             this.dead = false;
-            this.lvl = 7;
+            this.lvl = 1;
             this.iv = new Inventory();
             this.team = "Poney";
         }
 
         public Player(ContentManager cm, int id, int x, int y, Direction dir, int lvl, string team, int idTeam)
         {
+            this.st = States.IDLE;
             this.id = id;
             this.pos = new Point(x, y);
             this.dir = dir;
             this.player = new Sprite[4];
             this.stake = new Sprite[4];
-            this.slvl = new Sprite[7];
+            this.slvl = new Sprite[8];
+            this.sfork = new Sprite[4];
             this.sbroadcast = new Sprite[2];
             this.team = team;
             this.lvl = (lvl < 1 ? 1 : lvl);
@@ -142,6 +179,10 @@ namespace Viewer.Sources
                 this.stake[1] = new Sprite(cm.Load<Texture2D>("Players/FR_prend"));
                 this.stake[2] = new Sprite(cm.Load<Texture2D>("Players/BR_prend"));
                 this.stake[3] = new Sprite(cm.Load<Texture2D>("Players/BL_prend"));
+                this.sfork[0] = new Sprite(cm.Load<Texture2D>("Players/FL_fork"));
+                this.sfork[1] = new Sprite(cm.Load<Texture2D>("Players/FR_fork"));
+                this.sfork[2] = new Sprite(cm.Load<Texture2D>("Players/BR_fork"));
+                this.sfork[3] = new Sprite(cm.Load<Texture2D>("Players/BL_fork"));
                 this.sincant = new Sprite(cm.Load<Texture2D>("Players/incant"));
             }
             else
@@ -154,6 +195,10 @@ namespace Viewer.Sources
                 this.stake[1] = new Sprite(cm.Load<Texture2D>("Players/FR_prend_2"));
                 this.stake[2] = new Sprite(cm.Load<Texture2D>("Players/BR_prend_2"));
                 this.stake[3] = new Sprite(cm.Load<Texture2D>("Players/BL_prend_2"));
+                this.sfork[0] = new Sprite(cm.Load<Texture2D>("Players/FL_fork_2"));
+                this.sfork[1] = new Sprite(cm.Load<Texture2D>("Players/FR_fork_2"));
+                this.sfork[2] = new Sprite(cm.Load<Texture2D>("Players/BR_fork_2"));
+                this.sfork[3] = new Sprite(cm.Load<Texture2D>("Players/BL_fork_2"));
                 this.sincant = new Sprite(cm.Load<Texture2D>("Players/incant_2"));
             }
             this.slvl[0] = new Sprite(cm.Load<Texture2D>("Level/level_1"));
@@ -163,6 +208,7 @@ namespace Viewer.Sources
             this.slvl[4] = new Sprite(cm.Load<Texture2D>("Level/level_5"));
             this.slvl[5] = new Sprite(cm.Load<Texture2D>("Level/level_6"));
             this.slvl[6] = new Sprite(cm.Load<Texture2D>("Level/level_7"));
+            this.slvl[7] = new Sprite(cm.Load<Texture2D>("Level/level_8"));
             this.sdead = new Sprite(cm.Load<Texture2D>("Players/dead"));
             this.sbroadcast[0] = new Sprite(cm.Load<Texture2D>("Players/BroadcastL"));
             this.sbroadcast[1] = new Sprite(cm.Load<Texture2D>("Players/BroadcastR"));
@@ -173,12 +219,12 @@ namespace Viewer.Sources
             Point p;
             Point off;
 
-            if (this.st == State.DEAD && this.dead == false)
+            if (this.st == States.DEAD && this.dead == false)
             {
                 this.deadTimer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
                 this.dead = true;
             }
-            if (this.st == State.DEAD || this.st == State.FINISHED)
+            if (this.st == States.DEAD || this.st == States.FINISHED)
             {
                 if (this.deadTimer >= gameTime.TotalGameTime)
                 {
@@ -195,9 +241,9 @@ namespace Viewer.Sources
                         this.sdead.Draw(sb, tar);
                 }
                 else
-                    this.st = State.FINISHED;
+                    this.st = States.FINISHED;
             }
-            else if (this.st == State.INCANT)
+            else if (this.st == States.INCANT)
             {
                 double factX = (this.sincant.getBounds().Width * (square.Width / 155.0));
                 double factY = (this.sincant.getBounds().Height * (square.Height / 58.0));
@@ -217,7 +263,7 @@ namespace Viewer.Sources
                 double factX = 0.0;
                 double factY = 0.0;
 
-                if (this.st == State.TAKE)
+                if (this.st == States.TAKE || this.st == States.DROP)
                 {
                     factX = (this.stake[(int)this.dir].getBounds().Width * (square.Width / 155.0));
                     factY = (this.stake[(int)this.dir].getBounds().Height * (square.Height / 58.0));
@@ -230,6 +276,20 @@ namespace Viewer.Sources
                     tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
                     if (screen.Intersects(tar))
                         this.stake[(int)this.dir].Draw(sb, tar);
+                }
+                else if (this.st == States.FORK)
+                {
+                    factX = (this.sfork[(int)this.dir].getBounds().Width * (square.Width / 155.0));
+                    factY = (this.sfork[(int)this.dir].getBounds().Height * (square.Height / 58.0));
+
+                    off.X = (this.pos.X + 1) * (square.Width / 2);
+                    off.Y = (this.pos.X) * (square.Height / 2);
+
+                    p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
+                    p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                    tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+                    if (screen.Intersects(tar))
+                        this.sfork[(int)this.dir].Draw(sb, tar);
                 }
                 else
                 {

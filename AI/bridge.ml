@@ -83,7 +83,8 @@ let push v =
   in
   begin
     aux v;
-    ignore (Unix.select [] [] [] 0.5)
+    Unix.select [] [] [] 0.5; (* TODO *)
+    ()
   end
 
 let voir_cmd str =
@@ -281,7 +282,8 @@ let match_me str =
     else
       aux str (idx + 1)
   in
-    aux str 0
+    if not (str = "") then
+      aux str 0
 
 let rec gather = function
   | Connect_nbr         ->
@@ -377,7 +379,7 @@ let pull = function
  * Unitest
  *)
 let unitest () =
-  let rec see (R_voir (RP_voir bat)) =
+  let rec see bat=
     let rec print_iv bat =
       begin
         Printf.printf " = Voir = \n";
@@ -389,9 +391,9 @@ let unitest () =
         Printf.printf "Phiras %d\n" bat.Inventory.phiras;
         Printf.printf "Thystame %d\n" bat.Inventory.thystame
       end
-    in print_iv bat.(0)
+    in print_iv ((voir bat).(0))
   and
-      inventory (R_inventaire (RP_inventaire bat)) =
+      inventory bat =
     let rec print_iv bat =
       begin
         Printf.printf " = Inventaire = \n";
@@ -403,18 +405,17 @@ let unitest () =
         Printf.printf "Phiras %d\n" bat.Inventory.phiras;
         Printf.printf "Thystame %d\n" bat.Inventory.thystame
       end
-    in print_iv bat
+    in print_iv (inventaire bat)
   and
-      mapSize (R_map_size (RP_map_size (x, y))) =
+      mapSize (x, y) =
     begin
       Printf.printf " = Map Size = \n";
       Printf.printf "%d %d\n" x y
     end
   and
-      pok (R_ok (RP_empty)) =
-    Printf.printf " = OK BBQ = \n"
+      pok _ = Printf.printf " = OK BBQ = \n"
   and
-      connection (R_connect_nbr (RP_connect cn)) =
+      connection cn =
     begin
       Printf.printf " = Connect nbr = \n";
       Printf.printf "%d\n" cn
@@ -428,8 +429,7 @@ let unitest () =
       push (Avance);
       inventory (pull Inventaire);
       see (pull Voir);
-      mapSize (pull (Team ""));
+      mapSize (map_size (pull (Team "")));
       pok (pull Avance);
-      connection (pull Connect_nbr);
-      flush stdout;
+      connection (connect (pull Connect_nbr))
     end

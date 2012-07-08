@@ -34,15 +34,17 @@ let recv () =
   and
       aux ret buf =
     let rec auxx buf r =
-      r := Unix.recv sock buf 0 (String.length buf) []
+      match Unix.select [sock] [] [] 0.01 with
+        | (sock::[], _, _)    -> r := Unix.recv sock buf 0 (String.length buf) []
+        | (_, _, _)           -> ()
     and
-        r = ref 0
+        r = ref (-1)
     in
       begin
         auxx buf r;
         (if !r > 0 then
           buffer := !buffer ^ (String.sub buf 0 !r)
-        else
+        else if !r = 0 then
           raise Exit);
         split !buffer
       end

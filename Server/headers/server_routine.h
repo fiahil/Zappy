@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:19:10 2012 ulric lefevre
-** Last update Sun Jun 24 21:30:07 2012 ulric lefevre
+** Last update Sun Jul  8 23:13:21 2012 ulric lefevre
 */
 
 #ifndef		__SERVER_ROUTINE_H__
@@ -13,6 +13,6 @@
 
 void	server_routine_input(t_data_serv, t_player);
 void	server_routine_output(t_data_serv, t_player);
-t_bool  welcome_player(t_data_serv, t_player, char *);
+t_bool  welcome_player(t_data_serv, t_player);
 
 #endif		/* __SERVER_ROUTINE_H__ */

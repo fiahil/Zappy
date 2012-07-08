@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Tue Jul  3 13:52:47 2012 ulric lefevre
+** Last update Sun Jul  8 15:18:02 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -53,7 +53,7 @@ void		put_inv(t_inventory inv)
   ds = get_data_serv(NULL);
   while (res != LAST)
     {
-      while (inv->resources[res])
+      while (inv->resources[res] > 0)
 	{
 	  pos.x = random() % map->size_x;
 	  pos.y = random() % map->size_y;

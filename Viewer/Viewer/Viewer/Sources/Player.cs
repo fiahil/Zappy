@@ -61,7 +61,7 @@ namespace Viewer.Sources
             this.dir = Direction.NORTH;
             this.player = new Sprite[4];
             this.stake = new Sprite[4];
-            this.slvl = new Sprite[7];
+            this.slvl = new Sprite[8];
             this.sbroadcast = new Sprite[2];
             this.Load(cm, idTeam);
             this.broadcast = null;
@@ -80,7 +80,7 @@ namespace Viewer.Sources
             this.dir = dir;
             this.player = new Sprite[4];
             this.stake = new Sprite[4];
-            this.slvl = new Sprite[7];
+            this.slvl = new Sprite[8];
             this.sbroadcast = new Sprite[2];
             this.team = team;
             this.lvl = (lvl < 1 ? 1 : lvl);
@@ -163,6 +163,7 @@ namespace Viewer.Sources
             this.slvl[4] = new Sprite(cm.Load<Texture2D>("Level/level_5"));
             this.slvl[5] = new Sprite(cm.Load<Texture2D>("Level/level_6"));
             this.slvl[6] = new Sprite(cm.Load<Texture2D>("Level/level_7"));
+            this.slvl[7] = new Sprite(cm.Load<Texture2D>("Level/level_8"));
             this.sdead = new Sprite(cm.Load<Texture2D>("Players/dead"));
             this.sbroadcast[0] = new Sprite(cm.Load<Texture2D>("Players/BroadcastL"));
             this.sbroadcast[1] = new Sprite(cm.Load<Texture2D>("Players/BroadcastR"));

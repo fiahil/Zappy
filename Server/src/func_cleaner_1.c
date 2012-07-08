@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:57 2012 ulric lefevre
-** Last update Fri Jul  6 16:19:24 2012 ulric lefevre
+** Last update Sun Jul  8 12:49:42 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -73,7 +73,6 @@ int		player_cleaner(void *ptr, size_t s)
 	++(((t_team)(list_find_cmp(ds->teams, &cmp_team,
 				   p->team, 0))->data)->remaining);
       map_cleaner(p);
-      delete_player(p);
       g_current = NULL;
       return (1);
     }

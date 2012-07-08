@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Tue Jun 26 11:14:45 2012 ulric lefevre
-** Last update Sun Jul  1 14:22:06 2012 ulric lefevre
+** Last update Sun Jul  8 11:42:20 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -44,6 +44,7 @@ void		clean_all(t_data_serv ds)
   delete_list(ds->teams);
   delete_pqueue(ds->action);
   delete_list(ds->send_q);
+  delete_list(ds->egg);
   map = get_map(NULL);
   y = 0;
   while (y < map->size_y)

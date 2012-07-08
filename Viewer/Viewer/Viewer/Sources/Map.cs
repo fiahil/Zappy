@@ -96,7 +96,7 @@ namespace Viewer.Sources
             this.square.Width = 155;
             this.square.X = (int)(this.square.Height);
             this.square.Y = (int)(this.square.Width);
-            this.Load(this.Game.Content, ((Main)this.Game).getSb(), ((Main)this.Game).sf);
+            this.Load(this.Game.Content, ((Main)this.Game).SpriteBatch, ((Main)this.Game).SpriteFont);
         }
 
         public Vector2 getSize()
@@ -335,7 +335,7 @@ namespace Viewer.Sources
              }
 
             p.X = -1 * (this.square.Width / 2) + ((this.square.Width / 2) * (int)this.dim.X) + this.square.X;
-            p.Y = 1 * (this.square.Height / 2) + ((this.square.Height / 2) * (int)this.dim.Y) + this.square.Y;
+            p.Y = 1 * (this.square.Height / 2) + ((this.square.Height / 2) * (int)this.dim.X) + this.square.Y;
 
             Rectangle tar3 = new Rectangle((int)(p.X + (int)(45 * (this.square.Width / 155.0))), (int)(p.Y - (int)(8 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
             if (this.screen.Intersects(tar3))

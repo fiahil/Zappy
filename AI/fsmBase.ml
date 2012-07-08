@@ -5,29 +5,68 @@
 
 (* type pattern = int;; *)
 
-let timeout t =
-    ignore (Unix.select [] [] [] t)
+let view_lvl = [| 0; 2; 6; 12; 20; 30; 42; 56; 72 ; 1000 |]
+
+let plvl = ref 1
+
+let set_lvl tab =
+  let rec aux tab idx =
+    if (view_lvl.(idx) > (Array.length tab)) then
+      plvl := (idx - 1)
+    else
+      aux tab (idx + 1)
+  in
+  aux tab 0
 
 let find rcs =
   Bridge.push (Bridge.Voir);
-  let rec in_find (Bridge.R_voir (Bridge.RP_voir tab)) idx rcs =
-    if (idx >= (Array.length tab)) then
+
+  let nb_rcs tab id = function
+    | Inventory.Nourriture -> tab.(id).Inventory.nourriture
+    | Inventory.Linemate   -> tab.(id).Inventory.linemate
+    | Inventory.Deraumere  -> tab.(id).Inventory.deraumere
+    | Inventory.Sibur      -> tab.(id).Inventory.sibur
+    | Inventory.Mendiane   -> tab.(id).Inventory.mendiane
+    | Inventory.Phiras     -> tab.(id).Inventory.phiras
+    | Inventory.Thystame   -> tab.(id).Inventory.thystame
+  in
+  let rec line_finder tab idx idxl =
+    let test_line tab idx idxl (left, right) =
+      if (left != 0) then
+	view_lvl.(idx) + idxl
+      else if (right != 0) then
+	view_lvl.(idx) - idxl
+      else
+	line_finder tab idx (idxl + 1)
+    in
+    if (idxl > idx) then
       (-1)
     else
-      let find_rcs = function
-	| 0 -> in_find (Bridge.R_voir (Bridge.RP_voir tab)) (idx + 1) rcs
-	| _ -> idx
-      in
-      match rcs with
-	| Inventory.Nourriture -> find_rcs tab.(idx).Inventory.nourriture
-	| Inventory.Linemate   -> find_rcs tab.(idx).Inventory.linemate
-	| Inventory.Deraumere  -> find_rcs tab.(idx).Inventory.deraumere
-	| Inventory.Sibur      -> find_rcs tab.(idx).Inventory.sibur
-	| Inventory.Mendiane   -> find_rcs tab.(idx).Inventory.mendiane
-	| Inventory.Phiras     -> find_rcs tab.(idx).Inventory.phiras
-	| Inventory.Thystame   -> find_rcs tab.(idx).Inventory.thystame
+      begin
+	Printf.printf "idx = %d et idxl = %d\n" idx idxl;
+	flush stdout;
+	test_line tab idx idxl
+	  (nb_rcs tab (view_lvl.(idx) + idxl) rcs, nb_rcs tab (view_lvl.(idx) - idxl) rcs)
+      end
   in
-  in_find (Bridge.pull Bridge.Voir) 0 rcs
+  let rec in_find tab idx =
+    let test_ret tab idx = function
+      | -1 -> in_find tab (idx + 1)
+      | rt ->
+	begin
+	  set_lvl tab;
+	  rt
+	end
+    in
+    if (idx > 8 || (view_lvl.(idx) + 1) >= (Array.length tab)) then
+      begin
+	set_lvl tab;
+	(-1)
+      end
+    else
+      test_ret tab idx (line_finder tab idx 0)
+  in
+  in_find (Bridge.voir (Bridge.pull Bridge.Voir)) 0
 
 let move off =
   let rec forward = function
@@ -52,7 +91,7 @@ let move off =
 	forward (off - midd)
       end
   in
-  if (off == 0) then
+  if (off = 0) then
     ()
   else if (off >= (2 - 1) && off <= (2 + 1)) then
     begin
@@ -89,6 +128,11 @@ let move off =
       forward 7;
       turn off 56
     end
+  else if (off >= (72 - 8) && off <= (72 + 8)) then
+    begin
+      forward 8;
+      turn off 72
+    end
   else
     ()
 
@@ -103,9 +147,22 @@ let gather rcs nb =
   in
   in_gather nb
 
-let gather_all rcs =
+let gather_all () =
   Bridge.push (Bridge.Voir);
-  let in_gather_all (Bridge.R_voir (Bridge.RP_voir tab)) = function
+  let aux tab =
+    gather Inventory.Nourriture tab.(0).Inventory.nourriture;
+    gather Inventory.Linemate tab.(0).Inventory.linemate;
+    gather Inventory.Deraumere tab.(0).Inventory.deraumere;
+    gather Inventory.Sibur tab.(0).Inventory.sibur;
+    gather Inventory.Mendiane tab.(0).Inventory.mendiane;
+    gather Inventory.Phiras tab.(0).Inventory.phiras;
+    gather Inventory.Thystame tab.(0).Inventory.thystame
+  in
+  aux (Bridge.voir (Bridge.pull Bridge.Voir))
+
+let gather_all_rcs rcs =
+  Bridge.push (Bridge.Voir);
+  let aux tab = function
     | Inventory.Nourriture -> gather Inventory.Nourriture tab.(0).Inventory.nourriture
     | Inventory.Linemate   -> gather Inventory.Linemate tab.(0).Inventory.linemate
     | Inventory.Deraumere  -> gather Inventory.Deraumere tab.(0).Inventory.deraumere
@@ -114,14 +171,14 @@ let gather_all rcs =
     | Inventory.Phiras     -> gather Inventory.Phiras tab.(0).Inventory.phiras
     | Inventory.Thystame   -> gather Inventory.Thystame tab.(0).Inventory.thystame
   in
-  in_gather_all (Bridge.pull Bridge.Voir) rcs
+  aux (Bridge.voir (Bridge.pull Bridge.Voir)) rcs
 
 let rec unitest () =
-  gather_all Inventory.Nourriture;
+  gather_all_rcs Inventory.Nourriture;
   gather Inventory.Linemate 1;
   move 4;
-  gather_all Inventory.Nourriture;
+  gather_all_rcs Inventory.Nourriture;
   move 12;
   gather Inventory.Linemate 2;
-  gather_all Inventory.Nourriture;
+  gather_all_rcs Inventory.Nourriture;
   unitest ()

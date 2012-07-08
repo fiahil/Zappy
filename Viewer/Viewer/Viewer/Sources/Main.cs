@@ -103,6 +103,7 @@ namespace Viewer.Sources
             this.graphics.PreferredBackBufferHeight = 720;
             this.graphics.ApplyChanges();
 
+            /*
             this.elist.Add(new Egg(this.Content, 0, 2, 2));
 
             this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
@@ -117,7 +118,7 @@ namespace Viewer.Sources
             this.plist[1].setBroadcast("bite");
             this.plist[2].setBroadcast("bite");
             this.plist[3].setBroadcast("bite");
-    
+            */
         }
 
         /// <summary>
@@ -131,7 +132,7 @@ namespace Viewer.Sources
             this.inventory_page = new Sprite(this.Content.Load<Texture2D>("Tiles/map_inventory"));
             this.sf = this.Content.Load<SpriteFont>("Font/Classic");
 
-            this.map.resizeMap(50, 50);
+            this.map.resizeMap(10, 7);
             server.Initialize(this);
         }
 

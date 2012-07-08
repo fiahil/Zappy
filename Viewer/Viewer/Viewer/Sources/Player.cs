@@ -103,7 +103,7 @@ namespace Viewer.Sources
             this.broacastTimer = TimeSpan.Zero;
             this.deadTimer = TimeSpan.Zero;
             this.dead = false;
-            this.lvl = 8;
+            this.lvl = 1;
             this.iv = new Inventory();
             this.team = "Poney";
         }

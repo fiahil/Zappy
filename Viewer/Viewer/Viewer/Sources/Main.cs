@@ -31,6 +31,11 @@ namespace Viewer.Sources
         TimeSpan inventory_timer;
         Sprite inventory_page;
 
+        SpriteManager sm;
+        public SpriteManager Sprites
+        {
+            get { return this.sm; }
+        }
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -128,8 +133,9 @@ namespace Viewer.Sources
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            this.inventory_page = new Sprite(this.Content.Load<Texture2D>("Tiles/map_inventory"));
+            
+            this.sm = new SpriteManager(this.Content);
+            this.inventory_page = sm.GetSprite("Tiles/map_inventory");
             this.sf = this.Content.Load<SpriteFont>("Font/Classic");
 
             this.map.resizeMap(10, 7);

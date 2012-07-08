@@ -83,34 +83,34 @@ namespace Viewer.Sources
             return target.Contains(p);
         }
 
-        public void Load(ContentManager cm)
+        public void Load(SpriteManager cm)
         {
-            this.tiles[0] = new Sprite(cm.Load<Texture2D>("Tiles/base1"));
-            this.tiles[1] = new Sprite(cm.Load<Texture2D>("Tiles/base2"));
-            this.tiles[2] = new Sprite(cm.Load<Texture2D>("Tiles/base3"));
+            this.tiles[0] = cm.GetSprite("Tiles/base1");
+            this.tiles[1] = cm.GetSprite("Tiles/base2");
+            this.tiles[2] = cm.GetSprite("Tiles/base3");
 
-            this.nourriture[0] = new Sprite(cm.Load<Texture2D>("Resources/nourriture_small"));
-            this.nourriture[1] = new Sprite(cm.Load<Texture2D>("Resources/nourriture_big"));
+            this.nourriture[0] = cm.GetSprite("Resources/nourriture_small");
+            this.nourriture[1] = cm.GetSprite("Resources/nourriture_big");
 
-            this.linemate[0] = new Sprite(cm.Load<Texture2D>("Resources/linemate_small"));
-            this.linemate[1] = new Sprite(cm.Load<Texture2D>("Resources/linemate_big"));
+            this.linemate[0] = cm.GetSprite("Resources/linemate_small");
+            this.linemate[1] = cm.GetSprite("Resources/linemate_big");
 
-            this.deraumere[0] = new Sprite(cm.Load<Texture2D>("Resources/deraumere_small"));
-            this.deraumere[1] = new Sprite(cm.Load<Texture2D>("Resources/deraumere_big"));
+            this.deraumere[0] = cm.GetSprite("Resources/deraumere_small");
+            this.deraumere[1] = cm.GetSprite("Resources/deraumere_big");
 
-            this.sibur[0] = new Sprite(cm.Load<Texture2D>("Resources/sibur_small"));
-            this.sibur[1] = new Sprite(cm.Load<Texture2D>("Resources/sibur_big"));
+            this.sibur[0] = cm.GetSprite("Resources/sibur_small");
+            this.sibur[1] = cm.GetSprite("Resources/sibur_big");
 
-            this.mendiane[0] = new Sprite(cm.Load<Texture2D>("Resources/mendiane_small"));
-            this.mendiane[1] = new Sprite(cm.Load<Texture2D>("Resources/mendiane_big"));
+            this.mendiane[0] = cm.GetSprite("Resources/mendiane_small");
+            this.mendiane[1] = cm.GetSprite("Resources/mendiane_big");
 
-            this.phiras[0] = new Sprite(cm.Load<Texture2D>("Resources/phiras_small"));
-            this.phiras[1] = new Sprite(cm.Load<Texture2D>("Resources/phiras_big"));
+            this.phiras[0] = cm.GetSprite("Resources/phiras_small");
+            this.phiras[1] = cm.GetSprite("Resources/phiras_big");
 
-            this.thystame[0] = new Sprite(cm.Load<Texture2D>("Resources/thystame_small"));
-            this.thystame[1] = new Sprite(cm.Load<Texture2D>("Resources/thystame_big"));
+            this.thystame[0] = cm.GetSprite("Resources/thystame_small");
+            this.thystame[1] = cm.GetSprite("Resources/thystame_big");
 
-            this.marker = new Sprite(cm.Load<Texture2D>("Tiles/base_highlited"));
+            this.marker = cm.GetSprite("Tiles/base_highlited");
 
             this.Bounds = tiles[0].getBounds();
         }

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  8 12:59:25 2012 ulric lefevre
-** Last update Sun Jul  8 13:13:46 2012 ulric lefevre
+** Last update Sun Jul  8 20:05:01 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -19,7 +19,7 @@ void		dtor_egg(void *data)
 {
   if (data)
     {
-      if (((t_egg)data)->fetus)
+      if (((t_egg)data)->status && ((t_egg)data)->fetus)
 	delete_player(((t_egg)data)->fetus);
       free(data);
     }

@@ -96,7 +96,7 @@ namespace Viewer.Sources
             this.square.Width = 155;
             this.square.X = (int)(this.square.Height);
             this.square.Y = (int)(this.square.Width);
-            this.Load(this.Game.Content, ((Main)this.Game).SpriteBatch, ((Main)this.Game).SpriteFont);
+            this.Load(((Main)this.Game).Sprites, ((Main)this.Game).SpriteBatch, ((Main)this.Game).SpriteFont);
         }
 
         public Vector2 getSize()
@@ -125,20 +125,20 @@ namespace Viewer.Sources
             }
         }
 
-        public void Load(ContentManager cm, SpriteBatch sb, SpriteFont sf)
+        public void Load(SpriteManager cm, SpriteBatch sb, SpriteFont sf)
         {
             this.sb = sb;
-            this.square_details = new Sprite(cm.Load<Texture2D>("Tiles/map_resources"));
+            this.square_details = cm.GetSprite("Tiles/map_resources");
             this.sf = sf;
-            this._wall[0] = new Sprite(cm.Load<Texture2D>("Background/wall"));
-            this._wall[1] = new Sprite(cm.Load<Texture2D>("Background/wall2"));
-            this._wall[2] = new Sprite(cm.Load<Texture2D>("Background/wall3"));
-            this._wall[3] = new Sprite(cm.Load<Texture2D>("Background/cloud"));
-            this._wall[4] = new Sprite(cm.Load<Texture2D>("Background/border"));
-            this._wall[5] = new Sprite(cm.Load<Texture2D>("Background/border2"));
-            this._wall[6] = new Sprite(cm.Load<Texture2D>("Background/top_border"));
-            this._wall[7] = new Sprite(cm.Load<Texture2D>("Background/top_border2"));
-            this._wall[8] = new Sprite(cm.Load<Texture2D>("Background/corner"));
+            this._wall[0] = cm.GetSprite("Background/wall");
+            this._wall[1] = cm.GetSprite("Background/wall2");
+            this._wall[2] = cm.GetSprite("Background/wall3");
+            this._wall[3] = cm.GetSprite("Background/cloud");
+            this._wall[4] = cm.GetSprite("Background/border");
+            this._wall[5] = cm.GetSprite("Background/border2");
+            this._wall[6] = cm.GetSprite("Background/top_border");
+            this._wall[7] = cm.GetSprite("Background/top_border2");
+            this._wall[8] = cm.GetSprite("Background/corner");
 
             for (int i = 0; i < this.dim.X; ++i)
                 for (int j = 0; j < this.dim.Y; ++j)

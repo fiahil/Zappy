@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Fri Jul  6 20:07:17 2012 ulric lefevre
+** Last update Sun Jul  8 23:09:24 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -31,7 +31,12 @@ static const int	g_dir[4][2] =
   };
 
 static const int	g_moved_dir[16] =
-  {5, 7, 1, 3, 3, 5, 7, 1, 1, 3, 5, 7, 7, 1, 3, 5};
+  {
+    5, 7, 1, 3,
+    3, 5, 7, 1,
+    1, 3, 5, 7,
+    7, 1, 3, 5
+  };
 
 static const int	g_src[4][4] =
   {

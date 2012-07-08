@@ -5,12 +5,13 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:37 2012 ulric lefevre
-** Last update Sun Jul  8 13:14:15 2012 ulric lefevre
+** Last update Sun Jul  8 14:24:28 2012 ulric lefevre
 */
 
 #include	<time.h>
 #include	<errno.h>
 #include	<stdio.h>
+#include	<signal.h>
 #include	<stdlib.h>
 #include	<string.h>
 
@@ -23,6 +24,7 @@
 #include	"network.h"
 #include	"victory.h"
 #include	"func_cmp.h"
+#include	"sig_manager.h"
 #include	"var_manager.h"
 #include	"func_cleaner.h"
 #include	"handle_error.h"
@@ -39,6 +41,8 @@ int		run(t_data_serv data_serv)
   select_add(&sm, data_serv->sock.fd);
   get_data_serv(data_serv);
   get_select_manager(&sm);
+  signal(SIGINT, &sig_end);
+  signal(SIGTERM, &sig_end);
   while (is_there_a_victorious(data_serv))
     iter_client();
   return (0);

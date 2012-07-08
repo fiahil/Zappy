@@ -5,7 +5,7 @@
 ## Login   <lefevr_u@epitech.net>
 ## 
 ## Started on  Tue Jul  3 13:29:53 2012 ulric lefevre
-## Last update Sun Jul  8 13:09:33 2012 ulric lefevre
+## Last update Sun Jul  8 20:13:36 2012 ulric lefevre
 ##
 
 NAME	=	zappy
@@ -66,6 +66,7 @@ SRC	=	src/broadcast.c			\
 		src/select_tools.c		\
 		src/server_routine.c		\
 		src/set_timeout.c		\
+		src/sig_manager.c		\
 		src/stdout_map.c		\
 		src/stdout_player.c		\
 		src/stdout_serv.c		\

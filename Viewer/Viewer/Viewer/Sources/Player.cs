@@ -88,7 +88,7 @@ namespace Viewer.Sources
             get { return team; }
         }
 
-        public Player(ContentManager cm, int idTeam)
+        public Player(SpriteManager cm, int idTeam)
         {
             this.st = States.IDLE;
             this.pos = new Point(0, 0);
@@ -108,7 +108,7 @@ namespace Viewer.Sources
             this.team = "Poney";
         }
 
-        public Player(ContentManager cm, int id, int x, int y, Direction dir, int lvl, string team, int idTeam)
+        public Player(SpriteManager cm, int id, int x, int y, Direction dir, int lvl, string team, int idTeam)
         {
             this.st = States.IDLE;
             this.id = id;
@@ -167,51 +167,51 @@ namespace Viewer.Sources
             return Direction.LAST;
         }
 
-        public void Load(ContentManager cm, int teamId)
+        public void Load(SpriteManager sm, int teamId)
         {
             if ((teamId % 2) == 0)
             {
-                this.player[0] = new Sprite(cm.Load<Texture2D>("Players/FL"));
-                this.player[1] = new Sprite(cm.Load<Texture2D>("Players/FR"));
-                this.player[2] = new Sprite(cm.Load<Texture2D>("Players/BR"));
-                this.player[3] = new Sprite(cm.Load<Texture2D>("Players/BL"));
-                this.stake[0] = new Sprite(cm.Load<Texture2D>("Players/FL_prend"));
-                this.stake[1] = new Sprite(cm.Load<Texture2D>("Players/FR_prend"));
-                this.stake[2] = new Sprite(cm.Load<Texture2D>("Players/BR_prend"));
-                this.stake[3] = new Sprite(cm.Load<Texture2D>("Players/BL_prend"));
-                this.sfork[0] = new Sprite(cm.Load<Texture2D>("Players/FL_fork"));
-                this.sfork[1] = new Sprite(cm.Load<Texture2D>("Players/FR_fork"));
-                this.sfork[2] = new Sprite(cm.Load<Texture2D>("Players/BR_fork"));
-                this.sfork[3] = new Sprite(cm.Load<Texture2D>("Players/BL_fork"));
-                this.sincant = new Sprite(cm.Load<Texture2D>("Players/incant"));
+                this.player[0] = sm.GetSprite("Players/FL");
+                this.player[1] = sm.GetSprite("Players/FR");
+                this.player[2] = sm.GetSprite("Players/BR");
+                this.player[3] = sm.GetSprite("Players/BL");
+                this.stake[0] = sm.GetSprite("Players/FL_prend");
+                this.stake[1] = sm.GetSprite("Players/FR_prend");
+                this.stake[2] = sm.GetSprite("Players/BR_prend");
+                this.stake[3] = sm.GetSprite("Players/BL_prend");
+                this.sfork[0] = sm.GetSprite("Players/FL_fork");
+                this.sfork[1] = sm.GetSprite("Players/FR_fork");
+                this.sfork[2] = sm.GetSprite("Players/BR_fork");
+                this.sfork[3] = sm.GetSprite("Players/BL_fork");
+                this.sincant = sm.GetSprite("Players/incant");
             }
             else
             {
-                this.player[0] = new Sprite(cm.Load<Texture2D>("Players/FL_2"));
-                this.player[1] = new Sprite(cm.Load<Texture2D>("Players/FR_2"));
-                this.player[2] = new Sprite(cm.Load<Texture2D>("Players/BR_2"));
-                this.player[3] = new Sprite(cm.Load<Texture2D>("Players/BL_2"));
-                this.stake[0] = new Sprite(cm.Load<Texture2D>("Players/FL_prend_2"));
-                this.stake[1] = new Sprite(cm.Load<Texture2D>("Players/FR_prend_2"));
-                this.stake[2] = new Sprite(cm.Load<Texture2D>("Players/BR_prend_2"));
-                this.stake[3] = new Sprite(cm.Load<Texture2D>("Players/BL_prend_2"));
-                this.sfork[0] = new Sprite(cm.Load<Texture2D>("Players/FL_fork_2"));
-                this.sfork[1] = new Sprite(cm.Load<Texture2D>("Players/FR_fork_2"));
-                this.sfork[2] = new Sprite(cm.Load<Texture2D>("Players/BR_fork_2"));
-                this.sfork[3] = new Sprite(cm.Load<Texture2D>("Players/BL_fork_2"));
-                this.sincant = new Sprite(cm.Load<Texture2D>("Players/incant_2"));
+                this.player[0] = sm.GetSprite("Players/FL_2");
+                this.player[1] = sm.GetSprite("Players/FR_2");
+                this.player[2] = sm.GetSprite("Players/BR_2");
+                this.player[3] = sm.GetSprite("Players/BL_2");
+                this.stake[0] = sm.GetSprite("Players/FL_prend_2");
+                this.stake[1] = sm.GetSprite("Players/FR_prend_2");
+                this.stake[2] = sm.GetSprite("Players/BR_prend_2");
+                this.stake[3] = sm.GetSprite("Players/BL_prend_2");
+                this.sfork[0] = sm.GetSprite("Players/FL_fork_2");
+                this.sfork[1] = sm.GetSprite("Players/FR_fork_2");
+                this.sfork[2] = sm.GetSprite("Players/BR_fork_2");
+                this.sfork[3] = sm.GetSprite("Players/BL_fork_2");
+                this.sincant = sm.GetSprite("Players/incant_2");
             }
-            this.slvl[0] = new Sprite(cm.Load<Texture2D>("Level/level_1"));
-            this.slvl[1] = new Sprite(cm.Load<Texture2D>("Level/level_2"));
-            this.slvl[2] = new Sprite(cm.Load<Texture2D>("Level/level_3"));
-            this.slvl[3] = new Sprite(cm.Load<Texture2D>("Level/level_4"));
-            this.slvl[4] = new Sprite(cm.Load<Texture2D>("Level/level_5"));
-            this.slvl[5] = new Sprite(cm.Load<Texture2D>("Level/level_6"));
-            this.slvl[6] = new Sprite(cm.Load<Texture2D>("Level/level_7"));
-            this.slvl[7] = new Sprite(cm.Load<Texture2D>("Level/level_8"));
-            this.sdead = new Sprite(cm.Load<Texture2D>("Players/dead"));
-            this.sbroadcast[0] = new Sprite(cm.Load<Texture2D>("Players/BroadcastL"));
-            this.sbroadcast[1] = new Sprite(cm.Load<Texture2D>("Players/BroadcastR"));
+            this.slvl[0] = sm.GetSprite("Level/level_1");
+            this.slvl[1] = sm.GetSprite("Level/level_2");
+            this.slvl[2] = sm.GetSprite("Level/level_3");
+            this.slvl[3] = sm.GetSprite("Level/level_4");
+            this.slvl[4] = sm.GetSprite("Level/level_5");
+            this.slvl[5] = sm.GetSprite("Level/level_6");
+            this.slvl[6] = sm.GetSprite("Level/level_7");
+            this.slvl[7] = sm.GetSprite("Level/level_8");
+            this.sdead = sm.GetSprite("Players/dead");
+            this.sbroadcast[0] = sm.GetSprite("Players/BroadcastL");
+            this.sbroadcast[1] = sm.GetSprite("Players/BroadcastR");
         }
 
         public void Draw(GameTime gameTime, Rectangle square, Rectangle screen, SpriteBatch sb)

@@ -34,11 +34,11 @@ namespace Viewer.Sources
             set { st = value; }
         }
 
-        public Egg(ContentManager cm,int id, int x, int y)
+        public Egg(SpriteManager cm,int id, int x, int y)
         {
             pos = new Point(x, y);
             this.id = id;
-            this.egg = new Sprite(cm.Load<Texture2D>("Players/Egg"));
+            this.egg = cm.GetSprite("Players/Egg");
         }
 
         public void Draw(GameTime gameTime, Rectangle square, Rectangle screen, SpriteBatch sb)

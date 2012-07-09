@@ -212,13 +212,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tiles\base_highlited.png">
-      <Name>base_highlited</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Font\Classic.spritefont">
       <Name>Classic</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -257,13 +250,6 @@
   <ItemGroup>
     <Compile Include="Background\border.png">
       <Name>border</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Tiles\base_highlited.png">
-      <Name>base_highlited</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -441,6 +427,13 @@
     </Compile>
     <Compile Include="Players\FR_fork_2.png">
       <Name>FR_fork_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tiles\base_highlited.png">
+      <Name>base_highlited</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

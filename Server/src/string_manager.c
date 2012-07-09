@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:51 2012 ulric lefevre
-** Last update Sat Jul  7 11:01:47 2012 ulric lefevre
+** Last update Mon Jul  9 10:55:28 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -31,7 +31,7 @@ static void	print_stock(char **buf)
   char		*str;
 
   str = NULL;
-  asprintf(&str, "ajout au buffer = [%s]\n", (*buf));
+  asprintf(&str, "Ajout au buffer = [%s]\n", (*buf));
   stdout_serv_status(str, 1);
   free(str);
 }

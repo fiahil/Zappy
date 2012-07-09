@@ -171,33 +171,33 @@ namespace Viewer.Sources
         {
             if ((teamId % 2) == 0)
             {
-                this.player[0] = sm.GetSprite("Players/FL");
+                this.player[0] = sm.GetSprite("Players/BR");
                 this.player[1] = sm.GetSprite("Players/FR");
-                this.player[2] = sm.GetSprite("Players/BR");
+                this.player[2] = sm.GetSprite("Players/FL");
                 this.player[3] = sm.GetSprite("Players/BL");
-                this.stake[0] = sm.GetSprite("Players/FL_prend");
+                this.stake[0] = sm.GetSprite("Players/BR_prend");
                 this.stake[1] = sm.GetSprite("Players/FR_prend");
-                this.stake[2] = sm.GetSprite("Players/BR_prend");
+                this.stake[2] = sm.GetSprite("Players/FL_prend");
                 this.stake[3] = sm.GetSprite("Players/BL_prend");
-                this.sfork[0] = sm.GetSprite("Players/FL_fork");
+                this.sfork[0] = sm.GetSprite("Players/BR_fork");
                 this.sfork[1] = sm.GetSprite("Players/FR_fork");
-                this.sfork[2] = sm.GetSprite("Players/BR_fork");
+                this.sfork[2] = sm.GetSprite("Players/FL_fork");
                 this.sfork[3] = sm.GetSprite("Players/BL_fork");
                 this.sincant = sm.GetSprite("Players/incant");
             }
             else
             {
-                this.player[0] = sm.GetSprite("Players/FL_2");
+                this.player[0] = sm.GetSprite("Players/BR_2");
                 this.player[1] = sm.GetSprite("Players/FR_2");
-                this.player[2] = sm.GetSprite("Players/BR_2");
+                this.player[2] = sm.GetSprite("Players/FL_2");
                 this.player[3] = sm.GetSprite("Players/BL_2");
-                this.stake[0] = sm.GetSprite("Players/FL_prend_2");
+                this.stake[0] = sm.GetSprite("Players/BR_prend_2");
                 this.stake[1] = sm.GetSprite("Players/FR_prend_2");
-                this.stake[2] = sm.GetSprite("Players/BR_prend_2");
+                this.stake[2] = sm.GetSprite("Players/FL_prend_2");
                 this.stake[3] = sm.GetSprite("Players/BL_prend_2");
-                this.sfork[0] = sm.GetSprite("Players/FL_fork_2");
+                this.sfork[0] = sm.GetSprite("Players/BR_fork_2");
                 this.sfork[1] = sm.GetSprite("Players/FR_fork_2");
-                this.sfork[2] = sm.GetSprite("Players/BR_fork_2");
+                this.sfork[2] = sm.GetSprite("Players/FL_fork_2");
                 this.sfork[3] = sm.GetSprite("Players/BL_fork_2");
                 this.sincant = sm.GetSprite("Players/incant_2");
             }
@@ -214,7 +214,7 @@ namespace Viewer.Sources
             this.sbroadcast[1] = sm.GetSprite("Players/BroadcastR");
         }
 
-        public void Draw(GameTime gameTime, Rectangle square, Rectangle screen, SpriteBatch sb)
+        public void Draw(GameTime gameTime, Rectangle square, Rectangle screen, SpriteBatch sb, Map map)
         {
             Point p;
             Point off;
@@ -234,8 +234,8 @@ namespace Viewer.Sources
                     off.X = (this.pos.X + 1) * (square.Width / 2);
                     off.Y = (this.pos.X) * (square.Height / 2);
 
-                    p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
-                    p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                    p.X = -this.pos.Y * (square.Width / 2) + off.X + square.X + ((int)map.getSize().Y - 1) * (square.Width / 2);
+                    p.Y = this.pos.Y * (square.Height / 2) + off.Y + square.Y - ((int)map.getSize().Y - 1) * (square.Height / 2);
                     Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
                     if (screen.Intersects(tar))
                         this.sdead.Draw(sb, tar);
@@ -257,11 +257,25 @@ namespace Viewer.Sources
                     off.X = (this.pos.X + 1) * (square.Width / 2);
                     off.Y = (this.pos.X) * (square.Height / 2);
 
-                    p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
-                    p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                    p.X = -this.pos.Y * (square.Width / 2) + off.X + square.X + ((int)map.getSize().Y - 1) * (square.Width / 2);
+                    p.Y = this.pos.Y * (square.Height / 2) + off.Y + square.Y - ((int)map.getSize().Y - 1) * (square.Height / 2);
                     tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
                     if (screen.Intersects(tar))
                         this.stake[(int)this.dir].Draw(sb, tar);
+                }
+                else if (this.st == States.INCANT)
+                {
+                    factX = (this.sincant.getBounds().Width * (square.Width / 155.0));
+                    factY = (this.sincant.getBounds().Height * (square.Height / 58.0));
+
+                    off.X = (this.pos.X + 1) * (square.Width / 2);
+                    off.Y = (this.pos.X) * (square.Height / 2);
+
+                    p.X = -this.pos.Y * (square.Width / 2) + off.X + square.X + ((int)map.getSize().Y - 1) * (square.Width / 2);
+                    p.Y = this.pos.Y * (square.Height / 2) + off.Y + square.Y - ((int)map.getSize().Y - 1) * (square.Height / 2);
+                    tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+                    if (screen.Intersects(tar))
+                        this.sincant.Draw(sb, tar);
                 }
                 else if (this.st == States.FORK)
                 {
@@ -271,8 +285,8 @@ namespace Viewer.Sources
                     off.X = (this.pos.X + 1) * (square.Width / 2);
                     off.Y = (this.pos.X) * (square.Height / 2);
 
-                    p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
-                    p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                    p.X = -this.pos.Y * (square.Width / 2) + off.X + square.X + ((int)map.getSize().Y - 1) * (square.Width / 2);
+                    p.Y = this.pos.Y * (square.Height / 2) + off.Y + square.Y - ((int)map.getSize().Y - 1) * (square.Height / 2);
                     tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
                     if (screen.Intersects(tar))
                         this.sfork[(int)this.dir].Draw(sb, tar);
@@ -299,8 +313,8 @@ namespace Viewer.Sources
                     off.X = (this.pos.X + 1) * (square.Width / 2);
                     off.Y = (this.pos.X) * (square.Height / 2);
 
-                    p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
-                    p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                    p.X = -this.pos.Y * (square.Width / 2) + off.X + square.X + ((int)map.getSize().Y - 1)* (square.Width / 2);
+                    p.Y = this.pos.Y * (square.Height / 2) + off.Y + square.Y - ((int)map.getSize().Y - 1) * (square.Height / 2);
                     tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
                     if (screen.Intersects(tar))
                         this.player[(int)this.dir].Draw(sb, tar);

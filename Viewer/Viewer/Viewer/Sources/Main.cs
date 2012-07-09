@@ -107,23 +107,6 @@ namespace Viewer.Sources
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
             this.graphics.ApplyChanges();
-
-            /*
-            this.elist.Add(new Egg(this.Content, 0, 2, 2));
-
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist[0].setPos(2, 2);
-            this.plist[2].setPos(1, 2);
-            this.plist[3].setPos(2, 0);
-
-            this.plist[0].setBroadcast("bite");
-            this.plist[1].setBroadcast("bite");
-            this.plist[2].setBroadcast("bite");
-            this.plist[3].setBroadcast("bite");
-            */
         }
 
         /// <summary>

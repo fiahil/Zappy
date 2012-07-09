@@ -37,8 +37,8 @@ let main () =
         Socket.connect !host !port;
         Bridge.push (Bridge.Team !team);
 	MapSize.storage ();
-	Random.self_init ();
-	FsmSurvival.survival ()
+	Random.self_init ()
+	(* FsmSurvival.survival () *)
       end
     with
       | Invalid_argument v      -> prerr_endline v

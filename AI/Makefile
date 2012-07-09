@@ -14,14 +14,16 @@ ML	=	socket.ml	\
 		fsmBase.ml	\
 		fsmIncant.ml	\
 		fsmSurvival.ml	\
-		main.ml
+		main.ml		\
+		broadcast.ml
 
 MLI	=	socket.mli	\
 		inventory.mli	\
 		bridge.mli	\
 		fsmBase.mli	\
 		fsmIncant.mli	\
-		fsmSurvival.mli
+		fsmSurvival.mli	\
+		broadcast.mli
 
 CMO	=	$(ML:.ml=.cmo)
 

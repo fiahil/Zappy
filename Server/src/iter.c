@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Sun Jul  8 00:56:38 2012 ulric lefevre
+** Last update Mon Jul  9 13:55:17 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -30,8 +30,6 @@
 
 static t_u_timeval	g_last = {0, 0};
 static t_u_timeval	g_current = {0, 0};
-
-int	monitor_cleaner(void *ptr, size_t s);
 
 static int	get_dmg()
 {

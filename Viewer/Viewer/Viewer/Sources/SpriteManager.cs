@@ -61,8 +61,50 @@ namespace Viewer.Sources
             this.db["Tiles/base3"] = new Sprite(cm.Load<Texture2D>("Tiles/base3"));
             this.db["Tiles/map_inventory"] = new Sprite(cm.Load<Texture2D>("Tiles/map_inventory"));
             this.db["Tiles/map_resources"] = new Sprite(cm.Load<Texture2D>("Tiles/map_resources"));
-        }
 
+            this.db["Players/BL"] = new Sprite(cm.Load<Texture2D>("Players/BL"));
+            this.db["Players/BL_2"] = new Sprite(cm.Load<Texture2D>("Players/BL_2"));
+
+            this.db["Players/BL_fork"] = new Sprite(cm.Load<Texture2D>("Players/BL_fork"));
+            this.db["Players/BL_fork_2"] = new Sprite(cm.Load<Texture2D>("Players/BL_fork_2"));
+
+            this.db["Players/BL_prend"] = new Sprite(cm.Load<Texture2D>("Players/BL_prend"));
+            this.db["Players/BL_prend_2"] = new Sprite(cm.Load<Texture2D>("Players/BL_prend_2"));
+
+            this.db["Players/BR"] = new Sprite(cm.Load<Texture2D>("Players/BR"));
+            this.db["Players/BR_2"] = new Sprite(cm.Load<Texture2D>("Players/BR_2"));
+
+            this.db["Players/BR_fork"] = new Sprite(cm.Load<Texture2D>("Players/BR_fork"));
+            this.db["Players/BR_fork_2"] = new Sprite(cm.Load<Texture2D>("Players/BR_fork_2"));
+
+            this.db["Players/BR_prend"] = new Sprite(cm.Load<Texture2D>("Players/BR_prend"));
+            this.db["Players/BR_prend_2"] = new Sprite(cm.Load<Texture2D>("Players/BR_prend_2"));
+
+            this.db["Players/FL"] = new Sprite(cm.Load<Texture2D>("Players/FL"));
+            this.db["Players/FL_2"] = new Sprite(cm.Load<Texture2D>("Players/FL_2"));
+
+            this.db["Players/FL_fork"] = new Sprite(cm.Load<Texture2D>("Players/FL_fork"));
+            this.db["Players/FL_fork_2"] = new Sprite(cm.Load<Texture2D>("Players/FL_fork_2"));
+
+            this.db["Players/FL_prend"] = new Sprite(cm.Load<Texture2D>("Players/FL_prend"));
+            this.db["Players/FL_prend_2"] = new Sprite(cm.Load<Texture2D>("Players/FL_prend_2"));
+
+            this.db["Players/FR"] = new Sprite(cm.Load<Texture2D>("Players/FR"));
+            this.db["Players/FR_2"] = new Sprite(cm.Load<Texture2D>("Players/FR_2"));
+
+            this.db["Players/FR_fork"] = new Sprite(cm.Load<Texture2D>("Players/FR_fork"));
+            this.db["Players/FR_fork_2"] = new Sprite(cm.Load<Texture2D>("Players/FR_fork_2"));
+
+            this.db["Players/FR_prend"] = new Sprite(cm.Load<Texture2D>("Players/FR_prend"));
+            this.db["Players/FR_prend_2"] = new Sprite(cm.Load<Texture2D>("Players/FR_prend_2"));
+
+            this.db["Players/BroadcastL"] = new Sprite(cm.Load<Texture2D>("Players/BroadcastL"));
+            this.db["Players/BroadcastR"] = new Sprite(cm.Load<Texture2D>("Players/BroadcastR"));
+            this.db["Players/dead"] = new Sprite(cm.Load<Texture2D>("Players/dead"));
+            this.db["Players/Egg"] = new Sprite(cm.Load<Texture2D>("Players/Egg"));
+            this.db["Players/incant"] = new Sprite(cm.Load<Texture2D>("Players/incant"));
+            this.db["Players/incant_2"] = new Sprite(cm.Load<Texture2D>("Players/incant_2"));
+        }
         public Sprite GetSprite(string path)
         {
             return db[path];

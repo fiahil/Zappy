@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:33 2012 ulric lefevre
-** Last update Fri Jul  6 13:37:05 2012 ulric lefevre
+** Last update Mon Jul  9 13:55:36 2012 ulric lefevre
 */
 
 #ifndef		__FUNC_CLEANER_H__
@@ -15,6 +15,7 @@ int		del_player_action(void *, size_t);
 t_player	get_current(t_player);
 int		action_cleaner(void *, size_t);
 int		player_cleaner(void *, size_t);
+int		monitor_cleaner(void *, size_t);
 int		egg_cleaner(void *, size_t);
 int		incant_cleaner(void *, size_t);
 void		io_cleaner(void *, size_t);

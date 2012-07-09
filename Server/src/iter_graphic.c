@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Wed Jul  4 13:55:31 2012 ulric lefevre
-** Last update Fri Jul  6 16:15:27 2012 ulric lefevre
+** Last update Mon Jul  9 10:54:45 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -134,7 +134,7 @@ void		graphic_routine_input(t_data_serv ds, t_graphic this)
       close(this->cm.sock.fd);
       this->cm.sock.fd = -1;
       select_del(ds, this->cm.sock.fd);
-      stdout_serv_status("deconnexion du monitor\n", 0);
+      stdout_serv_status("Deconnexion du moniteur\n", 0);
       return ;
     }
   get_graphic_commands(this, buf);

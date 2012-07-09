@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Mon Jul  9 15:21:14 2012 ulric lefevre
+** Last update Mon Jul  9 16:07:40 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -25,8 +25,8 @@ void		put_res(int val)
   t_data_serv	ds;
 
   last_val += val;
-  i = last_val / 500;
-  last_val %= 500;
+  i = last_val / 200;
+  last_val %= 200;
   map = get_map(NULL);
   ds = get_data_serv(NULL);
   while (i)

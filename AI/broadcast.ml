@@ -7,7 +7,7 @@ type t =
   | Hel
   | Icq of (string * int)
   | Icr of (string * int * bool)
-  | Ici of (string * list int)
+  | Ici of (string * int list)
   | Ica of string
   | Icl of string
   | Icz of string
@@ -17,14 +17,22 @@ let hash_team = ref ""
 let autohash team =
   hash_team := Digest.to_hex (Digest.string team)
 
+let string_of_id_list l =
+  let rec aux str = function
+    | []                -> str
+    | head::[]          -> aux (str ^ (string_of_int head)) []
+    | head::tail        -> aux (str ^ (string_of_int head) ^ " ") tail
+  in
+  aux "" l
+
 let melt = function
   | Hel                 -> "Hello world"
-  | Icq id, lvl         -> id ^ " " ^ (string_of_int lvl)
-  | Icr id, pid, b      -> id ^ " " ^ (string_of_int pid) ^ " " ^ (string_of_bool b)
-  | Ici id, l           -> id ^ " " ^ " TODO "
-  | Ica id              -> id
-  | Icl id              -> id
-  | Icz id              -> id
+  | Icq (id, lvl)       -> "Icq " ^ id ^ " " ^ (string_of_int lvl)
+  | Icr (id, pid, b)    -> "Icr " ^ id ^ " " ^ (string_of_int pid) ^ " " ^ (string_of_bool b)
+  | Ici (id, l)         -> "Ici " ^ id ^ " " ^ (string_of_id_list l)
+  | Ica id              -> "Ica " ^ id
+  | Icl id              -> "Icl " ^ id
+  | Icz id              -> "Icz " ^ id
 
 let bc m =
   let aux = !hash_team ^ "--"
@@ -36,9 +44,9 @@ let bc m =
  *)
 let unitest () =
   bc Hel;
-  bc Hel;
-  bc Hel;
-  bc Hel;
+  bc (Icq ("COUCOU", 10));
+  bc (Ici ("YOP", [10;12;666]));
+  bc (Icr ("OKKK", 66, true));
   bc Hel;
   ignore (Bridge.pull (Bridge.Broadcast "PLOP"));
   ()

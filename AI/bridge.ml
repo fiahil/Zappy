@@ -350,8 +350,10 @@ let init () =
     begin
       Socket.send "inventaire\n";
       PlayerInventory.valid (inventaire (pull Inventaire));
-      timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0;
-      end
+      timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0 *. 0.95;
+      Printf.printf "--> %f\n" !timeout_t;
+      flush stdout
+    end
 
 let push v =
   let is_not_team = function
@@ -438,8 +440,8 @@ and
            end
            in
     begin
-      Socket.connect "127.0.0.1" 4242;
-      push (Team "Poney");
+      Socket.connect "10.19.253.232" 4242;
+      push (Team "titi");
       push (Voir);
       push (Inventaire);
       print_endline "== 1";

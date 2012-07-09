@@ -243,20 +243,6 @@ namespace Viewer.Sources
                 else
                     this.st = States.FINISHED;
             }
-            else if (this.st == States.INCANT)
-            {
-                double factX = (this.sincant.getBounds().Width * (square.Width / 155.0));
-                double factY = (this.sincant.getBounds().Height * (square.Height / 58.0));
-
-                off.X = (this.pos.X + 1) * (square.Width / 2);
-                off.Y = (this.pos.X) * (square.Height / 2);
-
-                p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
-                p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
-                Rectangle tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
-                if (screen.Intersects(tar))
-                    this.sincant.Draw(sb, tar);
-            }
             else
             {    
                 Rectangle tar = Rectangle.Empty;
@@ -290,6 +276,20 @@ namespace Viewer.Sources
                     tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
                     if (screen.Intersects(tar))
                         this.sfork[(int)this.dir].Draw(sb, tar);
+                }
+                else if (this.st == States.INCANT)
+                {
+                    factX = (this.sincant.getBounds().Width * (square.Width / 155.0));
+                    factY = (this.sincant.getBounds().Height * (square.Height / 58.0));
+
+                    off.X = (this.pos.X + 1) * (square.Width / 2);
+                    off.Y = (this.pos.X) * (square.Height / 2);
+
+                    p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
+                    p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+                    tar = new Rectangle((int)(p.X + (int)(42 * (square.Width / 155.0))), (int)(p.Y - (int)(19 * (square.Height / 58.0))), (int)factX, (int)factY);
+                    if (screen.Intersects(tar))
+                        this.sincant.Draw(sb, tar);
                 }
                 else
                 {

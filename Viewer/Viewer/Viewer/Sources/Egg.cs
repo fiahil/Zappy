@@ -41,7 +41,7 @@ namespace Viewer.Sources
             this.egg = cm.GetSprite("Players/Egg");
         }
 
-        public void Draw(GameTime gameTime, Rectangle square, Rectangle screen, SpriteBatch sb)
+        public void Draw(GameTime gameTime, Rectangle square, Rectangle screen, SpriteBatch sb, Map map)
         {
             Point p;
             Point off;
@@ -52,8 +52,8 @@ namespace Viewer.Sources
             off.X = (this.pos.X + 1) * (square.Width / 2);
             off.Y = (this.pos.X) * (square.Height / 2);
 
-            p.X = this.pos.Y * (square.Width / 2) + off.X + square.X;
-            p.Y = -this.pos.Y * (square.Height / 2) + off.Y + square.Y;
+            p.X = -this.pos.Y * (square.Width / 2) + off.X + square.X + ((int)map.getSize().Y - 1) * (square.Width / 2);
+            p.Y = this.pos.Y * (square.Height / 2) + off.Y + square.Y - ((int)map.getSize().Y - 1) * (square.Height / 2);
 
             Rectangle tar = new Rectangle((int)(p.X + (int)(117 * (square.Width / 155.0))), (int)(p.Y + (int)(38 * (square.Height / 58.0))), (int)factX, (int)factY);
             if (screen.Intersects(tar))

@@ -211,12 +211,12 @@ namespace Viewer.Sources
 
             foreach (Egg eelt in elist)
             {
-                eelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch);
+                eelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch, this.map);
             }
 
             foreach (Player pelt in plist)
             {
-                pelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch);
+                pelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch, this.map);
             }
 
             if (this.inventory_details != null)

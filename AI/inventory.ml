@@ -21,7 +21,6 @@ type t =
       mendiane : int;
       phiras : int;
       thystame : int
-
     }
 
 let empty () =
@@ -76,7 +75,7 @@ let inc iv = function
         phiras = iv.phiras;
         thystame = iv.thystame
       }
-  | Mendiane            ->    
+  | Mendiane            ->
       {
         nourriture = iv.nourriture;
         linemate = iv.linemate;
@@ -86,7 +85,7 @@ let inc iv = function
         phiras = iv.phiras;
         thystame = iv.thystame
       }
-  | Phiras              ->          
+  | Phiras              ->
       {
         nourriture = iv.nourriture;
         linemate = iv.linemate;
@@ -148,7 +147,7 @@ let dec iv = function
         phiras = iv.phiras;
         thystame = iv.thystame
       }
-  | Mendiane            ->    
+  | Mendiane            ->
       {
         nourriture = iv.nourriture;
         linemate = iv.linemate;
@@ -158,7 +157,7 @@ let dec iv = function
         phiras = iv.phiras;
         thystame = iv.thystame
       }
-  | Phiras              ->          
+  | Phiras              ->
       {
         nourriture = iv.nourriture;
         linemate = iv.linemate;
@@ -220,7 +219,7 @@ let set iv nb = function
         phiras = iv.phiras;
         thystame = iv.thystame
       }
-  | Mendiane            ->    
+  | Mendiane            ->
       {
         nourriture = iv.nourriture;
         linemate = iv.linemate;
@@ -230,7 +229,7 @@ let set iv nb = function
         phiras = iv.phiras;
         thystame = iv.thystame
       }
-  | Phiras              ->          
+  | Phiras              ->
       {
         nourriture = iv.nourriture;
         linemate = iv.linemate;

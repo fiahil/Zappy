@@ -49,7 +49,7 @@ let _ = bat_re.(2) <- (Str.regexp "^ko\n", R_ko RP_empty)
 let _ = bat_re.(3) <- (Str.regexp "^message [0-8],.*\n", R_broadcast RP_empty)
 let _ = bat_re.(4) <- (Str.regexp "^deplacement [1357]\n", R_broadcast RP_empty)
 let _ = bat_re.(5) <- (Str.regexp "^elevation en cours\n", R_elevation RP_empty)
-let _ = bat_re.(6) <- (Str.regexp "^niveau actuel: [2-8]\n", R_end_incant RP_empty)
+let _ = bat_re.(6) <- (Str.regexp "^niveau actuel : [2-8]\n", R_end_incant RP_empty)
 let _ = bat_re.(7) <- (Str.regexp "^{nourriture [0-9]+,linemate [0-9]+,deraumere [0-9]+,sibur [0-9]+,mendiane [0-9]+,phiras [0-9]+,thystame [0-9]+}\n", R_inventaire RP_empty)
 let _ = bat_re.(8) <- (Str.regexp "^{\\(\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*,\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*\\)*}\n", R_voir RP_empty)
 let _ = bat_re.(9) <- (Str.regexp "^[0-9]+ [0-9]+\n", R_map_size RP_empty)
@@ -242,7 +242,9 @@ let punch v = function
 
 let match_me str =
   let rec aux str idx =
-    if idx = 10 then
+    if str = "mort" then
+      raise Exit
+    else if idx = 11 then
       failwith "Unmatched string"
     else if Str.string_match (fst bat_re.(idx)) str 0 then
       punch (fill str (snd bat_re.(idx))) idx
@@ -346,12 +348,9 @@ let init () =
   let aux = Unix.gettimeofday ()
   in
     begin
-      Printf.printf "--> ???\n";
       Socket.send "inventaire\n";
       pull Inventaire;
       timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0;
-      Printf.printf "--> T = %f\n" !timeout_t;
-      flush stdout
     end
 
 let push v =

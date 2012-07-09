@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:20:25 2012 ulric lefevre
-** Last update Fri Jul  6 16:18:01 2012 ulric lefevre
+** Last update Mon Jul  9 17:07:54 2012 ulric lefevre
 */
 
 #ifndef		__GRAPHIC_H__
@@ -34,12 +34,14 @@ void	monitor_graphic(t_graphic, t_data_serv, t_player);
 void	player_graphic(t_list *, t_player);
 void	incend_graphic(t_data_serv, t_incant);
 
+void	enw_general(t_list *, int, int, t_pos);
 void	ppo_general(t_list *, t_player);
 void	pin_general(t_list *, t_player);
 void	bct_general(t_list *, t_square, t_pos);
 void	plv_general(t_list *, int, int);
+void	pnw_general(t_list *, t_player);
 
-void	pnw(t_list *, t_player);
+void	pnw(t_graphic, t_player);
 void	ppo(t_graphic, t_player);
 void	plv(t_graphic, int, int);
 void	pin(t_graphic, t_player);
@@ -52,22 +54,22 @@ void	pdr(t_list *, int, int);
 void	pgt(t_list *, int, int);
 void	pdi(t_list *, int);
 
-void	sbp(t_list*);
-void	suc(t_list*);
-void	smg(t_list*, char const*);
-void	edi(t_list*, int);
-void	ebo(t_list*, int);
-void	eht(t_list*, int);
-void	enw(t_list*, int, int, t_pos);
+void	sbp(t_list *);
+void	suc(t_list *);
+void	smg(t_list *, char const*);
+void	edi(t_list *, int);
+void	ebo(t_list *, int);
+void	eht(t_list *, int);
+void	enw(t_graphic, int, int, t_pos);
 
 void	sgt(t_graphic, int);
 void	msz(t_graphic, size_t, size_t);
-void	tna(t_graphic, t_list*);
+void	tna(t_graphic, t_list *);
 void	bct(t_graphic, t_square, t_pos);
 void	bct_all(t_graphic, t_map);
 
-void	mn_push(t_list*, char*);
+void	mn_push(t_list *, char *);
 void	mn_out(t_list *);
-void	mn_rep(t_graphic, char*);
+void	mn_rep(t_graphic, char *);
 
 #endif		/* __GRAPHIC_H__ */

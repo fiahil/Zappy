@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Mon Jul  9 19:02:51 2012 ulric lefevre
+** Last update Mon Jul  9 19:19:34 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -87,17 +87,6 @@ t_bool		move_process(t_player this, char *data, t_data_serv info)
 static int	get_moved_dir(int bandit, int victim)
 {
   return (g_moved_dir[bandit * 4 + victim]);
-}
-
-int		cmp_noghost(void *data, size_t len)
-{
-  t_player	player;
-
-  (void)len;
-  player = *((t_player*)data);
-  if (player->cm.online && !player->dead)
-    return (1);
-  return (0);
 }
 
 t_bool		expulse_process(t_player this, char *data, t_data_serv info)

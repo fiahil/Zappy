@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Mon Jul  9 15:45:12 2012 ulric lefevre
+** Last update Mon Jul  9 17:42:25 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -15,6 +15,7 @@
 #include	<string.h>
 
 #include	"map.h"
+#include	"player.h"
 #include	"graphic.h"
 #include	"func_cmp.h"
 #include	"algorithm.h"
@@ -104,7 +105,7 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
   list_extract(players, ti);
   msgout_expulse(this, players->size ? TRUE : FALSE);
   pex(info->monitor, this->id);
-  while (players->size)
+  while (get_nb_player(map->map[this->pos.y][this->pos.x]))
     {
       p = list_front(players);
       do_move_process(*p, g_dir[this->dir][0],

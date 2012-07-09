@@ -26,10 +26,18 @@ void		delete_iter(t_iter *this, t_dtor dtor)
 
 void		delete_iters(t_iter *this, t_dtor dtor)
 {
+  t_iter	*it;
+
   if (this)
     {
-      if (this->next)
-	delete_iters(this->next, dtor);
-      delete_iter(this, dtor);
+      while (this)
+	{
+	  it = this->next;
+	  delete_iter(this, dtor);
+	  this = it;
+	}
+      /* if (this->next) */
+      /* 	delete_iters(this->next, dtor); */
+      /* delete_iter(this, dtor); */
     }
 }

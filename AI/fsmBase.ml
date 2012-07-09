@@ -7,17 +7,6 @@
 
 let view_lvl = [| 0; 2; 6; 12; 20; 30; 42; 56; 72 ; 1000 |]
 
-let piv = ref (Inventory.empty ())
-  (* { *)
-    (* nourriture = 0; *)
-    (* linemate = 0; *)
-    (* deraumere = 0; *)
-    (* sibur = 0; *)
-    (* mendiane = 0; *)
-    (* phiras = 0; *)
-    (* thystame = 0; *)
-  (* } *)
-
 let plvl = ref 1
 
 let set_lvl tab =
@@ -153,7 +142,7 @@ let gather rcs nb =
     | it ->
       begin
 	Bridge.push (Bridge.Prend rcs);
-	piv := (Inventory.inc !piv rcs);
+	PlayerInventory.piv := (Inventory.inc !PlayerInventory.piv rcs);
 	in_gather (it - 1)
       end
   in

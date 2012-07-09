@@ -22,19 +22,30 @@ let rec survival () =
 	if (FsmIncant.test_incant ()) then
 	  begin
 	    Bridge.push Bridge.Incantation;
-	    ignore (Unix.select [] [] [] 25.)
+	    ignore (Unix.select [] [] [] 30.)
 	  end
       end
   in
   action (FsmBase.find Inventory.Nourriture);
   Printf.printf "Test :: Un cycle and my lvl is %d\n" !FsmBase.plvl;
   Printf.printf "      : and my inventory is like = \n";
-  Printf.printf "      : - nourriture : %2d units\n" !FsmBase.piv.Inventory.nourriture;
-  Printf.printf "      : - linemate   : %2d units\n" !FsmBase.piv.Inventory.linemate;
-  Printf.printf "      : - deraumere  : %2d units\n" !FsmBase.piv.Inventory.deraumere;
-  Printf.printf "      : - sibur      : %2d units\n" !FsmBase.piv.Inventory.sibur;
-  Printf.printf "      : - mendiane   : %2d units\n" !FsmBase.piv.Inventory.mendiane;
-  Printf.printf "      : - phiras     : %2d units\n" !FsmBase.piv.Inventory.phiras;
-  Printf.printf "      : - thystame   : %2d units\n" !FsmBase.piv.Inventory.thystame;
+  Printf.printf "      : - nourriture : %2d units\n" !PlayerInventory.piv.Inventory.nourriture;
+  Printf.printf "      : - linemate   : %2d units\n" !PlayerInventory.piv.Inventory.linemate;
+  Printf.printf "      : - deraumere  : %2d units\n" !PlayerInventory.piv.Inventory.deraumere;
+  Printf.printf "      : - sibur      : %2d units\n" !PlayerInventory.piv.Inventory.sibur;
+  Printf.printf "      : - mendiane   : %2d units\n" !PlayerInventory.piv.Inventory.mendiane;
+  Printf.printf "      : - phiras     : %2d units\n" !PlayerInventory.piv.Inventory.phiras;
+  Printf.printf "      : - thystame   : %2d units\n" !PlayerInventory.piv.Inventory.thystame;
+  flush stdout;
+  PlayerInventory.valid ();
+  Printf.printf "New   :: Un cycle and my lvl is %d\n" !FsmBase.plvl;
+  Printf.printf "      : and my inventory is like = \n";
+  Printf.printf "      : - nourriture : %2d units\n" !PlayerInventory.piv.Inventory.nourriture;
+  Printf.printf "      : - linemate   : %2d units\n" !PlayerInventory.piv.Inventory.linemate;
+  Printf.printf "      : - deraumere  : %2d units\n" !PlayerInventory.piv.Inventory.deraumere;
+  Printf.printf "      : - sibur      : %2d units\n" !PlayerInventory.piv.Inventory.sibur;
+  Printf.printf "      : - mendiane   : %2d units\n" !PlayerInventory.piv.Inventory.mendiane;
+  Printf.printf "      : - phiras     : %2d units\n" !PlayerInventory.piv.Inventory.phiras;
+  Printf.printf "      : - thystame   : %2d units\n" !PlayerInventory.piv.Inventory.thystame;
   flush stdout;
   survival ()

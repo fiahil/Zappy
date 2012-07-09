@@ -5,11 +5,11 @@
 
 
 let to_lvl_two () =
-  if (!FsmBase.piv.Inventory.nourriture > 4) && (!FsmBase.piv.Inventory.linemate > 0) then
+  if (!PlayerInventory.piv.Inventory.nourriture > 4)
+    && (!PlayerInventory.piv.Inventory.linemate > 0) then
     begin
-      print_endline "Incantation authorized !";
       Bridge.push (Bridge.Pose Inventory.Linemate);
-      FsmBase.piv := (Inventory.dec !FsmBase.piv Inventory.Linemate);
+      PlayerInventory.piv := (Inventory.dec !PlayerInventory.piv Inventory.Linemate);
       true
     end
   else

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Wed Jul  4 12:15:33 2012 ulric lefevre
-** Last update Wed Jul  4 13:56:11 2012 ulric lefevre
+** Last update Mon Jul  9 19:03:57 2012 ulric lefevre
 */
 
 #include	<unistd.h>
@@ -15,7 +15,7 @@
 
 static int	g_current_id;
 
-t_bool		cmp_id(void *data, size_t len)
+int		cmp_id(void *data, size_t len)
 {
   t_player	player;
 

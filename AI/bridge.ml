@@ -349,7 +349,7 @@ let init () =
   in
     begin
       Socket.send "inventaire\n";
-      pull Inventaire;
+      PlayerInventory.valid (inventaire (pull Inventaire));
       timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0;
     end
 

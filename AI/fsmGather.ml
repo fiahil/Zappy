@@ -1,9 +1,9 @@
-(*
- * Busina
- * 07.07.2012
- *)
+ (*
+  * Busina
+  * 09.07.2012
+  *)
 
-let rec survival iv =
+let rec gather iv =
   let default = function
     | 0 -> Bridge.push Bridge.Avance
     | 1 -> Bridge.push Bridge.Droite
@@ -12,13 +12,13 @@ let rec survival iv =
   let action = function
     | -1 ->
       begin
-	default (Random.int 3);
-	Bridge.push Bridge.Avance
+        default (Random.int 3);
+        Bridge.push Bridge.Avance
       end
     | ps ->
       begin
-	FsmBase.move ps;
-	FsmBase.gather_all ()
+        FsmBase.move ps;
+        FsmBase.gather_all ()
       end
   in
-  action (FsmBase.find Inventory.Nourriture)
+  action (FsmBase.mineral_find iv)

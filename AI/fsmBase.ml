@@ -19,9 +19,9 @@ let set_lvl tab =
   aux tab 0
 
 (* Find function *)
-let find rcs =
-  Bridge.push (Bridge.Voir);
 
+
+let rcs_finder tab rcs =
   let nb_rcs tab id = function
     | Inventory.Nourriture -> tab.(id).Inventory.nourriture
     | Inventory.Linemate   -> tab.(id).Inventory.linemate
@@ -63,7 +63,25 @@ let find rcs =
     else
       test_ret tab idx (line_finder tab idx 0)
   in
-  in_find (Bridge.voir (Bridge.pull Bridge.Voir)) 0
+  in_find tab 0
+
+let mineral_find iv =
+  Bridge.push (Bridge.Voir);
+  let rec aux tab = function
+    | []        -> -1
+    | cur::next ->
+      let test_ret = function
+	| (-1) -> aux tab next
+	| othv -> othv
+      in
+      test_ret (rcs_finder tab cur)
+  in
+  aux (Bridge.voir (Bridge.pull Bridge.Voir)) iv
+
+
+let find rcs =
+  Bridge.push (Bridge.Voir);
+  rcs_finder (Bridge.voir (Bridge.pull Bridge.Voir)) rcs
 
 
 (* Move function *)

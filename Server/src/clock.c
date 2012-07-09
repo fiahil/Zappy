@@ -20,7 +20,7 @@ static const t_u_time_attrib g_time_attrib[] =
     {&right_process, 7.0},
     {&left_process, 7.0},
     {&look_process, 7.0},
-    {&inventory_process, 7.0},
+    {&inventory_process, 1.0},
     {&take_process, 7.0},
     {&drop_process, 7.0},
     {&expulse_process, 7.0},

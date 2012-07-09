@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:12:58 2012 ulric lefevre
-** Last update Fri Jul  6 16:35:51 2012 ulric lefevre
+** Last update Sun Jul  8 23:15:12 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -91,11 +91,13 @@ static void	first_contact(t_player *p, int nb_c, char *data)
   list_pop_front((*p)->cm.in);
 }
 
-t_bool		welcome_player(t_data_serv server, t_player player, char *data)
+t_bool		welcome_player(t_data_serv server, t_player player)
 {
   int		nb_client;
   t_iter	*ghost;
+  char		*data;
 
+  data = list_front(player->cm.in);
   if (data)
     {
       if ((nb_client = chk_team(server, data)) < 0)

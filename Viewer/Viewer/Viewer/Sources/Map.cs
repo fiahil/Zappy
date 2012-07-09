@@ -263,12 +263,34 @@ namespace Viewer.Sources
 
             for (i = 0; i < this.dim.X + 1; ++i, off.X += this.square.Width / 2, off.Y += this.square.Height / 2)
             {
-                for (j = (int)this.dim.Y - 1; j >= -1; --j)
+                /* Bord superieur droit de la map */
+                if (i != 0)
                 {
-                    p.X = j * (this.square.Width / 2) + (off.X) + this.square.X;
-                    p.Y = -j * (this.square.Height / 2) + (off.Y) + this.square.Y;
+                    p.X = ((int)this.dim.Y) * (this.square.Width / 2) + (off.X) + this.square.X;
+                    p.Y = -((int)this.dim.Y) * (this.square.Height / 2) + (off.Y) + this.square.Y;
+                    Rectangle tar2 = new Rectangle((int)(p.X - (int)(31 * (this.square.Width / 155.0))), (int)(p.Y - (int)(101 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                    if (this.screen.Intersects(tar2))
+                        this._wall[i % 2].Draw(this.sb, tar2);
+                }
 
-                    if (i != 0 && j != -1)
+                for (j = -1; j < (int)this.dim.Y + 1; ++j)
+                {
+                    /* Bord superieur gauche de la map */
+                    if (j >= 1 && i == 1)
+                    {
+                        p.X = -j * (this.square.Width / 2) + this.square.X + ((int)this.dim.Y) * (this.square.Width / 2);
+                        p.Y = j * (this.square.Height / 2) + this.square.Y - ((int)this.dim.Y) * (this.square.Height / 2);
+
+                        Rectangle tar = new Rectangle((int)(p.X - (int)(33 * (this.square.Width / 155.0))), (int)(p.Y - (int)(103 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
+                        if (this.screen.Intersects(tar))
+                            this._wall[2].Draw(this.sb, tar);
+                    }
+
+                    p.X = -j * (this.square.Width / 2) + (off.X) + this.square.X + ((int)this.dim.Y - 1) * (this.square.Width / 2);
+                    p.Y = j * (this.square.Height / 2) + (off.Y) + this.square.Y - ((int)this.dim.Y - 1) * (this.square.Height / 2);
+                    
+                    /* Draw des case*/
+                    if (i != 0 && j >= 0 && j < this.dim.Y)
                     {
                         Rectangle target = new Rectangle(p.X, p.Y, this.square.Width, this.square.Height);
 
@@ -290,8 +312,8 @@ namespace Viewer.Sources
                             inventory[6] = this.map[i - 1, j ].Inventory.thystame.ToString();
                         }
                     }
-
-                    if (j == -1)
+                    /* Bord inferieur gauche de la map*/
+                    if (j == this.dim.Y)
                     {
                         Rectangle tar =  new Rectangle((int)(p.X - (this.square.Width / 2) - (int)(34 * (this.square.Width / 155.0))), (int)(p.Y - (this.square.Height / 2) - (int)(0 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
                         if (i == 1 && this.screen.Intersects(tar))
@@ -300,28 +322,9 @@ namespace Viewer.Sources
                         if (i != 0 && this.screen.Intersects(tar))
                             this._wall[4].Draw(this.sb, tar);
                     }
-
-                    if (j != -1 && i == 1)
-                    {
-                        p.X = j * (this.square.Width / 2) + this.square.X;
-                        p.Y = -j * (this.square.Height / 2) + this.square.Y;
-
-                        Rectangle tar = new Rectangle((int)(p.X - (int)(33 * (this.square.Width / 155.0))), (int)(p.Y - (int)(103 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
-                        if (this.screen.Intersects(tar))
-                            this._wall[2].Draw(this.sb, tar);
-                    }
-                }
-                ++j;
-                if (i != 0)
-                {
-                    p.X = ((int)this.dim.Y - 1 - j) * (this.square.Width / 2) + (off.X) + this.square.X;
-                    p.Y = - ((int)this.dim.Y - 1 - j) * (this.square.Height / 2) + (off.Y) + this.square.Y;
-                    Rectangle tar2 = new Rectangle((int)(p.X - (int)(31 * (this.square.Width / 155.0))), (int)(p.Y - (int)(101 * (this.square.Height / 58.0))), (int)(factX), (int)(factY));
-                    if (this.screen.Intersects(tar2))
-                        this._wall[i % 2].Draw(this.sb, tar2);
                 }
             }
-
+            /* Bord inferieur droite de la map */
             for (j = (int)this.dim.Y; j >= 0; --j)
             {
                 p.X = j * (this.square.Width / 2) + (off.X) + this.square.X;

@@ -4,6 +4,7 @@
   *)
 
 val plvl : int ref
+val piv : Inventory.t ref
 
 (* find a resources with a "voir" instruction,
    return the offset of the resources in a pattern *)
@@ -21,5 +22,3 @@ val gather_all : unit -> unit
 
 (* gather all of the specified resources at the current position *)
 val gather_all_rcs : Inventory.resources -> unit
-
-val unitest : unit -> unit

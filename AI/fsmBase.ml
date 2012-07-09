@@ -7,6 +7,17 @@
 
 let view_lvl = [| 0; 2; 6; 12; 20; 30; 42; 56; 72 ; 1000 |]
 
+let piv = ref (Inventory.empty ())
+  (* { *)
+    (* nourriture = 0; *)
+    (* linemate = 0; *)
+    (* deraumere = 0; *)
+    (* sibur = 0; *)
+    (* mendiane = 0; *)
+    (* phiras = 0; *)
+    (* thystame = 0; *)
+  (* } *)
+
 let plvl = ref 1
 
 let set_lvl tab =
@@ -18,6 +29,7 @@ let set_lvl tab =
   in
   aux tab 0
 
+(* Find function *)
 let find rcs =
   Bridge.push (Bridge.Voir);
 
@@ -42,12 +54,8 @@ let find rcs =
     if (idxl > idx) then
       (-1)
     else
-      begin
-	Printf.printf "idx = %d et idxl = %d\n" idx idxl;
-	flush stdout;
-	test_line tab idx idxl
-	  (nb_rcs tab (view_lvl.(idx) + idxl) rcs, nb_rcs tab (view_lvl.(idx) - idxl) rcs)
-      end
+      test_line tab idx idxl
+	(nb_rcs tab (view_lvl.(idx) + idxl) rcs, nb_rcs tab (view_lvl.(idx) - idxl) rcs)
   in
   let rec in_find tab idx =
     let test_ret tab idx = function
@@ -68,6 +76,8 @@ let find rcs =
   in
   in_find (Bridge.voir (Bridge.pull Bridge.Voir)) 0
 
+
+(* Move function *)
 let move off =
   let rec forward = function
     | 0 -> ()
@@ -136,12 +146,14 @@ let move off =
   else
     ()
 
+(* Gather functions *)
 let gather rcs nb =
   let rec in_gather = function
     | 0 -> ()
     | it ->
       begin
 	Bridge.push (Bridge.Prend rcs);
+	piv := (Inventory.inc !piv rcs);
 	in_gather (it - 1)
       end
   in
@@ -172,13 +184,3 @@ let gather_all_rcs rcs =
     | Inventory.Thystame   -> gather Inventory.Thystame tab.(0).Inventory.thystame
   in
   aux (Bridge.voir (Bridge.pull Bridge.Voir)) rcs
-
-let rec unitest () =
-  gather_all_rcs Inventory.Nourriture;
-  gather Inventory.Linemate 1;
-  move 4;
-  gather_all_rcs Inventory.Nourriture;
-  move 12;
-  gather Inventory.Linemate 2;
-  gather_all_rcs Inventory.Nourriture;
-  unitest ()

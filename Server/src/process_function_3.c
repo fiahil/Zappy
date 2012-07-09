@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Mon Jul  9 17:42:25 2012 ulric lefevre
+** Last update Mon Jul  9 17:53:03 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -103,7 +103,8 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
   players = map->map[this->pos.y][this->pos.x]->players;
   ti = list_find_cmp(players, &cmp_player_list, this, sizeof(*this));
   list_extract(players, ti);
-  msgout_expulse(this, players->size ? TRUE : FALSE);
+  msgout_expulse(this, get_nb_player(map->map[this->pos.y][this->pos.x]) ?
+		 TRUE : FALSE);
   pex(info->monitor, this->id);
   while (get_nb_player(map->map[this->pos.y][this->pos.x]))
     {

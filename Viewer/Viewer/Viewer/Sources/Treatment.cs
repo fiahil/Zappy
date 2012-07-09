@@ -60,7 +60,7 @@ namespace Viewer.Sources
         private void msz(string[] a)
         {
             Vector2 dim = parent.Map.getSize();
-            if (dim.X != int.Parse(a[0]) && dim.Y != int.Parse(a[1]))
+            if (dim.X != int.Parse(a[0]) || dim.Y != int.Parse(a[1]))
             {
                 parent.Map.resizeMap(int.Parse(a[0]), int.Parse(a[1]));
             }

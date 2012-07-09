@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Sun Jul  8 15:18:02 2012 ulric lefevre
+** Last update Mon Jul  9 15:21:14 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -25,8 +25,8 @@ void		put_res(int val)
   t_data_serv	ds;
 
   last_val += val;
-  i = last_val / 300;
-  last_val %= 300;
+  i = last_val / 500;
+  last_val %= 500;
   map = get_map(NULL);
   ds = get_data_serv(NULL);
   while (i)
@@ -67,13 +67,13 @@ void		put_inv(t_inventory inv)
 
 static void	init_res_tab(int (*new)[])
 {
-  (*new)[FOOD] = 100;
-  (*new)[LINEMATE] = 18;
-  (*new)[DERAUMERE] = 16;
-  (*new)[SIBUR] = 20;
-  (*new)[MENDIANE] = 10;
-  (*new)[PHIRAS] = 12;
-  (*new)[THYSTAME] = 2;
+  (*new)[FOOD] = 30;
+  (*new)[LINEMATE] = 6;
+  (*new)[DERAUMERE] = 5;
+  (*new)[SIBUR] = 7;
+  (*new)[MENDIANE] = 3;
+  (*new)[PHIRAS] = 4;
+  (*new)[THYSTAME] = 0;
 }
 
 void		put_res_egg()

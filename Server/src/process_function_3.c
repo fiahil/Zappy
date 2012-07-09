@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Sun Jul  8 23:09:24 2012 ulric lefevre
+** Last update Mon Jul  9 15:45:12 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -52,6 +52,8 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
   t_u_pos	prec;
   t_iter	*tmp;
 
+  if (!this->cm.online)
+    return ;
   tmp = NULL;
   prec.x = this->pos.x;
   prec.y = this->pos.y;

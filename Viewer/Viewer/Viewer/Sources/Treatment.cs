@@ -87,8 +87,11 @@ namespace Viewer.Sources
             Player P;
 
             P = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
-            P.setPos(int.Parse(a[1]), int.Parse(a[2])).Dir = Player.convertDir(int.Parse(a[3]));
-            P.State = Player.States.IDLE;
+            if (P != null)
+            {
+                P.setPos(int.Parse(a[1]), int.Parse(a[2])).Dir = Player.convertDir(int.Parse(a[3]));
+                P.State = Player.States.IDLE;
+            }
         }
 
         private void plv(string[] a)
@@ -100,26 +103,35 @@ namespace Viewer.Sources
         private void pin(string[] a)
         {
             Player pl = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
-            pl.setPos(int.Parse(a[1]), int.Parse(a[2]));
-            pl.Inventory.nourriture    = uint.Parse(a[3]);
-            pl.Inventory.linemate      = uint.Parse(a[4]);
-            pl.Inventory.deraumere     = uint.Parse(a[5]);
-            pl.Inventory.sibur         = uint.Parse(a[6]);
-            pl.Inventory.mendiane      = uint.Parse(a[7]);
-            pl.Inventory.phiras        = uint.Parse(a[8]);
-            pl.Inventory.thystame      = uint.Parse(a[9]);
+            if (pl != null)
+            {
+                pl.setPos(int.Parse(a[1]), int.Parse(a[2]));
+                pl.Inventory.nourriture = uint.Parse(a[3]);
+                pl.Inventory.linemate = uint.Parse(a[4]);
+                pl.Inventory.deraumere = uint.Parse(a[5]);
+                pl.Inventory.sibur = uint.Parse(a[6]);
+                pl.Inventory.mendiane = uint.Parse(a[7]);
+                pl.Inventory.phiras = uint.Parse(a[8]);
+                pl.Inventory.thystame = uint.Parse(a[9]);
+            }
         }
 
         private void pex(string[] a)
         {
             Player P = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
-            P.State = Player.States.EXPULSE;
+            if (P != null)
+            {
+                P.State = Player.States.EXPULSE;
+            }
         }
 
         private void pbc(string[] a)
         {
             Player P = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
-            P.setBroadcast(a[1]);
+            if (P != null)
+            {
+                P.setBroadcast(a[1]);
+            }
         }
 
         private void pic(string[] a)
@@ -127,7 +139,10 @@ namespace Viewer.Sources
             foreach (string s in a.Skip(3))
             {
                 Player P = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(s); });
-                P.State = Player.States.INCANT;
+                if (P != null)
+                {
+                    P.State = Player.States.INCANT;
+                }
             }
         }
 
@@ -141,25 +156,37 @@ namespace Viewer.Sources
         private void pfk(string[] a)
         {
             Player P = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
-            P.State = Player.States.FORK;
+            if (P != null)
+            {
+                P.State = Player.States.FORK;
+            }
         }
 
         private void pdr(string[] a)
         {
             Player P = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
-            P.State = Player.States.DROP;
+            if (parent != null)
+            {
+                P.State = Player.States.DROP;
+            }
         }
 
         private void pgt(string[] a)
         {
             Player P = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
-            P.State = Player.States.TAKE;
+            if (P != null)
+            {
+                P.State = Player.States.TAKE;
+            }
         }
 
         private void pdi(string[] a)
         {
             Player P = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
-            P.State = Player.States.DEAD;
+            if (P != null)
+            {
+                P.State = Player.States.DEAD;
+            }
         }
 
         private void enw(string[] a)
@@ -170,19 +197,28 @@ namespace Viewer.Sources
         private void eht(string[] a)
         {
             Egg P = parent.Eggs.Find(delegate(Egg e) { return e.Id == int.Parse(a[0]); });
-            P.State = Egg.States.BROKE;
+            if (P != null)
+            {
+                P.State = Egg.States.BROKE;
+            }
         }
 
         private void ebo(string[] a)
         {
             Egg P = parent.Eggs.Find(delegate(Egg e) { return e.Id == int.Parse(a[0]); });
-            P.State = Egg.States.BORN;
+            if (P != null)
+            {
+                P.State = Egg.States.BORN;
+            }
         }
 
         private void edi(string[] a)
         {
             Egg P = parent.Eggs.Find(delegate(Egg e) { return e.Id == int.Parse(a[0]); });
-            P.State = Egg.States.DEAD;
+            if (P != null)
+            {
+                P.State = Egg.States.DEAD;
+            }
         }
 
         private void sgt(string[] a)

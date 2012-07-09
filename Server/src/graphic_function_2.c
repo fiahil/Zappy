@@ -35,6 +35,25 @@ void		pnw(t_list *mn, t_player play)
     }
 }
 
+void		pnw2(t_graphic mn, t_player play)
+{
+  char		*str;
+
+  str = NULL;
+  if (play->cm.online)
+    {
+      asprintf(&str, "pnw %d %d %d %d %d %s\n",
+	       play->id,
+	       play->pos.x,
+	       play->pos.y,
+	       play->dir + 1,
+	       play->lvl,
+	       play->team);
+      mn_rep(mn, str);
+      free(str);
+    }
+}
+
 void		ppo(t_graphic mn, t_player play)
 {
   char		*str;

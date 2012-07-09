@@ -57,6 +57,16 @@ void		enw(t_list *mn, int egg, int player, t_pos p)
   free(str);
 }
 
+void		enw2(t_graphic mn, int egg, int player, t_pos p)
+{
+  char		*str;
+
+  str = NULL;
+  asprintf(&str, "enw %d %d %d %d\n", egg, player, p->x, p->y);
+  mn_rep(mn, str);
+  free(str);
+}
+
 void		pdi(t_list *mn, int id)
 {
   char	*str;

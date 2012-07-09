@@ -56,6 +56,11 @@ val pull : command -> response
 val dr : response -> response_param
 
 (*
+ * Set timeout
+ *)
+val init : unit -> unit
+
+(*
  * Return params within a type
  *)
 val voir : response -> Inventory.t array

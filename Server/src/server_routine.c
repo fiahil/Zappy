@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:01 2012 ulric lefevre
-** Last update Sun Jul  8 23:18:51 2012 ulric lefevre
+** Last update Mon Jul  9 14:56:48 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -126,6 +126,9 @@ void		server_routine_output(t_data_serv ds, t_player this)
     close(this->cm.sock.fd);
     this->cm.sock.fd = -1;
     select_del(ds, this->cm.sock.fd);
+    if (this->team && this->cm.online)
+      ++(((t_team)(list_find_cmp(ds->teams,
+				 &cmp_team, this->team, 0))->data)->remaining);
     this->cm.online = FALSE;
   }
 }

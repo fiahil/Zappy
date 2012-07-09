@@ -40,6 +40,7 @@ type response =
   | R_inventaire of response_param
   | R_voir of response_param
 
+let timeout_t = ref 0.0
 let bat_re = Array.make 10 (Str.regexp ".*", R_ko RP_empty)
 
 let _ = bat_re.(0) <- (Str.regexp "^[0-9]+\n", R_connect_nbr RP_empty)
@@ -52,40 +53,6 @@ let _ = bat_re.(6) <- (Str.regexp "^niveau actuel : [2-8]\n", R_end_incant RP_em
 let _ = bat_re.(7) <- (Str.regexp "^{nourriture [0-9]+,linemate [0-9]+,deraumere [0-9]+,sibur [0-9]+,mendiane [0-9]+,phiras [0-9]+,thystame [0-9]+}\n", R_inventaire RP_empty)
 let _ = bat_re.(8) <- (Str.regexp "^{\\(\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*,\\( \\(\\bjoueur\\b\\|\\bnourriture\\b\\|\\blinemate\\b\\|\\bderaumere\\b\\|\\bsibur\\b\\|\\bmendiane\\b\\|\\bphiras\\b\\|\\bthystame\\b\\)\\)*\\)*}\n", R_voir RP_empty)
 let _ = bat_re.(9) <- (Str.regexp "^[0-9]+ [0-9]+\n", R_map_size RP_empty)
-
-let push v = 
-  let aux = function
-    | Connect_nbr         -> Socket.send "connect_nbr\n"
-    | Voir                -> Socket.send "voir\n"
-    | Inventaire          -> Socket.send "inventaire\n"
-    | Expulse             -> Socket.send "expulse\n"
-    | Gauche              -> Socket.send "gauche\n"
-    | Droite              -> Socket.send "droite\n"
-    | Avance              -> Socket.send "avance\n"
-    | Fork                -> Socket.send "fork\n"
-    | Incantation         -> Socket.send "incantation\n"
-    | Broadcast value     -> Socket.send ("broadcast " ^ value ^ "\n")
-    | Prend Inventory.Nourriture    -> Socket.send "prend nourriture\n"
-    | Prend Inventory.Linemate      -> Socket.send "prend linemate\n"
-    | Prend Inventory.Deraumere     -> Socket.send "prend deraumere\n"
-    | Prend Inventory.Sibur         -> Socket.send "prend sibur\n"
-    | Prend Inventory.Mendiane      -> Socket.send "prend mendiane\n"
-    | Prend Inventory.Phiras        -> Socket.send "prend phiras\n"
-    | Prend Inventory.Thystame      -> Socket.send "prend thystame\n"
-    | Pose Inventory.Nourriture     -> Socket.send "pose nourriture\n"
-    | Pose Inventory.Linemate       -> Socket.send "pose linemate\n"
-    | Pose Inventory.Deraumere      -> Socket.send "pose deraumere\n"
-    | Pose Inventory.Sibur          -> Socket.send "pose sibur\n"
-    | Pose Inventory.Mendiane       -> Socket.send "pose mendiane\n"
-    | Pose Inventory.Phiras         -> Socket.send "pose phiras\n"
-    | Pose Inventory.Thystame       -> Socket.send "pose thystame\n"
-    | Team value          -> Socket.send (value ^ "\n")
-  in
-  begin
-    aux v;
-    Unix.select [] [] [] 0.5; (* TODO *)
-    ()
-  end
 
 let voir_cmd str =
   let rec re = Str.regexp "[{}, ]"
@@ -275,7 +242,9 @@ let punch v = function
 
 let match_me str =
   let rec aux str idx =
-    if idx = 10 then
+    if str = "mort" then
+      raise Exit
+    else if idx = 11 then
       failwith "Unmatched string"
     else if Str.string_match (fst bat_re.(idx)) str 0 then
       punch (fill str (snd bat_re.(idx))) idx
@@ -375,6 +344,53 @@ let pull = function
   | Pose t              -> gather (Pose t)
   | Team t              -> gather (Team t)
 
+let init () =
+  let aux = Unix.gettimeofday ()
+  in
+    begin
+      Socket.send "inventaire\n";
+      pull Inventaire;
+      timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0;
+    end
+
+let push v =
+  let is_not_team = function
+    | Team _    -> false
+    | _         -> true
+  in
+  let aux = function
+    | Connect_nbr         -> Socket.send "connect_nbr\n"; 0.0
+    | Voir                -> Socket.send "voir\n"; 7.0
+    | Inventaire          -> Socket.send "inventaire\n"; 1.0
+    | Expulse             -> Socket.send "expulse\n"; 7.0
+    | Gauche              -> Socket.send "gauche\n"; 7.0
+    | Droite              -> Socket.send "droite\n"; 7.0
+    | Avance              -> Socket.send "avance\n"; 7.0
+    | Fork                -> Socket.send "fork\n"; 42.0
+    | Incantation         -> Socket.send "incantation\n"; 300.0
+    | Broadcast value     -> Socket.send ("broadcast " ^ value ^ "\n"); 7.0
+    | Prend Inventory.Nourriture    -> Socket.send "prend nourriture\n"; 7.0
+    | Prend Inventory.Linemate      -> Socket.send "prend linemate\n"; 7.0
+    | Prend Inventory.Deraumere     -> Socket.send "prend deraumere\n"; 7.0
+    | Prend Inventory.Sibur         -> Socket.send "prend sibur\n"; 7.0
+    | Prend Inventory.Mendiane      -> Socket.send "prend mendiane\n"; 7.0
+    | Prend Inventory.Phiras        -> Socket.send "prend phiras\n"; 7.0
+    | Prend Inventory.Thystame      -> Socket.send "prend thystame\n"; 7.0
+    | Pose Inventory.Nourriture     -> Socket.send "pose nourriture\n"; 7.0
+    | Pose Inventory.Linemate       -> Socket.send "pose linemate\n"; 7.0
+    | Pose Inventory.Deraumere      -> Socket.send "pose deraumere\n"; 7.0
+    | Pose Inventory.Sibur          -> Socket.send "pose sibur\n"; 7.0
+    | Pose Inventory.Mendiane       -> Socket.send "pose mendiane\n"; 7.0
+    | Pose Inventory.Phiras         -> Socket.send "pose phiras\n"; 7.0
+    | Pose Inventory.Thystame       -> Socket.send "pose thystame\n"; 7.0
+    | Team value          -> Socket.send (value ^ "\n"); 0.0
+  in
+    begin
+      (if !timeout_t = 0.0 && is_not_team v then
+         init ());
+      ignore (Unix.select [] [] [] (!timeout_t *. aux v))
+    end
+
 (*
  * Unitest
  *)
@@ -393,7 +409,7 @@ let unitest () =
       end
     in print_iv ((voir bat).(0))
   and
-      inventory bat =
+         inventory bat =
     let rec print_iv bat =
       begin
         Printf.printf " = Inventaire = \n";
@@ -407,7 +423,7 @@ let unitest () =
       end
     in print_iv (inventaire bat)
   and
-      mapSize (x, y) =
+         mapSize (x, y) =
     begin
       Printf.printf " = Map Size = \n";
       Printf.printf "%d %d\n" x y
@@ -415,7 +431,7 @@ let unitest () =
   and
       pok _ = Printf.printf " = OK BBQ = \n"
   and
-      connection cn =
+                connection cn =
     begin
       Printf.printf " = Connect nbr = \n";
       Printf.printf "%d\n" cn
@@ -426,6 +442,19 @@ let unitest () =
       push (Team "Poney");
       push (Voir);
       push (Inventaire);
+      print_endline "== 1";
+      push (Voir);
+      push (Inventaire);
+      print_endline "== 2";
+      push (Voir);
+      push (Inventaire);
+      print_endline "== 3";
+      push (Voir);
+      push (Inventaire);
+      print_endline "== 4";
+      push (Voir);
+      push (Inventaire);
+      print_endline "== 5";
       push (Avance);
       inventory (pull Inventaire);
       see (pull Voir);

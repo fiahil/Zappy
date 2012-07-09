@@ -1,11 +1,11 @@
 /*
-** func_cmp.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
+** func_cmp_1.c for zappy_bibicy in /home/lefevr_u/GIT/zappy/Zappy/Server
 ** 
 ** Made by ulric lefevre
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:49:18 2012 ulric lefevre
-** Last update Fri Jul  6 19:17:57 2012 ulric lefevre
+** Last update Mon Jul  9 19:19:28 2012 ulric lefevre
 */
 
 #include	<stdio.h>

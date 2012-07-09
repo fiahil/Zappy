@@ -107,23 +107,6 @@ namespace Viewer.Sources
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
             this.graphics.ApplyChanges();
-
-            /*
-            this.elist.Add(new Egg(this.Content, 0, 2, 2));
-
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist.Add(new Player(this.Content, 0)); //TO REMOVE
-            this.plist[0].setPos(2, 2);
-            this.plist[2].setPos(1, 2);
-            this.plist[3].setPos(2, 0);
-
-            this.plist[0].setBroadcast("bite");
-            this.plist[1].setBroadcast("bite");
-            this.plist[2].setBroadcast("bite");
-            this.plist[3].setBroadcast("bite");
-            */
         }
 
         /// <summary>
@@ -179,8 +162,8 @@ namespace Viewer.Sources
                     off.X = (elt.getPos().X + 1) * (this.map.getSquare().Width / 2);
                     off.Y = (elt.getPos().X) * (this.map.getSquare().Height / 2);
 
-                    p.X = elt.getPos().Y * (this.map.getSquare().Width / 2) + off.X + this.map.getSquare().X;
-                    p.Y = -elt.getPos().Y * (this.map.getSquare().Height / 2) + off.Y + this.map.getSquare().Y;
+                    p.X = ((int)this.map.getSize().Y - elt.getPos().Y - 1) * (this.map.getSquare().Width / 2) + off.X + this.map.getSquare().X;
+                    p.Y = -((int)this.map.getSize().Y - elt.getPos().Y - 1) * (this.map.getSquare().Height / 2) + off.Y + this.map.getSquare().Y;
 
                     Rectangle bound = new Rectangle((int)(p.X + (int)(42 * (this.map.getSquare().Width / 155.0))), (int)(p.Y - (int)(19 * (this.map.getSquare().Height / 58.0))), (int)(elt.getBounds().Width * (this.map.getSquare().Width / 155.0)), (int)(elt.getBounds().Height * (this.map.getSquare().Height / 58.0)));
 

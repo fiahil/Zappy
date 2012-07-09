@@ -10,13 +10,18 @@ NAME	=	drone
 ML	=	socket.ml	\
 		inventory.ml	\
 		bridge.ml	\
+		mapSize.ml	\
 		fsmBase.ml	\
+		fsmIncant.ml	\
+		fsmSurvival.ml	\
 		main.ml
 
 MLI	=	socket.mli	\
 		inventory.mli	\
 		bridge.mli	\
-		fsmBase.mli
+		fsmBase.mli	\
+		fsmIncant.mli	\
+		fsmSurvival.mli
 
 CMO	=	$(ML:.ml=.cmo)
 

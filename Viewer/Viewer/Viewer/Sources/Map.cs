@@ -211,13 +211,13 @@ namespace Viewer.Sources
                 {
                     for (int j = 0; j < this.dim.Y; ++j)
                     {
-                        if (this.map[i, j].isInPolygon(pos, this.square))
+                        if (this.map[i, j].isInPolygon(pos, this.square, this))
                         {
                             this.square_details_on = true;
                             this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
                             this.map[this.square_details_pos.X, this.square_details_pos.Y].Selected = false;
-                            this.map[j, i].Selected = true;
-                            this.square_details_pos = new Point(j, i);
+                            this.map[i, j].Selected = true;
+                            this.square_details_pos = new Point(i, j);
                             ((Main)this.Game).unplug();
                         }
                     }

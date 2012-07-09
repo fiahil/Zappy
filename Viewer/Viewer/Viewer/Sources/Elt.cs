@@ -70,9 +70,10 @@ namespace Viewer.Sources
             this.selected = false;
         }
 
-        public bool isInPolygon(Vector2 p, Rectangle square)
+        public bool isInPolygon(Vector2 p, Rectangle square, Map map)
         {
-            Vector2 pos = new Vector2(this.p.X * (square.Width / 2) + ((this.p.Y + 1) * (square.Width / 2)), -this.p.X * (square.Height / 2) + ((this.p.Y + 1) * (square.Height / 2)));
+            Vector2 pos = new Vector2(-(this.p.Y - 1) * (square.Width / 2) + square.X + ((this.p.X - 2) * (square.Width / 2)) + (map.getSize().Y) * (square.Width / 2),
+                                      (this.p.Y - 1) * (square.Height / 2) + square.Y + ((this.p.X - 2) * (square.Height / 2)) - (map.getSize().Y) * (square.Height / 2));
             Polygon target = new Polygon(new Vector2[]
                 {
                     new Vector2((square.X + pos.X) + square.Width / 2, (square.Y + pos.Y)),

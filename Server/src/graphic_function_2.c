@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:30 2012 ulric lefevre
-** Last update Fri Jul  6 13:08:35 2012 ulric lefevre
+** Last update Mon Jul  9 17:05:32 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -16,26 +16,7 @@
 #include	"def.h"
 #include	"graphic.h"
 
-void		pnw(t_list *mn, t_player play)
-{
-  char		*str;
-
-  str = NULL;
-  if (play->cm.online)
-    {
-      asprintf(&str, "pnw %d %d %d %d %d %s\n",
-	       play->id,
-	       play->pos.x,
-	       play->pos.y,
-	       play->dir + 1,
-	       play->lvl,
-	       play->team);
-      mn_push(mn, str);
-      free(str);
-    }
-}
-
-void		pnw2(t_graphic mn, t_player play)
+void		pnw(t_graphic mn, t_player play)
 {
   char		*str;
 

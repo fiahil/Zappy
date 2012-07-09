@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:22 2012 ulric lefevre
-** Last update Fri Jul  6 13:08:28 2012 ulric lefevre
+** Last update Mon Jul  9 17:05:07 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -47,17 +47,7 @@ void            eht(t_list *mn, int id)
   free(str);
 }
 
-void		enw(t_list *mn, int egg, int player, t_pos p)
-{
-  char		*str;
-
-  str = NULL;
-  asprintf(&str, "enw %d %d %d %d\n", egg, player, p->x, p->y);
-  mn_push(mn, str);
-  free(str);
-}
-
-void		enw2(t_graphic mn, int egg, int player, t_pos p)
+void		enw(t_graphic mn, int egg, int player, t_pos p)
 {
   char		*str;
 

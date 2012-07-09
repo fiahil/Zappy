@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Wed Jul  4 12:18:31 2012 ulric lefevre
-** Last update Sat Jul  7 12:06:56 2012 ulric lefevre
+** Last update Mon Jul  9 17:12:55 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -31,13 +31,13 @@ void		monitor_graphic(t_graphic mn, t_data_serv ds, t_player p)
   while (it)
     {
       if ((*(t_player*)it->data)->welcome)
-	  pnw2(mn, (*(t_player*)it->data));
+	  pnw(mn, (*(t_player*)it->data));
       it = it->next;
     }
   it2 = ds->egg->head;
   while (it2)
     {
-      enw2(mn, ((t_egg)it2->data)->id,
+      enw(mn, ((t_egg)it2->data)->id,
 	  p->lvl, &((t_egg)it2->data)->fetus->pos);
       it2 = it2->next;
     }
@@ -47,7 +47,7 @@ void		player_graphic(t_list *mn, t_player this)
 {
   if (this->egg >= 0)
     ebo(mn, this->egg);
-  pnw(mn, this);
+  pnw_general(mn, this);
 }
 
 void		incend_graphic(t_data_serv ds, t_incant inc)

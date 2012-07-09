@@ -5,7 +5,7 @@
 ## Login   <lefevr_u@epitech.net>
 ## 
 ## Started on  Tue Jul  3 13:29:53 2012 ulric lefevre
-## Last update Sun Jul  8 20:13:36 2012 ulric lefevre
+## Last update Mon Jul  9 17:10:35 2012 ulric lefevre
 ##
 
 NAME	=	zappy
@@ -32,7 +32,8 @@ SRC	=	src/broadcast.c			\
 		src/graphic_function_4.c	\
 		src/graphic_function_5.c	\
 		src/graphic_function_6.c	\
-		src/graphic_function_all.c	\
+		src/graphic_function_all_1.c	\
+		src/graphic_function_all_2.c	\
 		src/graphic_process_1.c		\
 		src/graphic_process_2.c		\
 		src/graphic_process_3.c		\

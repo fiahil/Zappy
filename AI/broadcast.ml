@@ -5,45 +5,40 @@
 
 type t =
   | Hel
-  | Icq
-  | Icr
-  | Ici
-  | Ica
-  | Icl
-  | Icz
+  | Icq of (string * int)
+  | Icr of (string * int * bool)
+  | Ici of (string * list int)
+  | Ica of string
+  | Icl of string
+  | Icz of string
 
 let hash_team = ref ""
 
-let hash team =
-  let aux team =
-    if !hash_team = "" then
-      print_endline "KOUKOU";
-      print_endline (Digest.string team)
+let autohash team =
+  hash_team := Digest.to_hex (Digest.string team)
+
+let melt = function
+  | Hel                 -> "Hello world"
+  | Icq id, lvl         -> id ^ " " ^ (string_of_int lvl)
+  | Icr id, pid, b      -> id ^ " " ^ (string_of_int pid) ^ " " ^ (string_of_bool b)
+  | Ici id, l           -> id ^ " " ^ " TODO "
+  | Ica id              -> id
+  | Icl id              -> id
+  | Icz id              -> id
+
+let bc m =
+  let aux = !hash_team ^ "--"
   in
-  begin
-    aux team;
-    !hash_team
-  end
-
-let melt () =
-  begin
-    print_endline (hash !Main.team);
-    hash !Main.team
-  end
-
-let bc = function
-  | Hel         -> Bridge.push (Bridge.Broadcast ((melt ()) ^ "\n"))
-  | _           -> Bridge.push (Bridge.Broadcast "YOUHOU PETIT PONEY!")
+  Bridge.push (Bridge.Broadcast (aux ^ (melt m)))
 
 (*
  * Unitest
  *)
-let _ =
-  let _ = Socket.connect "127.0.0.1" 4242
-  in
-  let _ = Main.team := "Poney"
-  in
-  let _ = Bridge.push (Bridge.Team !Main.team)
-  in
+let unitest () =
   bc Hel;
-  Bridge.pull (Bridge.Broadcast "")
+  bc Hel;
+  bc Hel;
+  bc Hel;
+  bc Hel;
+  ignore (Bridge.pull (Bridge.Broadcast "PLOP"));
+  ()

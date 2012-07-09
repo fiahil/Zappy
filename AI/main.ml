@@ -37,11 +37,14 @@ let main () =
         Socket.connect !host !port;
         Bridge.push (Bridge.Team !team);
 	MapSize.storage ();
-	Random.self_init ();
-	FsmSurvival.survival ()
+        Random.self_init ();
+        Broadcast.autohash !team;
+        Broadcast.unitest ()
+	(* FsmSurvival.survival () *)
       end
     with
       | Invalid_argument v      -> prerr_endline v
 (*    | _                       -> prerr_endline "BOUM BOUM BOUM" *)
 
-(*let _ = main () *)
+let _ = main ()
+ 

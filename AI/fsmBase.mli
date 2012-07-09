@@ -4,7 +4,8 @@
   *)
 
 val plvl : int ref
-val piv : Inventory.t ref
+
+val mineral_find : Inventory.resources list -> int
 
 (* find a resources with a "voir" instruction,
    return the offset of the resources in a pattern *)

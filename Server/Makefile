@@ -5,7 +5,7 @@
 ## Login   <lefevr_u@epitech.net>
 ## 
 ## Started on  Tue Jul  3 13:29:53 2012 ulric lefevre
-## Last update Tue Jul 10 14:48:59 2012 ulric lefevre
+## Last update Tue Jul 10 19:51:17 2012 ulric lefevre
 ##
 
 NAME	=	zappy
@@ -88,7 +88,7 @@ CC	=	gcc
 
 RM	=	rm -f
 
-CFLAGS	=	-Wall -Wextra -g -O3 $(INCLUDES)
+CFLAGS	=	-Wall -Wextra -O3 $(INCLUDES)
 
 LDFLAGS	=	-L./lists/ -lclists -lm
 

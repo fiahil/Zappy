@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Tue Jul 10 19:44:21 2012 ulric lefevre
+** Last update Tue Jul 10 19:52:13 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -26,8 +26,8 @@ void		put_res(int val)
 
   ds = get_data_serv(NULL);
   last_val += val;
-  i = last_val / (200 / ds->player->size);
-  last_val %= (200 / ds->player->size);
+  i = last_val / (200 / (ds->player->size + 1));
+  last_val %= (200 / (ds->player->size + 1));
   map = get_map(NULL);
   while (i)
     {

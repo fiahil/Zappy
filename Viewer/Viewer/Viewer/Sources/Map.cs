@@ -160,6 +160,14 @@ namespace Viewer.Sources
             base.Initialize();
         }
 
+        bool getPadCap(Vector2 t)
+        {
+            GamePadCapabilities p = GamePad.GetCapabilities(PlayerIndex.One);
+            if (p.HasLeftXThumbStick && p.HasLeftYThumbStick)
+                return (GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X >= t.X && GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y >= t.Y);
+            return false;
+        }
+        
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -175,28 +183,28 @@ namespace Viewer.Sources
                     this.clouds[i].X += 1;
             }
 
-            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up)) && (this.view > 50 || this.edge[1]) && this.Vrep <= gameTime.TotalGameTime)
+            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadUp)) && (this.view > 50 || this.edge[1]) && this.Vrep <= gameTime.TotalGameTime)
             {
                 this.square.Y += 20;
                 this.Vrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
                 this.edge[1] = false;
                 this.edge[2] = true;
             }
-            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) && (this.view > 50 || this.edge[2]) && this.Vrep <= gameTime.TotalGameTime)
+            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadDown)) && (this.view > 50 || this.edge[2]) && this.Vrep <= gameTime.TotalGameTime)
             {
                 this.square.Y -= 20;
                 this.Vrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
                 this.edge[1] = true;
                 this.edge[2] = false;
             }
-            if ((Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left)) && (this.view > 50 || this.edge[0]) && this.Hrep <= gameTime.TotalGameTime)
+            if ((Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadLeft)) && (this.view > 50 || this.edge[0]) && this.Hrep <= gameTime.TotalGameTime)
             {
                 this.square.X += 20;
                 this.Hrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
                 this.edge[3] = true;
                 this.edge[0] = false;
             }
-            if ((Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right)) && (this.view > 50 || this.edge[3]) && this.Hrep <= gameTime.TotalGameTime)
+            if ((Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadRight)) && (this.view > 50 || this.edge[3]) && this.Hrep <= gameTime.TotalGameTime)
             {
                 this.square.X -= 20;
                 this.Hrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
@@ -204,14 +212,15 @@ namespace Viewer.Sources
                 this.edge[0] = true;
             }
 
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A))
             {
-                Vector2 pos = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+                if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    ((Main)this.Game).Dot = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
                 for (int i = 0; i < this.dim.X; ++i)
                 {
                     for (int j = 0; j < this.dim.Y; ++j)
                     {
-                        if (this.map[i, j].isInPolygon(pos, this.square, this))
+                        if (this.map[i, j].isInPolygon(new Vector2(((Main)this.Game).Dot.X, ((Main)this.Game).Dot.Y), this.square, this))
                         {
                             this.square_details_on = true;
                             this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(10);

@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:19 2012 ulric lefevre
-** Last update Mon Jul  9 17:53:03 2012 ulric lefevre
+** Last update Mon Jul  9 19:19:34 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -16,6 +16,7 @@
 
 #include	"map.h"
 #include	"player.h"
+#include	"c_lists.h"
 #include	"graphic.h"
 #include	"func_cmp.h"
 #include	"algorithm.h"
@@ -53,8 +54,6 @@ static void	do_move_process(t_player this, int coef_x, int coef_y)
   t_u_pos	prec;
   t_iter	*tmp;
 
-  if (!this->cm.online)
-    return ;
   tmp = NULL;
   prec.x = this->pos.x;
   prec.y = this->pos.y;
@@ -94,6 +93,7 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
 {
   t_list	*players;
   t_iter	*ti;
+  t_iter	*it;
   t_player	*p;
   t_map		map;
 
@@ -108,7 +108,8 @@ t_bool		expulse_process(t_player this, char *data, t_data_serv info)
   pex(info->monitor, this->id);
   while (get_nb_player(map->map[this->pos.y][this->pos.x]))
     {
-      p = list_front(players);
+      it = list_find_if(players, &cmp_noghost);
+      p = ((t_player*)it->data);
       do_move_process(*p, g_dir[this->dir][0],
 		      g_dir[this->dir][1]);
       msgout_moved(*p, get_moved_dir(this->dir, (*p)->dir));

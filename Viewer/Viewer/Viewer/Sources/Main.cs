@@ -50,8 +50,15 @@ namespace Viewer.Sources
             this.screen = new Rectangle(0, 0, 1280, 720);
             this.inventory_details = null;
             this.inventory_timer = TimeSpan.Zero;
-         }
+            this.dot = new Vector2(640, 360);
+        }
 
+        Vector2 dot;
+        public Vector2 Dot
+        {
+            set { dot = value; }
+            get { return dot; }
+        }
         public void unplug()
         {
             this.inventory_details = null;
@@ -152,14 +159,20 @@ namespace Viewer.Sources
 
             base.Update(gameTime);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || !server.IsConnected())
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || !server.IsConnected() || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Y))
                 this.Exit();
+
+            Vector2 test = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left * 5;
+
+            this.dot.X += test.X;
+            this.dot.Y -= test.Y;
 
             this.plist.RemoveAll(delegate(Player p) { return p.State == Player.States.FINISHED; });
 
-            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+            if (Mouse.GetState().RightButton == ButtonState.Pressed || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.B))
             {
-                Point ppmouse = new Point(Mouse.GetState().X, Mouse.GetState().Y);
+                if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                    this.dot = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
                 foreach (Player elt in this.plist)
                 {
                     Point p;
@@ -174,7 +187,7 @@ namespace Viewer.Sources
 
                     Rectangle bound = new Rectangle((int)(p.X + (int)(42 * (this.map.getSquare().Width / 155.0))), (int)(p.Y - (int)(19 * (this.map.getSquare().Height / 58.0))), (int)(elt.getBounds().Width * (this.map.getSquare().Width / 155.0)), (int)(elt.getBounds().Height * (this.map.getSquare().Height / 58.0)));
 
-                    if (bound.Contains(ppmouse))
+                    if (bound.Contains(new Point((int)this.dot.X, (int)this.dot.Y)))
                     {
                         this.inventory_details = elt;
                         this.inventory_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(10);
@@ -256,6 +269,7 @@ namespace Viewer.Sources
                 this.spriteBatch.DrawString(this.sf, this.map.Inventory[5], new Vector2(1200, 380), Color.Black);
                 this.spriteBatch.DrawString(this.sf, this.map.Inventory[6], new Vector2(1200, 440), Color.Black);
             }
+            sm.GetSprite("Level/level_1").Draw(this.spriteBatch, new Rectangle((int)(dot.X - 50), (int)(dot.Y), 100, 100));
             this.spriteBatch.End();
         }
     }

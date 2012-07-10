@@ -223,11 +223,10 @@ namespace Viewer.Sources
                         if (this.map[i, j].isInPolygon(new Vector2(((Main)this.Game).Dot.X, ((Main)this.Game).Dot.Y), this.square, this))
                         {
                             this.square_details_on = true;
-                            this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
+                            this.square_setails_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(10);
                             this.map[this.square_details_pos.X, this.square_details_pos.Y].Selected = false;
                             this.map[i, j].Selected = true;
                             this.square_details_pos = new Point(i, j);
-                            ((Main)this.Game).unplug();
                         }
                     }
                 }
@@ -292,7 +291,8 @@ namespace Viewer.Sources
 
                 for (j = -1; j < (int)this.dim.Y + 1; ++j)
                 {
-                    /* Bord superieur droit de la map */
+                    
+                    /* Bord superieur droit de la map */                    
                     if (i != 0 && j == 0)
                     {
                         Rectangle target = this.getPos(j, off.X, off.Y, 31, 101, factX, factY);
@@ -308,6 +308,13 @@ namespace Viewer.Sources
                             this._wall[2].Draw(this.sb, target);
                     }
 
+                    if (i == 1)
+                    {
+                        /* Coin extreme droit de la map */
+                        Rectangle tar = this.getPos((int)this.dim.Y + 1, 0, 0, 34, 0, factX, factY);
+                        if (this.screen.Intersects(tar))
+                            this._wall[6].Draw(this.sb, tar);
+                    }
                     /* Draw des case*/
                     if (i != 0 && j >= 0 && j < this.dim.Y)
                     {
@@ -339,11 +346,6 @@ namespace Viewer.Sources
                     }
                 }
             }
-            /* Coin extreme droit de la map */
-            Rectangle tar = this.getPos((int)this.dim.Y + 1, 0, 0, 34, 0, factX, factY);
-            if (this.screen.Intersects(tar))
-                this._wall[6].Draw(this.sb, tar);
-
             /* Bord inferieur droite de la map */
             for (j = 0 ; j < (int)this.dim.Y + 1; ++j)
             {

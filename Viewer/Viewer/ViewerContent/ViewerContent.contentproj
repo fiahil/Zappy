@@ -219,13 +219,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tiles\map_inventory.png">
-      <Name>map_inventory</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Background\cloud.PNG">
       <Name>cloud</Name>
       <Importer>TextureImporter</Importer>
@@ -434,6 +427,20 @@
   <ItemGroup>
     <Compile Include="Tiles\base_highlited.png">
       <Name>base_highlited</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tiles\map_inventory.png">
+      <Name>map_inventory</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tiles\team_detail.png">
+      <Name>team_detail</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

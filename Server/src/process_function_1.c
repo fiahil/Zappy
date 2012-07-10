@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:32 2012 ulric lefevre
-** Last update Mon Jul  9 21:50:00 2012 ulric lefevre
+** Last update Tue Jul 10 13:42:24 2012 ulric lefevre
 */
 
 #define		_GNU_SOURCE
@@ -39,9 +39,11 @@ t_bool		look_process(t_player this, char *data, t_data_serv info)
   (void)data;
   (void)info;
   map = get_map(NULL);
-  look = get_look(this, map);
-  msgout_voir(this, look);
-  free(look);
+  if ((look = get_look(this, map)) != NULL)
+    {
+      msgout_voir(this, look);
+      free(look);
+    }
   return (TRUE);
 }
 

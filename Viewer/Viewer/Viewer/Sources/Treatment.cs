@@ -205,7 +205,7 @@ namespace Viewer.Sources
 
         private void ebo(string[] a)
         {
-            Egg P = parent.Eggs.Find(delegate(Egg e) { return e.Id == int.Parse(a[0]); });
+            Egg P = parent.Eggs.Find(e => e.Id == int.Parse(a[0]));
             if (P != null)
             {
                 P.State = Egg.States.BORN;

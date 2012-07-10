@@ -44,11 +44,11 @@ cmds = ["connect_nbr",
 	"gauche",
 	"avance",
 	"droite",
-        "prend nourriture",
-        "pose nourriture",
-	"incantation",
-	"fork",
-	"broadcast PONEEEYYYY!"]
+        "prend nourriture"]
+#        "pose nourriture",
+#	"incantation",
+#	"fork",
+#	"broadcast PONEEEYYYY!"]
 
 cmdr = ["nourriture",
     	"linemate",

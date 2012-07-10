@@ -168,26 +168,34 @@ let gather rcs nb =
 
 let gather_all () =
   Bridge.push (Bridge.Voir);
-  let aux tab =
-    gather Inventory.Nourriture tab.(0).Inventory.nourriture;
-    gather Inventory.Linemate tab.(0).Inventory.linemate;
-    gather Inventory.Deraumere tab.(0).Inventory.deraumere;
-    gather Inventory.Sibur tab.(0).Inventory.sibur;
-    gather Inventory.Mendiane tab.(0).Inventory.mendiane;
-    gather Inventory.Phiras tab.(0).Inventory.phiras;
-    gather Inventory.Thystame tab.(0).Inventory.thystame
+  let auxx tab =
+    let aux tab =
+      gather Inventory.Nourriture tab.(0).Inventory.nourriture;
+      gather Inventory.Linemate tab.(0).Inventory.linemate;
+      gather Inventory.Deraumere tab.(0).Inventory.deraumere;
+      gather Inventory.Sibur tab.(0).Inventory.sibur;
+      gather Inventory.Mendiane tab.(0).Inventory.mendiane;
+      gather Inventory.Phiras tab.(0).Inventory.phiras;
+      gather Inventory.Thystame tab.(0).Inventory.thystame
+    in
+    set_lvl tab;
+    aux tab
   in
-  aux (Bridge.voir (Bridge.pull Bridge.Voir))
+  auxx (Bridge.voir (Bridge.pull Bridge.Voir))
 
 let gather_all_rcs rcs =
   Bridge.push (Bridge.Voir);
-  let aux tab = function
-    | Inventory.Nourriture -> gather Inventory.Nourriture tab.(0).Inventory.nourriture
-    | Inventory.Linemate   -> gather Inventory.Linemate tab.(0).Inventory.linemate
-    | Inventory.Deraumere  -> gather Inventory.Deraumere tab.(0).Inventory.deraumere
-    | Inventory.Sibur      -> gather Inventory.Sibur tab.(0).Inventory.sibur
-    | Inventory.Mendiane   -> gather Inventory.Mendiane tab.(0).Inventory.mendiane
-    | Inventory.Phiras     -> gather Inventory.Phiras tab.(0).Inventory.phiras
-    | Inventory.Thystame   -> gather Inventory.Thystame tab.(0).Inventory.thystame
+  let auxx tab =
+    let aux tab = function
+      | Inventory.Nourriture -> gather Inventory.Nourriture tab.(0).Inventory.nourriture
+      | Inventory.Linemate   -> gather Inventory.Linemate tab.(0).Inventory.linemate
+      | Inventory.Deraumere  -> gather Inventory.Deraumere tab.(0).Inventory.deraumere
+      | Inventory.Sibur      -> gather Inventory.Sibur tab.(0).Inventory.sibur
+      | Inventory.Mendiane   -> gather Inventory.Mendiane tab.(0).Inventory.mendiane
+      | Inventory.Phiras     -> gather Inventory.Phiras tab.(0).Inventory.phiras
+      | Inventory.Thystame   -> gather Inventory.Thystame tab.(0).Inventory.thystame
+    in
+    set_lvl tab;
+    aux tab
   in
-  aux (Bridge.voir (Bridge.pull Bridge.Voir)) rcs
+  auxx (Bridge.voir (Bridge.pull Bridge.Voir)) rcs

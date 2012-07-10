@@ -2,7 +2,7 @@
  * Fiahil
  * 25.06.2012
  *)
-
+ 
 type command =
   | Connect_nbr
   | Voir
@@ -139,11 +139,10 @@ let broadcast_cmd str =
   let rec re = Str.regexp ","
   and
       extract_dir str =
-        print_endline str;
-    try
-      int_of_string (String.sub str (String.length str - 1) 1)
-            with
-      | _       -> 0
+        try
+          int_of_string (String.sub str (String.length str - 1) 1)
+        with
+          | _       -> 0
     and
       aux l = (extract_dir (List.hd l)), (List.hd (List.tl l))
   in
@@ -155,8 +154,8 @@ let map_cmd str =
       aux l =
         try
           (int_of_string (List.hd l)), (int_of_string (List.hd (List.tl l)))
-    with
-      | _       -> (0, 0)
+        with
+          | _       -> (0, 0)
   in
     aux (Str.bounded_split re str 2)
 
@@ -350,8 +349,8 @@ let init () =
     begin
       Socket.send "inventaire\n";
       PlayerInventory.valid (inventaire (pull Inventaire));
-      timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0 *. 0.95;
-      Printf.printf "--> %f\n" !timeout_t;
+      timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0;
+      Printf.printf "Lag --> %f\n" !timeout_t;
       flush stdout
     end
 

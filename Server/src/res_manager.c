@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Mon Jul  9 16:19:06 2012 ulric lefevre
+** Last update Tue Jul 10 19:52:13 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -18,17 +18,17 @@
 
 void		put_res(int val)
 {
+  t_data_serv	ds;
   static int	last_val = 0;
   int		i;
   t_u_pos	pos;
   t_map		map;
-  t_data_serv	ds;
 
-  last_val += val;
-  i = last_val / 100;
-  last_val %= 100;
-  map = get_map(NULL);
   ds = get_data_serv(NULL);
+  last_val += val;
+  i = last_val / (200 / (ds->player->size + 1));
+  last_val %= (200 / (ds->player->size + 1));
+  map = get_map(NULL);
   while (i)
     {
       pos.x = random() % map->size_x;

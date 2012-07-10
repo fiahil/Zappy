@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:29 2012 ulric lefevre
-** Last update Sun Jul  8 00:12:59 2012 ulric lefevre
+** Last update Tue Jul 10 14:57:38 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -26,6 +26,8 @@ static const	char *g_resources[8] =
     " thystame",
     NULL
   };
+
+static const	int g_char_len[8] = {11, 9, 10, 6, 9, 7, 9, 0};
 
 static const	t_u_pos g_vtab[4][81] =
   {
@@ -378,51 +380,57 @@ static int	calc_nbcases(int lvl)
   return (nbcases - 1);
 }
 
-static void	add_to_str(char **dest, const char *src)
+static t_square	get_cur_square(t_map map, t_player this, int i)
 {
-  char		*tmp;
-
-  if (dest && *dest)
-    {
-      if ((*dest = realloc(*dest, strlen(*dest) + strlen(src) + 1)) == NULL)
-	return ;
-      tmp = strdup(strcat(*dest, src));
-      free(*dest);
-      *dest = tmp;
-    }
+  return (map->map
+	  [(this->pos.y + g_vtab[this->dir][i].y
+	    + map->size_y * this->lvl) % map->size_y]
+	  [(this->pos.x + g_vtab[this->dir][i].x
+	    + map->size_x * this->lvl) % map->size_x]);
 }
 
-static void	add_players(t_square s, char **look)
+static int	get_size_look(t_map map, t_player this, int nbcases)
+{
+  int		i;
+  int		j;
+  int		count;
+  t_square	cur;
+
+  count = 3;
+  i = 0;
+  while (i <= nbcases)
+    {
+      cur = get_cur_square(map, this, i);
+      count += (cur->players->size) * 7;
+      j = -1;
+      while (++j < LAST)
+	count += (cur->inv.resources[j] * g_char_len[j]);
+      ++i;
+      if (i <= nbcases)
+	++count;
+    }
+  return (count);
+}
+
+static void	add_look(t_square s, char **look)
 {
   size_t	nb_player;
   size_t	i;
+  int		j;
 
   if (s->players && s->players->size)
     {
       nb_player = get_nb_player(s);
-      i = 0;
-      while (i < nb_player)
-	{
-	  add_to_str(look, " joueur");
-	  ++i;
-	}
+      i = -1;
+      while (++i < nb_player)
+	*look = strcat(*look, " joueur");
     }
-}
-
-static void	add_resources(t_square s, char **look)
-{
-  int		i;
-  int		j;
-
   i = FOOD;
   while (i < LAST)
     {
-      j = 0;
-      while (j < s->inv.resources[i])
-	{
-	  add_to_str(look, g_resources[i]);
-	  ++j;
-	}
+      j = -1;
+      while (++j < s->inv.resources[i])
+	*look = strcat(*look, g_resources[i]);
       ++i;
     }
 }
@@ -433,23 +441,23 @@ char		*get_look(t_player this, t_map map)
   int		i;
   int		nbcases;
   t_square	cur;
+  int		len;
 
   nbcases = calc_nbcases(this->lvl);
-  look = strdup("{");
+  len = get_size_look(map, this, nbcases);
+  if ((look = malloc(sizeof(*look) * len + 1)) == NULL)
+    return (NULL);
+  memset(look, 0, len + 1);
+  look = strcat(look, "{");
   i = 0;
   while (i <= nbcases)
     {
-      cur = map->map
-	[(this->pos.y + g_vtab[this->dir][i].y
-	  + map->size_y * this->lvl) % map->size_y]
-	[(this->pos.x + g_vtab[this->dir][i].x
-	  + map->size_x * this->lvl) % map->size_x];
-      add_players(cur, &look);
-      add_resources(cur, &look);
+      cur = get_cur_square(map, this, i);
+      add_look(cur, &look);
       ++i;
       if (i <= nbcases)
-	add_to_str(&look, ",");
+	look = strcat(look, ",");
     }
-  add_to_str(&look, "}\n");
+  look = strcat(look, "}\n");
   return (look);
 }

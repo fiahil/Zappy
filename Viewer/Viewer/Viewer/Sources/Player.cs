@@ -69,7 +69,7 @@ namespace Viewer.Sources
             get { return id; }
         }
 
-        Inventory iv;
+        public Inventory iv; // TODO
         public Inventory Inventory
         {
             get { return iv; }

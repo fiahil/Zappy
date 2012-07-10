@@ -25,11 +25,12 @@ namespace Viewer.Sources
         SpriteFont sf;
         int t;
         Network server;
-       
+
         Rectangle screen;
         Player inventory_details;
         TimeSpan inventory_timer;
         Sprite inventory_page;
+        Sprite team_detail;
 
         SpriteManager sm;
         public SpriteManager Sprites
@@ -126,8 +127,14 @@ namespace Viewer.Sources
             
             this.sm = new SpriteManager(this.Content);
             this.inventory_page = sm.GetSprite("Tiles/map_inventory");
+            this.team_detail = sm.GetSprite("Tiles/team_detail");
             this.sf = this.Content.Load<SpriteFont>("Font/Classic");
 
+
+            this.plist.Add(new Player(this.sm, 0)); // TODO
+            this.plist[0].Inventory.nourriture = 1000;
+            this.plist[0].setPos(5, 5);
+       
             this.map.resizeMap(10, 7);
             server.Initialize(this);
         }
@@ -183,8 +190,7 @@ namespace Viewer.Sources
                     if (bound.Contains(new Point((int)this.dot.X, (int)this.dot.Y)))
                     {
                         this.inventory_details = elt;
-                        this.inventory_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(5);
-                        this.map.unplug();
+                        this.inventory_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(10);
                     }
                 }
             }
@@ -217,16 +223,39 @@ namespace Viewer.Sources
 
             if (this.inventory_details != null)
             {
-                this.inventory_page.Draw(this.spriteBatch, new Rectangle(this.Window.ClientBounds.Width - this.inventory_page.getBounds().Width, 0, this.inventory_page.getBounds().Width, this.inventory_page.getBounds().Height));
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.nourriture.ToString(), new Vector2(1200, 100), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.linemate.ToString(), new Vector2(1200, 155), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.deraumere.ToString(), new Vector2(1200, 210), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.sibur.ToString(), new Vector2(1200, 265), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.mendiane.ToString(), new Vector2(1200, 325), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.phiras.ToString(), new Vector2(1200, 380), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.thystame.ToString(), new Vector2(1200, 440), Color.Black);
-				this.spriteBatch.DrawString(this.sf, this.inventory_details.Level.ToString(), new Vector2(1120, 492), Color.Black);
-				this.spriteBatch.DrawString(this.sf, this.inventory_details.Team, new Vector2(1120, 532), Color.Black);
+                this.inventory_page.Draw(this.spriteBatch, new Rectangle(0, this.Window.ClientBounds.Height - this.inventory_page.getBounds().Height, this.inventory_page.getBounds().Width, this.inventory_page.getBounds().Height));
+                this.team_detail.Draw(this.spriteBatch, new Rectangle(this.Window.ClientBounds.Width - this.team_detail.getBounds().Width, this.Window.ClientBounds.Height - this.team_detail.getBounds().Height, this.team_detail.getBounds().Width, this.team_detail.getBounds().Height));
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.nourriture.ToString(), new Vector2(368 - (this.inventory_details.Inventory.nourriture.ToString().Length * 7), 515), Color.White);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.linemate.ToString(), new Vector2(205, 615), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.deraumere.ToString(), new Vector2(205, 650), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.sibur.ToString(), new Vector2(205, 685), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.mendiane.ToString(), new Vector2(319, 615), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.phiras.ToString(), new Vector2(319, 650), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.thystame.ToString(), new Vector2(319, 685), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Level.ToString(), new Vector2(278, 555), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Team, new Vector2(150, 555), Color.Black);
+                this.spriteBatch.DrawString(this.sf, this.inventory_details.Team, new Vector2(this.Window.ClientBounds.Width - 200, 555), Color.Black);
+                int sizeTeam = 0;
+                int maxLvl = 0;
+                int avgLvl = 0;
+
+                foreach (var item in this.plist)
+                {
+                    if (item.Team == this.inventory_details.Team)
+                    {
+                        sizeTeam += 1;
+                        if (item.Level > maxLvl)
+                            maxLvl = item.Level;
+                        avgLvl += item.Level;
+                    }
+               	}
+                if (sizeTeam != 0)
+                    avgLvl /= sizeTeam;
+                else
+                    avgLvl = 0;
+                this.spriteBatch.DrawString(this.sf, sizeTeam.ToString(), new Vector2(this.Window.ClientBounds.Width - 150, 590), Color.Black);
+                this.spriteBatch.DrawString(this.sf, maxLvl.ToString(), new Vector2(this.Window.ClientBounds.Width - 100, 655), Color.Black);
+                this.spriteBatch.DrawString(this.sf, avgLvl.ToString(), new Vector2(this.Window.ClientBounds.Width - 100, 680), Color.Black);
             }
             if (this.map.SquareDetailsOn)
             {

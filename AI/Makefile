@@ -13,11 +13,11 @@ ML	=	socket.ml		\
 		bridge.ml		\
 		broadcast.ml		\
 		mapSize.ml		\
-		fsmLaunch.ml		\
 		fsmBase.ml		\
 		fsmIncant.ml		\
 		fsmSurvival.ml		\
 		fsmGather.ml		\
+		fsmLaunch.ml		\
 		main.ml
 
 MLI	=	socket.mli		\
@@ -25,9 +25,9 @@ MLI	=	socket.mli		\
 		playerInventory.mli	\
 		bridge.mli		\
 		broadcast.mli		\
-		fsmLaunch.mli		\
 		fsmBase.mli		\
-		fsmIncant.mli
+		fsmIncant.mli		\
+		fsmLaunch.mli
 
 CMO	=	$(ML:.ml=.cmo)
 

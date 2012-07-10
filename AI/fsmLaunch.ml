@@ -25,8 +25,20 @@ let reset () =
   in
   swap !func_last !func
 
-let rec run () =
-  begin
-    !func !func_param;
-    run ()
-  end
+let run () =
+  let rec aux () =
+    begin
+    (* !func !func_param; *)
+      Bridge.init ();
+      if (FsmIncant.test_food () = false) then
+	FsmSurvival.survival []
+      else if (FsmIncant.test_mineral () = false) then
+	FsmGather.gather [Inventory.Linemate]
+      else
+	FsmIncant.incant ()
+      ;
+      aux ()
+    end
+  in
+  FsmBase.gather_all ();
+  aux ()

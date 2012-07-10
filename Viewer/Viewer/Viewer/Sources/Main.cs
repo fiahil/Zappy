@@ -35,11 +35,12 @@ namespace Viewer.Sources
         Sprite bc_box;
         Queue<string> lbc;
 
+        int followedId;
         Player followed;
         public Player Followed
         {
             get { return this.followed; }
-            set { this.followed = value; }
+            set { this.followed = value; this.followedId = this.plist.FindIndex(p => value.Id == p.Id); }
         }
         SpriteManager sm;
         public SpriteManager Sprites
@@ -62,6 +63,7 @@ namespace Viewer.Sources
             this.inventory_timer = TimeSpan.Zero;
             this.dot = new Vector2(640, 360);
             this.followed = null;
+            this.followedId = 0;
         }
 
        
@@ -193,6 +195,28 @@ namespace Viewer.Sources
 
             this.plist.RemoveAll(delegate(Player p) { return p.State == Player.States.FINISHED; });
 
+            if (Keyboard.GetState().IsKeyDown(Keys.PageDown) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.RightTrigger))
+            {
+                try
+                {
+                    this.followed = this.plist[(this.followedId + 1) % this.plist.Count];
+                }
+                catch
+                {
+                    this.followed = null;
+                }
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.PageUp) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftTrigger))
+            {
+                try
+                {
+                    this.followed = this.plist[(this.followedId - 1 + this.plist.Count) % this.plist.Count];
+                }
+                catch
+                {
+                    this.followed = null;
+                }
+            }
             if (Mouse.GetState().RightButton == ButtonState.Pressed || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.B))
             {
                 if (Mouse.GetState().RightButton == ButtonState.Pressed)
@@ -219,7 +243,7 @@ namespace Viewer.Sources
                         {
                             this.followed = elt;
                             Rectangle r = new Rectangle();
-                            r.X = -(-elt.Pos.Y * (this.map.getSquare().Width / 2) + (elt.getPos().X + 1) * (this.map.getSquare().Width / 2) + ((int)map.getSize().Y - 1) * (this.map.getSquare().Width / 2) - 640);
+                            r.X = -(-elt.Pos.Y * (this.map.getSquare().Width / 2) + (elt.getPos().X + 1) * (this.map.getSquare().Width / 2) + ((int)map.getSize().Y - 1) * (this.map.getSquare().Width / 2) - 620);
                             r.Y = -(elt.Pos.Y * (this.map.getSquare().Height / 2) + (elt.getPos().X) * (this.map.getSquare().Height / 2) - ((int)map.getSize().Y - 1) * (this.map.getSquare().Height / 2) - 360);
                             this.map.Square = r;
                         }
@@ -318,7 +342,7 @@ namespace Viewer.Sources
                 this.spriteBatch.DrawString(this.sf, this.map.Inventory[6], new Vector2(1200, 440), Color.Black);
             }
             if (GamePad.GetState(PlayerIndex.One).IsConnected)
-                sm.GetSprite("Level/level_1").Draw(this.spriteBatch, new Rectangle((int)(dot.X - 50), (int)(dot.Y), 100, 100));
+                sm.GetSprite("Tiles/cursor").Draw(this.spriteBatch, new Rectangle((int)(dot.X - 25), (int)(dot.Y - 25), 50, 50));
             this.spriteBatch.End();
         }
     }

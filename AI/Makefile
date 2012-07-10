@@ -13,6 +13,7 @@ ML	=	socket.ml		\
 		bridge.ml		\
 		broadcast.ml		\
 		mapSize.ml		\
+		fsmLaunch.ml		\
 		fsmBase.ml		\
 		fsmIncant.ml		\
 		fsmSurvival.ml		\
@@ -24,6 +25,7 @@ MLI	=	socket.mli		\
 		playerInventory.mli	\
 		bridge.mli		\
 		broadcast.mli		\
+		fsmLaunch.mli		\
 		fsmBase.mli		\
 		fsmIncant.mli
 

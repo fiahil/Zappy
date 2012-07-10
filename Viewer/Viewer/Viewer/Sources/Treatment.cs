@@ -91,6 +91,13 @@ namespace Viewer.Sources
             {
                 P.setPos(int.Parse(a[1]), int.Parse(a[2])).Dir = Player.convertDir(int.Parse(a[3]));
                 P.State = Player.States.IDLE;
+                if (this.parent.Followed != null && this.parent.Followed.Id == P.Id)
+                {
+                    Rectangle r = new Rectangle();
+                    r.X = -(-P.Pos.Y * (this.parent.Map.getSquare().Width / 2) + (P.getPos().X + 1) * (this.parent.Map.getSquare().Width / 2) + ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Width / 2) - 640);
+                    r.Y = -(P.Pos.Y * (this.parent.Map.getSquare().Height / 2) + (P.getPos().X) * (this.parent.Map.getSquare().Height / 2) - ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Height / 2) - 360);
+                    this.parent.Map.Square = r;
+                }
             }
         }
 

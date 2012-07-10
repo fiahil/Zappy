@@ -18,7 +18,6 @@ namespace Viewer.Sources
     public class Map : Microsoft.Xna.Framework.DrawableGameComponent
     {
         Vector2 dim;
-        Rectangle square;
         Rectangle screen;
         Elt[,] map;
         bool[] edge;
@@ -31,6 +30,13 @@ namespace Viewer.Sources
         TimeSpan square_setails_timer;
         Sprite[] _wall;
         Point[] clouds;
+
+        Rectangle square;
+        public Rectangle Square
+        {
+            get { return this.square; }
+            set { this.square.X = value.X; this.square.Y = value.Y; }
+        }
 
         string[] inventory;
         public string[] Inventory
@@ -185,6 +191,7 @@ namespace Viewer.Sources
 
             if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadUp)) && (this.view > 50 || this.edge[1]) && this.Vrep <= gameTime.TotalGameTime)
             {
+                ((Main)Game).Followed = null;
                 this.square.Y += 20;
                 this.Vrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
                 this.edge[1] = false;
@@ -192,6 +199,7 @@ namespace Viewer.Sources
             }
             if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadDown)) && (this.view > 50 || this.edge[2]) && this.Vrep <= gameTime.TotalGameTime)
             {
+                ((Main)Game).Followed = null;
                 this.square.Y -= 20;
                 this.Vrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
                 this.edge[1] = true;
@@ -199,6 +207,7 @@ namespace Viewer.Sources
             }
             if ((Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadLeft)) && (this.view > 50 || this.edge[0]) && this.Hrep <= gameTime.TotalGameTime)
             {
+                ((Main)Game).Followed = null;
                 this.square.X += 20;
                 this.Hrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
                 this.edge[3] = true;
@@ -206,6 +215,7 @@ namespace Viewer.Sources
             }
             if ((Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadRight)) && (this.view > 50 || this.edge[3]) && this.Hrep <= gameTime.TotalGameTime)
             {
+                ((Main)Game).Followed = null;
                 this.square.X -= 20;
                 this.Hrep = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(30);
                 this.edge[3] = false;

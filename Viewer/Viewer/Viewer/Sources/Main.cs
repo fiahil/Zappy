@@ -33,8 +33,14 @@ namespace Viewer.Sources
         Sprite inventory_page;
         Sprite team_detail;
         Sprite bc_box;
-        Queue<string> lbc; 
+        Queue<string> lbc;
 
+        Player followed;
+        public Player Followed
+        {
+            get { return this.followed; }
+            set { this.followed = value; }
+        }
         SpriteManager sm;
         public SpriteManager Sprites
         {
@@ -55,7 +61,7 @@ namespace Viewer.Sources
             this.inventory_details = null;
             this.inventory_timer = TimeSpan.Zero;
             this.dot = new Vector2(640, 360);
-
+            this.followed = null;
         }
 
        
@@ -209,11 +215,26 @@ namespace Viewer.Sources
                     {
                         this.inventory_details = elt;
                         this.inventory_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(10);
+                        if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftShoulder))
+                        {
+                            this.followed = elt;
+                            Rectangle r = new Rectangle();
+                            r.X = -(-elt.Pos.Y * (this.map.getSquare().Width / 2) + (elt.getPos().X + 1) * (this.map.getSquare().Width / 2) + ((int)map.getSize().Y - 1) * (this.map.getSquare().Width / 2) - 640);
+                            r.Y = -(elt.Pos.Y * (this.map.getSquare().Height / 2) + (elt.getPos().X) * (this.map.getSquare().Height / 2) - ((int)map.getSize().Y - 1) * (this.map.getSquare().Height / 2) - 360);
+                            this.map.Square = r;
+                        }
+                        else
+                        {
+                            this.followed = null;
+                        }
                     }
                 }
             }
 
-            if (this.inventory_timer <= gameTime.TotalGameTime && this.inventory_details != null)
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                this.followed = null;
+
+            if (this.inventory_timer <= gameTime.TotalGameTime && this.inventory_details != null && this.followed == null)
             {
                 this.inventory_details = null;
             }
@@ -296,7 +317,8 @@ namespace Viewer.Sources
                 this.spriteBatch.DrawString(this.sf, this.map.Inventory[5], new Vector2(1200, 380), Color.Black);
                 this.spriteBatch.DrawString(this.sf, this.map.Inventory[6], new Vector2(1200, 440), Color.Black);
             }
-            sm.GetSprite("Level/level_1").Draw(this.spriteBatch, new Rectangle((int)(dot.X - 50), (int)(dot.Y), 100, 100));
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+                sm.GetSprite("Level/level_1").Draw(this.spriteBatch, new Rectangle((int)(dot.X - 50), (int)(dot.Y), 100, 100));
             this.spriteBatch.End();
         }
     }

@@ -8,6 +8,7 @@
 ** Last update Mon Jul  2 11:23:54 2012 ulric lefevre
 */
 
+#include	<stdio.h>
 #include	<stdlib.h>
 #include	<string.h>
 #include	<sys/types.h>
@@ -34,11 +35,13 @@ char*		my_receive(int fd)
   if ((ret = malloc(8)) == NULL)
     return (NULL);
   ret = memset(ret, 0, 8);
+  fprintf(stderr, "\nBEGIN\n");
   while (test)
     {
       if ((test = recv(fd, buff, BUFFER_SIZE - 1, 0)) <= 0)
 	return (cleaner(ret, ret[0] ? ret : (char*)-1));
       buff[test] = '\0';
+      fprintf(stderr, "%d\n", test);
       if ((tmp = malloc(strlen(ret) + test + 1)) == NULL)
 	return (cleaner(ret, NULL));
       strcpy(tmp, ret);
@@ -48,5 +51,6 @@ char*		my_receive(int fd)
       if (test != BUFFER_SIZE - 1)
 	test = 0;
     }
+  fprintf(stderr, "END\n\n");
   return (ret);
 }

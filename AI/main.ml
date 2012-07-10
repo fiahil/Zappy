@@ -39,12 +39,11 @@ let main () =
 	MapSize.storage ();
         Random.self_init ();
         Broadcast.autohash !team;
-        Broadcast.unitest ()
-	(* FsmSurvival.survival () *)
+        (*FsmLaunch.set unitest;*)
+        FsmLaunch.run ()
       end
     with
       | Invalid_argument v      -> prerr_endline v
 (*    | _                       -> prerr_endline "BOUM BOUM BOUM" *)
 
 let _ = main ()
- 

@@ -23,6 +23,7 @@ namespace Viewer.Sources
         List<Egg> elist;
         List<string> tlist;
         SpriteFont sf;
+        SpriteFont sf_bc;
         int t;
         Network server;
 
@@ -31,6 +32,8 @@ namespace Viewer.Sources
         TimeSpan inventory_timer;
         Sprite inventory_page;
         Sprite team_detail;
+        Sprite bc_box;
+        Queue<string> lbc; 
 
         SpriteManager sm;
         public SpriteManager Sprites
@@ -47,12 +50,15 @@ namespace Viewer.Sources
             this.plist = new List<Player>();
             this.elist = new List<Egg>();
             this.tlist = new List<string>();
+            this.lbc = new Queue<string>();
             this.screen = new Rectangle(0, 0, 1280, 720);
             this.inventory_details = null;
             this.inventory_timer = TimeSpan.Zero;
             this.dot = new Vector2(640, 360);
+
         }
 
+       
         Vector2 dot;
         public Vector2 Dot
         {
@@ -105,6 +111,21 @@ namespace Viewer.Sources
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
+
+        public void addBroadcast(string team, string msg)
+        {
+            if (team.Length > 5)
+                team = team.Remove(5);
+            if (msg.Length > 40)
+            {
+                msg = msg.Remove(37);
+                msg += "...";
+            }
+            if (this.lbc.Count >= 3)
+                this.lbc.Dequeue();
+            this.lbc.Enqueue(team + " : " + msg);
+        }
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -128,13 +149,10 @@ namespace Viewer.Sources
             this.sm = new SpriteManager(this.Content);
             this.inventory_page = sm.GetSprite("Tiles/map_inventory");
             this.team_detail = sm.GetSprite("Tiles/team_detail");
+            this.bc_box = sm.GetSprite("Tiles/bc_box");
             this.sf = this.Content.Load<SpriteFont>("Font/Classic");
+            this.sf_bc = this.Content.Load<SpriteFont>("Font/Broadcast");
 
-
-            this.plist.Add(new Player(this.sm, 0)); // TODO
-            this.plist[0].Inventory.nourriture = 1000;
-            this.plist[0].setPos(5, 5);
-       
             this.map.resizeMap(10, 7);
             server.Initialize(this);
         }
@@ -224,6 +242,7 @@ namespace Viewer.Sources
             if (this.inventory_details != null)
             {
                 this.inventory_page.Draw(this.spriteBatch, new Rectangle(0, this.Window.ClientBounds.Height - this.inventory_page.getBounds().Height, this.inventory_page.getBounds().Width, this.inventory_page.getBounds().Height));
+                this.bc_box.Draw(this.spriteBatch, new Rectangle(this.inventory_page.getBounds().Width - 54, this.Window.ClientBounds.Height - this.bc_box.getBounds().Height - 10, this.bc_box.getBounds().Width, this.bc_box.getBounds().Height));
                 this.team_detail.Draw(this.spriteBatch, new Rectangle(this.Window.ClientBounds.Width - this.team_detail.getBounds().Width, this.Window.ClientBounds.Height - this.team_detail.getBounds().Height, this.team_detail.getBounds().Width, this.team_detail.getBounds().Height));
                 this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.nourriture.ToString(), new Vector2(368 - (this.inventory_details.Inventory.nourriture.ToString().Length * 7), 515), Color.White);
                 this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.linemate.ToString(), new Vector2(205, 615), Color.Black);
@@ -256,6 +275,14 @@ namespace Viewer.Sources
                 this.spriteBatch.DrawString(this.sf, sizeTeam.ToString(), new Vector2(this.Window.ClientBounds.Width - 150, 590), Color.Black);
                 this.spriteBatch.DrawString(this.sf, maxLvl.ToString(), new Vector2(this.Window.ClientBounds.Width - 100, 655), Color.Black);
                 this.spriteBatch.DrawString(this.sf, avgLvl.ToString(), new Vector2(this.Window.ClientBounds.Width - 100, 680), Color.Black);
+
+                int dec = 0;
+                foreach (var item in this.lbc)
+                {
+                    this.spriteBatch.DrawString(this.sf_bc, item, new Vector2(415, 630 + dec), Color.White);
+                    dec += 20;
+                }
+
             }
             if (this.map.SquareDetailsOn)
             {

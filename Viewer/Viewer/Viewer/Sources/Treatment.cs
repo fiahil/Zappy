@@ -131,6 +131,7 @@ namespace Viewer.Sources
             if (P != null)
             {
                 P.setBroadcast(a[1]);
+                parent.addBroadcast(P.Team, a[1]);
             }
         }
 

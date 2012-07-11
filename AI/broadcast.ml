@@ -14,6 +14,7 @@ type t =
   | Icz of string
 
 let hash_team = ref ""
+let last_b = ref (0, "")
 
 let autohash team =
   hash_team := Digest.to_hex (Digest.string team)
@@ -106,9 +107,12 @@ let match_command c = function
   | "Icz"::tail         -> match_icz c tail
   | s                   -> Err c
 
-let pp () =
+let pp f =
   let aux () =
-    snd (Bridge.broadcast (Bridge.pull (Bridge.Broadcast "")))
+    begin
+      last_b := Bridge.broadcast (f (Bridge.Broadcast ""));
+      snd !last_b
+    end
   in
   let auxx str =
     if is_my_team str then
@@ -117,6 +121,8 @@ let pp () =
       Err str
   in
   auxx (aux ())
+
+let gd () = fst !last_b
 
 (*
  * Unitest
@@ -138,10 +144,10 @@ let unitest () =
   bc (Icr ("COUCOU", 888, true));
   bc (Ica "COUCOU");
   Bridge.push (Bridge.Broadcast "CECI EST UNE ERREUR");
-  print_pp (pp ());
-  print_pp (pp ());
-  print_pp (pp ());
-  print_pp (pp ());
-  print_pp (pp ());
-  print_pp (pp ());
+  print_pp (pp Bridge.pull);
+  print_pp (pp Bridge.pull);
+  print_pp (pp Bridge.pull);
+  print_pp (pp Bridge.pull);
+  print_pp (pp Bridge.pull);
+  print_pp (pp Bridge.pull);
   ()

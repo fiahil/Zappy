@@ -24,9 +24,14 @@ val autohash : string -> unit
 val bc : t -> unit
 
 (*
+ * Get direction of last broadcast
+ *)
+val gd : unit -> int
+
+(*
  * Pull and parse a broadcast
  *)
-val pp : unit -> t
+val pp : (Bridge.command -> Bridge.response) -> t
 
 (*
  * Unitest

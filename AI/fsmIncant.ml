@@ -5,22 +5,22 @@
 
 let test_food () =
   let to_lvl nb =
-    if (nb > 2) then (*TODO*)
+    if (nb > 1) then (*TODO*)
       false
     else
-      if (!PlayerInventory.piv.Inventory.nourriture > (nb * 3)) then
+      if (!PlayerInventory.piv.Inventory.nourriture > (nb * 6)) then
 	true
       else
 	false
   in
   let aux = function
-    | 1 -> to_lvl 2
-    | 2 -> to_lvl 3
-    | 3 -> to_lvl 4
-    | 4 -> to_lvl 5
-    | 5 -> to_lvl 6
-    | 6 -> to_lvl 7
-    | 7 -> to_lvl 8
+    | 1 -> to_lvl 1
+    | 2 -> to_lvl 2
+    | 3 -> to_lvl 2
+    | 4 -> to_lvl 4
+    | 5 -> to_lvl 4
+    | 6 -> to_lvl 6
+    | 7 -> to_lvl 6
     | _ -> false
   in
   aux !FsmBase.plvl
@@ -104,14 +104,44 @@ let test_mineral () =
   in
   aux !FsmBase.plvl
 
+let call_player nb =
+  IncantManager.init_incant_id ();
+  Broadcast.bc (Broadcast.Icq (!IncantManager.id, !FsmBase.plvl));
+  let rec loop list =
+    Bridge.init ();
+    (* get resp *)
+    if (test_food ()) then
+      loop list
+    else
+      false
+  in
+  if (loop [] == false) then
+    begin
+      Broadcast.bc (Broadcast.Ica !IncantManager.id);
+      false
+    end
+  else
+    true
+
 let incant () =
   let to_lvl_two () =
     Bridge.push (Bridge.Pose Inventory.Linemate);
     Bridge.push Bridge.Incantation
   in
+  let to_lvl_three () =
+    if (call_player 2) then
+      begin
+	Bridge.push (Bridge.Pose Inventory.Linemate);
+	Bridge.push (Bridge.Pose Inventory.Deraumere);
+	Bridge.push (Bridge.Pose Inventory.Sibur);
+	Bridge.push Bridge.Incantation
+      end
+    else
+      ()
+  in
   let aux = function
     | 1 -> to_lvl_two ()
-    | 2 -> ()
+    | 2 -> to_lvl_three ()
     | 3 -> ()
     | 4 -> ()
     | 5 -> ()

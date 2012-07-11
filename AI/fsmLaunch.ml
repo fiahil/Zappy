@@ -28,8 +28,7 @@ let reset () =
 let run () =
   let rec aux () =
     begin
-    (* !func !func_param; *)
-      IncantManager.init_incant_id ();
+      (* !func !func_param; *)
       Bridge.init ();
       if (FsmIncant.test_food () = false) then
 	FsmSurvival.survival []

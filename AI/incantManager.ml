@@ -6,5 +6,4 @@
 let id = ref "0"
 
 let init_incant_id () =
-  id := (Digest.to_hex (Digest.string (string_of_float (Unix.gettimeofday ()))));
-  print_endline(!id)
+  id := (Digest.to_hex (Digest.string (string_of_float (Unix.gettimeofday ()))))

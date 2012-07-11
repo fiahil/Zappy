@@ -90,6 +90,8 @@ let rec test_ici = function
     | Broadcast.Ici (fp, l)     ->
         if fp = !ic_fp && List.exists (fun v -> v = !ic_id) l then
           true
+        else if fp = !ic_fp then
+          false
         else
           test_ici (Broadcast.pp Bridge.pull)
     | Broadcast.Ica fp  ->

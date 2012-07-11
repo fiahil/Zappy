@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:50 2012 ulric lefevre
-** Last update Mon Jul  9 13:55:17 2012 ulric lefevre
+** Last update Tue Jul 10 22:58:02 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -21,8 +21,8 @@
 #include	"algorithm.h"
 #include	"iter_tools.h"
 #include	"msgout_cmd.h"
-#include	"res_manager.h"
 #include	"set_timeout.h"
+#include	"res_manager.h"
 #include	"var_manager.h"
 #include	"func_cleaner.h"
 #include	"iter_function.h"
@@ -31,7 +31,7 @@
 static t_u_timeval	g_last = {0, 0};
 static t_u_timeval	g_current = {0, 0};
 
-static int	get_dmg()
+int		get_dmg()
 {
   t_data_serv	ds;
   double	val;
@@ -50,7 +50,7 @@ static void	lose_life_loop(t_player *this)
   int		i;
 
   i = 0;
-  dmg = get_dmg();
+  dmg = get_dmg(g_last, g_current);
   while (!i)
     {
       if (dmg < (*this)->inv.cur_life)
@@ -111,7 +111,7 @@ void			iter_client()
   if ((g_last.tv_sec) || (g_last.tv_usec))
     {
       list_for_each(ds->player, &iter_lose_life);
-      put_res(get_dmg());
+      call_feeder();
     }
   if (select_r_isset(sm, ds->sock.fd))
     {

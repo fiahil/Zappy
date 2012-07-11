@@ -147,6 +147,11 @@ let call_player nb =
 		else
 		  begin
 		    Broadcast.bc (Broadcast.Icz !IncantManager.id);
+                    Bridge.push (Bridge.Voir);
+                    Bridge.push (Bridge.Voir);
+                    Bridge.push (Bridge.Voir);
+                    Bridge.push (Bridge.Voir);
+                    Bridge.push (Bridge.Voir);
 		    come_loop (pars_come_info cnt (Broadcast.pp (Bridge.take)))
 		  end
 	      end

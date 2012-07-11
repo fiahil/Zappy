@@ -34,13 +34,19 @@ namespace Viewer.Sources
         Sprite team_detail;
         Sprite bc_box;
         Queue<string> lbc;
+        KeyboardState oldState;
 
         int followedId;
         Player followed;
         public Player Followed
         {
             get { return this.followed; }
-            set { this.followed = value; this.followedId = this.plist.FindIndex(p => value.Id == p.Id); }
+            set
+            {
+                this.followed = value;
+                if (value != null)
+                    this.followedId = this.plist.FindIndex(p => value.Id == p.Id);
+            }
         }
         SpriteManager sm;
         public SpriteManager Sprites
@@ -64,6 +70,7 @@ namespace Viewer.Sources
             this.dot = new Vector2(640, 360);
             this.followed = null;
             this.followedId = 0;
+            this.oldState = Keyboard.GetState();
         }
 
        
@@ -195,22 +202,24 @@ namespace Viewer.Sources
 
             this.plist.RemoveAll(delegate(Player p) { return p.State == Player.States.FINISHED; });
 
-            if (Keyboard.GetState().IsKeyDown(Keys.PageDown) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.RightTrigger))
+            if ((oldState.IsKeyUp(Keys.PageDown) && Keyboard.GetState().IsKeyDown(Keys.PageDown)) ||
+                GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.RightTrigger))
             {
                 try
                 {
-                    this.followed = this.plist[(this.followedId + 1) % this.plist.Count];
+                    this.followed = this.plist[(++this.followedId) % this.plist.Count];
                 }
                 catch
                 {
                     this.followed = null;
                 }
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.PageUp) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftTrigger))
+            if ((oldState.IsKeyUp(Keys.PageUp) && Keyboard.GetState().IsKeyDown(Keys.PageUp)) ||
+                GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftTrigger))
             {
                 try
                 {
-                    this.followed = this.plist[(this.followedId - 1 + this.plist.Count) % this.plist.Count];
+                    this.followed = this.plist[(--this.followedId + this.plist.Count) % this.plist.Count];
                 }
                 catch
                 {
@@ -262,6 +271,7 @@ namespace Viewer.Sources
             {
                 this.inventory_details = null;
             }
+            this.oldState = Keyboard.GetState();
         }
 
         /// <summary>

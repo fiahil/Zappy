@@ -35,7 +35,7 @@ let run () =
       else if (FsmIncant.test_food () = false) then
 	FsmSurvival.survival []
       else if (FsmIncant.test_mineral () = false) then
-	FsmGather.gather [Inventory.Linemate]
+	FsmGather.gather [Inventory.Linemate; Inventory.Sibur; Inventory.Deraumere; Inventory.Phiras; Inventory.Mendiane; Inventory.Thystame]
       else
 	FsmIncant.incant ()
       ;

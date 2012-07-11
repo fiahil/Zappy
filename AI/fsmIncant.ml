@@ -183,7 +183,7 @@ let incant () =
     Bridge.push Bridge.Incantation
   in
   let to_lvl_three () =
-    if (call_player 2) then
+    if (call_player 1) then
       begin
 	Bridge.push (Bridge.Pose Inventory.Linemate);
 	Bridge.push (Bridge.Pose Inventory.Deraumere);

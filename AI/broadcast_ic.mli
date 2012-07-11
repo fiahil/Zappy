@@ -6,7 +6,7 @@
 (*
  * Search a Icq broadcast. Discard others until end of queue is reached
  *)
-val test_rcp : unit -> int
+val test_rcp : Broadcast.t -> int
 
 (*
  * Launch Icq rcp mode

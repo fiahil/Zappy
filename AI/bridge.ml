@@ -400,6 +400,8 @@ let push v =
     | Pose Inventory.Phiras         -> Socket.send "pose phiras\n"; 7.0
     | Pose Inventory.Thystame       -> Socket.send "pose thystame\n"; 7.0
     | Team value          -> Socket.send (value ^ "\n"); 0.0
+    | Pose _                        -> 0.0
+    | Prend _                       -> 0.0
   in
     begin
       (if !timeout_t = 0.0 && is_not_team v then

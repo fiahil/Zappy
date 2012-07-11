@@ -73,7 +73,12 @@ let rec moving = function
           moving (Broadcast.pp Bridge.pull)
       else
         moving (Broadcast.pp Bridge.pull)
-  | _                   -> ()
+  | Broadcast.Ica fp    ->
+      if (fp = !ic_fp) then
+        ()
+      else
+        moving (Broadcast.pp Bridge.pull)
+  | _                   -> moving (Broadcast.pp Bridge.pull)
 
 let rec test_ici = function
     | Broadcast.Ici (fp, l)     ->
@@ -81,7 +86,12 @@ let rec test_ici = function
           true
         else
           test_ici (Broadcast.pp Bridge.pull)
-    | _                 -> false
+    | Broadcast.Ica fp  ->
+        if (fp = !ic_fp) then
+          false
+        else
+          test_ici (Broadcast.pp Bridge.pull)
+    | _                 -> test_ici (Broadcast.pp Bridge.pull)
 
 let rec test_rcp = function
     | Broadcast.Icq (fp, lvl)   ->

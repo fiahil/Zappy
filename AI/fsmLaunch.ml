@@ -31,7 +31,7 @@ let run () =
     (* !func !func_param; *)
       IncantManager.init_incant_id ();
       Bridge.init ();
-      if Broadcast_ic.test_rcp () = !FsmBase.plvl && FsmIncant.test_food () then
+      if Broadcast_ic.test_rcp (Broadcast.pp Bridge.take) = !FsmBase.plvl && FsmIncant.test_food () then
         Broadcast_ic.engage ()
       else if (FsmIncant.test_food () = false) then
 	FsmSurvival.survival []

@@ -40,7 +40,7 @@ let main () =
         Random.self_init ();
         Broadcast.autohash !team;
         (*FsmLaunch.set unitest;*)
-        (*FsmLaunch.run ()*)
+        FsmLaunch.run ()
       end
     with
       | Invalid_argument v      -> prerr_endline v

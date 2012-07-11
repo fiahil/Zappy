@@ -152,13 +152,6 @@ namespace Viewer.Sources
                     this.map[i, j] = new Elt(sb, new Point(i, j));
                     this.map[i, j].Load(cm);
                 }
-
-            //TODO REMOVE THIS
-            foreach (Elt element in this.map)
-            {
-                if (p.Next(3) == 0)
-                    element.Inventory.setAll((uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10), (uint)p.Next(10));
-            }
         }
 
         public override void Initialize()

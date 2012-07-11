@@ -47,13 +47,13 @@ namespace Viewer.Sources
         {
             if (tab.ContainsKey(cmd.Substring(0, 3)))
             {
-                //try
-                //{
+                try
+                {
                     tab[cmd.Substring(0, 3)](cmd.Substring(4).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
-                //}
-                //catch
-                //{
-                //}
+                }
+                catch
+                {
+                }
             }
         }
 
@@ -94,7 +94,7 @@ namespace Viewer.Sources
                 if (this.parent.Followed != null && this.parent.Followed.Id == P.Id)
                 {
                     Rectangle r = new Rectangle();
-                    r.X = -(-P.Pos.Y * (this.parent.Map.getSquare().Width / 2) + (P.getPos().X + 1) * (this.parent.Map.getSquare().Width / 2) + ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Width / 2) - 640);
+                    r.X = -(-P.Pos.Y * (this.parent.Map.getSquare().Width / 2) + (P.getPos().X + 1) * (this.parent.Map.getSquare().Width / 2) + ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Width / 2) - 620);
                     r.Y = -(P.Pos.Y * (this.parent.Map.getSquare().Height / 2) + (P.getPos().X) * (this.parent.Map.getSquare().Height / 2) - ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Height / 2) - 360);
                     this.parent.Map.Square = r;
                 }
@@ -137,8 +137,9 @@ namespace Viewer.Sources
             Player P = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
             if (P != null)
             {
-                P.setBroadcast(a[1]);
-                parent.addBroadcast(P.Team, a[1]);
+                string b = a.Skip(1).Aggregate(delegate(string one, string two) { return one + " " + two; });
+                P.setBroadcast(b);
+                parent.addBroadcast(P.Team, b);
             }
         }
 

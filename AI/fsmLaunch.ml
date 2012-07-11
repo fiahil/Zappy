@@ -28,10 +28,11 @@ let reset () =
 let run () =
   let rec aux () =
     begin
-    (* !func !func_param; *)
-      IncantManager.init_incant_id ();
+      (* !func !func_param; *)
       Bridge.init ();
-      if (FsmIncant.test_food () = false) then
+      if Broadcast_ic.test_rcp (Broadcast.pp Bridge.take) = !FsmBase.plvl then
+        Broadcast_ic.engage ()
+      else if (FsmIncant.test_food () = false) then
 	FsmSurvival.survival []
       else if (FsmIncant.test_mineral () = false) then
 	FsmGather.gather [Inventory.Linemate]

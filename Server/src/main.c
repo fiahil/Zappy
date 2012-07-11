@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:37 2012 ulric lefevre
-** Last update Sun Jul  8 14:24:28 2012 ulric lefevre
+** Last update Wed Jul 11 18:57:22 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -79,7 +79,7 @@ int		main(int ac, char **av)
     return (EXIT_FAILURE);
   data_serv.verbose = args.verbose;
   data_serv.t = args.exec_time;
-  init_map(args.width, args.height, (args.teams->size * args.nb_per_team));
+  init_map(args.width, args.height, args.teams->size);
   init_teams(&data_serv, &args);
   init_lists(&data_serv);
   stdout_logo();

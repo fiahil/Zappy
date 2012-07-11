@@ -23,6 +23,7 @@ let set_lvl tab =
 
 let rcs_finder tab rcs =
   let nb_rcs tab id = function
+    | Inventory.Joueur     -> tab.(id).Inventory.joueur
     | Inventory.Nourriture -> tab.(id).Inventory.nourriture
     | Inventory.Linemate   -> tab.(id).Inventory.linemate
     | Inventory.Deraumere  -> tab.(id).Inventory.deraumere
@@ -194,6 +195,7 @@ let gather_all_rcs rcs =
       | Inventory.Mendiane   -> gather Inventory.Mendiane tab.(0).Inventory.mendiane
       | Inventory.Phiras     -> gather Inventory.Phiras tab.(0).Inventory.phiras
       | Inventory.Thystame   -> gather Inventory.Thystame tab.(0).Inventory.thystame
+      | _                    -> ()
     in
     set_lvl tab;
     aux tab

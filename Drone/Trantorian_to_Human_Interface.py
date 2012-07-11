@@ -115,6 +115,29 @@ class Bridge:
 	return value
     return None
 
+  def parseCmd(self, raw):
+    """Pretty-print raw commands"""
+
+    if raw == "":
+      sys.exit()
+    if raw[:8] == "{ joueur":
+      #|||||||||||||||
+      # |||||||||||||
+      #  |||||||||||
+      #   |||||||||
+      #    |||||||
+      #     |||||
+      #      |||
+      #       |
+      #[01234567][ 1   5  ]
+      #
+      # Slice {}
+      # Split ,
+      # Split " "
+      # Fill
+      return "VOIR" #TODO
+    return raw
+
   def loop(self, link):
     """Iter on stdin and socket"""
 
@@ -122,13 +145,11 @@ class Bridge:
       rlist = self.monitor()
       if rlist.count(sys.stdin) > 0:
 	data = self.getCmd(sys.stdin)
-	print "-", data
+	print "\033[34m-", data, "\033[00m"
 	link.send(data)
       if rlist.count(link.s) > 0:
 	data = link.recv()
-	if data == "": # TODO Placer dans parse voir
-	  sys.exit()
-	print data # TODO Parse voir
+	print self.parseCmd(data)
 
 ##
 ## Command line options

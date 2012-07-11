@@ -8,6 +8,7 @@
 NAME	=	drone
 
 ML	=	socket.ml		\
+		incantManager.ml	\
 		inventory.ml		\
 		playerInventory.ml	\
 		bridge.ml		\

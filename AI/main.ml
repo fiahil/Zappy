@@ -37,7 +37,6 @@ let main () =
         Socket.connect !host !port;
         Bridge.push (Bridge.Team !team);
 	MapSize.storage ();
-        Random.self_init ();
         Broadcast.autohash !team;
         (*FsmLaunch.set unitest;*)
         FsmLaunch.run ()

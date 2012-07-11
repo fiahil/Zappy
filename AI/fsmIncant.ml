@@ -3,15 +3,18 @@
   * 08.07.2012
   *)
 
+let test_crit_food () =
+  if (!PlayerInventory.piv.Inventory.nourriture > 5) then
+    true
+  else
+    false
+
 let test_food () =
   let to_lvl nb =
-    if (nb > 1) then (*TODO*)
-      false
+    if (!PlayerInventory.piv.Inventory.nourriture > (nb * 6)) then
+      true
     else
-      if (!PlayerInventory.piv.Inventory.nourriture > (nb * 6)) then
-	true
-      else
-	false
+      false
   in
   let aux = function
     | 1 -> to_lvl 1
@@ -107,21 +110,72 @@ let test_mineral () =
 let call_player nb =
   IncantManager.init_incant_id ();
   Broadcast.bc (Broadcast.Icq (!IncantManager.id, !FsmBase.plvl));
+  let pars_bc list = function
+    | Broadcast.Icr (idi, idp, _) ->
+      begin
+	if (idi = !IncantManager.id) then
+	  idp::list
+	else
+	  list
+      end
+    | _ -> list
+  in
+
   let rec loop list =
     Bridge.init ();
-    (* get resp *)
-    if (test_food ()) then
-      loop list
+    if (test_crit_food ()) then
+      begin
+	let come_at_me_bro list =
+	  Broadcast.bc (Broadcast.Ici (!IncantManager.id, list));
+	  let pars_come_info cnt = function
+	    | Broadcast.Icr (idi, idp, rdy) ->
+	      begin
+		if (idi = !IncantManager.id) && (rdy) then
+		  cnt + 1
+		else
+		  cnt
+	      end
+	    | _ -> cnt
+	  in
+
+	  let rec come_loop cnt =
+	    Bridge.init ();
+	    if (test_crit_food ()) then
+	      begin
+		if (cnt = nb) then
+		  true
+		else
+		  begin
+		    Broadcast.bc (Broadcast.Icz !IncantManager.id);
+		    come_loop (pars_come_info cnt (Broadcast.pp (Bridge.take)))
+		  end
+	      end
+	    else
+	      false
+	  in
+
+	  come_loop 0
+	in
+
+	if (List.length list = nb) then
+	  come_at_me_bro list
+	else
+	  loop (pars_bc list (Broadcast.pp (Bridge.take)))
+      end
     else
       false
   in
+
   if (loop [] == false) then
     begin
       Broadcast.bc (Broadcast.Ica !IncantManager.id);
       false
     end
   else
-    true
+    begin
+      Broadcast.bc (Broadcast.Icl !IncantManager.id);
+      true
+    end
 
 let incant () =
   let to_lvl_two () =
@@ -134,7 +188,8 @@ let incant () =
 	Bridge.push (Bridge.Pose Inventory.Linemate);
 	Bridge.push (Bridge.Pose Inventory.Deraumere);
 	Bridge.push (Bridge.Pose Inventory.Sibur);
-	Bridge.push Bridge.Incantation
+	Bridge.push Bridge.Incantation;
+	Broadcast.bc (Broadcast.Icl !IncantManager.id)
       end
     else
       ()

@@ -4,6 +4,7 @@
  *)
 
 type resources =
+  | Joueur
   | Nourriture
   | Linemate
   | Deraumere
@@ -14,6 +15,7 @@ type resources =
 
 type t =
     {
+      joueur : int;
       nourriture : int;
       linemate : int;
       deraumere : int;

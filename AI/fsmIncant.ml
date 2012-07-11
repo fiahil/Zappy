@@ -121,9 +121,9 @@ let call_player nb =
     | _ -> list
   in
 
-  let rec loop list =
+  let rec loop list it =
     Bridge.init ();
-    if (test_crit_food ()) then
+    if (it < 50) then
       begin
 	let come_at_me_bro list =
 	  Broadcast.bc (Broadcast.Ici (!IncantManager.id, list));
@@ -160,13 +160,13 @@ let call_player nb =
 	if (List.length list = nb) then
 	  come_at_me_bro list
 	else
-	  loop (pars_bc list (Broadcast.pp (Bridge.take)))
+	  loop (pars_bc list (Broadcast.pp (Bridge.take))) (it + 1)
       end
     else
       false
   in
 
-  if (loop [] == false) then
+  if ((loop [] 0) == false) then
     begin
       Broadcast.bc (Broadcast.Ica !IncantManager.id);
       false
@@ -194,14 +194,94 @@ let incant () =
     else
       ()
   in
+  let to_lvl_four () =
+    if (call_player 1) then
+      begin
+	Bridge.push (Bridge.Pose Inventory.Linemate);
+	Bridge.push (Bridge.Pose Inventory.Linemate);
+	Bridge.push (Bridge.Pose Inventory.Sibur);
+	Bridge.push (Bridge.Pose Inventory.Phiras);
+	Bridge.push (Bridge.Pose Inventory.Phiras);
+	Bridge.push Bridge.Incantation;
+	Broadcast.bc (Broadcast.Icl !IncantManager.id)
+      end
+    else
+      ()
+  in
+  let to_lvl_five () =
+    if (call_player 3) then
+      begin
+	Bridge.push (Bridge.Pose Inventory.Linemate);
+	Bridge.push (Bridge.Pose Inventory.Deraumere);
+	Bridge.push (Bridge.Pose Inventory.Sibur);
+	Bridge.push (Bridge.Pose Inventory.Sibur);
+	Bridge.push (Bridge.Pose Inventory.Phiras);
+	Bridge.push Bridge.Incantation;
+	Broadcast.bc (Broadcast.Icl !IncantManager.id)
+      end
+    else
+      ()
+  in
+  let to_lvl_six () =
+    if (call_player 3) then
+      begin
+	Bridge.push (Bridge.Pose Inventory.Linemate);
+	Bridge.push (Bridge.Pose Inventory.Deraumere);
+	Bridge.push (Bridge.Pose Inventory.Deraumere);
+	Bridge.push (Bridge.Pose Inventory.Sibur);
+	Bridge.push (Bridge.Pose Inventory.Mendiane);
+	Bridge.push (Bridge.Pose Inventory.Mendiane);
+	Bridge.push (Bridge.Pose Inventory.Mendiane);
+	Bridge.push Bridge.Incantation;
+	Broadcast.bc (Broadcast.Icl !IncantManager.id)
+      end
+    else
+      ()
+  in
+  let to_lvl_seven () =
+    if (call_player 5) then
+      begin
+	Bridge.push (Bridge.Pose Inventory.Linemate);
+	Bridge.push (Bridge.Pose Inventory.Deraumere);
+	Bridge.push (Bridge.Pose Inventory.Deraumere);
+	Bridge.push (Bridge.Pose Inventory.Sibur);
+	Bridge.push (Bridge.Pose Inventory.Sibur);
+	Bridge.push (Bridge.Pose Inventory.Sibur);
+	Bridge.push (Bridge.Pose Inventory.Phiras);
+	Bridge.push Bridge.Incantation;
+	Broadcast.bc (Broadcast.Icl !IncantManager.id)
+      end
+    else
+      ()
+  in
+  let to_lvl_eight () =
+    if (call_player 5) then
+      begin
+	Bridge.push (Bridge.Pose Inventory.Linemate);
+	Bridge.push (Bridge.Pose Inventory.Linemate);
+	Bridge.push (Bridge.Pose Inventory.Deraumere);
+	Bridge.push (Bridge.Pose Inventory.Deraumere);
+	Bridge.push (Bridge.Pose Inventory.Sibur);
+	Bridge.push (Bridge.Pose Inventory.Sibur);
+	Bridge.push (Bridge.Pose Inventory.Phiras);
+	Bridge.push (Bridge.Pose Inventory.Phiras);
+	Bridge.push (Bridge.Pose Inventory.Mendiane);
+	Bridge.push (Bridge.Pose Inventory.Mendiane);
+	Bridge.push (Bridge.Pose Inventory.Thystame);
+	Bridge.push Bridge.Incantation;
+	Broadcast.bc (Broadcast.Icl !IncantManager.id)
+      end
+    else
+      ()
+  in
   let aux = function
     | 1 -> to_lvl_two ()
     | 2 -> to_lvl_three ()
-    | 3 -> ()
-    | 4 -> ()
-    | 5 -> ()
-    | 6 -> ()
-    | 7 -> ()
+    | 3 -> to_lvl_four ()
+    | 4 -> to_lvl_five ()
+    | 5 -> to_lvl_six ()
+    | 6 -> to_lvl_seven ()
+    | 7 -> to_lvl_eight ()
     | _ -> ()
   in
   aux !FsmBase.plvl

@@ -3,8 +3,14 @@
  * 10.07.2012
  *)
 
+let _ = Random.self_init ()
 let ic_fp = ref ""
 let ic_id = ref (Random.int 100000)
+
+let rec garbage = function
+  | Broadcast.Ica fp    -> Broadcast.Ica fp
+  | Broadcast.Err ""    -> Broadcast.pp Bridge.pull
+  | _                   -> Broadcast.pp Bridge.take
 
 let move = function
   | 0           -> true
@@ -70,15 +76,15 @@ let rec moving = function
         if move (Broadcast.gd ()) then
           Broadcast.bc (Broadcast.Icr (!ic_fp, !ic_id, true))
         else
-          moving (Broadcast.pp Bridge.pull)
+          moving ((Broadcast.pp Bridge.pull))
       else
-        moving (Broadcast.pp Bridge.pull)
+        moving ((Broadcast.pp Bridge.pull))
   | Broadcast.Ica fp    ->
       if (fp = !ic_fp) then
         ()
       else
-        moving (Broadcast.pp Bridge.pull)
-  | _                   -> moving (Broadcast.pp Bridge.pull)
+        moving ((Broadcast.pp Bridge.pull))
+  | _                   -> moving ((Broadcast.pp Bridge.pull))
 
 let rec test_ici = function
     | Broadcast.Ici (fp, l)     ->
@@ -125,7 +131,7 @@ let engage () =
     Broadcast.bc (Broadcast.Icr (!ic_fp, !ic_id, false));
     if test_ici (Broadcast.pp Bridge.pull) then
       begin
-        moving (Broadcast.pp Bridge.pull);
+        moving ((Broadcast.pp Bridge.pull));
         test_launch (Broadcast.pp Bridge.pull)
       end
   end

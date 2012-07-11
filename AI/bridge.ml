@@ -343,6 +343,21 @@ let pull = function
   | Pose t              -> gather (Pose t)
   | Team t              -> gather (Team t)
 
+let put_out = function
+  | Broadcast _         ->
+      begin
+        match_me (Socket.recv ());
+        if Queue.is_empty broadcast_q then
+          R_broadcast (RP_broadcast (0, ""))
+        else
+          Queue.pop broadcast_q
+      end
+  | _                   -> R_ok RP_empty
+
+let take = function
+  | Broadcast t         -> put_out (Broadcast t)
+  | _                   -> R_ok RP_empty
+
 let init () =
   let aux = Unix.gettimeofday ()
   in

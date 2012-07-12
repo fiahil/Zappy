@@ -3,6 +3,8 @@
  * 09.07.2012
  *)
 
+let icp = ref []
+
 type t =
   | Hel
   | Err of string

@@ -52,8 +52,13 @@ let rcs_finder tab rcs =
       | -1 -> in_find tab (idx + 1)
       | rt ->
 	begin
-	  set_lvl tab;
-	  rt
+	  if (tab.(rt).Inventory.joueur = 0) then
+	    begin
+	      set_lvl tab;
+	      rt
+	    end
+	  else
+	    in_find tab (idx + 1)
 	end
     in
     if (idx > 8 || (view_lvl.(idx) + 1) >= (Array.length tab)) then

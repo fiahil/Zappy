@@ -3,6 +3,8 @@
  * 09.07.2012
  *)
 
+val icp : (int * int) list ref
+
 type t =
   | Hel
   | Err of string

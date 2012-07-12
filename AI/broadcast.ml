@@ -20,6 +20,7 @@ type t =
   | Rsz of string
   | Rsr of (string * bool)
   | Rse of string
+  | Rsa of string
 
 let hash_team = ref ""
 let last_b = ref (0, "")
@@ -82,6 +83,7 @@ let melt = function
   | Rsc (id, pid)       -> "Rsc " ^ id ^ " " ^ (string_of_int pid)
   | Rsh (id, pid)       -> "Rsh " ^ id ^ " " ^ (string_of_int pid)
   | Rsn (id, l)         -> "Rsn " ^ id ^ " " ^ (string_of_resources_list l)
+  | Rsa id              -> "Rsa " ^ id
   | Err str             -> str
   | _                   -> "Hello World"
 
@@ -181,6 +183,12 @@ let match_rse c l =
   with
     | _                   -> Err c
 
+let match_rsa c l =
+  try
+    Rsa (List.hd l)
+  with
+    | _                   -> Err c
+
 let match_command c = function
   | "Hello"::tail       -> Hel
   | "Icq"::tail         -> match_icq c tail
@@ -195,6 +203,7 @@ let match_command c = function
   | "Rsz"::tail         -> match_rsz c tail
   | "Rsr"::tail         -> match_rsr c tail
   | "Rse"::tail         -> match_rse c tail
+  | "Rsa"::tail         -> match_rsa c tail
   | s                   -> Err c
 
 let pp f =

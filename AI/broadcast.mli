@@ -20,6 +20,7 @@ type t =
   | Rsz of string
   | Rsr of (string * bool)
   | Rse of string
+  | Rsa of string
 
 (*
  * Hash team name

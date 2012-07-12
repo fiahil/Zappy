@@ -15,6 +15,7 @@ ML	=	socket.ml		\
 		exchange_ic.ml		\
 		broadcast_ic.ml		\
 		incantManager.ml	\
+		resourcesManager.ml	\
 		mapSize.ml		\
 		fsmBase.ml		\
 		fsmIncant.ml		\

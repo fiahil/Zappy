@@ -4,9 +4,9 @@
  *)
 
 (*
- * Search a Icq broadcast. Discard others until end of queue is reached
+ * Search a Icq/Rsn broadcast. Discard others until end of queue is reached
  *)
-val test_rcp : Broadcast.t -> int
+val test_rcp : Broadcast.t -> unit
 
 (*
  * Launch Icq rcp mode
@@ -14,3 +14,5 @@ val test_rcp : Broadcast.t -> int
 val engage : unit -> unit
 
 val ic_id : int ref
+val ic_lvl : int ref
+val ic_mode : int ref

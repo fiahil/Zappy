@@ -12,6 +12,7 @@ ML	=	socket.ml		\
 		playerInventory.ml	\
 		bridge.ml		\
 		broadcast.ml		\
+		exchange_ic.ml		\
 		broadcast_ic.ml		\
 		incantManager.ml	\
 		mapSize.ml		\
@@ -27,6 +28,7 @@ MLI	=	socket.mli		\
 		playerInventory.mli	\
 		bridge.mli		\
 		broadcast.mli		\
+		exchange_ic.mli		\
 		broadcast_ic.mli	\
 		fsmBase.mli		\
 		fsmIncant.mli		\

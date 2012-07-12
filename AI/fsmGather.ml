@@ -3,6 +3,8 @@
   * 09.07.2012
   *)
 
+let fls_round = ref 0
+
 let rec gather iv =
   let default = function
     | 0 -> Bridge.push Bridge.Avance
@@ -12,11 +14,13 @@ let rec gather iv =
   let action = function
     | -1 ->
       begin
+	fls_round := !fls_round + 1;
         default (Random.int 3);
         Bridge.push Bridge.Avance
       end
     | ps ->
       begin
+	fls_round := 0;
         FsmBase.move ps;
         FsmBase.gather_all ()
       end

@@ -33,7 +33,7 @@ let test_mineral () =
     if (!PlayerInventory.piv.Inventory.linemate > 0) then
       (true, [])
     else
-      (false, [Inventory.Linemate])
+      (false, [Inventory.Linemate, 1])
   in
   let to_lvl_three () =
     if (!PlayerInventory.piv.Inventory.linemate > 0) &&
@@ -42,8 +42,9 @@ let test_mineral () =
     then
       (true, [])
     else
-      (false, [Inventory.Linemate;
-	       Inventory.Deraumere; Inventory.Sibur])
+      (false, [(Inventory.Linemate, 1 - !PlayerInventory.piv.Inventory.linemate);
+	       (Inventory.Deraumere, 1 - !PlayerInventory.piv.Inventory.deraumere);
+	       (Inventory.Sibur, 1 - !PlayerInventory.piv.Inventory.sibur)])
   in
   let to_lvl_four () =
     if (!PlayerInventory.piv.Inventory.linemate > 1) &&
@@ -52,8 +53,9 @@ let test_mineral () =
     then
       (true, [])
     else
-      (false, [Inventory.Linemate;
-	       Inventory.Sibur; Inventory.Phiras])
+      (false, [(Inventory.Linemate, 2 - !PlayerInventory.piv.Inventory.linemate);
+	       (Inventory.Sibur, 1 - !PlayerInventory.piv.Inventory.sibur);
+	       (Inventory.Phiras, 2 - !PlayerInventory.piv.Inventory.phiras)])
   in
   let to_lvl_five () =
     if (!PlayerInventory.piv.Inventory.linemate > 0) &&
@@ -63,8 +65,10 @@ let test_mineral () =
     then
       (true, [])
     else
-      (false, [Inventory.Linemate; Inventory.Deraumere;
-	       Inventory.Sibur; Inventory.Phiras])
+      (false, [(Inventory.Linemate, 1 - !PlayerInventory.piv.Inventory.linemate);
+	       (Inventory.Deraumere, 1 - !PlayerInventory.piv.Inventory.deraumere);
+	       (Inventory.Sibur, 2 - !PlayerInventory.piv.Inventory.sibur);
+	       (Inventory.Phiras, 1 - !PlayerInventory.piv.Inventory.phiras)])
   in
   let to_lvl_six () =
     if (!PlayerInventory.piv.Inventory.linemate > 0) &&
@@ -74,8 +78,10 @@ let test_mineral () =
     then
       (true, [])
     else
-      (false, [Inventory.Linemate; Inventory.Deraumere;
-	       Inventory.Sibur; Inventory.Mendiane])
+      (false, [(Inventory.Linemate, 1 - !PlayerInventory.piv.Inventory.linemate);
+	       (Inventory.Deraumere, 2 - !PlayerInventory.piv.Inventory.deraumere);
+	       (Inventory.Sibur, 1 - !PlayerInventory.piv.Inventory.sibur);
+	       (Inventory.Mendiane, 3 - !PlayerInventory.piv.Inventory.mendiane)])
   in
   let to_lvl_seven () =
     if (!PlayerInventory.piv.Inventory.linemate > 0) &&
@@ -85,8 +91,10 @@ let test_mineral () =
     then
       (true, [])
     else
-      (false, [Inventory.Linemate; Inventory.Deraumere;
-	       Inventory.Sibur; Inventory.Phiras])
+      (false, [(Inventory.Linemate, 1 - !PlayerInventory.piv.Inventory.linemate);
+	       (Inventory.Deraumere, 2 - !PlayerInventory.piv.Inventory.deraumere);
+	       (Inventory.Sibur, 3 - !PlayerInventory.piv.Inventory.sibur);
+	       (Inventory.Phiras, 1 - !PlayerInventory.piv.Inventory.phiras)])
   in
   let to_lvl_eight () =
     if  (!PlayerInventory.piv.Inventory.linemate > 1) &&
@@ -98,9 +106,12 @@ let test_mineral () =
     then
       (true, [])
     else
-      (false, [Inventory.Linemate; Inventory.Deraumere;
-	       Inventory.Sibur; Inventory.Phiras; Inventory.Mendiane;
-	       Inventory.Thystame])
+      (false, [(Inventory.Linemate, 2 - !PlayerInventory.piv.Inventory.linemate);
+	       (Inventory.Deraumere, 2 - !PlayerInventory.piv.Inventory.deraumere);
+	       (Inventory.Sibur, 2 - !PlayerInventory.piv.Inventory.sibur);
+	       (Inventory.Phiras, 2 - !PlayerInventory.piv.Inventory.phiras);
+	       (Inventory.Mendiane, 2 - !PlayerInventory.piv.Inventory.mendiane);
+	       (Inventory.Thystame, 1 - !PlayerInventory.piv.Inventory.thystame)])
   in
   let aux = function
     | 1 -> to_lvl_two ()
@@ -112,7 +123,15 @@ let test_mineral () =
     | 7 -> to_lvl_eight ()
     | _ -> (false, [])
   in
-  aux !FsmBase.plvl
+  let rec clear_list ret = function
+    | ( res , [])            -> (res, ret)
+    | ( res , (t, nb)::next) ->
+      if (nb < 1) then
+	clear_list ret (res, next)
+      else
+	clear_list ((t, nb)::ret) (res, next)
+  in
+  clear_list [] (aux !FsmBase.plvl)
 
 let call_player nb =
   IncantManager.init_incant_id ();

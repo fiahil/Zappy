@@ -75,7 +75,7 @@ let mineral_find iv =
   Bridge.push (Bridge.Voir);
   let rec aux tab = function
     | []        -> -1
-    | cur::next ->
+    | (cur, _)::next ->
       let test_ret = function
 	| (-1) -> aux tab next
 	| othv -> othv

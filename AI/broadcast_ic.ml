@@ -3,80 +3,20 @@
  * 10.07.2012
  *)
 
-let _ = Random.self_init ()
 let ic_fp = ref ""
 let ic_lvl = ref 0
 let ic_mode = ref 0
-let ic_id = ref (Random.int 100000)
 
 let rec garbage = function
   | Broadcast.Ica fp    -> Broadcast.Ica fp
   | Broadcast.Err ""    -> Broadcast.pp Bridge.pull
   | _                   -> Broadcast.pp Bridge.take
 
-let move = function
-  | 0           -> true
-  | 1           ->
-      begin
-        Bridge.push (Bridge.Avance);
-        false
-      end
-  | 2           ->
-      begin
-        Bridge.push (Bridge.Avance);
-        Bridge.push (Bridge.Gauche);
-        Bridge.push (Bridge.Avance);
-        false
-      end
-  | 3           ->
-      begin
-        Bridge.push (Bridge.Gauche);
-        Bridge.push (Bridge.Avance);
-        false
-      end
-  | 4           ->
-      begin
-        Bridge.push (Bridge.Gauche);
-        Bridge.push (Bridge.Avance);
-        Bridge.push (Bridge.Gauche);
-        Bridge.push (Bridge.Avance);
-        false
-      end
-  | 5           ->
-      begin
-        Bridge.push (Bridge.Gauche);
-        Bridge.push (Bridge.Gauche);
-        Bridge.push (Bridge.Avance);
-        false
-      end
-  | 6           ->
-      begin
-        Bridge.push (Bridge.Droite);
-        Bridge.push (Bridge.Avance);
-        Bridge.push (Bridge.Droite);
-        Bridge.push (Bridge.Avance);
-        false
-      end
-  | 7           ->
-      begin
-        Bridge.push (Bridge.Droite);
-        Bridge.push (Bridge.Avance);
-        false
-      end
-  | 8           ->
-      begin
-        Bridge.push (Bridge.Avance);
-        Bridge.push (Bridge.Droite);
-        Bridge.push (Bridge.Avance);
-        false
-      end
-  | _           -> false
-
 let rec moving = function
   | Broadcast.Icz id    ->
       if id = !ic_fp then
-        if move (Broadcast.gd ()) then
-          Broadcast.bc (Broadcast.Icr (!ic_fp, !ic_id, true))
+        if Utils.move_to (Broadcast.gd ()) then
+          Broadcast.bc (Broadcast.Icr (!ic_fp, !PlayerInventory.pid, true))
         else
           moving ((Broadcast.pp Bridge.pull))
       else
@@ -90,7 +30,7 @@ let rec moving = function
 
 let rec test_ici = function
     | Broadcast.Ici (fp, l)     ->
-        if fp = !ic_fp && List.exists (fun v -> v = !ic_id) l then
+        if fp = !ic_fp && List.exists (fun v -> v = !PlayerInventory.pid) l then
           true
         else if fp = !ic_fp then
           false
@@ -139,7 +79,7 @@ let test_launch v =
 
 let engage () =
   begin
-    Broadcast.bc (Broadcast.Icr (!ic_fp, !ic_id, false));
+    Broadcast.bc (Broadcast.Icr (!ic_fp, !PlayerInventory.pid, false));
     if test_ici (Broadcast.pp Bridge.pull) then
       begin
         moving ((Broadcast.pp Bridge.pull));

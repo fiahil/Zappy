@@ -33,7 +33,7 @@
             <TextBox x:Name="Host" Margin="0,65,0,499" />
             <TextBox x:Name="Port" Margin="0,283,0,281" />
             <!--Créer un bouton pour naviguer vers la deuxième page rendue avec XNA Framework-->
-            <Button Height="100" Content="Change to game page" Click="Button_Click" Margin="0,510,0,33" />
+            <Button Height="100" Content="Launch" Click="Button_Click" Margin="0,510,0,33" />
             
         </Grid>
     </Grid>

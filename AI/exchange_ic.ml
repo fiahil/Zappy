@@ -6,6 +6,9 @@
 let ex_fp = ref ""
 let ex_ll = ref []
 
+let test_rsc = function
+  | _           -> false
+
 let engage () =
   let rec aux = function
     | []                                -> true
@@ -51,4 +54,8 @@ let engage () =
           false
   in
   if aux !ex_ll then
-    ()
+    begin
+      Broadcast.bc (Broadcast.Rsh (!ex_fp, !PlayerInventory.pid));
+      if test_rsc (Broadcast.pp Bridge.pull) then
+        ()
+    end

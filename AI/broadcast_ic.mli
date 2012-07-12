@@ -13,6 +13,5 @@ val test_rcp : Broadcast.t -> unit
  *)
 val engage : unit -> unit
 
-val ic_id : int ref
 val ic_lvl : int ref
 val ic_mode : int ref

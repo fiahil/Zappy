@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Wed Jul 11 19:09:32 2012 ulric lefevre
+** Last update Thu Jul 12 19:53:31 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -29,8 +29,8 @@ void		put_food(int val)
   if (ds->player->size)
     {
       last_val += val;
-      i = last_val / (200 / (ds->player->size));
-      last_val %= (200 / (ds->player->size));
+      i = last_val / (100 / (ds->player->size));
+      last_val %= (100 / (ds->player->size));
     }
   map = get_map(NULL);
   while (i)

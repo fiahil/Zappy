@@ -14,6 +14,7 @@ import sys
 import socket
 import select
 import termios
+import re
 
 ##
 ## Server Connection
@@ -70,30 +71,30 @@ class Bridge:
     attr[3] = attr[3] & ~(termios.ECHO | termios.ICANON)
     termios.tcsetattr(0, termios.TCSANOW, attr)
     self.keyMap = [
-		("0", "connect_nbr"),
-		("1", "voir"),
-		("2", "inventaire"),
-		("3", "expulse"),
-		("4", "gauche"),
-		("5", "avance"),
-		("6", "droite"),
-		("7", "incantation"),
-		("8", "fork"),
-		("9", "broadcast PONEY!"),
-		("a", "prend nourriture"),
+		("m", "connect_nbr"),
+		("k", "voir"),
+		("l", "inventaire"),
+		(":", "expulse"),
+		("a", "gauche"),
+		("z", "avance"),
+		("e", "droite"),
+		("!", "incantation"),
+		("ù", "fork"),
+		(";", "broadcast PONEY!"),
+		("q", "prend nourriture"),
 		("s", "prend linemate"),
 		("d", "prend deraumere"),
 		("f", "prend sibur"),
 		("g", "prend mendiane"),
 		("h", "prend phiras"),
 		("j", "prend thystame"),
-		("z", "pose nourriture"),
+		("w", "pose nourriture"),
 		("x", "pose linemate"),
 		("c", "pose deraumere"),
 		("v", "pose sibur"),
 		("b", "pose mendiane"),
 		("n", "pose phiras"),
-		("m", "pose thystame")]
+		(",", "pose thystame")]
 
   def register(self, descriptor):
     """Register a file descriptor"""

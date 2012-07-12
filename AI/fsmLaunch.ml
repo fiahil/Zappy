@@ -30,12 +30,20 @@ let run () =
     begin
       (* !func !func_param; *)
       Bridge.init ();
+      let treat_mineral = function
+	| (true, _) -> true
+	| (false, ret) ->
+	  begin
+	    FsmGather.gather ret;
+	    false
+	  end
+      in
       if Broadcast_ic.test_rcp (Broadcast.pp Bridge.take) = !FsmBase.plvl then
         Broadcast_ic.engage ()
       else if (FsmIncant.test_food () = false) then
 	FsmSurvival.survival []
-      else if (FsmIncant.test_mineral () = false) then
-	FsmGather.gather [Inventory.Linemate; Inventory.Sibur; Inventory.Deraumere; Inventory.Phiras; Inventory.Mendiane; Inventory.Thystame]
+      else if ((treat_mineral (FsmIncant.test_mineral ())) = false) then
+	()
       else
 	FsmIncant.incant ()
       ;

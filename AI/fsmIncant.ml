@@ -31,27 +31,29 @@ let test_food () =
 let test_mineral () =
   let to_lvl_two () =
     if (!PlayerInventory.piv.Inventory.linemate > 0) then
-      true
+      (true, [])
     else
-      false
+      (false, [Inventory.Linemate])
   in
   let to_lvl_three () =
     if (!PlayerInventory.piv.Inventory.linemate > 0) &&
       (!PlayerInventory.piv.Inventory.deraumere > 0) &&
       (!PlayerInventory.piv.Inventory.sibur > 0)
     then
-      true
+      (true, [])
     else
-      false
+      (false, [Inventory.Linemate;
+	       Inventory.Deraumere; Inventory.Sibur])
   in
   let to_lvl_four () =
     if (!PlayerInventory.piv.Inventory.linemate > 1) &&
       (!PlayerInventory.piv.Inventory.sibur > 0) &&
       (!PlayerInventory.piv.Inventory.phiras > 1)
     then
-      true
+      (true, [])
     else
-      false
+      (false, [Inventory.Linemate;
+	       Inventory.Sibur; Inventory.Phiras])
   in
   let to_lvl_five () =
     if (!PlayerInventory.piv.Inventory.linemate > 0) &&
@@ -59,9 +61,10 @@ let test_mineral () =
       (!PlayerInventory.piv.Inventory.sibur > 1) &&
       (!PlayerInventory.piv.Inventory.phiras > 0)
     then
-      true
+      (true, [])
     else
-      false
+      (false, [Inventory.Linemate; Inventory.Deraumere;
+	       Inventory.Sibur; Inventory.Phiras])
   in
   let to_lvl_six () =
     if (!PlayerInventory.piv.Inventory.linemate > 0) &&
@@ -69,9 +72,10 @@ let test_mineral () =
       (!PlayerInventory.piv.Inventory.sibur > 0) &&
       (!PlayerInventory.piv.Inventory.mendiane > 2)
     then
-      true
+      (true, [])
     else
-      false
+      (false, [Inventory.Linemate; Inventory.Deraumere;
+	       Inventory.Sibur; Inventory.Mendiane])
   in
   let to_lvl_seven () =
     if (!PlayerInventory.piv.Inventory.linemate > 0) &&
@@ -79,9 +83,10 @@ let test_mineral () =
       (!PlayerInventory.piv.Inventory.sibur > 2) &&
       (!PlayerInventory.piv.Inventory.phiras > 0)
     then
-      true
+      (true, [])
     else
-      false
+      (false, [Inventory.Linemate; Inventory.Deraumere;
+	       Inventory.Sibur; Inventory.Phiras])
   in
   let to_lvl_eight () =
     if  (!PlayerInventory.piv.Inventory.linemate > 1) &&
@@ -91,9 +96,11 @@ let test_mineral () =
       (!PlayerInventory.piv.Inventory.mendiane > 1) &&
       (!PlayerInventory.piv.Inventory.thystame > 0)
     then
-      true
+      (true, [])
     else
-      false
+      (false, [Inventory.Linemate; Inventory.Deraumere;
+	       Inventory.Sibur; Inventory.Phiras; Inventory.Mendiane;
+	       Inventory.Thystame])
   in
   let aux = function
     | 1 -> to_lvl_two ()
@@ -103,7 +110,7 @@ let test_mineral () =
     | 5 -> to_lvl_six ()
     | 6 -> to_lvl_seven ()
     | 7 -> to_lvl_eight ()
-    | _ -> false
+    | _ -> (false, [])
   in
   aux !FsmBase.plvl
 

@@ -14,6 +14,12 @@ type t =
   | Ica of string
   | Icl of string
   | Icz of string
+  | Rsn of (string * ((Inventory.resources * int) list))
+  | Rsh of (string * int)
+  | Rsc of (string * int)
+  | Rsz of string
+  | Rsr of (string * bool)
+  | Rse of string
 
 let hash_team = ref ""
 let last_b = ref (0, "")
@@ -37,7 +43,7 @@ let melt = function
   | Icl id              -> "Icl " ^ id
   | Icz id              -> "Icz " ^ id
   | Err str             -> str
-  | _                   -> "Hello THIS IZ PONEEEEEYYYYYY"
+  | _                   -> "Hello World"
 
 let bc m =
   let aux = !hash_team ^ "--"

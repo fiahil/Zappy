@@ -14,6 +14,12 @@ type t =
   | Ica of string
   | Icl of string
   | Icz of string
+  | Rsn of (string * ((Inventory.resources * int) list))
+  | Rsh of (string * int)
+  | Rsc of (string * int)
+  | Rsz of string
+  | Rsr of (string * bool)
+  | Rse of string
 
 (*
  * Hash team name

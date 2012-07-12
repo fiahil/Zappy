@@ -11,6 +11,7 @@ ML	=	socket.ml		\
 		inventory.ml		\
 		playerInventory.ml	\
 		bridge.ml		\
+		utils.ml		\
 		broadcast.ml		\
 		exchange_ic.ml		\
 		broadcast_ic.ml		\

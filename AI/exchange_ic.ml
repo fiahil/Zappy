@@ -51,4 +51,4 @@ let engage () =
           false
   in
   if aux !ex_ll then
-    ()
+    Broadcast.bc (Broadcast.Rsh (!ex_fp, !PlayerInventory.pid))

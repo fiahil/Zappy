@@ -134,15 +134,18 @@ let call_player nb =
       begin
 	let come_at_me_bro list =
 	  Broadcast.bc (Broadcast.Ici (!IncantManager.id, list));
-	  let pars_come_info cnt = function
+	  let rec pars_come_info cnt = function
 	    | Broadcast.Icr (idi, idp, rdy) ->
 	      begin
 		if (idi = !IncantManager.id) && (rdy) then
-		  cnt + 1
-		else
-		  cnt
+		  pars_come_info (cnt + 1) (Broadcast.pp (Bridge.take))
+		else if idi = !IncantManager.id then
+                  pars_come_info cnt (Broadcast.pp (Bridge.take))
+                else
+		  pars_come_info cnt (Broadcast.pp (Bridge.take))
 	      end
-	    | _ -> cnt
+            | Broadcast.Err ""          -> cnt
+	    | _                         -> pars_come_info cnt (Broadcast.pp (Bridge.take))
 	  in
 
 	  let rec come_loop cnt =
@@ -155,10 +158,13 @@ let call_player nb =
 		  begin
 		    Broadcast.bc (Broadcast.Icz !IncantManager.id);
                     Bridge.push (Bridge.Voir);
+                    ignore (Bridge.pull (Bridge.Voir));
                     Bridge.push (Bridge.Voir);
+                    ignore (Bridge.pull (Bridge.Voir));
                     Bridge.push (Bridge.Voir);
+                    ignore (Bridge.pull (Bridge.Voir));
                     Bridge.push (Bridge.Voir);
-                    Bridge.push (Bridge.Voir);
+                    ignore (Bridge.pull (Bridge.Voir));
 		    come_loop (pars_come_info cnt (Broadcast.pp (Bridge.take)))
 		  end
 	      end

@@ -38,7 +38,8 @@ let run () =
 	    false
 	  end
       in
-      if Broadcast_ic.test_rcp (Broadcast.pp Bridge.take) = !FsmBase.plvl then
+      if Broadcast_ic.test_rcp (Broadcast.pp Bridge.take) = !FsmBase.plvl &&
+	!PlayerInventory.piv.Inventory.nourriture > 8 then
         Broadcast_ic.engage ()
       else if (FsmIncant.test_food () = false) then
 	FsmSurvival.survival []

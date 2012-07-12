@@ -171,6 +171,7 @@ namespace PhoneViewer
         private void OnUpdate(object sender, GameTimerEventArgs e)
         {
             // TODO: Ajouter votre logique de mise à jour ici
+            this.server.Update();
             this.map.Update(e);
             try
             {

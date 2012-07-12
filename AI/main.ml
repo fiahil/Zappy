@@ -38,7 +38,6 @@ let main () =
         Bridge.push (Bridge.Team !team);
 	MapSize.storage ();
         Broadcast.autohash !team;
-        (*FsmLaunch.set unitest;*)
         FsmLaunch.run ()
       end
     with

@@ -14,6 +14,12 @@ type t =
   | Ica of string
   | Icl of string
   | Icz of string
+  | Rsn of (string * ((Inventory.resources * int) list))
+  | Rsh of (string * int)
+  | Rsc of (string * int)
+  | Rsz of string
+  | Rsr of (string * bool)
+  | Rse of string
 
 let hash_team = ref ""
 let last_b = ref (0, "")
@@ -29,6 +35,40 @@ let string_of_id_list l =
   in
   aux "" l
 
+let string_of_resources_tuple = function
+  | (Inventory.Joueur, v)       -> "joueur " ^ (string_of_int v)
+  | (Inventory.Nourriture, v)   -> "nourriture " ^ (string_of_int v)
+  | (Inventory.Linemate, v)     -> "linemate " ^ (string_of_int v)
+  | (Inventory.Deraumere, v)    -> "deraumere " ^ (string_of_int v)
+  | (Inventory.Sibur, v)        -> "sibur " ^ (string_of_int v)
+  | (Inventory.Mendiane, v)     -> "mendiane " ^ (string_of_int v)
+  | (Inventory.Phiras, v)       -> "phiras " ^ (string_of_int v)
+  | (Inventory.Thystame, v)     -> "thystame " ^ (string_of_int v)
+
+let string_of_resources_list l =
+  let rec aux str = function
+    | []                -> str
+    | head::[]          -> aux (str ^ (string_of_resources_tuple head)) []
+    | head::tail        -> aux (str ^ (string_of_resources_tuple head) ^ " ") tail
+  in
+  aux "" l
+
+let list_of_resource_string str =
+  let rec aux target l = function
+    | []                            -> l
+    | "joueur"::tail     -> aux Inventory.Joueur l tail
+    | "nourriture"::tail -> aux Inventory.Nourriture l tail
+    | "linemate"::tail   -> aux Inventory.Linemate l tail
+    | "deraumere"::tail  -> aux Inventory.Deraumere l tail
+    | "sibur"::tail      -> aux Inventory.Sibur l tail
+    | "mendiane"::tail   -> aux Inventory.Mendiane l tail
+    | "phiras"::tail     -> aux Inventory.Phiras l tail
+    | "thystame"::tail   -> aux Inventory.Thystame l tail
+    | value::tail        -> 
+        aux target ((target, (int_of_string value))::l) tail
+  in
+  aux Inventory.Joueur [] str
+
 let melt = function
   | Icq (id, lvl)       -> "Icq " ^ id ^ " " ^ (string_of_int lvl)
   | Icr (id, pid, b)    -> "Icr " ^ id ^ " " ^ (string_of_int pid) ^ " " ^ (string_of_bool b)
@@ -36,8 +76,14 @@ let melt = function
   | Ica id              -> "Ica " ^ id
   | Icl id              -> "Icl " ^ id
   | Icz id              -> "Icz " ^ id
+  | Rse id              -> "Rse " ^ id
+  | Rsr (id, b)         -> "Rsr " ^ id ^ " " ^ (string_of_bool b)
+  | Rsz id              -> "Rsz " ^ id
+  | Rsc (id, pid)       -> "Rsc " ^ id ^ " " ^ (string_of_int pid)
+  | Rsh (id, pid)       -> "Rsh " ^ id ^ " " ^ (string_of_int pid)
+  | Rsn (id, l)         -> "Rsn " ^ id ^ " " ^ (string_of_resources_list l)
   | Err str             -> str
-  | _                   -> "Hello THIS IZ PONEEEEEYYYYYY"
+  | _                   -> "Hello World"
 
 let bc m =
   let aux = !hash_team ^ "--"
@@ -99,6 +145,42 @@ let match_icz c l =
   with
     | _                   -> Err c
 
+let match_rsn c l =
+  try
+    Rsn (List.hd l, list_of_resource_string (List.tl l))
+  with
+    | _                   -> Err c
+
+let match_rsh c l =
+  try
+    Rsh (List.hd l, (int_of_string (List.nth l 1)))
+  with
+    | _                   -> Err c
+
+let match_rsc c l =
+  try
+    Rsc (List.hd l, (int_of_string (List.nth l 1)))
+  with
+    | _                   -> Err c
+
+let match_rsz c l =
+  try
+    Rsz (List.hd l)
+  with
+    | _                   -> Err c
+
+let match_rsr c l =
+  try
+    Rsr (List.hd l, (bool_of_string (List.nth l 1)))
+  with
+    | _                   -> Err c
+
+let match_rse c l =
+  try
+    Rse (List.hd l)
+  with
+    | _                   -> Err c
+
 let match_command c = function
   | "Hello"::tail       -> Hel
   | "Icq"::tail         -> match_icq c tail
@@ -107,6 +189,12 @@ let match_command c = function
   | "Ica"::tail         -> match_ica c tail
   | "Icl"::tail         -> match_icl c tail
   | "Icz"::tail         -> match_icz c tail
+  | "Rsn"::tail         -> match_rsn c tail
+  | "Rsh"::tail         -> match_rsh c tail
+  | "Rsc"::tail         -> match_rsc c tail
+  | "Rsz"::tail         -> match_rsz c tail
+  | "Rsr"::tail         -> match_rsr c tail
+  | "Rse"::tail         -> match_rse c tail
   | s                   -> Err c
 
 let pp f =
@@ -137,15 +225,28 @@ let unitest () =
     | Ica id              -> Printf.printf "ICA %s\n" id
     | Icl id              -> Printf.printf "ICL %s\n" id
     | Icz id              -> Printf.printf "ICZ %s\n" id
+    | Rse id              -> Printf.printf "RSE %s\n" id
+    | Rsr (id, b)         -> Printf.printf "RSR %s - %B\n" id b
+    | Rsz id              -> Printf.printf "RSZ %s\n" id
+    | Rsc (id, i)         -> Printf.printf "RSC %s - %d\n" id i
+    | Rsh (id, i)         -> Printf.printf "RSH %s - %d\n" id i
+    | Rsn (id, l)         -> Printf.printf "RSN %s - %d - %d - %d\n" id
+    (snd (List.nth l 0)) (snd (List.nth l 1)) (snd (List.nth l 2))
     | Err str             -> Printf.printf "ERR %s\n" str
     | _                   -> Printf.printf "POOOOONNNNEYYYY\n"
   in
   bc Hel;
-  bc (Icq ("COUCOU", 777));
-  bc (Ici ("COUCOU", [42;5555;666]));
-  bc (Icr ("COUCOU", 888, true));
-  bc (Ica "COUCOU");
+  bc (Rse "KOUKOU");
+  bc (Rsz "KOUKOU");
+  bc (Rsr ("KOUKOU", true));
+  bc (Rsc ("KOUKOU", 1));
+  bc (Rsh ("KOUKOU", 666));
+  bc (Rsn ("KOUKOU",
+  [(Inventory.Nourriture, 777); (Inventory.Phiras, 777); (Inventory.Thystame,
+  888)]));
   Bridge.push (Bridge.Broadcast "CECI EST UNE ERREUR");
+  print_pp (pp Bridge.pull);
+  print_pp (pp Bridge.pull);
   print_pp (pp Bridge.pull);
   print_pp (pp Bridge.pull);
   print_pp (pp Bridge.pull);

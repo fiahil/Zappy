@@ -40,7 +40,6 @@ val inc : t -> resources -> t
  *)
 val dec : t -> resources -> t
 
-
 (*
  * Set a value to a resource
  *)

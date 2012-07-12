@@ -5,6 +5,8 @@
 
 let _ = Random.self_init ()
 let ic_fp = ref ""
+let ic_lvl = ref 0
+let ic_mode = ref 0
 let ic_id = ref (Random.int 100000)
 
 let rec garbage = function
@@ -105,9 +107,16 @@ let rec test_rcp = function
     | Broadcast.Icq (fp, lvl)   ->
         begin
           ic_fp := fp;
-          lvl
+          ic_lvl := lvl;
+          ic_mode := 1
         end
-    | Broadcast.Err ""  -> 0
+    | Broadcast.Rsn (fp, l)     ->
+        begin
+          Exchange_ic.ex_fp := fp;
+          Exchange_ic.ex_ll := l;
+          ic_mode := 2
+        end
+    | Broadcast.Err ""  -> ic_mode := 0
     | _                 -> test_rcp (Broadcast.pp Bridge.take)
 
 let test_launch v = 

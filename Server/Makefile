@@ -5,7 +5,7 @@
 ## Login   <lefevr_u@epitech.net>
 ## 
 ## Started on  Tue Jul  3 13:29:53 2012 ulric lefevre
-## Last update Wed Jul 11 04:24:22 2012 ulric lefevre
+## Last update Thu Jul 12 12:20:43 2012 ulric lefevre
 ##
 
 NAME	=	zappy
@@ -99,6 +99,21 @@ all_list:
 
 $(NAME):	all_list $(OBJ)
 		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
+
+
+install:
+		mkdir -p $(DESTDIR)/usr/bin/
+		@cp $(NAME) $(DESTDIR)/usr/bin/
+		mkdir -p $(DESTDIR)/usr/share/zappy/
+		@cp logo $(DESTDIR)/usr/share/zappy/
+		mkdir -p $(DESTDIR)/usr/share/man/man1/
+		@cp Documents/zappy.1.gz $(DESTDIR)/usr/share/man/man1/
+
+uninstall:
+		@$(RM) $(DESTDIR)/usr/bin/$(NAME)
+		@$(RM) $(DESTDIR)/usr/share/zappy/logo
+		@$(RM) $(DESTDIR)/usr/share/man/man1/zappy.1.gz
+		rmdir -p $(DESTDIR)
 
 clean:
 		@$(RM) $(OBJ)

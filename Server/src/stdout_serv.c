@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:18 2012 ulric lefevre
-** Last update Sat Jul  7 11:18:06 2012 ulric lefevre
+** Last update Thu Jul 12 12:21:50 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -27,7 +27,8 @@ void            stdout_logo()
   ds = get_data_serv(NULL);
   if (ds->verbose)
     {
-      if ((logo = fopen("logo", "r")) != NULL)
+      if ((logo = fopen("/usr/share/zappy/logo", "r")) != NULL
+          || (logo = fopen("logo", "r")) != NULL)
 	{
 	  printf("\033[1;31m");
 	  while (fgets(str, 84, logo) != NULL)

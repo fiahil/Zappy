@@ -77,6 +77,8 @@ let voir_cmd str =
             aux ((Inventory.inc (List.hd bat) Inventory.Phiras)::(List.tl bat)) tail
         | (Str.Text "thystame")::tail       ->
             aux ((Inventory.inc (List.hd bat) Inventory.Thystame)::(List.tl bat)) tail
+        | (Str.Text "joueur")::tail         ->
+            aux ((Inventory.inc (List.hd bat) Inventory.Joueur)::(List.tl bat)) tail
         | (Str.Text _)::tail                -> aux bat tail
         | _::tail                           -> aux bat tail
   in

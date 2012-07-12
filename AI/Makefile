@@ -8,12 +8,12 @@
 NAME	=	drone
 
 ML	=	socket.ml		\
-		incantManager.ml	\
 		inventory.ml		\
 		playerInventory.ml	\
 		bridge.ml		\
 		broadcast.ml		\
 		broadcast_ic.ml		\
+		incantManager.ml	\
 		mapSize.ml		\
 		fsmBase.ml		\
 		fsmIncant.ml		\

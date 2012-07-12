@@ -12,3 +12,5 @@ val test_rcp : Broadcast.t -> int
  * Launch Icq rcp mode
  *)
 val engage : unit -> unit
+
+val ic_id : int ref

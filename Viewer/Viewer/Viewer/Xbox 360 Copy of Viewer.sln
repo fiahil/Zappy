@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xbox 360 Copy of Viewer", "Xbox 360 Copy of Viewer.csproj", "{E90571C7-DFB5-42E2-B01A-6642B59713CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Xbox 360 = Debug|Xbox 360
+		Release|Xbox 360 = Release|Xbox 360
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E90571C7-DFB5-42E2-B01A-6642B59713CE}.Debug|Xbox 360.ActiveCfg = Debug|Xbox 360
+		{E90571C7-DFB5-42E2-B01A-6642B59713CE}.Debug|Xbox 360.Build.0 = Debug|Xbox 360
+		{E90571C7-DFB5-42E2-B01A-6642B59713CE}.Debug|Xbox 360.Deploy.0 = Debug|Xbox 360
+		{E90571C7-DFB5-42E2-B01A-6642B59713CE}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
+		{E90571C7-DFB5-42E2-B01A-6642B59713CE}.Release|Xbox 360.Build.0 = Release|Xbox 360
+		{E90571C7-DFB5-42E2-B01A-6642B59713CE}.Release|Xbox 360.Deploy.0 = Release|Xbox 360
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

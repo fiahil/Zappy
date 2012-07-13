@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:37 2012 ulric lefevre
-** Last update Wed Jul 11 18:57:22 2012 ulric lefevre
+** Last update Fri Jul 13 11:09:07 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -83,8 +83,8 @@ int		main(int ac, char **av)
   init_teams(&data_serv, &args);
   init_lists(&data_serv);
   stdout_logo();
-  set_connection(&data_serv, args.port);
   stdout_data_serv(&args, &data_serv);
+  set_connection(&data_serv, args.port);
   if (run(&data_serv) < 0)
     {
       clean_all(&data_serv);

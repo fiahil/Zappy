@@ -8,12 +8,12 @@ import subprocess
 
 print " - Launching Clients"
 
-host = '127.0.0.1'
+host = '10.19.252.96'
 port = 4242
 
 i = 0
 s = []
-while (i < 1000):
+while (i < 300):
   s.insert(0, socket.socket(socket.AF_INET, socket.SOCK_STREAM))
   try:
     s[0].connect((host, port))
@@ -38,7 +38,7 @@ time.sleep(0.5)
 
 while (True):
   i = 0
-  while (i < 1000):
+  while (i < 300):
     print " - Sending", i, cmd
     s[i].send(cmd + "\n")
     i += 1

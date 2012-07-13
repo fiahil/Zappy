@@ -4,6 +4,7 @@
  *)
 
 type resources =
+  | Joueur
   | Nourriture
   | Linemate
   | Deraumere
@@ -14,6 +15,7 @@ type resources =
 
 type t =
     {
+      joueur : int;
       nourriture : int;
       linemate : int;
       deraumere : int;
@@ -25,6 +27,7 @@ type t =
 
 let empty () =
   {
+    joueur = 0;
     nourriture = 0;
     linemate = 0;
     deraumere = 0;
@@ -35,8 +38,20 @@ let empty () =
   }
 
 let inc iv = function
+  | Joueur              ->
+      {
+        joueur = iv.joueur + 1;
+        nourriture = iv.nourriture;
+        linemate = iv.linemate;
+        deraumere = iv.deraumere;
+        sibur = iv.sibur;
+        mendiane = iv.mendiane;
+        phiras = iv.phiras;
+        thystame = iv.thystame
+      }
   | Nourriture          ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture + 1;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -47,6 +62,7 @@ let inc iv = function
       }
   | Linemate            ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate + 1;
         deraumere = iv.deraumere;
@@ -57,6 +73,7 @@ let inc iv = function
       }
   | Deraumere           ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere + 1;
@@ -67,6 +84,7 @@ let inc iv = function
       }
   | Sibur               ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -77,6 +95,7 @@ let inc iv = function
       }
   | Mendiane            ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -87,6 +106,7 @@ let inc iv = function
       }
   | Phiras              ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -97,6 +117,7 @@ let inc iv = function
       }
   | Thystame            ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -107,8 +128,20 @@ let inc iv = function
       }
 
 let dec iv = function
+  | Joueur              ->
+      {
+        joueur = iv.joueur - 1;
+        nourriture = iv.nourriture;
+        linemate = iv.linemate;
+        deraumere = iv.deraumere;
+        sibur = iv.sibur;
+        mendiane = iv.mendiane;
+        phiras = iv.phiras;
+        thystame = iv.thystame
+      }
   | Nourriture          ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture - 1;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -119,6 +152,7 @@ let dec iv = function
       }
   | Linemate            ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate - 1;
         deraumere = iv.deraumere;
@@ -129,6 +163,7 @@ let dec iv = function
       }
   | Deraumere           ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere - 1;
@@ -139,6 +174,7 @@ let dec iv = function
       }
   | Sibur               ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -149,6 +185,7 @@ let dec iv = function
       }
   | Mendiane            ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -159,6 +196,7 @@ let dec iv = function
       }
   | Phiras              ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -169,6 +207,7 @@ let dec iv = function
       }
   | Thystame            ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -179,8 +218,20 @@ let dec iv = function
       }
 
 let set iv nb = function
+  | Joueur              ->
+      {
+        joueur = nb;
+        nourriture = nb;
+        linemate = iv.linemate;
+        deraumere = iv.deraumere;
+        sibur = iv.sibur;
+        mendiane = iv.mendiane;
+        phiras = iv.phiras;
+        thystame = iv.thystame
+      }
   | Nourriture          ->
       {
+        joueur = iv.joueur;
         nourriture = nb;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -191,6 +242,7 @@ let set iv nb = function
       }
   | Linemate            ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = nb;
         deraumere = iv.deraumere;
@@ -201,6 +253,7 @@ let set iv nb = function
       }
   | Deraumere           ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = nb;
@@ -211,6 +264,7 @@ let set iv nb = function
       }
   | Sibur               ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -221,6 +275,7 @@ let set iv nb = function
       }
   | Mendiane            ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -231,6 +286,7 @@ let set iv nb = function
       }
   | Phiras              ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;
@@ -241,6 +297,7 @@ let set iv nb = function
       }
   | Thystame            ->
       {
+        joueur = iv.joueur;
         nourriture = iv.nourriture;
         linemate = iv.linemate;
         deraumere = iv.deraumere;

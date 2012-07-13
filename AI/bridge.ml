@@ -77,6 +77,8 @@ let voir_cmd str =
             aux ((Inventory.inc (List.hd bat) Inventory.Phiras)::(List.tl bat)) tail
         | (Str.Text "thystame")::tail       ->
             aux ((Inventory.inc (List.hd bat) Inventory.Thystame)::(List.tl bat)) tail
+        | (Str.Text "joueur")::tail         ->
+            aux ((Inventory.inc (List.hd bat) Inventory.Joueur)::(List.tl bat)) tail
         | (Str.Text _)::tail                -> aux bat tail
         | _::tail                           -> aux bat tail
   in
@@ -343,6 +345,21 @@ let pull = function
   | Pose t              -> gather (Pose t)
   | Team t              -> gather (Team t)
 
+let put_out = function
+  | Broadcast _         ->
+      begin
+        match_me (Socket.recv ());
+        if Queue.is_empty broadcast_q then
+          R_broadcast (RP_broadcast (0, ""))
+        else
+          Queue.pop broadcast_q
+      end
+  | _                   -> R_ok RP_empty
+
+let take = function
+  | Broadcast t         -> put_out (Broadcast t)
+  | _                   -> R_ok RP_empty
+
 let init () =
   let aux = Unix.gettimeofday ()
   in
@@ -385,6 +402,8 @@ let push v =
     | Pose Inventory.Phiras         -> Socket.send "pose phiras\n"; 7.0
     | Pose Inventory.Thystame       -> Socket.send "pose thystame\n"; 7.0
     | Team value          -> Socket.send (value ^ "\n"); 0.0
+    | Pose _                        -> 0.0
+    | Prend _                       -> 0.0
   in
     begin
       (if !timeout_t = 0.0 && is_not_team v then
@@ -394,7 +413,7 @@ let push v =
 
     (*
      * Unitest
- *)
+     *)
 let unitest () =
   let rec see bat=
     let rec print_iv bat =

@@ -8,14 +8,18 @@
 NAME	=	drone
 
 ML	=	socket.ml		\
-		incantManager.ml	\
 		inventory.ml		\
 		playerInventory.ml	\
 		bridge.ml		\
+		utils.ml		\
 		broadcast.ml		\
+		incantManager.ml	\
+		resourcesManager.ml	\
 		mapSize.ml		\
 		fsmBase.ml		\
 		fsmIncant.ml		\
+		exchange_ic.ml		\
+		broadcast_ic.ml		\
 		fsmSurvival.ml		\
 		fsmGather.ml		\
 		fsmLaunch.ml		\
@@ -28,6 +32,8 @@ MLI	=	socket.mli		\
 		broadcast.mli		\
 		fsmBase.mli		\
 		fsmIncant.mli		\
+		exchange_ic.mli		\
+		broadcast_ic.mli	\
 		fsmLaunch.mli
 
 CMO	=	$(ML:.ml=.cmo)

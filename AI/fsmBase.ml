@@ -23,6 +23,7 @@ let set_lvl tab =
 
 let rcs_finder tab rcs =
   let nb_rcs tab id = function
+    | Inventory.Joueur     -> tab.(id).Inventory.joueur
     | Inventory.Nourriture -> tab.(id).Inventory.nourriture
     | Inventory.Linemate   -> tab.(id).Inventory.linemate
     | Inventory.Deraumere  -> tab.(id).Inventory.deraumere
@@ -51,8 +52,13 @@ let rcs_finder tab rcs =
       | -1 -> in_find tab (idx + 1)
       | rt ->
 	begin
-	  set_lvl tab;
-	  rt
+	  if (tab.(rt).Inventory.joueur = 0) then
+	    begin
+	      set_lvl tab;
+	      rt
+	    end
+	  else
+	    in_find tab (idx + 1)
 	end
     in
     if (idx > 8 || (view_lvl.(idx) + 1) >= (Array.length tab)) then
@@ -69,7 +75,7 @@ let mineral_find iv =
   Bridge.push (Bridge.Voir);
   let rec aux tab = function
     | []        -> -1
-    | cur::next ->
+    | (cur, _)::next ->
       let test_ret = function
 	| (-1) -> aux tab next
 	| othv -> othv
@@ -194,8 +200,10 @@ let gather_all_rcs rcs =
       | Inventory.Mendiane   -> gather Inventory.Mendiane tab.(0).Inventory.mendiane
       | Inventory.Phiras     -> gather Inventory.Phiras tab.(0).Inventory.phiras
       | Inventory.Thystame   -> gather Inventory.Thystame tab.(0).Inventory.thystame
+      | _                    -> ()
     in
     set_lvl tab;
     aux tab
   in
   auxx (Bridge.voir (Bridge.pull Bridge.Voir)) rcs
+

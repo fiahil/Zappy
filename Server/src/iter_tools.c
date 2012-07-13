@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:41 2012 ulric lefevre
-** Last update Tue Jul 10 22:58:15 2012 ulric lefevre
+** Last update Wed Jul 11 19:01:42 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -53,7 +53,6 @@ void		call_feeder()
 
   val = get_dmg();
   put_food(val);
-  put_rock(val);
 }
 
 void			push_new_action(t_player_action pa)

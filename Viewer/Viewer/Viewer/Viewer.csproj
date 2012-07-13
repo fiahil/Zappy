@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sources\MusicManager.cs" />
     <Compile Include="Sources\Egg.cs" />
     <Compile Include="Sources\Elt.cs" />
     <Compile Include="Sources\Inventory.cs" />

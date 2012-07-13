@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:42 2012 ulric lefevre
-** Last update Sun Jul  8 11:55:37 2012 ulric lefevre
+** Last update Fri Jul 13 12:00:57 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -19,6 +19,7 @@
 
 static void	get_default_names(t_arg *args)
 {
+  list_push_front_ctor(args->teams, "Koala", args->nb_per_team);
   list_push_front_ctor(args->teams, "Poney", args->nb_per_team);
 }
 

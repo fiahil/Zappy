@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:18 2012 ulric lefevre
-** Last update Thu Jul 12 12:21:50 2012 ulric lefevre
+** Last update Fri Jul 13 11:21:46 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -81,7 +81,7 @@ void            stdout_data_serv(t_arg *args, t_data_serv ds)
       printf("\t\tLargeur : %d\n", args->width);
       printf("\t\tHauteur : %d\n", args->height);
       printf("Infos sur les equipes: \n");
-      list_for_each(args->teams, &print_list);
+      list_for_each(ds->teams, &print_list);
       printf("\t\tClients par equipe : %d\033[0m\n\n", args->nb_per_team);
     }
 }

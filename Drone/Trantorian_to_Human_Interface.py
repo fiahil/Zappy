@@ -66,51 +66,49 @@ class Bridge:
   def __init__(self):
     """Set stdin to raw mode"""
 
-    self.fdList = [sys.stdin]
     attr = termios.tcgetattr(0)
     attr[3] = attr[3] & ~(termios.ECHO | termios.ICANON)
     termios.tcsetattr(0, termios.TCSANOW, attr)
     self.keyMap = [
-		("m", "connect_nbr"),
+		(";", "connect_nbr"),
 		("k", "voir"),
 		("l", "inventaire"),
-		(":", "expulse"),
-		("a", "gauche"),
-		("z", "avance"),
-		("e", "droite"),
-		("!", "incantation"),
-		("ù", "fork"),
-		(";", "broadcast PONEY!"),
-		("q", "prend nourriture"),
+		(".", "expulse"),
+		("D", "gauche"),
+		("A", "avance"),
+		("C", "droite"),
+		("/", "incantation"),
+		("'", "fork"),
+		(",", "broadcast PONEY!"),
+		("a", "prend nourriture"),
 		("s", "prend linemate"),
 		("d", "prend deraumere"),
 		("f", "prend sibur"),
 		("g", "prend mendiane"),
 		("h", "prend phiras"),
 		("j", "prend thystame"),
-		("w", "pose nourriture"),
+		("z", "pose nourriture"),
 		("x", "pose linemate"),
 		("c", "pose deraumere"),
 		("v", "pose sibur"),
 		("b", "pose mendiane"),
 		("n", "pose phiras"),
-		(",", "pose thystame")]
+		("m", "pose thystame")]
 
-  def register(self, descriptor):
-    """Register a file descriptor"""
-
-    self.fdList.append(descriptor)
-
-  def monitor(self):
+  def monitor(self, l):
     """Retrieve select informations"""
 
-    (rlist, _, _) = select.select(self.fdList, [], [], 1.0)
+    l.append(sys.stdin)
+    (rlist, _, _) = select.select(l, [], [], 1.0)
     return rlist
 
   def getCmd(self, channel):
     """Associate commands and keys"""
 
-    data = sys.stdin.read(1)
+    data = channel.read(1)
+    if data == '\033':
+      data = channel.read(1)
+      data = channel.read(1)
     for (key, value) in self.keyMap:
       if key == data:
 	return value
@@ -122,6 +120,25 @@ class Bridge:
     if raw == "":
       sys.exit()
     if raw[:8] == "{ joueur":
+      raw = raw[2:-1]
+      lines = re.split(re.compile(","), raw)
+      print raw
+      vision = []
+      for elt in lines:
+	tmp = re.split(re.compile(" "), elt)
+	val = (len(re.findall(re.compile("joueur"), elt)),
+	    len(re.findall(re.compile("nourriture"), elt)),
+	    len(re.findall(re.compile("linemate"), elt)),
+	    len(re.findall(re.compile("deraumere"), elt)),
+	    len(re.findall(re.compile("sibur"), elt)),
+	    len(re.findall(re.compile("mendiane"), elt)),
+	    len(re.findall(re.compile("phiras"), elt)),
+	    len(re.findall(re.compile("thystame"), elt)))
+	vision.append(val) #1234
+      for elt in vision:
+	print elt
+      while len(vision) > 0:
+	print vision.pop()
       #|||||||||||||||
       # |||||||||||||
       #  |||||||||||
@@ -143,7 +160,7 @@ class Bridge:
     """Iter on stdin and socket"""
 
     while True:
-      rlist = self.monitor()
+      rlist = self.monitor([l.s])
       if rlist.count(sys.stdin) > 0:
 	data = self.getCmd(sys.stdin)
 	print "\033[34m-", data, "\033[00m"
@@ -191,7 +208,6 @@ if __name__ == "__main__":
   try:
     l = Link(parseCommandLine())
     b = Bridge()
-    b.register(l.s)
     b.loop(l)
   except KeyboardInterrupt:
     pass

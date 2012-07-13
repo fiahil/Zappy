@@ -165,6 +165,7 @@ let call_player nb =
                     ignore (Bridge.pull (Bridge.Voir));
                     Bridge.push (Bridge.Voir);
                     ignore (Bridge.pull (Bridge.Voir));
+                    Bridge.init ();
 		    come_loop (pars_come_info cnt (Broadcast.pp (Bridge.take)))
 		  end
 	      end
@@ -197,12 +198,14 @@ let call_player nb =
 
 let incant () =
   let to_lvl_two () =
+    FsmBase.gather_all ();
     Bridge.push (Bridge.Pose Inventory.Linemate);
     Bridge.push Bridge.Incantation
   in
   let to_lvl_three () =
     if (call_player 1) then
       begin
+        FsmBase.gather_all ();
 	Bridge.push (Bridge.Pose Inventory.Linemate);
 	Bridge.push (Bridge.Pose Inventory.Deraumere);
 	Bridge.push (Bridge.Pose Inventory.Sibur);
@@ -215,6 +218,7 @@ let incant () =
   let to_lvl_four () =
     if (call_player 1) then
       begin
+        FsmBase.gather_all ();
 	Bridge.push (Bridge.Pose Inventory.Linemate);
 	Bridge.push (Bridge.Pose Inventory.Linemate);
 	Bridge.push (Bridge.Pose Inventory.Sibur);
@@ -229,6 +233,7 @@ let incant () =
   let to_lvl_five () =
     if (call_player 3) then
       begin
+        FsmBase.gather_all ();
 	Bridge.push (Bridge.Pose Inventory.Linemate);
 	Bridge.push (Bridge.Pose Inventory.Deraumere);
 	Bridge.push (Bridge.Pose Inventory.Sibur);
@@ -243,6 +248,7 @@ let incant () =
   let to_lvl_six () =
     if (call_player 3) then
       begin
+        FsmBase.gather_all ();
 	Bridge.push (Bridge.Pose Inventory.Linemate);
 	Bridge.push (Bridge.Pose Inventory.Deraumere);
 	Bridge.push (Bridge.Pose Inventory.Deraumere);
@@ -259,6 +265,7 @@ let incant () =
   let to_lvl_seven () =
     if (call_player 5) then
       begin
+        FsmBase.gather_all ();
 	Bridge.push (Bridge.Pose Inventory.Linemate);
 	Bridge.push (Bridge.Pose Inventory.Deraumere);
 	Bridge.push (Bridge.Pose Inventory.Deraumere);
@@ -275,6 +282,7 @@ let incant () =
   let to_lvl_eight () =
     if (call_player 5) then
       begin
+        FsmBase.gather_all ();
 	Bridge.push (Bridge.Pose Inventory.Linemate);
 	Bridge.push (Bridge.Pose Inventory.Linemate);
 	Bridge.push (Bridge.Pose Inventory.Deraumere);

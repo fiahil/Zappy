@@ -15,18 +15,20 @@ let rec garbage = function
 let rec moving = function
   | Broadcast.Icz id    ->
       if id = !ic_fp then
-        if Utils.move_to (Broadcast.gd ()) then
+        if FsmIncant.test_crit_food () && Utils.move_to (Broadcast.gd ()) then
           Broadcast.bc (Broadcast.Icr (!ic_fp, !PlayerInventory.pid, true))
-        else
+        else if FsmIncant.test_crit_food () then
           moving ((Broadcast.pp Bridge.pull))
-      else
+      else if FsmIncant.test_crit_food () then
         moving ((Broadcast.pp Bridge.pull))
   | Broadcast.Ica fp    ->
       if (fp = !ic_fp) then
         ()
-      else
+      else if FsmIncant.test_crit_food () then
         moving ((Broadcast.pp Bridge.pull))
-  | _                   -> moving ((Broadcast.pp Bridge.pull))
+  | _                   ->
+      if FsmIncant.test_crit_food () then
+        moving ((Broadcast.pp Bridge.pull))
 
 let rec test_ici = function
     | Broadcast.Ici (fp, l)     ->

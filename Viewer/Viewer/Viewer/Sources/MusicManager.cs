@@ -22,10 +22,10 @@ namespace Viewer.Sources
 
             this.cm = cm;
             this.playlist = new List<Song>();
-            for (int i = 1; i < 23; ++i)
+            for (int i = 1; i < 6; ++i)
                 this.playlist.Add(cm.Load<Song>("Music/track" + i));
             this.active = true;
-            curr = rand.Next(0, 23);
+            curr = rand.Next(0, 6);
         }
 
         public void Mute()

@@ -5,9 +5,10 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:00 2012 ulric lefevre
-** Last update Fri Jul 13 11:14:36 2012 ulric lefevre
+** Last update Fri Jul 13 17:12:59 2012 ulric lefevre
 */
 
+#include	<math.h>
 #include	<stdio.h>
 #include	<stdlib.h>
 
@@ -38,15 +39,18 @@ static void	get_position(int dim, t_map map, int (*coord)[])
   (*coord)[1] = pos % map->size_x;
 }
 
-static void	fill_res_stock(int nb_team, int (*stock)[])
+static void	fill_res_stock(t_map map, int nb_team, int (*stock)[])
 {
-  (*stock)[FOOD] = nb_team * 100;
-  (*stock)[LINEMATE] = nb_team * 9;
-  (*stock)[DERAUMERE] = nb_team * 8;
-  (*stock)[SIBUR] = nb_team * 10;
-  (*stock)[MENDIANE] = nb_team * 5;
-  (*stock)[PHIRAS] = nb_team * 6;
-  (*stock)[THYSTAME] = nb_team * 1;
+  int		n;
+
+  n = ceil((float)map->size_x / 10.0) * ceil((float)map->size_y / 10.0);
+  (*stock)[FOOD] = nb_team * 100 * n;
+  (*stock)[LINEMATE] = nb_team * 9 * n;
+  (*stock)[DERAUMERE] = nb_team * 8 * n;
+  (*stock)[SIBUR] = nb_team * 10 * n;
+  (*stock)[MENDIANE] = nb_team * 5 * n;
+  (*stock)[PHIRAS] = nb_team * 6 * n;
+  (*stock)[THYSTAME] = nb_team * 1 * n;
 }
 
 static void	put_res_on_map(t_map map, int (*stock)[], int coord[])
@@ -77,7 +81,7 @@ void		fill_map(t_map map, int dim, int nb_team)
   int		coord[2];
   int		nb_res;
 
-  fill_res_stock(nb_team, &stock);
+  fill_res_stock(map, nb_team, &stock);
   counts[0] = -1;
   while (count_res(stock))
     {

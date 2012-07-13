@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Thu Jul 12 19:53:31 2012 ulric lefevre
+** Last update Sat Jul 14 00:44:02 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -23,14 +23,16 @@ void		put_food(int val)
   int		i;
   t_u_pos	pos;
   t_map		map;
+  int		div;
 
   ds = get_data_serv(NULL);
   i = 0;
   if (ds->player->size)
     {
-      last_val += val;
-      i = last_val / (100 / (ds->player->size));
-      last_val %= (100 / (ds->player->size));
+      last_val = last_val + val;
+      div = (ds->player->size > 100) ? (100) : (ds->player->size);
+      i = last_val / (100 / div);
+      last_val %= (100 / div);
     }
   map = get_map(NULL);
   while (i)
@@ -50,14 +52,16 @@ void		put_rock(int val)
   int		i;
   t_u_pos	pos;
   t_map		map;
+  int		div;
 
   ds = get_data_serv(NULL);
   i = 0;
   if (ds->player->size)
     {
       last_val += val;
-      i = last_val / (1000 / (ds->player->size));
-      last_val %= (1000 / (ds->player->size));
+      div = (ds->player->size > 100) ? (100) : (ds->player->size);
+      i = last_val / (1000 / div);
+      last_val %= (1000 / div);
     }
   map = get_map(NULL);
   while (i)

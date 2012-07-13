@@ -184,7 +184,6 @@ let call_player nb =
                     ignore (Bridge.pull (Bridge.Voir));
                     Bridge.push (Bridge.Voir);
                     ignore (Bridge.pull (Bridge.Voir));
-                    Bridge.init ();
 		    come_loop (pars_come_info cnt (Broadcast.pp (Bridge.take)))
 		  end
 	      end

@@ -76,7 +76,6 @@
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sources\AsynchronousSocketClient.cs" />
     <Compile Include="Sources\Egg.cs" />
     <Compile Include="Sources\Elt.cs" />
     <Compile Include="Sources\Inventory.cs" />

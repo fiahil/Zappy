@@ -203,7 +203,7 @@ let call_player nb =
       false
   in
 
-  if ((loop [] 0) == false) then
+  if ((loop [] 0) = false) then
     begin
       Broadcast.bc (Broadcast.Ica !IncantManager.id);
       false

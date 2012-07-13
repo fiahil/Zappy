@@ -40,7 +40,11 @@ let drop_all l =
   in
   let rec auxx = function
     | []                -> ()
-    | (v, n)::tail      -> aux v n
+    | (v, n)::tail      ->
+        begin
+          aux v n;
+          auxx tail
+        end
   in
   auxx l
 

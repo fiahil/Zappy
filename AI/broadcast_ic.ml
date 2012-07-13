@@ -14,6 +14,7 @@ let rec garbage = function
 
 let rec moving = function
   | Broadcast.Icz id    ->
+      Bridge.init ();
       if id = !ic_fp then
         if Utils.move_to (Broadcast.gd ()) then
           Broadcast.bc (Broadcast.Icr (!ic_fp, !PlayerInventory.pid, true))
@@ -22,6 +23,7 @@ let rec moving = function
       else
         moving ((Broadcast.pp Bridge.pull))
   | Broadcast.Ica fp    ->
+      Bridge.init ();
       if (fp = !ic_fp) then
         ()
       else

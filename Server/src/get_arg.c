@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:16:53 2012 ulric lefevre
-** Last update Sat Jul  7 11:38:46 2012 ulric lefevre
+** Last update Fri Jul 13 11:59:27 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -42,6 +42,7 @@ int		get_arg(int ac, char **av, t_arg *args)
   char		opt;
 
   init_arg(args);
+  get_opt_n(av, args);
   opterr = 0;
   while ((opt = getopt(ac, av, "vc:n:p:t:x:y:")) != EOF)
     if (opt != 'n' && opt == '?')
@@ -59,6 +60,5 @@ int		get_arg(int ac, char **av, t_arg *args)
 	    ++i;
 	  }
       }
-  get_opt_n(av, args);
   return (0);
 }

@@ -8,14 +8,16 @@ let ex_ll = ref []
 
 let rec moving = function
   | Broadcast.Rsz id    ->
+      Bridge.init ();
       if id = !ex_fp then
         if Utils.move_to (Broadcast.gd ()) then
           Broadcast.bc (Broadcast.Rsr (!ex_fp, true))
-        else
+        else 
           moving (Broadcast.pp Bridge.pull)
         else
           moving (Broadcast.pp Bridge.pull)
   | Broadcast.Rsa fp    ->
+      Bridge.init ();
       if (fp = !ex_fp) then
         ()
       else
@@ -55,42 +57,42 @@ let engage () =
   let rec aux = function
     | []                                -> true
     | (Inventory.Nourriture, v)::tail   ->
-        if !PlayerInventory.piv.Inventory.nourriture = v then
+        if !PlayerInventory.piv.Inventory.nourriture >= v then
           aux tail
       else
         false
     | (Inventory.Linemate, v)::tail     ->
-        if !PlayerInventory.piv.Inventory.linemate = v then
+        if !PlayerInventory.piv.Inventory.linemate >= v then
           aux tail
         else
           false
     | (Inventory.Deraumere, v)::tail    ->
-        if !PlayerInventory.piv.Inventory.deraumere = v then
+        if !PlayerInventory.piv.Inventory.deraumere >= v then
           aux tail
         else
           false
     | (Inventory.Sibur, v)::tail        ->
-        if !PlayerInventory.piv.Inventory.sibur = v then
+        if !PlayerInventory.piv.Inventory.sibur >= v then
           aux tail
         else
           false
     | (Inventory.Mendiane, v)::tail     ->
-        if !PlayerInventory.piv.Inventory.mendiane = v then
+        if !PlayerInventory.piv.Inventory.mendiane >= v then
           aux tail
         else
           false
     | (Inventory.Phiras, v)::tail       ->
-        if !PlayerInventory.piv.Inventory.phiras = v then
+        if !PlayerInventory.piv.Inventory.phiras >= v then
           aux tail
         else
           false
     | (Inventory.Thystame, v)::tail     ->
-        if !PlayerInventory.piv.Inventory.thystame = v then
+        if !PlayerInventory.piv.Inventory.thystame >= v then
           aux tail
         else
           false
     | (Inventory.Joueur, v)::tail       ->
-        if !PlayerInventory.piv.Inventory.joueur = v then
+        if !PlayerInventory.piv.Inventory.joueur >= v then
           aux tail
         else
           false

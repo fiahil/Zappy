@@ -13,13 +13,13 @@ ML	=	socket.ml		\
 		bridge.ml		\
 		utils.ml		\
 		broadcast.ml		\
-		exchange_ic.ml		\
-		broadcast_ic.ml		\
 		incantManager.ml	\
 		resourcesManager.ml	\
 		mapSize.ml		\
 		fsmBase.ml		\
 		fsmIncant.ml		\
+		exchange_ic.ml		\
+		broadcast_ic.ml		\
 		fsmSurvival.ml		\
 		fsmGather.ml		\
 		fsmLaunch.ml		\
@@ -30,10 +30,10 @@ MLI	=	socket.mli		\
 		playerInventory.mli	\
 		bridge.mli		\
 		broadcast.mli		\
-		exchange_ic.mli		\
-		broadcast_ic.mli	\
 		fsmBase.mli		\
 		fsmIncant.mli		\
+		exchange_ic.mli		\
+		broadcast_ic.mli	\
 		fsmLaunch.mli
 
 CMO	=	$(ML:.ml=.cmo)

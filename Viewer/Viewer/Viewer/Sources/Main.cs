@@ -16,6 +16,7 @@ namespace Viewer.Sources
     /// </summary>
     public class Main : Microsoft.Xna.Framework.Game
     {
+        MusicManager mm;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Map map;
@@ -160,7 +161,8 @@ namespace Viewer.Sources
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
+            this.mm = new MusicManager(this.Content);
             this.sm = new SpriteManager(this.Content);
             this.inventory_page = sm.GetSprite("Tiles/map_inventory");
             this.team_detail = sm.GetSprite("Tiles/team_detail");
@@ -192,6 +194,8 @@ namespace Viewer.Sources
 
             base.Update(gameTime);
 
+            mm.Update();
+
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) || !server.IsConnected() || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Y))
                 this.Exit();
 
@@ -201,6 +205,9 @@ namespace Viewer.Sources
             this.dot.Y -= test.Y;
 
             this.plist.RemoveAll(delegate(Player p) { return p.State == Player.States.FINISHED; });
+
+            if (oldState.IsKeyUp(Keys.C) && Keyboard.GetState().IsKeyDown(Keys.C))
+                mm.Mute();
 
             if ((oldState.IsKeyUp(Keys.PageDown) && Keyboard.GetState().IsKeyDown(Keys.PageDown)) ||
                 GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.RightTrigger))

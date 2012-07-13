@@ -20,7 +20,6 @@ let set_lvl tab =
 
 (* Find function *)
 
-
 let rcs_finder tab rcs =
   let nb_rcs tab id = function
     | Inventory.Joueur     -> tab.(id).Inventory.joueur
@@ -32,19 +31,19 @@ let rcs_finder tab rcs =
     | Inventory.Phiras     -> tab.(id).Inventory.phiras
     | Inventory.Thystame   -> tab.(id).Inventory.thystame
   in
-  let rec line_finder tab idx idxl =
-    let test_line tab idx idxl (left, right) =
+  let rec line_finder coef tab idx idxl =
+    let test_line coef tab idx idxl (left, right) =
       if (left != 0) then
-	view_lvl.(idx) + idxl
+	view_lvl.(idx) + (idxl * coef)
       else if (right != 0) then
-	view_lvl.(idx) - idxl
+	view_lvl.(idx) - (idxl * coef)
       else
-	line_finder tab idx (idxl + 1)
+	line_finder coef tab idx (idxl + 1)
     in
     if (idxl > idx) then
       (-1)
     else
-      test_line tab idx idxl
+      test_line coef tab idx idxl
 	(nb_rcs tab (view_lvl.(idx) + idxl) rcs, nb_rcs tab (view_lvl.(idx) - idxl) rcs)
   in
   let rec in_find tab idx =
@@ -67,7 +66,10 @@ let rcs_finder tab rcs =
 	(-1)
       end
     else
-      test_ret tab idx (line_finder tab idx 0)
+      if ((Random.int 2) = 0) then
+	test_ret tab idx (line_finder (-1) tab idx 0)
+      else
+	test_ret tab idx (line_finder (1) tab idx 0)
   in
   in_find tab 0
 
@@ -75,7 +77,7 @@ let mineral_find iv =
   Bridge.push (Bridge.Voir);
   let rec aux tab = function
     | []        -> -1
-    | cur::next ->
+    | (cur, _)::next ->
       let test_ret = function
 	| (-1) -> aux tab next
 	| othv -> othv
@@ -206,3 +208,4 @@ let gather_all_rcs rcs =
     aux tab
   in
   auxx (Bridge.voir (Bridge.pull Bridge.Voir)) rcs
+

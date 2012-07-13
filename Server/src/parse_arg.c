@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:14:40 2012 ulric lefevre
-** Last update Wed Jul 11 18:52:44 2012 ulric lefevre
+** Last update Fri Jul 13 11:38:32 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -19,7 +19,11 @@ int		parse_arg(t_arg *args)
       args->width < 2 ||
       args->height < 2 ||
       args->nb_per_team < 1 ||
-      args->exec_time < 1)
-    return (-1);
+      args->exec_time < 1 ||
+      args->teams->size < 2)
+    {
+      usage();
+      return (-1);
+    }
   return (0);
 }

@@ -14,6 +14,7 @@ import sys
 import socket
 import select
 import termios
+import re
 
 ##
 ## Server Connection
@@ -65,21 +66,23 @@ class Bridge:
   def __init__(self):
     """Set stdin to raw mode"""
 
-    self.fdList = [sys.stdin]
+    self.vision = ()
+    self.gather = False
+    self.lvl = 1
     attr = termios.tcgetattr(0)
     attr[3] = attr[3] & ~(termios.ECHO | termios.ICANON)
     termios.tcsetattr(0, termios.TCSANOW, attr)
     self.keyMap = [
-		("0", "connect_nbr"),
-		("1", "voir"),
-		("2", "inventaire"),
-		("3", "expulse"),
-		("4", "gauche"),
-		("5", "avance"),
-		("6", "droite"),
-		("7", "incantation"),
-		("8", "fork"),
-		("9", "broadcast PONEY!"),
+		(";", "connect_nbr"),
+		("k", "voir"),
+		("l", "inventaire"),
+		(".", "expulse"),
+		("D", "gauche"),
+		("A", "avance"),
+		("C", "droite"),
+		("/", "incantation"),
+		("'", "fork"),
+		(",", "broadcast PONEY!"),
 		("a", "prend nourriture"),
 		("s", "prend linemate"),
 		("d", "prend deraumere"),
@@ -93,63 +96,217 @@ class Bridge:
 		("v", "pose sibur"),
 		("b", "pose mendiane"),
 		("n", "pose phiras"),
-		("m", "pose thystame")]
+		("m", "pose thystame"),
+		("q", "gather_all"),
+		("w", "require_stones"),
+		("e", "broadcast @all: IMMEDIATE VORTEX")]
 
-  def register(self, descriptor):
-    """Register a file descriptor"""
-
-    self.fdList.append(descriptor)
-
-  def monitor(self):
+  def monitor(self, l):
     """Retrieve select informations"""
 
-    (rlist, _, _) = select.select(self.fdList, [], [], 1.0)
+    l.append(sys.stdin)
+    (rlist, _, _) = select.select(l, [], [], 1.0)
     return rlist
 
   def getCmd(self, channel):
     """Associate commands and keys"""
 
-    data = sys.stdin.read(1)
+    data = channel.read(1)
+    if data == '\033':
+      data = channel.read(1)
+      data = channel.read(1)
     for (key, value) in self.keyMap:
       if key == data:
 	return value
     return None
 
-  def parseCmd(self, raw):
-    """Pretty-print raw commands"""
+  def printOrNot(self, st):
+    """Disable print 0"""
+
+    if st == "0":
+      return " "
+    else:
+      return st
+
+  def printMe(self, line):
+    """Print one line"""
+
+    while len(line) > 0:
+      print "[\033[00m"+self.printOrNot(str(line[0][0]))+"\033[00m"+\
+	"\033[36m"+self.printOrNot(str(line[0][1]))+"\033[00m"+\
+	"\033[30;01m"+self.printOrNot(str(line[0][2]))+"\033[00m"+\
+	"\033[32;01m"+self.printOrNot(str(line[0][3]))+"\033[00m"+\
+	"\033[33;01m"+self.printOrNot(str(line[0][4]))+"\033[00m"+\
+	"\033[00;01m"+self.printOrNot(str(line[0][5]))+"\033[00m"+\
+	"\033[34;01m"+self.printOrNot(str(line[0][6]))+"\033[00m"+\
+	"\033[31;01m"+self.printOrNot(str(line[0][7]))+"\033[00m"+"]",
+      line = line[1:]
+
+  def printRcs(self, lvl):
+    """Print stones"""
+
+    print "\033[32mNiveau actuel :", lvl
+    if lvl == 1:
+      print "1 Linemate\033[00m"
+    elif lvl == 2:
+      print "2 Joueurs - 1 Linemate - 1 Deraumere - 1 Sibur\033[00m"
+    elif lvl == 3:
+      print "2 Joueurs - 2 Linemate - 1 Sibur - 2 Phiras\033[00m"
+    elif lvl == 4:
+      print "4 Joueurs - 1 Linemate - 1 Deraumere - 2 Sibur - 1 Phiras\033[00m"
+    elif lvl == 5:
+      print "4 Joueurs - 1 Linemate - 2 Deraumere - 1 Sibur - 3 Mendiane\033[00m"
+    elif lvl == 6:
+      print "6 Joueurs - 1 Linemate - 2 Deraumere - 3 Sibur - 1 Phiras\033[00m"
+    elif lvl == 7:
+      print "6 Joueurs - 2 Linemate - 2 Deraumere - 2 Sibur - 2 Mendiane - 2 Phiras - 1 Thystame\033[00m"
+    elif lvl == 8:
+      print "Elevation maximale atteinte\033[00m"
+
+  def move_to(self, n, link):
+    """Move to emiter"""
+
+    print "\033[32mIncomming transmission!"
+    if n == 0:
+      print "I'm here captain!\033[00m"
+    elif n == 1:
+      print "Moving to North\033[00m"
+      link.send("avance")
+    elif n == 2:
+      print "Moving to NW\033[00m"
+      link.send("avance\ngauche\navance")
+    elif n == 3:
+      print "Moving to West\033[00m"
+      link.send("gauche\navance")
+    elif n == 4:
+      print "Moving to SW\033[00m"
+      link.send("gauche\navance\ngauche\navance")
+    elif n == 5:
+      print "Moving to South\033[00m"
+      link.send("gauche\ngauche\navance")
+    elif n == 6:
+      print "Moving to SE\033[00m"
+      link.send("droite\navance\ndroite\navance")
+    elif n == 7:
+      print "Moving to East\033[00m"
+      link.send("droite\navance")
+    elif n == 8:
+      print "Moving to NE\033[00m"
+      link.send("avance\ndroite\navance")
+
+  def parseCmd(self, raw, link):
+    """
+    Pretty-print raw commands
+      |||||||||||||||
+       |||||||||||||
+        |||||||||||
+         |||||||||
+          |||||||
+           |||||
+            |||
+             |
+      [01234567][ 1   5  ]
+    """
 
     if raw == "":
       sys.exit()
+    if raw[10:] == "@all: IMMEDIATE VORTEX":
+      self.move_to(int(raw[8:9]), link)
+      return None
     if raw[:8] == "{ joueur":
-      #|||||||||||||||
-      # |||||||||||||
-      #  |||||||||||
-      #   |||||||||
-      #    |||||||
-      #     |||||
-      #      |||
-      #       |
-      #[01234567][ 1   5  ]
-      #
-      # Slice {}
-      # Split ,
-      # Split " "
-      # Fill
-      return "VOIR" #TODO
+      raw = raw[2:-1]
+      lines = re.split(re.compile(","), raw)
+      vision = []
+      for elt in lines:
+	tmp = re.split(re.compile(" "), elt)
+	val = (len(re.findall(re.compile("joueur"), elt)),
+	    len(re.findall(re.compile("nourriture"), elt)),
+	    len(re.findall(re.compile("linemate"), elt)),
+	    len(re.findall(re.compile("deraumere"), elt)),
+	    len(re.findall(re.compile("sibur"), elt)),
+	    len(re.findall(re.compile("mendiane"), elt)),
+	    len(re.findall(re.compile("phiras"), elt)),
+	    len(re.findall(re.compile("thystame"), elt)))
+	vision.append(val)
+      i = len(lines)
+      self.vision = vision[0]
+      log = [0, 1]
+      if i > 4:
+	self.lvl = 2
+	log.append(4)
+      if i > 9:
+	self.lvl = 3
+	log.append(9)
+      if i > 16:
+	self.lvl = 4
+	log.append(16)
+      if i > 25:
+	self.lvl = 5
+	log.append(25)
+      if i > 36:
+	self.lvl = 6
+	log.append(36)
+      if i > 49:
+	self.lvl = 7
+	log.append(49)
+      if i > 64:
+	self.lvl = 8
+	log.append(64)
+      j = 0
+      while len(vision) > 0:
+	val = log.pop()
+	if j != 0:
+	  print "           " * j,
+	else:
+	  print "",
+	self.printMe(vision[val:])
+	vision = vision[:-(len(vision) - val)]
+	print ""
+	j += 1
+      if self.gather == True:
+	data = self.gatherAll(link)
+      return None
     return raw
+
+  def gatherRcs(self, rcs, n, link):
+    """Gather a given resource"""
+
+    while n > 0:
+      link.send(rcs)
+      n -= 1
+
+  def gatherAll(self, link):
+    """Gather all resources on a square"""
+
+    self.gatherRcs("prend nourriture", self.vision[1], link)
+    self.gatherRcs("prend linemate", self.vision[2], link)
+    self.gatherRcs("prend deraumere", self.vision[3], link)
+    self.gatherRcs("prend sibur", self.vision[4], link)
+    self.gatherRcs("prend mendiane", self.vision[5], link)
+    self.gatherRcs("prend phiras", self.vision[6], link)
+    self.gatherRcs("prend thystame", self.vision[7], link)
+    self.gather = False
 
   def loop(self, link):
     """Iter on stdin and socket"""
 
     while True:
-      rlist = self.monitor()
+      rlist = self.monitor([l.s])
       if rlist.count(sys.stdin) > 0:
 	data = self.getCmd(sys.stdin)
 	print "\033[34m-", data, "\033[00m"
-	link.send(data)
+	if data == "gather_all":
+	  link.send("voir")
+	  self.gather = True
+	elif data == "require_stones":
+	  self.printRcs(self.lvl)
+	else:
+	  link.send(data)
       if rlist.count(link.s) > 0:
 	data = link.recv()
-	print self.parseCmd(data)
+	data = self.parseCmd(data, link)
+	if data != None:
+	  print data
 
 ##
 ## Command line options
@@ -190,7 +347,6 @@ if __name__ == "__main__":
   try:
     l = Link(parseCommandLine())
     b = Bridge()
-    b.register(l.s)
     b.loop(l)
   except KeyboardInterrupt:
     pass

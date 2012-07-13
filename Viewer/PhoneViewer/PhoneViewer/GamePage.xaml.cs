@@ -29,6 +29,10 @@ namespace PhoneViewer
         SpriteFont sf_bc;
         int t;
         Network server;
+        public Network Server
+        {
+            get { return server; }
+        }
 
         public Microsoft.Xna.Framework.Rectangle screen;
         Player inventory_details;

@@ -11,7 +11,7 @@ let test_crit_food () =
 
 let test_food () =
   let to_lvl nb =
-    if (!PlayerInventory.piv.Inventory.nourriture > (nb * 6)) then
+    if (!PlayerInventory.piv.Inventory.nourriture > ((nb * 6) + !MapSize.size_coef)) then
       true
     else
       false

@@ -163,7 +163,7 @@ let map_cmd str =
 
 let connect_cmd str =
   try
-    int_of_string str
+    int_of_string (String.sub str 0 ((String.length str) - 1))
         with
     | _         -> 0
 

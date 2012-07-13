@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Mon Jun 25 13:19:18 2012 ulric lefevre
-** Last update Fri Jul 13 11:21:46 2012 ulric lefevre
+** Last update Fri Jul 13 16:27:49 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -73,7 +73,7 @@ void            stdout_data_serv(t_arg *args, t_data_serv ds)
   if (ds->verbose)
     {
       printf("\033[1;33m");
-      printf("Infos du Serveur :\n");
+      printf("\nInfos du Serveur :\n");
       printf("\t\tIP : %s\n", inet_ntoa(ds->sock.addr.sin_addr));
       printf("\t\tPort : %d\n", args->port);
       printf("\t\tTemps d'execution : %d\n", args->exec_time);

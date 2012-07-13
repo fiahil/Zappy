@@ -5,6 +5,26 @@
 
 let fls_round = ref 0
 
+let rec gather_loop () =
+  Bridge.init ();
+  let leave = function
+    | Broadcast.Rse idi ->
+      if (idi = !ResourcesManager.id) then
+	true
+      else
+	false
+    | _                         -> false
+  in
+  if (FsmIncant.test_crit_food ()) then
+    if (leave (Broadcast.pp (Bridge.take))) then
+      begin
+	FsmBase.gather_all ();
+	()
+      end
+    else
+      gather_loop ()
+  else
+    ()
 
 let call_rsc iv =
   ResourcesManager.init_exchange ();
@@ -31,7 +51,7 @@ let call_rsc iv =
 	let rec come_loop cnt =
           Bridge.init ();
           if (FsmIncant.test_crit_food ()) then
-            if (cnt = 1) then
+            if (cnt > 0) then
               true
             else
               begin
@@ -79,7 +99,7 @@ let call_rsc iv =
     end
   else
     begin
-      (* Gather loop *)
+      gather_loop ();
       true
     end
 
@@ -104,7 +124,10 @@ let rec gather par =
         FsmBase.gather_all ()
       end
   in
-  if (!fls_round > 4) && (call_rsc par) then
-    fls_round := 0
+  if (!fls_round > 50) then
+    begin
+      ignore (call_rsc par);
+      fls_round := 0
+    end
   else
     action (FsmBase.mineral_find par)

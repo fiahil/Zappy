@@ -114,6 +114,28 @@ class Bridge:
 	return value
     return None
 
+  def printOrNot(self, st):
+    """Disable print 0"""
+
+    if st == "0":
+      return " "
+    else:
+      return st
+
+  def printMe(self, line):
+    """Print one line"""
+
+    while len(line) > 0:
+      print "[\033[31m"+self.printOrNot(str(line[0][0]))+"\033[00m"+\
+	"\033[32m"+self.printOrNot(str(line[0][1]))+"\033[00m"+\
+	"\033[33m"+self.printOrNot(str(line[0][2]))+"\033[00m"+\
+	"\033[34m"+self.printOrNot(str(line[0][3]))+"\033[00m"+\
+	"\033[35m"+self.printOrNot(str(line[0][4]))+"\033[00m"+\
+	"\033[36m"+self.printOrNot(str(line[0][5]))+"\033[00m"+\
+	"\033[37m"+self.printOrNot(str(line[0][6]))+"\033[00m"+\
+	"\033[38m"+self.printOrNot(str(line[0][7]))+"\033[00m"+"]",
+      line = line[1:]
+
   def parseCmd(self, raw):
     """Pretty-print raw commands"""
 
@@ -122,7 +144,6 @@ class Bridge:
     if raw[:8] == "{ joueur":
       raw = raw[2:-1]
       lines = re.split(re.compile(","), raw)
-      print raw
       vision = []
       for elt in lines:
 	tmp = re.split(re.compile(" "), elt)
@@ -134,11 +155,34 @@ class Bridge:
 	    len(re.findall(re.compile("mendiane"), elt)),
 	    len(re.findall(re.compile("phiras"), elt)),
 	    len(re.findall(re.compile("thystame"), elt)))
-	vision.append(val) #1234
-      for elt in vision:
-	print elt
+	vision.append(val)
+      i = len(lines)
+      log = [0, 1]
+      if i > 4:
+	log.append(4)
+      if i > 9:
+	log.append(9)
+      if i > 16:
+	log.append(16)
+      if i > 25:
+	log.append(25)
+      if i > 36:
+	log.append(36)
+      if i > 49:
+	log.append(49)
+      if i > 64:
+	log.append(64)
+      j = 0
       while len(vision) > 0:
-	print vision.pop()
+	val = log.pop()
+	if j != 0:
+	  print "           " * j,
+	else:
+	  print "",
+	self.printMe(vision[val:])
+	vision = vision[:-(len(vision) - val)]
+	print ""
+	j += 1
       #|||||||||||||||
       # |||||||||||||
       #  |||||||||||
@@ -153,7 +197,7 @@ class Bridge:
       # Split ,
       # Split " "
       # Fill
-      return "VOIR" #TODO
+      return ""
     return raw
 
   def loop(self, link):

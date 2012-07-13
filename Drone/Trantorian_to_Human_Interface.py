@@ -15,6 +15,7 @@ import socket
 import select
 import termios
 import re
+import os
 
 ##
 ## Server Connection
@@ -32,7 +33,7 @@ class Link:
     self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     try:
-      self.s.connect((host, port))
+      self.s.connect((host, int(port)))
     except socket.error as e:
       print "- Failure:", e.strerror
       sys.exit()
@@ -69,9 +70,13 @@ class Bridge:
     self.vision = ()
     self.gather = False
     self.lvl = 1
-    attr = termios.tcgetattr(0)
-    attr[3] = attr[3] & ~(termios.ECHO | termios.ICANON)
-    termios.tcsetattr(0, termios.TCSANOW, attr)
+    if os.isatty(0):
+      try:
+        attr = termios.tcgetattr(0)
+        attr[3] = attr[3] & ~(termios.ECHO | termios.ICANON)
+        termios.tcsetattr(0, termios.TCSANOW, attr)
+      except termios.error as e:
+	pass
     self.keyMap = [
 		(";", "connect_nbr"),
 		("k", "voir"),
@@ -112,6 +117,8 @@ class Bridge:
     """Associate commands and keys"""
 
     data = channel.read(1)
+    if data == '':
+      sys.exit()
     if data == '\033':
       data = channel.read(1)
       data = channel.read(1)
@@ -348,5 +355,5 @@ if __name__ == "__main__":
     l = Link(parseCommandLine())
     b = Bridge()
     b.loop(l)
-  except KeyboardInterrupt:
+  except:
     pass

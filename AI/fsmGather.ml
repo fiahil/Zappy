@@ -87,7 +87,8 @@ let call_rsc iv =
           | Broadcast.Err ""          -> -1
           | _                         -> pars_info (Broadcast.pp (Bridge.take))
 	in
-
+        (* /!\ Pas de pull entre chaque iteration --> toujours -1. Patcher en
+         * placant un Bridge.init () *)
 	pars_ret (pars_info (Broadcast.pp (Bridge.take)))
 
       end

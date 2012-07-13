@@ -8,6 +8,7 @@ let ex_ll = ref []
 
 let rec moving = function
   | Broadcast.Rsz id    ->
+      Bridge.init ();
       if id = !ex_fp then
         if FsmIncant.test_crit_food () && Utils.move_to (Broadcast.gd ()) then
           Broadcast.bc (Broadcast.Rsr (!ex_fp, true))
@@ -16,6 +17,7 @@ let rec moving = function
         else if FsmIncant.test_crit_food () then
           moving (Broadcast.pp Bridge.pull)
   | Broadcast.Rsa fp    ->
+      Bridge.init ();
       if (fp = !ex_fp) then
         ()
       else if FsmIncant.test_crit_food () then

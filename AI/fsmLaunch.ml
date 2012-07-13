@@ -39,11 +39,11 @@ let run () =
       Bridge.init ();
       Broadcast_ic.test_rcp (Broadcast.pp Bridge.take);
       if !Broadcast_ic.ic_mode = 1 &&
-      !PlayerInventory.piv.Inventory.nourriture > 8 then
+      !PlayerInventory.piv.Inventory.nourriture > (8 + !MapSize.size_coef) then
         (if !Broadcast_ic.ic_lvl = !FsmBase.plvl then
           Broadcast_ic.engage ())
       else if !Broadcast_ic.ic_mode = 2 &&
-      !PlayerInventory.piv.Inventory.nourriture > 8 then
+      !PlayerInventory.piv.Inventory.nourriture > (8 + !MapSize.size_coef) then
         Exchange_ic.engage ()
       else if (FsmIncant.test_food () = false) then
 	FsmSurvival.survival []

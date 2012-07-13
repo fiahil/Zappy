@@ -72,7 +72,7 @@ let call_rsc iv =
 
 	let rec pars_ret = function
 	  | -1 -> loop (cnt + 1)
-	  | ret -> come_loop cnt
+	  | ret -> come_loop 0
 	in
 
 	let rec pars_info = function

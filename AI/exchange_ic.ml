@@ -8,20 +8,26 @@ let ex_ll = ref []
 
 let rec moving = function
   | Broadcast.Rsz id    ->
-      Bridge.init ();
+    Bridge.init ();
+    if (FsmIncant.test_crit_food ()) then
       if id = !ex_fp then
         if Utils.move_to (Broadcast.gd ()) then
           Broadcast.bc (Broadcast.Rsr (!ex_fp, true))
-        else 
-          moving (Broadcast.pp Bridge.pull)
         else
           moving (Broadcast.pp Bridge.pull)
+      else
+        moving (Broadcast.pp Bridge.pull)
+    else
+      ()
   | Broadcast.Rsa fp    ->
-      Bridge.init ();
+    Bridge.init ();
+    if (FsmIncant.test_crit_food ()) then
       if (fp = !ex_fp) then
         ()
       else
         moving (Broadcast.pp Bridge.pull)
+    else
+      ()
   | _                   -> moving (Broadcast.pp Bridge.pull)
 
 let drop_all l =
@@ -103,7 +109,12 @@ let engage () =
       if test_rsc (Broadcast.pp Bridge.pull) then
         begin
           moving (Broadcast.pp Bridge.pull);
-          drop_all !ex_ll;
-          Broadcast.bc (Broadcast.Rse !ex_fp)
+	  if (FsmIncant.test_crit_food ())then
+	    begin
+	      drop_all !ex_ll;
+	      Broadcast.bc (Broadcast.Rse !ex_fp)
+	    end
+	  else
+	    ()
         end
     end

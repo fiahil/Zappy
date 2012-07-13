@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:17:00 2012 ulric lefevre
-** Last update Wed Jul 11 19:00:58 2012 ulric lefevre
+** Last update Thu Jul 12 20:25:48 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -41,11 +41,11 @@ static void	get_position(int dim, t_map map, int (*coord)[])
 static void	fill_res_stock(int nb_team, int (*stock)[])
 {
   (*stock)[FOOD] = nb_team * 100;
-  (*stock)[LINEMATE] = (nb_team * 10) * 2;
-  (*stock)[DERAUMERE] = (nb_team * 9) * 2;
-  (*stock)[SIBUR] = (nb_team * 12) * 2;
-  (*stock)[MENDIANE] = (nb_team * 6) * 2;
-  (*stock)[PHIRAS] = (nb_team * 7) * 2;
+  (*stock)[LINEMATE] = nb_team * 18;
+  (*stock)[DERAUMERE] = nb_team * 16;
+  (*stock)[SIBUR] = nb_team * 20;
+  (*stock)[MENDIANE] = nb_team * 10;
+  (*stock)[PHIRAS] = nb_team * 12;
   (*stock)[THYSTAME] = nb_team * 2;
 }
 

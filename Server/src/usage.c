@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:13:40 2012 ulric lefevre
-** Last update Mon Jul  9 01:11:07 2012 ulric lefevre
+** Last update Thu Jul 12 19:55:24 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -13,12 +13,7 @@
 
 void		usage()
 {
-  fprintf(stderr, "./zappy ");
-  fprintf(stderr, "[-v] ");
-  fprintf(stderr, "[-p port] ");
-  fprintf(stderr, "[-x width] ");
-  fprintf(stderr, "[-y height] ");
-  fprintf(stderr, "[-c clients_per_team] ");
-  fprintf(stderr, "[-t execution_time] ");
+  fprintf(stderr, "./zappy [-v] [-p port] [-x width] [-y height] ");
+  fprintf(stderr, "[-c clients_per_team] [-t execution_time] ");
   fprintf(stderr, "-n name_of_team_1 name_of_team_2 ...\n");
 }

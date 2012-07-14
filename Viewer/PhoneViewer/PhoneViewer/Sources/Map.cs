@@ -152,7 +152,7 @@ namespace PhoneViewer
                     this.map[i, j].Load(cm);
                 }
 
-            TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Hold | GestureType.Tap | GestureType.DoubleTap;
+            TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Tap | GestureType.DoubleTap;
         }
         
         public void Update(GameTimerEventArgs gameTime)
@@ -177,7 +177,6 @@ namespace PhoneViewer
                 {
                     case GestureType.DoubleTap:
                         // Player infos
-                        this.Game.Followed = null;
                         foreach (Player elt in this.Game.Players)
                         {
                             Point p;
@@ -198,35 +197,6 @@ namespace PhoneViewer
                                 Game.Server.SendDatas("pin " + elt.Id + "\n");
                                 this.Game.Inventory = elt;
                                 this.Game.InventoryTimer = gameTime.TotalTime + TimeSpan.FromSeconds(10);
-                            }
-                        }
-                        break;
-                    case GestureType.Hold:
-                        // Player locked
-                        foreach (Player elt in this.Game.Players)
-                        {
-                            Point p;
-                            Point off;
-
-                            off.X = (elt.getPos().X + 1) * (this.getSquare().Width / 2);
-                            off.Y = (elt.getPos().X) * (this.getSquare().Height / 2);
-
-                            p.X = ((int)this.getSize().Y - elt.getPos().Y - 1) * (this.getSquare().Width / 2) + off.X + this.getSquare().X;
-                            p.Y = -((int)this.getSize().Y - elt.getPos().Y - 1) * (this.getSquare().Height / 2) + off.Y + this.getSquare().Y;
-
-                            Rectangle bound = new Rectangle((int)(p.X + (int)(42 * (this.getSquare().Width / 155.0))),
-                                (int)(p.Y - (int)(19 * (this.getSquare().Height / 58.0))),
-                                (int)(elt.getBounds().Width * (this.getSquare().Width / 155.0)),
-                                (int)(elt.getBounds().Height * (this.getSquare().Height / 58.0)));
-
-                            if (bound.Contains(new Point((int)gl.Position.X, (int)gl.Position.Y)))
-                            {
-                                Game.Server.SendDatas("pin " + elt.Id + "\n");
-                                this.Game.Inventory = elt;
-                                this.Game.InventoryTimer = gameTime.TotalTime + TimeSpan.FromSeconds(10);
-                                this.Game.Followed = elt;
-                                this.square.X = -(-elt.Pos.Y * (this.getSquare().Width / 2) + (elt.getPos().X + 1) * (this.getSquare().Width / 2) + ((int)getSize().Y - 1) * (this.getSquare().Width / 2) - 620);
-                                this.square.Y = -(elt.Pos.Y * (this.getSquare().Height / 2) + (elt.getPos().X) * (this.getSquare().Height / 2) - ((int)getSize().Y - 1) * (this.getSquare().Height / 2) - 360);
                             }
                         }
                         break;

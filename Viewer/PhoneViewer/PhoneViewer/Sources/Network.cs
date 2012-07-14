@@ -12,6 +12,16 @@ namespace PhoneViewer
     {
         Socket _socket;
         bool isConnected;
+        public bool IsConnected
+        {
+            get { return this.isConnected; }
+        }
+
+        string error;
+        public string Error
+        {
+            get { return error; }
+        }
 
         Queue<string> _in;
         bool isReceiving;
@@ -88,17 +98,20 @@ namespace PhoneViewer
             ManualResetEvent sync = new ManualResetEvent(false);
 
             SocketAsyncEventArgs co = new SocketAsyncEventArgs();
+            error = SocketError.TimedOut.ToString();
             co.Completed += new EventHandler<SocketAsyncEventArgs>(delegate(object o, SocketAsyncEventArgs e)
                 {
                     sync.Set();
+                    error = e.SocketError.ToString();
                     if (e.SocketError == SocketError.Success)
                         isConnected = true;
                 });
 
             co.RemoteEndPoint = host;
             recvEvents.RemoteEndPoint = host;
+            Array.Clear(recvEvents.Buffer, 0, recvEvents.Buffer.Length);
             sendEvents.RemoteEndPoint = host;
-
+            isConnected = false;
             sync.Reset();
             if (_socket.ConnectAsync(co))
                 sync.WaitOne(10000);
@@ -106,8 +119,14 @@ namespace PhoneViewer
             {
                 sync.Set();
             }
+            isReceiving = true;
             _socket.ReceiveAsync(recvEvents);
             return isConnected;
+        }
+
+        public void Close()
+        {
+            _socket.Close();
         }
 
         public string Receive()
@@ -150,8 +169,6 @@ namespace PhoneViewer
         Queue<string> _in;
         string tmp;
 
-        bool connected;
-
         public SocketClient Socket
         {
             get { return s; }
@@ -165,6 +182,11 @@ namespace PhoneViewer
 
             t.Initialize(p);
             s.Connect(Infos.GetInstance().host, Int32.Parse(Infos.GetInstance().port));
+        }
+
+        public string Error()
+        {
+            return s.Error;
         }
 
         public void Update()
@@ -195,7 +217,7 @@ namespace PhoneViewer
 
         public bool IsConnected()
         {
-            return connected;
+            return s.IsConnected;
         }
 
         public void SendDatas(string msg)

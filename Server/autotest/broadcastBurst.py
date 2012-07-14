@@ -8,8 +8,8 @@ import subprocess
 
 print " - Launching Clients"
 
-host = '127.0.0.1'
-port = 4242
+host = '10.19.253.175'
+port = 8888
 
 i = 0
 s = []

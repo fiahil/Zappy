@@ -45,6 +45,7 @@ let main () =
       end
     with
       | Invalid_argument v      -> prerr_endline v
-      | _                       -> prerr_endline "An error occured"
+      | Pervasives.Exit         -> prerr_endline "Player disconnected"
+      (* | _                       -> prerr_endline "An error occured" *)
 
 let _ = main ()

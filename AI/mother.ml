@@ -12,6 +12,7 @@ let run () =
     | nb ->
       Bridge.push Bridge.Fork;
       ignore (Bridge.pull Bridge.Fork);
+      Bridge.push Bridge.Avance;
       launch_fork (nb - 1)
   in
 
@@ -30,26 +31,42 @@ let run () =
 		     "-s"
 		   |]
 		   Unix.stdin Unix.stdout Unix.stderr)::(!child));
-      print_endline "Des BEBES !!! plein de bebes !";
+      Printf.printf "I Connect one And nb = %d\n" nb;
+      flush stdout;
       connect_soldier (nb - 1)
   in
 
-  let test_connect qt =
-    Printf.printf "jep eu faire %d bebes\n" qt;
-    flush stdout;
-    match qt with
-      | 0  -> ()
-      | nb -> connect_soldier nb
+  let test_connect sz = function
+    | 0  -> ()
+    | n ->
+      if (sz < 8) then
+	if ((n + sz) > 8) then
+	  connect_soldier (8 - sz)
+	else
+	  connect_soldier (n)
+  in
+  
+  let ret_connect = function
+    | 0  -> 8
+    | nb ->
+      if (nb > 8) then
+	0
+      else
+	(8 - nb)
   in
 
   let rec cycle () =
     Bridge.init ();
     Bridge.push Bridge.Connect_nbr;
-    test_connect (Bridge.connect (Bridge.pull Bridge.Connect_nbr));
-    FsmSurvival.min_survival [];
+    test_connect (List.length !child) (Bridge.connect (Bridge.pull Bridge.Connect_nbr));
+    if (!PlayerInventory.piv.Inventory.nourriture < 50) then
+      FsmSurvival.min_survival []
+    else
+      Bridge.push (Bridge.Avance)
+    ;
     cycle ()
   in
 
-  Bridge.init ();
-  launch_fork 8;
+  Bridge.push Bridge.Connect_nbr;
+  launch_fork (ret_connect (Bridge.connect (Bridge.pull Bridge.Connect_nbr)));
   cycle ()

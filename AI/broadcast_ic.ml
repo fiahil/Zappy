@@ -38,18 +38,28 @@ let rec moving = function
 
 let rec test_ici = function
   | Broadcast.Ici (fp, l)     ->
-    if fp = !ic_fp && List.exists (fun v -> v = !PlayerInventory.pid) l then
-      true
-        else if fp = !ic_fp then
-          false
-        else
-          test_ici (Broadcast.pp Bridge.pull)
+    if (FsmIncant.test_crit_food ())then
+      (if fp = !ic_fp && List.exists (fun v -> v = !PlayerInventory.pid) l then
+	  true
+       else if fp = !ic_fp then
+	false
+       else
+	 test_ici (Broadcast.pp Bridge.pull))
+    else
+      false
     | Broadcast.Ica fp  ->
-        if (fp = !ic_fp) then
-          false
-        else
-          test_ici (Broadcast.pp Bridge.pull)
-    | _                 -> test_ici (Broadcast.pp Bridge.pull)
+      if (FsmIncant.test_crit_food ())then
+	(if (fp = !ic_fp) then
+            false
+          else
+            test_ici (Broadcast.pp Bridge.pull))
+      else
+	false
+    | _                 ->
+      if (FsmIncant.test_crit_food ())then
+        test_ici (Broadcast.pp Bridge.pull)
+      else
+	false
 
 let rec test_rcp = function
     | Broadcast.Icq (fp, lvl)   ->
@@ -67,21 +77,31 @@ let rec test_rcp = function
     | Broadcast.Err ""  -> ic_mode := 0
     | _                 -> test_rcp (Broadcast.pp Bridge.take)
 
-let test_launch v = 
+let test_launch v =
   let rec aux n = function
     | Broadcast.Icl id  ->
-        if id = !ic_fp && n = 1 then
-          ()
-        else if (id = !ic_fp) then
-          aux (n + 1) (Broadcast.pp Bridge.pull)
-        else
-          aux n (Broadcast.pp Bridge.pull)
+      if (FsmIncant.test_crit_food ())then
+        (if id = !ic_fp && n = 1 then
+            ()
+         else if (id = !ic_fp) then
+           aux (n + 1) (Broadcast.pp Bridge.pull)
+         else
+           aux n (Broadcast.pp Bridge.pull))
+      else
+	()
     | Broadcast.Ica id  ->
-        if id = !ic_fp then
+      if (FsmIncant.test_crit_food ())then
+	if id = !ic_fp then
           ()
-        else
+	else
           aux n (Broadcast.pp Bridge.pull)
-    | _                 -> aux n (Broadcast.pp Bridge.pull)
+      else
+	()
+    | _                 ->
+      if (FsmIncant.test_crit_food ())then
+	aux n (Broadcast.pp Bridge.pull)
+      else
+	()
   in
   aux 0 v
 

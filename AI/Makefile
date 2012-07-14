@@ -5,7 +5,7 @@
 ## Fri Mar 16 2012
 ##
 
-NAME	=	drone
+NAME	=	ai_client
 
 ML	=	param.ml		\
 		socket.ml		\
@@ -36,6 +36,7 @@ MLI	=	socket.mli		\
 		fsmIncant.mli		\
 		exchange_ic.mli		\
 		broadcast_ic.mli	\
+		fsmGather.mli		\
 		mother.mli		\
 		fsmLaunch.mli
 

@@ -31,8 +31,6 @@ let run () =
 		     "-s"
 		   |]
 		   Unix.stdin Unix.stdout Unix.stderr)::(!child));
-      Printf.printf "I Connect one And nb = %d\n" nb;
-      flush stdout;
       connect_soldier (nb - 1)
   in
 
@@ -45,7 +43,7 @@ let run () =
 	else
 	  connect_soldier (n)
   in
-  
+
   let ret_connect = function
     | 0  -> 8
     | nb ->
@@ -55,10 +53,21 @@ let run () =
 	(8 - nb)
   in
 
+  let rec test_rcp = function
+     | Broadcast.Err ""  -> ()
+     | Broadcast.Err msg  ->
+       if (!PlayerInventory.piv.Inventory.nourriture < 10) then
+	 ()
+       else
+	 Bridge.push (Bridge.Broadcast msg)
+     | _                 -> test_rcp (Broadcast.pp Bridge.take)
+  in
+
   let rec cycle () =
     Bridge.init ();
     Bridge.push Bridge.Connect_nbr;
     test_connect (List.length !child) (Bridge.connect (Bridge.pull Bridge.Connect_nbr));
+    test_rcp (Broadcast.pp Bridge.take);
     if (!PlayerInventory.piv.Inventory.nourriture < 50) then
       FsmSurvival.min_survival []
     else

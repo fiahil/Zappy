@@ -5,7 +5,7 @@
 ## Login   <lefevr_u@epitech.net>
 ## 
 ## Started on  Tue Jul  3 13:29:53 2012 ulric lefevre
-## Last update Sat Jul 14 01:00:32 2012 ulric lefevre
+## Last update Sat Jul 14 13:43:31 2012 ulric lefevre
 ##
 
 NAME	=	zappy
@@ -102,6 +102,7 @@ $(NAME):	all_list $(OBJ)
 
 
 install:
+		strip $(NAME)
 		mkdir -p $(DESTDIR)/usr/bin/
 		@cp $(NAME) $(DESTDIR)/usr/bin/
 		mkdir -p $(DESTDIR)/usr/share/zappy/

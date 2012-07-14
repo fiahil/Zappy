@@ -84,7 +84,7 @@ class Main:
       print "-", e
       print "- Valid options are [-h HOST] [-p PORT] [-n TEAM]"
       print "- Default values are -h 127.0.01 -p 4242 -n Poney"
-      sys.exit() 
+      sys.exit()
 
   def ioMode(self):
     if os.isatty(0):
@@ -119,10 +119,10 @@ class Main:
 	  getCurTime(self.host, self.port)
 	  data = None
 	if data == "-":
-	  setTime(10, self.host, self.port)
+	  setTime(5, self.host, self.port)
 	  data = None
 	if data == "0":
-	  setTime(-10, self.host, self.port)
+	  setTime(-5, self.host, self.port)
 	  data = None
 	if data == "2":
 	  self.selected -= 1

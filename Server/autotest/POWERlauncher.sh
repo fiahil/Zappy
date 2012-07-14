@@ -2,5 +2,5 @@
 
 for i in {0..120}
 do
-    ./POWEROFGODdrone.py > /dev/null &
+    ./4444.py > /dev/null &
 done

@@ -69,6 +69,7 @@ class Main:
     self.team = 'Poney'
     self.process = []
     self.selected = 0
+    self.parseCommandLine()
 
   def parseCommandLine(self):
     try:

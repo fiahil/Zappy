@@ -9,6 +9,7 @@
 */
 
 #include	<stdio.h>
+#include	<signal.h>
 #include	<stdlib.h>
 
 #include	"def.h"
@@ -19,6 +20,8 @@ void		sig_end()
 {
   t_data_serv	ds;
 
+  signal(SIGINT, SIG_IGN);
+  signal(SIGTERM, SIG_IGN);
   ds = get_data_serv(NULL);
   clean_all(ds);
   exit(EXIT_FAILURE);

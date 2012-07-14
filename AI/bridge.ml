@@ -366,9 +366,7 @@ let init () =
     begin
       Socket.send "inventaire\n";
       PlayerInventory.valid (inventaire (pull Inventaire));
-      timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0;
-      Printf.printf "Lag --> %f\n" !timeout_t;
-      flush stdout
+      timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0
     end
 
 let push v =

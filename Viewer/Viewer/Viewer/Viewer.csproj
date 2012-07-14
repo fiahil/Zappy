@@ -316,6 +316,7 @@
     </Compile>
     <Compile Include="Sources\Program.cs" />
     <Compile Include="Sources\Main.cs" />
+    <Compile Include="Sources\SoundManager.cs" />
     <Compile Include="Sources\Sprite.cs" />
     <Compile Include="Sources\SpriteManager.cs" />
     <Compile Include="Sources\Treatment.cs" />

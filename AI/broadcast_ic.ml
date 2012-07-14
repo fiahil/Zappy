@@ -77,21 +77,31 @@ let rec test_rcp = function
     | Broadcast.Err ""  -> ic_mode := 0
     | _                 -> test_rcp (Broadcast.pp Bridge.take)
 
-let test_launch v = 
+let test_launch v =
   let rec aux n = function
     | Broadcast.Icl id  ->
-        if id = !ic_fp && n = 1 then
-          ()
-        else if (id = !ic_fp) then
-          aux (n + 1) (Broadcast.pp Bridge.pull)
-        else
-          aux n (Broadcast.pp Bridge.pull)
+      if (FsmIncant.test_crit_food ())then
+        (if id = !ic_fp && n = 1 then
+            ()
+         else if (id = !ic_fp) then
+           aux (n + 1) (Broadcast.pp Bridge.pull)
+         else
+           aux n (Broadcast.pp Bridge.pull))
+      else
+	()
     | Broadcast.Ica id  ->
-        if id = !ic_fp then
+      if (FsmIncant.test_crit_food ())then
+	if id = !ic_fp then
           ()
-        else
+	else
           aux n (Broadcast.pp Bridge.pull)
-    | _                 -> aux n (Broadcast.pp Bridge.pull)
+      else
+	()
+    | _                 ->
+      if (FsmIncant.test_crit_food ())then
+	aux n (Broadcast.pp Bridge.pull)
+      else
+	()
   in
   aux 0 v
 

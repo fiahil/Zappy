@@ -33,7 +33,7 @@ namespace PhoneViewer
             recvEvents = new SocketAsyncEventArgs();
             recvEvents.UserToken = this;
             recvEvents.Completed += ProcessRecv;
-            recvEvents.SetBuffer(new byte[4096], 0, 4096);
+            recvEvents.SetBuffer(new byte[16384], 0, 16384);
 
             sendEvents = new SocketAsyncEventArgs();
             sendEvents.UserToken = this;
@@ -45,6 +45,8 @@ namespace PhoneViewer
             SocketClient _this = e.UserToken as SocketClient;
 
             _this._in.Enqueue(Encoding.UTF8.GetString(e.Buffer, 0, e.Buffer.Length));
+            Array.Clear(e.Buffer, 0, e.Buffer.Length);
+            e.SetBuffer(e.Buffer, 0, e.Buffer.Length);
             _this.isReceiving = false;
         }
 
@@ -67,7 +69,6 @@ namespace PhoneViewer
                 }
                 return;
             }
-            _this.isSending = false;
         }
 
         public bool Connect(string hostname, int port)
@@ -105,6 +106,7 @@ namespace PhoneViewer
             {
                 sync.Set();
             }
+            _socket.ReceiveAsync(recvEvents);
             return isConnected;
         }
 
@@ -112,15 +114,15 @@ namespace PhoneViewer
         {
             string ret = String.Empty;
 
-            if (!isReceiving)
-            {
-                isReceiving = true;
-                _socket.ReceiveAsync(recvEvents);
-            }
             if (_in.Count > 0)
             {
                 ret = _in.Aggregate((a, b) => a + b);
                 _in.Clear();
+            }
+            if (!isReceiving)
+            {
+                isReceiving = true;
+                _socket.ReceiveAsync(recvEvents);
             }
             return ret;
         }
@@ -134,6 +136,7 @@ namespace PhoneViewer
                 {
                     byte[] s = Encoding.UTF8.GetBytes(_out.Dequeue());
                     sendEvents.SetBuffer(s, 0, s.Length);
+                    isSending = true;
                     _socket.SendAsync(sendEvents);
                 }
             }

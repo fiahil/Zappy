@@ -38,18 +38,28 @@ let rec moving = function
 
 let rec test_ici = function
   | Broadcast.Ici (fp, l)     ->
-    if fp = !ic_fp && List.exists (fun v -> v = !PlayerInventory.pid) l then
-      true
-        else if fp = !ic_fp then
-          false
-        else
-          test_ici (Broadcast.pp Bridge.pull)
+    if (FsmIncant.test_crit_food ())then
+      (if fp = !ic_fp && List.exists (fun v -> v = !PlayerInventory.pid) l then
+	  true
+       else if fp = !ic_fp then
+	false
+       else
+	 test_ici (Broadcast.pp Bridge.pull))
+    else
+      false
     | Broadcast.Ica fp  ->
-        if (fp = !ic_fp) then
-          false
-        else
-          test_ici (Broadcast.pp Bridge.pull)
-    | _                 -> test_ici (Broadcast.pp Bridge.pull)
+      if (FsmIncant.test_crit_food ())then
+	(if (fp = !ic_fp) then
+            false
+          else
+            test_ici (Broadcast.pp Bridge.pull))
+      else
+	false
+    | _                 ->
+      if (FsmIncant.test_crit_food ())then
+        test_ici (Broadcast.pp Bridge.pull)
+      else
+	false
 
 let rec test_rcp = function
     | Broadcast.Icq (fp, lvl)   ->

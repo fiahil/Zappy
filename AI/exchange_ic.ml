@@ -50,18 +50,29 @@ let drop_all l =
 
 let rec test_rsc = function
   | Broadcast.Rsc (fp, id)      ->
-      if fp = !ex_fp && !PlayerInventory.pid = id then
-        true
-      else if fp = !ex_fp then
-        false
-      else
-        test_rsc (Broadcast.pp Bridge.pull)
+    if (FsmIncant.test_crit_food ())then
+      (if fp = !ex_fp && !PlayerInventory.pid = id then
+          true
+       else if fp = !ex_fp then
+         false
+       else
+         test_rsc (Broadcast.pp Bridge.pull))
+    else
+      false
+
   | Broadcast.Rsa fp            ->
-      if fp = !ex_fp then
-        false
-      else
-        test_rsc (Broadcast.pp Bridge.pull)
-  | _                           -> test_rsc (Broadcast.pp Bridge.pull)
+    if (FsmIncant.test_crit_food ())then
+      (if fp = !ex_fp then
+          false
+       else
+          test_rsc (Broadcast.pp Bridge.pull))
+    else
+      false
+  | _                           ->
+    if (FsmIncant.test_crit_food ())then
+      test_rsc (Broadcast.pp Bridge.pull)
+    else
+      false
 
 let engage () =
   let rec aux = function

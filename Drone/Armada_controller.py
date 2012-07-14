@@ -20,7 +20,45 @@ import os
 import subprocess
 
 ##
-## Command line options
+## Time manipulation option
+##
+
+def getCurTime(host, port):
+  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  try:
+    s.connect((host, port))
+    s.send("GRAPHIC\n")
+    data = s.recv(4096)
+    ma = re.search(re.compile("sgt ([0-9]+)\n"), data)
+    while ma == None:
+      data = s.recv(4096)
+      ma = re.search(re.compile("sgt ([0-9]+)\n"), data)
+    print "\033[31m- Time t:\033[33m", ma.groups()[0], "\033[00m"
+  except socket.error as e:
+    print "\033[31m- Failure", e.strerror, "\033[00m"
+
+def setTime(value, host, port):
+  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  try:
+    s.connect((host, port))
+    s.send("GRAPHIC\n")
+    data = s.recv(4096)
+    ma = re.search(re.compile("sgt ([0-9]+)\n"), data)
+    while ma == None:
+      data = s.recv(4096)
+      ma = re.search(re.compile("sgt ([0-9]+)\n"), data)
+    s.send("sst " + str(int(ma.groups()[0]) + value) + "\n")
+    data = s.recv(4096)
+    ma = re.search(re.compile("sgt ([0-9]+)\n"), data)
+    while ma == None:
+      data = s.recv(4096)
+      ma = re.search(re.compile("sgt ([0-9]+)\n"), data)
+    print "\033[31m- Time t:\033[33m", ma.groups()[0], "\033[00m"
+  except socket.error as e:
+    print "\033[31m- Failure", e.strerror, "\033[00m"
+
+##
+## Main class
 ##
 
 class Main:
@@ -30,7 +68,7 @@ class Main:
     self.port = 4242
     self.team = 'Poney'
     self.process = []
-    self.selected = None
+    self.selected = 0
 
   def parseCommandLine(self):
     try:
@@ -55,23 +93,49 @@ class Main:
       termios.tcsetattr(0, termios.TCSANOW, attr)
 
   def spawnChild(self):
-    self.selected = subprocess.Popen(["./Trantorian_to_Human_Interface.py",
-      		     "-h", self.host, "-p", str(self.port), "-n", self.team],
-		     stdout=subprocess.PIPE, stdin=subprocess.PIPE,
-		     stderr=subprocess.PIPE)
-    #self.selected = self.process[len(self.process) - 1]
+    print "\033[31m- Spawn new Drone\033[00m"
+    self.process.append([subprocess.Popen(["./Trantorian_to_Human_Interface.py",
+      "-h", self.host, "-p", str(self.port), "-n", self.team],
+      stdout=subprocess.PIPE, stdin=subprocess.PIPE,
+      stderr=subprocess.PIPE), False, True])
 
   def loopAll(self):
     while True:
-      (rlist, _, _) = select.select([sys.stdin, self.selected.stdout], [], [], 0.01)
+      l = []
+      for elt in self.process:
+        l.append(elt[0].stdout)
+      l.append(sys.stdin)
+      (rlist, _, _) = select.select(l, [], [], 0.01)
       if rlist.count(sys.stdin) > 0:
 	data = sys.stdin.read(1)
 	if data == "\033":
 	  data = sys.stdin.read(1)
 	  data = sys.stdin.read(1)
-	self.selected.stdin.write(data)
-      if rlist.count(self.selected.stdout) > 0:
-	sys.stdout.write(self.selected.stdout.readline())
+	
+	if data == "1":
+	  self.spawnChild()
+	  data = None
+	if data == "=":
+	  getCurTime(self.host, self.port)
+	  data = None
+	if data == "-":
+	  setTime(10, self.host, self.port)
+	  data = None
+	if data == "0":
+	  setTime(-10, self.host, self.port)
+	  data = None
+
+	if len(self.process) > 0 and data != None:
+	  self.process[self.selected][0].stdin.write(data)
+      for elt in rlist:
+	if elt != sys.stdin:
+	  data = elt.readline()
+	  if data == "":
+	    for e in self.process:
+	      if e[0].stdout == elt:
+		print "\033[31m- Drone Disconnected\033[00m"
+		self.process.remove(e)
+	  sys.stdout.write(data)
 
 if __name__ == "__main__":
   try:

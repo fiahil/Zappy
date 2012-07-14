@@ -16,6 +16,7 @@ namespace Viewer.Sources
     /// </summary>
     public class Main : Microsoft.Xna.Framework.Game
     {
+        bool end;
         MusicManager mm;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -25,8 +26,10 @@ namespace Viewer.Sources
         List<string> tlist;
         SpriteFont sf;
         SpriteFont sf_bc;
+        SpriteFont vic;
         int t;
         Network server;
+        String winner;
 
         Rectangle screen;
         Player inventory_details;
@@ -72,9 +75,10 @@ namespace Viewer.Sources
             this.followed = null;
             this.followedId = 0;
             this.oldState = Keyboard.GetState();
+            this.end = false;
         }
 
-       
+
         Vector2 dot;
         public Vector2 Dot
         {
@@ -121,6 +125,15 @@ namespace Viewer.Sources
             set { this.t = value; }
         }
 
+        public bool End
+        {
+            set { this.end = value; }
+        }
+
+        public String Winner
+        {
+            set { this.winner = value; }
+        }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -169,6 +182,7 @@ namespace Viewer.Sources
             this.bc_box = sm.GetSprite("Tiles/bc_box");
             this.sf = this.Content.Load<SpriteFont>("Font/Classic");
             this.sf_bc = this.Content.Load<SpriteFont>("Font/Broadcast");
+            this.vic = this.Content.Load<SpriteFont>("Font/victory");
 
             this.map.resizeMap(10, 7);
             server.Initialize(this);
@@ -209,75 +223,80 @@ namespace Viewer.Sources
             if (oldState.IsKeyUp(Keys.C) && Keyboard.GetState().IsKeyDown(Keys.C))
                 mm.Mute();
 
-            if ((oldState.IsKeyUp(Keys.PageDown) && Keyboard.GetState().IsKeyDown(Keys.PageDown)) ||
-                GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.RightTrigger))
+            if (this.end == false)
             {
-                try
+                if ((oldState.IsKeyUp(Keys.PageDown) && Keyboard.GetState().IsKeyDown(Keys.PageDown)) ||
+                    GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.RightTrigger))
                 {
-                    this.followed = this.plist[(++this.followedId) % this.plist.Count];
-                }
-                catch
-                {
-                    this.followed = null;
-                }
-            }
-            if ((oldState.IsKeyUp(Keys.PageUp) && Keyboard.GetState().IsKeyDown(Keys.PageUp)) ||
-                GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftTrigger))
-            {
-                try
-                {
-                    this.followed = this.plist[(--this.followedId + this.plist.Count) % this.plist.Count];
-                }
-                catch
-                {
-                    this.followed = null;
-                }
-            }
-            if (Mouse.GetState().RightButton == ButtonState.Pressed || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.B))
-            {
-                if (Mouse.GetState().RightButton == ButtonState.Pressed)
-                    this.dot = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
-                foreach (Player elt in this.plist)
-                {
-                    Point p;
-                    Point off;
-
-                    server.SendDatas("pin " + elt.Id + "\n");
-                    off.X = (elt.getPos().X + 1) * (this.map.getSquare().Width / 2);
-                    off.Y = (elt.getPos().X) * (this.map.getSquare().Height / 2);
-
-                    p.X = ((int)this.map.getSize().Y - elt.getPos().Y - 1) * (this.map.getSquare().Width / 2) + off.X + this.map.getSquare().X;
-                    p.Y = -((int)this.map.getSize().Y - elt.getPos().Y - 1) * (this.map.getSquare().Height / 2) + off.Y + this.map.getSquare().Y;
-
-                    Rectangle bound = new Rectangle((int)(p.X + (int)(42 * (this.map.getSquare().Width / 155.0))), (int)(p.Y - (int)(19 * (this.map.getSquare().Height / 58.0))), (int)(elt.getBounds().Width * (this.map.getSquare().Width / 155.0)), (int)(elt.getBounds().Height * (this.map.getSquare().Height / 58.0)));
-
-                    if (bound.Contains(new Point((int)this.dot.X, (int)this.dot.Y)))
+                    try
                     {
-                        this.inventory_details = elt;
-                        this.inventory_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(10);
-                        if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftShoulder))
+                        this.followed = this.plist[(++this.followedId) % this.plist.Count];
+                    }
+                    catch
+                    {
+                        this.followed = null;
+                    }
+                }
+                if ((oldState.IsKeyUp(Keys.PageUp) && Keyboard.GetState().IsKeyDown(Keys.PageUp)) ||
+                    GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftTrigger))
+                {
+                    try
+                    {
+                        this.followed = this.plist[(--this.followedId + this.plist.Count) % this.plist.Count];
+                    }
+                    catch
+                    {
+                        this.followed = null;
+                    }
+                }
+                if (Mouse.GetState().RightButton == ButtonState.Pressed || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.B))
+                {
+                    if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                        this.dot = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+                    foreach (Player elt in this.plist)
+                    {
+                        Point p;
+                        Point off;
+
+                        server.SendDatas("pin " + elt.Id + "\n");
+                        off.X = (elt.getPos().X + 1) * (this.map.getSquare().Width / 2);
+                        off.Y = (elt.getPos().X) * (this.map.getSquare().Height / 2);
+
+                        p.X = ((int)this.map.getSize().Y - elt.getPos().Y - 1) * (this.map.getSquare().Width / 2) + off.X + this.map.getSquare().X;
+                        p.Y = -((int)this.map.getSize().Y - elt.getPos().Y - 1) * (this.map.getSquare().Height / 2) + off.Y + this.map.getSquare().Y;
+
+                        Rectangle bound = new Rectangle((int)(p.X + (int)(42 * (this.map.getSquare().Width / 155.0))), (int)(p.Y - (int)(19 * (this.map.getSquare().Height / 58.0))), (int)(elt.getBounds().Width * (this.map.getSquare().Width / 155.0)), (int)(elt.getBounds().Height * (this.map.getSquare().Height / 58.0)));
+
+                        if (bound.Contains(new Point((int)this.dot.X, (int)this.dot.Y)))
                         {
-                            this.followed = elt;
-                            Rectangle r = new Rectangle();
-                            r.X = -(-elt.Pos.Y * (this.map.getSquare().Width / 2) + (elt.getPos().X + 1) * (this.map.getSquare().Width / 2) + ((int)map.getSize().Y - 1) * (this.map.getSquare().Width / 2) - 620);
-                            r.Y = -(elt.Pos.Y * (this.map.getSquare().Height / 2) + (elt.getPos().X) * (this.map.getSquare().Height / 2) - ((int)map.getSize().Y - 1) * (this.map.getSquare().Height / 2) - 360);
-                            this.map.Square = r;
-                        }
-                        else
-                        {
-                            this.followed = null;
+                            this.inventory_details = elt;
+                            this.inventory_timer = gameTime.TotalGameTime + TimeSpan.FromSeconds(10);
+                            if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftShoulder))
+                            {
+                                this.followed = elt;
+                                Rectangle r = new Rectangle();
+                                r.X = -(-elt.Pos.Y * (this.map.getSquare().Width / 2) + (elt.getPos().X + 1) * (this.map.getSquare().Width / 2) + ((int)map.getSize().Y - 1) * (this.map.getSquare().Width / 2) - 620);
+                                r.Y = -(elt.Pos.Y * (this.map.getSquare().Height / 2) + (elt.getPos().X) * (this.map.getSquare().Height / 2) - ((int)map.getSize().Y - 1) * (this.map.getSquare().Height / 2) - 360);
+                                this.map.Square = r;
+                            }
+                            else
+                            {
+                                this.followed = null;
+                            }
                         }
                     }
                 }
-            }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                this.followed = null;
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    this.followed = null;
 
-            if (this.inventory_timer <= gameTime.TotalGameTime && this.inventory_details != null && this.followed == null)
-            {
-                this.inventory_details = null;
+                if (this.inventory_timer <= gameTime.TotalGameTime && this.inventory_details != null && this.followed == null)
+                {
+                    this.inventory_details = null;
+                }
             }
+            else
+                this.mm.PlayEnd();
             this.oldState = Keyboard.GetState();
         }
 
@@ -289,77 +308,86 @@ namespace Viewer.Sources
         {
             GraphicsDevice.Clear(Color.AliceBlue);
             base.Draw(gameTime);
-            this.spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend);
-
-            foreach (Egg eelt in elist)
+            this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            if (this.end == false)
             {
-                eelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch, this.map);
-            }
-
-            foreach (Player pelt in plist)
-            {
-                pelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch, this.map);
-            }
-
-            if (this.inventory_details != null)
-            {
-                this.inventory_page.Draw(this.spriteBatch, new Rectangle(0, this.Window.ClientBounds.Height - this.inventory_page.getBounds().Height, this.inventory_page.getBounds().Width, this.inventory_page.getBounds().Height));
-                this.bc_box.Draw(this.spriteBatch, new Rectangle(this.inventory_page.getBounds().Width - 54, this.Window.ClientBounds.Height - this.bc_box.getBounds().Height - 10, this.bc_box.getBounds().Width, this.bc_box.getBounds().Height));
-                this.team_detail.Draw(this.spriteBatch, new Rectangle(this.Window.ClientBounds.Width - this.team_detail.getBounds().Width, this.Window.ClientBounds.Height - this.team_detail.getBounds().Height, this.team_detail.getBounds().Width, this.team_detail.getBounds().Height));
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.nourriture.ToString(), new Vector2(368 - (this.inventory_details.Inventory.nourriture.ToString().Length * 7), 515), Color.White);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.linemate.ToString(), new Vector2(205, 615), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.deraumere.ToString(), new Vector2(205, 650), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.sibur.ToString(), new Vector2(205, 685), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.mendiane.ToString(), new Vector2(319, 615), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.phiras.ToString(), new Vector2(319, 650), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.thystame.ToString(), new Vector2(319, 685), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Level.ToString(), new Vector2(278, 555), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Team, new Vector2(150, 555), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.inventory_details.Team, new Vector2(this.Window.ClientBounds.Width - 200, 555), Color.Black);
-                int sizeTeam = 0;
-                int maxLvl = 0;
-                int avgLvl = 0;
-
-                foreach (var item in this.plist)
+                foreach (Egg eelt in elist)
                 {
-                    if (item.Team == this.inventory_details.Team)
-                    {
-                        sizeTeam += 1;
-                        if (item.Level > maxLvl)
-                            maxLvl = item.Level;
-                        avgLvl += item.Level;
-                    }
-               	}
-                if (sizeTeam != 0)
-                    avgLvl /= sizeTeam;
-                else
-                    avgLvl = 0;
-                this.spriteBatch.DrawString(this.sf, sizeTeam.ToString(), new Vector2(this.Window.ClientBounds.Width - 150, 590), Color.Black);
-                this.spriteBatch.DrawString(this.sf, maxLvl.ToString(), new Vector2(this.Window.ClientBounds.Width - 100, 655), Color.Black);
-                this.spriteBatch.DrawString(this.sf, avgLvl.ToString(), new Vector2(this.Window.ClientBounds.Width - 100, 680), Color.Black);
-
-                int dec = 0;
-                foreach (var item in this.lbc)
-                {
-                    this.spriteBatch.DrawString(this.sf_bc, item, new Vector2(415, 630 + dec), Color.White);
-                    dec += 20;
+                    eelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch, this.map);
                 }
 
+                foreach (Player pelt in plist)
+                {
+                    pelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch, this.map);
+                }
+
+                if (this.inventory_details != null)
+                {
+                    this.inventory_page.Draw(this.spriteBatch, new Rectangle(0, this.Window.ClientBounds.Height - this.inventory_page.getBounds().Height, this.inventory_page.getBounds().Width, this.inventory_page.getBounds().Height));
+                    this.bc_box.Draw(this.spriteBatch, new Rectangle(this.inventory_page.getBounds().Width - 54, this.Window.ClientBounds.Height - this.bc_box.getBounds().Height - 10, this.bc_box.getBounds().Width, this.bc_box.getBounds().Height));
+                    this.team_detail.Draw(this.spriteBatch, new Rectangle(this.Window.ClientBounds.Width - this.team_detail.getBounds().Width, this.Window.ClientBounds.Height - this.team_detail.getBounds().Height, this.team_detail.getBounds().Width, this.team_detail.getBounds().Height));
+                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.nourriture.ToString(), new Vector2(368 - (this.inventory_details.Inventory.nourriture.ToString().Length * 7), 515), Color.White);
+                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.linemate.ToString(), new Vector2(205, 615), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.deraumere.ToString(), new Vector2(205, 650), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.sibur.ToString(), new Vector2(205, 685), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.mendiane.ToString(), new Vector2(319, 615), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.phiras.ToString(), new Vector2(319, 650), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.thystame.ToString(), new Vector2(319, 685), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Level.ToString(), new Vector2(278, 555), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Team, new Vector2(150, 555), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Team, new Vector2(this.Window.ClientBounds.Width - 200, 555), Color.Black);
+                    int sizeTeam = 0;
+                    int maxLvl = 0;
+                    int avgLvl = 0;
+
+                    foreach (var item in this.plist)
+                    {
+                        if (item.Team == this.inventory_details.Team)
+                        {
+                            sizeTeam += 1;
+                            if (item.Level > maxLvl)
+                                maxLvl = item.Level;
+                            avgLvl += item.Level;
+                        }
+                    }
+                    if (sizeTeam != 0)
+                        avgLvl /= sizeTeam;
+                    else
+                        avgLvl = 0;
+                    this.spriteBatch.DrawString(this.sf, sizeTeam.ToString(), new Vector2(this.Window.ClientBounds.Width - 150, 590), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, maxLvl.ToString(), new Vector2(this.Window.ClientBounds.Width - 100, 655), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, avgLvl.ToString(), new Vector2(this.Window.ClientBounds.Width - 100, 680), Color.Black);
+
+                    int dec = 0;
+                    foreach (var item in this.lbc)
+                    {
+                        this.spriteBatch.DrawString(this.sf_bc, item, new Vector2(415, 630 + dec), Color.White);
+                        dec += 20;
+                    }
+
+                }
+                if (this.map.SquareDetailsOn)
+                {
+                    System.Diagnostics.Debug.Assert(this.map.Inventory != null);
+                    this.map.SquareDetails.Draw(this.spriteBatch, new Rectangle(base.Window.ClientBounds.Width - this.map.SquareDetails.getBounds().Width, 0, this.map.SquareDetails.getBounds().Width, this.map.SquareDetails.getBounds().Height));
+                    this.spriteBatch.DrawString(this.sf, this.map.Inventory[0], new Vector2(1200, 100), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.map.Inventory[1], new Vector2(1200, 155), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.map.Inventory[2], new Vector2(1200, 210), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.map.Inventory[3], new Vector2(1200, 265), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.map.Inventory[4], new Vector2(1200, 325), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.map.Inventory[5], new Vector2(1200, 380), Color.Black);
+                    this.spriteBatch.DrawString(this.sf, this.map.Inventory[6], new Vector2(1200, 440), Color.Black);
+                }
+                if (GamePad.GetState(PlayerIndex.One).IsConnected)
+                    sm.GetSprite("Tiles/cursor").Draw(this.spriteBatch, new Rectangle((int)(dot.X - 25), (int)(dot.Y - 25), 50, 50));
             }
-            if (this.map.SquareDetailsOn)
+            else
             {
-                System.Diagnostics.Debug.Assert(this.map.Inventory != null);
-                this.map.SquareDetails.Draw(this.spriteBatch, new Rectangle(base.Window.ClientBounds.Width - this.map.SquareDetails.getBounds().Width, 0, this.map.SquareDetails.getBounds().Width, this.map.SquareDetails.getBounds().Height));
-                this.spriteBatch.DrawString(this.sf, this.map.Inventory[0], new Vector2(1200, 100), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.Inventory[1], new Vector2(1200, 155), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.Inventory[2], new Vector2(1200, 210), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.Inventory[3], new Vector2(1200, 265), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.Inventory[4], new Vector2(1200, 325), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.Inventory[5], new Vector2(1200, 380), Color.Black);
-                this.spriteBatch.DrawString(this.sf, this.map.Inventory[6], new Vector2(1200, 440), Color.Black);
+                sm.GetSprite("Background/Victory").Draw(this.spriteBatch, new Rectangle(0, 0, 1280, 720));
+                this.spriteBatch.DrawString(this.vic, "Team", new Vector2(640 - (this.vic.MeasureString("Team").X / 2), 110), Color.Black);
+                this.spriteBatch.DrawString(this.vic, this.winner, new Vector2(640 - (this.vic.MeasureString(this.winner).X / 2), 190), Color.Red);
+                this.spriteBatch.DrawString(this.vic, "is victorious", new Vector2(415, 270), Color.Black);
             }
-            if (GamePad.GetState(PlayerIndex.One).IsConnected)
-                sm.GetSprite("Tiles/cursor").Draw(this.spriteBatch, new Rectangle((int)(dot.X - 25), (int)(dot.Y - 25), 50, 50));
             this.spriteBatch.End();
         }
     }

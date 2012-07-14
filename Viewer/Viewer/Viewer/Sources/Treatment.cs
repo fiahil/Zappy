@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Viewer.Sources
 {
@@ -11,11 +12,13 @@ namespace Viewer.Sources
     class Treatment
     {
         Dictionary<string, TreatCmd> tab;
+        SoundManager sm;
         Main parent;
 
         public void Initialize(Main p)
         {
             parent = p;
+            sm = new SoundManager(parent.Content);
             tab = new Dictionary<string, TreatCmd>();
             tab["msz"] = msz;
             tab["bct"] = bct;
@@ -98,13 +101,17 @@ namespace Viewer.Sources
                     r.Y = -(P.Pos.Y * (this.parent.Map.getSquare().Height / 2) + (P.getPos().X) * (this.parent.Map.getSquare().Height / 2) - ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Height / 2) - 360);
                     this.parent.Map.Square = r;
                 }
+                if (parent.Followed != null && P == parent.Followed)
+                    this.sm.PlaySound("ppo");
             }
         }
 
         private void plv(string[] a)
         {
-            parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); })
-                .Level = int.Parse(a[1]);
+            Player pl = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
+            pl.Level = int.Parse(a[1]);
+            if (parent.Followed != null && pl != null && pl == parent.Followed)
+                this.sm.PlaySound("plv");
         }
 
         private void pin(string[] a)
@@ -129,6 +136,8 @@ namespace Viewer.Sources
             if (P != null)
             {
                 P.State = Player.States.EXPULSE;
+                if (parent.Followed != null && P == parent.Followed)
+                    this.sm.PlaySound("pex");
             }
         }
 
@@ -140,6 +149,8 @@ namespace Viewer.Sources
                 string b = a.Skip(1).Aggregate(delegate(string one, string two) { return one + " " + two; });
                 P.setBroadcast(b);
                 parent.addBroadcast(P.Team, b);
+                if (parent.Followed != null && P == parent.Followed)
+                    this.sm.PlaySound("pbc");
             }
         }
 
@@ -151,6 +162,8 @@ namespace Viewer.Sources
                 if (P != null)
                 {
                     P.State = Player.States.INCANT;
+                    if (parent.Followed != null && P == parent.Followed)
+                        this.sm.PlaySound("pic");
                 }
             }
         }
@@ -168,6 +181,8 @@ namespace Viewer.Sources
             if (P != null)
             {
                 P.State = Player.States.FORK;
+                if (parent.Followed != null && P == parent.Followed)
+                    this.sm.PlaySound("pfk");
             }
         }
 
@@ -177,6 +192,8 @@ namespace Viewer.Sources
             if (parent != null)
             {
                 P.State = Player.States.DROP;
+                if (parent.Followed != null && P == parent.Followed)
+                    this.sm.PlaySound("pdr");
             }
         }
 
@@ -186,6 +203,8 @@ namespace Viewer.Sources
             if (P != null)
             {
                 P.State = Player.States.TAKE;
+                if (parent.Followed != null && P == parent.Followed)
+                    this.sm.PlaySound("pgt");
             }
         }
 
@@ -195,6 +214,8 @@ namespace Viewer.Sources
             if (P != null)
             {
                 P.State = Player.States.DEAD;
+                if (parent.Followed != null && P == parent.Followed)
+                    this.sm.PlaySound("pdi");
             }
         }
 
@@ -237,6 +258,8 @@ namespace Viewer.Sources
 
         private void seg(string[] a)
         {
+            parent.End = true;
+            parent.Winner = a[1];
         }
         private void smg(string[] a)
         {

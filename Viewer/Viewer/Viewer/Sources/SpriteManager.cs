@@ -24,6 +24,7 @@ namespace Viewer.Sources
             this.db["Background/wall"] = new Sprite(cm.Load<Texture2D>("Background/wall"));
             this.db["Background/wall2"] = new Sprite(cm.Load<Texture2D>("Background/wall2"));
             this.db["Background/wall3"] = new Sprite(cm.Load<Texture2D>("Background/wall3"));
+            this.db["Background/Victory"] = new Sprite(cm.Load<Texture2D>("Background/Victory"));
 
             this.db["Level/level_1"] = new Sprite(cm.Load<Texture2D>("Level/level_1"));
             this.db["Level/level_2"] = new Sprite(cm.Load<Texture2D>("Level/level_2"));

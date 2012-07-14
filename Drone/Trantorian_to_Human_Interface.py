@@ -110,14 +110,14 @@ class Bridge:
     """Retrieve select informations"""
 
     l.append(sys.stdin)
-    (rlist, _, _) = select.select(l, [], [], 1.0)
+    (rlist, _, _) = select.select(l, [], [], 0.01)
     return rlist
 
   def getCmd(self, channel):
     """Associate commands and keys"""
 
     data = channel.read(1)
-    if data == '':
+    if data == "":
       sys.exit()
     if data == '\033':
       data = channel.read(1)
@@ -298,9 +298,12 @@ class Bridge:
     """Iter on stdin and socket"""
 
     while True:
+      sys.stdout.flush()
       rlist = self.monitor([l.s])
       if rlist.count(sys.stdin) > 0:
 	data = self.getCmd(sys.stdin)
+	if data == None:
+	  continue
 	print "\033[34m-", data, "\033[00m"
 	if data == "gather_all":
 	  link.send("voir")

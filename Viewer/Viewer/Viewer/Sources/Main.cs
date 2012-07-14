@@ -356,12 +356,6 @@ namespace Viewer.Sources
             this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             if (this.end == false)
             {
-                this.tm_box.Draw(this.spriteBatch, new Rectangle(0, 0, this.tm_box.getBounds().Width, this.tm_box.getBounds().Height));
-                if (this.scroll != null)
-                {
-                    this.DisplayTeams(gameTime);
-                    this.spriteBatch.DrawString(this.sf, this.scroll, new Vector2(12, 12), Color.White);
-                }
                 foreach (Egg eelt in elist)
                 {
                     eelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch, this.map);
@@ -431,6 +425,12 @@ namespace Viewer.Sources
                 }
                 if (GamePad.GetState(PlayerIndex.One).IsConnected)
                     sm.GetSprite("Tiles/cursor").Draw(this.spriteBatch, new Rectangle((int)(dot.X - 25), (int)(dot.Y - 25), 50, 50));
+                this.tm_box.Draw(this.spriteBatch, new Rectangle(0, 0, this.tm_box.getBounds().Width, this.tm_box.getBounds().Height));
+                if (this.scroll != null)
+                {
+                    this.DisplayTeams(gameTime);
+                    this.spriteBatch.DrawString(this.sf, this.scroll, new Vector2(12, 12), Color.White);
+                }
             }
             else
             {

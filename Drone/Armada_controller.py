@@ -84,7 +84,7 @@ class Main:
       print "-", e
       print "- Valid options are [-h HOST] [-p PORT] [-n TEAM]"
       print "- Default values are -h 127.0.01 -p 4242 -n Poney"
-      sys.exit() 
+      sys.exit()
 
   def ioMode(self):
     if os.isatty(0):
@@ -119,10 +119,26 @@ class Main:
 	  getCurTime(self.host, self.port)
 	  data = None
 	if data == "-":
-	  setTime(10, self.host, self.port)
+	  setTime(5, self.host, self.port)
 	  data = None
 	if data == "0":
-	  setTime(-10, self.host, self.port)
+	  setTime(-5, self.host, self.port)
+	  data = None
+	if data == "2":
+	  self.selected -= 1
+	  if self.selected < 0:
+	    self.selected = len(self.process) - 1
+	  print "\033[31m- Switch to drone", self.selected, "\033[00m"
+	  data = None
+	if data == "3":
+	  self.selected += 1
+	  self.selected = self.selected % len(self.process)
+	  print "\033[31m- Switch to drone", self.selected, "\033[00m"
+	  data = None
+	if data == "4":
+	  print "\033[31m- Active drone id:", self.selected, "\033[00m"
+	if data == "5":
+	  print "\033[31m- Total active drones", len(self.process), "\033[00m"
 	  data = None
 
 	if len(self.process) > 0 and data != None:
@@ -134,6 +150,9 @@ class Main:
 	    for e in self.process:
 	      if e[0].stdout == elt:
 		print "\033[31m- Drone Disconnected\033[00m"
+		if self.process[self.selected] == e:
+		  self.selected = 0
+		  print "\033[31m- Switch selection to drone 0\033[00m"
 		self.process.remove(e)
 	  sys.stdout.write(data)
 

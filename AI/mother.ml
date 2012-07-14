@@ -4,8 +4,9 @@
   *)
 
 let child = ref []
+let size_max = ref 8
 
-let run () =
+let rec run () =
 
   let rec launch_fork = function
     | 0 -> ()
@@ -31,21 +32,19 @@ let run () =
 		     "-s"
 		   |]
 		   Unix.stdin Unix.stdout Unix.stderr)::(!child));
-      Printf.printf "I Connect one And nb = %d\n" nb;
-      flush stdout;
       connect_soldier (nb - 1)
   in
 
   let test_connect sz = function
     | 0  -> ()
     | n ->
-      if (sz < 8) then
-	if ((n + sz) > 8) then
-	  connect_soldier (8 - sz)
+      if (sz < !size_max) then
+	if ((n + sz) > !size_max) then
+	  connect_soldier (!size_max - sz)
 	else
 	  connect_soldier (n)
   in
-  
+
   let ret_connect = function
     | 0  -> 8
     | nb ->
@@ -55,18 +54,34 @@ let run () =
 	(8 - nb)
   in
 
-  let rec cycle () =
-    Bridge.init ();
-    Bridge.push Bridge.Connect_nbr;
-    test_connect (List.length !child) (Bridge.connect (Bridge.pull Bridge.Connect_nbr));
-    if (!PlayerInventory.piv.Inventory.nourriture < 50) then
-      FsmSurvival.min_survival []
-    else
-      Bridge.push (Bridge.Avance)
-    ;
-    cycle ()
+  let rec test_rcp = function
+     | Broadcast.Err ""  -> ()
+     | Broadcast.Err msg  ->
+       if (!PlayerInventory.piv.Inventory.nourriture < 10) then
+	 ()
+       else
+	 Bridge.push (Bridge.Broadcast msg)
+     | _                 -> test_rcp (Broadcast.pp Bridge.take)
+  in
+
+  let rec cycle = function
+    | 200 ->
+      launch_fork 4;
+      size_max := !size_max + 4;
+      cycle 0
+    | nb ->
+      Bridge.init ();
+      Bridge.push Bridge.Connect_nbr;
+      test_connect (List.length !child) (Bridge.connect (Bridge.pull Bridge.Connect_nbr));
+      test_rcp (Broadcast.pp Bridge.take);
+      if (!PlayerInventory.piv.Inventory.nourriture < 50) then
+	FsmSurvival.min_survival []
+      else
+	Bridge.push (Bridge.Avance)
+      ;
+      cycle (nb + 1)
   in
 
   Bridge.push Bridge.Connect_nbr;
   launch_fork (ret_connect (Bridge.connect (Bridge.pull Bridge.Connect_nbr)));
-  cycle ()
+  cycle 0

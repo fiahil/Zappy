@@ -218,7 +218,8 @@ let incant () =
   let to_lvl_two () =
     FsmBase.gather_all ();
     Bridge.push (Bridge.Pose Inventory.Linemate);
-    Bridge.push Bridge.Incantation
+    Bridge.push Bridge.Incantation;
+    true
   in
   let to_lvl_three () =
     if (call_player 1) then
@@ -228,10 +229,11 @@ let incant () =
 	Bridge.push (Bridge.Pose Inventory.Deraumere);
 	Bridge.push (Bridge.Pose Inventory.Sibur);
 	Bridge.push Bridge.Incantation;
-	Broadcast.bc (Broadcast.Icl !IncantManager.id)
+	Broadcast.bc (Broadcast.Icl !IncantManager.id);
+	true
       end
     else
-      ()
+      false
   in
   let to_lvl_four () =
     if (call_player 1) then
@@ -243,10 +245,11 @@ let incant () =
 	Bridge.push (Bridge.Pose Inventory.Phiras);
 	Bridge.push (Bridge.Pose Inventory.Phiras);
 	Bridge.push Bridge.Incantation;
-	Broadcast.bc (Broadcast.Icl !IncantManager.id)
+	Broadcast.bc (Broadcast.Icl !IncantManager.id);
+	true
       end
     else
-      ()
+      false
   in
   let to_lvl_five () =
     if (call_player 3) then
@@ -258,10 +261,11 @@ let incant () =
 	Bridge.push (Bridge.Pose Inventory.Sibur);
 	Bridge.push (Bridge.Pose Inventory.Phiras);
 	Bridge.push Bridge.Incantation;
-	Broadcast.bc (Broadcast.Icl !IncantManager.id)
+	Broadcast.bc (Broadcast.Icl !IncantManager.id);
+	true
       end
     else
-      ()
+      false
   in
   let to_lvl_six () =
     if (call_player 3) then
@@ -275,10 +279,11 @@ let incant () =
 	Bridge.push (Bridge.Pose Inventory.Mendiane);
 	Bridge.push (Bridge.Pose Inventory.Mendiane);
 	Bridge.push Bridge.Incantation;
-	Broadcast.bc (Broadcast.Icl !IncantManager.id)
+	Broadcast.bc (Broadcast.Icl !IncantManager.id);
+	true
       end
     else
-      ()
+      false
   in
   let to_lvl_seven () =
     if (call_player 5) then
@@ -292,10 +297,11 @@ let incant () =
 	Bridge.push (Bridge.Pose Inventory.Sibur);
 	Bridge.push (Bridge.Pose Inventory.Phiras);
 	Bridge.push Bridge.Incantation;
-	Broadcast.bc (Broadcast.Icl !IncantManager.id)
+	Broadcast.bc (Broadcast.Icl !IncantManager.id);
+	true
       end
     else
-      ()
+      false
   in
   let to_lvl_eight () =
     if (call_player 5) then
@@ -313,10 +319,11 @@ let incant () =
 	Bridge.push (Bridge.Pose Inventory.Mendiane);
 	Bridge.push (Bridge.Pose Inventory.Thystame);
 	Bridge.push Bridge.Incantation;
-	Broadcast.bc (Broadcast.Icl !IncantManager.id)
+	Broadcast.bc (Broadcast.Icl !IncantManager.id);
+	true
       end
     else
-      ()
+      false
   in
   let aux = function
     | 1 -> to_lvl_two ()
@@ -326,6 +333,6 @@ let incant () =
     | 5 -> to_lvl_six ()
     | 6 -> to_lvl_seven ()
     | 7 -> to_lvl_eight ()
-    | _ -> ()
+    | _ -> false
   in
   aux !FsmBase.plvl

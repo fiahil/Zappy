@@ -35,12 +35,45 @@ namespace PhoneViewer
         }
 
         public Microsoft.Xna.Framework.Rectangle screen;
-        Player inventory_details;
-        TimeSpan inventory_timer;
+
         Sprite inventory_page;
         Sprite team_detail;
         Sprite bc_box;
         Queue<string> lbc;
+
+        Player inventory_details;
+        TimeSpan inventory_timer;
+        public Player Inventory
+        {
+            set { this.inventory_details = value; }
+        }
+        public TimeSpan InventoryTimer
+        {
+            set { this.inventory_timer = value; }
+        }
+
+        int followedId;
+        Player followed;
+        public Player Followed
+        {
+            get { return this.followed; }
+            set
+            {
+                this.followed = value;
+                if (value != null)
+                {
+                    int i = 0;
+                    int j = 0;
+                    foreach (var e in this.plist)
+                    {
+                        if (e.Id == this.followed.Id)
+                            i = j;
+                        ++j;
+                    }
+                    this.followedId = i;
+                }
+            }
+        }
 
         SpriteManager sm;
         public SpriteManager Sprites
@@ -149,7 +182,7 @@ namespace PhoneViewer
             this.sf = this.contentManager.Load<SpriteFont>("Font/Classic");
             this.sf_bc = this.contentManager.Load<SpriteFont>("Font/Broadcast");
 
-            this.map.resizeMap(10, 7);
+            this.map.resizeMap(10, 10);
             server.Initialize(this);
             // Démarrer le minuteur
             timer.Start();

@@ -24,7 +24,7 @@ let main () =
              ("-p", Arg.Int select_port, "Port");
              ("-h", Arg.String select_host, "Host");
 	     ("-s", Arg.Unit is_soldier, "Soldier")]
-            (select_unkn) "usage: -n Team [-p Port] [-h Host]"
+            (select_unkn) "usage: -n Team [-p Port] [-h Host] [-s]"
   and
       check_all =
     if !Param.team = "" then
@@ -46,6 +46,6 @@ let main () =
     with
       | Invalid_argument v      -> prerr_endline v
       | Pervasives.Exit         -> prerr_endline "Player disconnected"
-      (* | _                       -> prerr_endline "An error occured" *)
+      | _                       -> prerr_endline "An error occured"
 
 let _ = main ()

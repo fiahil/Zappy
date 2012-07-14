@@ -9,13 +9,15 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Viewer.Sources
 {
-    class SoundManager
+    public class SoundManager
     {
         Dictionary<string, SoundEffect> soundbank;
         ContentManager cm;
+        bool play;
 
         public SoundManager(ContentManager cmo)
         {
+            play = true;
             this.cm = cmo;
             soundbank = new Dictionary<string, SoundEffect>();
             soundbank["pbc"] = cm.Load<SoundEffect>("Sounds/Broadcast");
@@ -29,9 +31,15 @@ namespace Viewer.Sources
             soundbank["plv"] = cm.Load<SoundEffect>("Sounds/Up");
         }
 
+        public void Mute()
+        {
+            this.play = !this.play;
+        }
+
         public void PlaySound(string snd)
         {
-            soundbank[snd].Play();
+            if (play)
+                soundbank[snd].Play();
         }
     }
 }

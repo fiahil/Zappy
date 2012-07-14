@@ -18,6 +18,7 @@ namespace Viewer.Sources
     {
         bool end;
         MusicManager mm;
+        SoundManager sounds;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Map map;
@@ -37,6 +38,7 @@ namespace Viewer.Sources
         Sprite inventory_page;
         Sprite team_detail;
         Sprite bc_box;
+        Sprite team_banner;
         Queue<string> lbc;
         KeyboardState oldState;
 
@@ -134,6 +136,11 @@ namespace Viewer.Sources
         {
             set { this.winner = value; }
         }
+
+        public SoundManager Sounds
+        {
+            get { return this.sounds; }
+        }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -176,10 +183,12 @@ namespace Viewer.Sources
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             this.mm = new MusicManager(this.Content);
+            this.sounds = new SoundManager(this.Content);
             this.sm = new SpriteManager(this.Content);
             this.inventory_page = sm.GetSprite("Tiles/map_inventory");
             this.team_detail = sm.GetSprite("Tiles/team_detail");
             this.bc_box = sm.GetSprite("Tiles/bc_box");
+            this.team_banner = sm.GetSprite("Tiles/bc_box"); // Temporary
             this.sf = this.Content.Load<SpriteFont>("Font/Classic");
             this.sf_bc = this.Content.Load<SpriteFont>("Font/Broadcast");
             this.vic = this.Content.Load<SpriteFont>("Font/victory");
@@ -221,7 +230,10 @@ namespace Viewer.Sources
             this.plist.RemoveAll(delegate(Player p) { return p.State == Player.States.FINISHED; });
 
             if (oldState.IsKeyUp(Keys.C) && Keyboard.GetState().IsKeyDown(Keys.C))
+            {
                 mm.Mute();
+                sounds.Mute();
+            }
 
             if (this.end == false)
             {
@@ -311,6 +323,8 @@ namespace Viewer.Sources
             this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             if (this.end == false)
             {
+                this.team_banner.Draw(this.spriteBatch, new Rectangle(0, 0, this.team_banner.getBounds().Width, this.team_banner.getBounds().Height));
+
                 foreach (Egg eelt in elist)
                 {
                     eelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch, this.map);

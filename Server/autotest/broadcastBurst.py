@@ -8,7 +8,7 @@ import subprocess
 
 print " - Launching Clients"
 
-host = '10.19.252.96'
+host = '127.0.0.1'
 port = 4242
 
 i = 0

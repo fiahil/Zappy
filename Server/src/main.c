@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:37 2012 ulric lefevre
-** Last update Fri Jul 13 16:22:30 2012 ulric lefevre
+** Last update Sat Jul 14 15:31:56 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -56,7 +56,8 @@ static void	init_teams(t_data_serv data_serv, t_arg *args)
   it = args->teams->head;
   while (it)
     {
-      list_push_front_ctor(data_serv->teams, (char*)it->data, data_serv->nb_per_team);
+      list_push_front_ctor(data_serv->teams,
+			   (char*)it->data, data_serv->nb_per_team);
       it = it -> next;
     }
   delete_list(args->teams);
@@ -69,7 +70,7 @@ static void	init_lists(t_data_serv data_serv)
   data_serv->action = new_pqueue(&cmp_action);
   data_serv->send_q = new_list(NULL, NULL, NULL);
   data_serv->egg = new_list(NULL, &dtor_egg, NULL);
-  data_serv->teams = new_list(&ctor_team, &dtor_team, NULL);;
+  data_serv->teams = new_list(&ctor_team, &dtor_team, NULL);
   get_data_serv(data_serv);
 }
 

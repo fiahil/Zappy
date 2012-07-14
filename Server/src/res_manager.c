@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Sat Jul 14 00:44:02 2012 ulric lefevre
+** Last update Sat Jul 14 12:07:43 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -29,7 +29,7 @@ void		put_food(int val)
   i = 0;
   if (ds->player->size)
     {
-      last_val = last_val + val;
+      last_val += val;
       div = (ds->player->size > 100) ? (100) : (ds->player->size);
       i = last_val / (100 / div);
       last_val %= (100 / div);

@@ -163,7 +163,7 @@ let map_cmd str =
 
 let connect_cmd str =
   try
-    int_of_string str
+    int_of_string (String.sub str 0 ((String.length str) - 1))
         with
     | _         -> 0
 
@@ -366,9 +366,7 @@ let init () =
     begin
       Socket.send "inventaire\n";
       PlayerInventory.valid (inventaire (pull Inventaire));
-      timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0;
-      Printf.printf "Lag --> %f\n" !timeout_t;
-      flush stdout
+      timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0
     end
 
 let push v =

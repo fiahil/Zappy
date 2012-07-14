@@ -45,15 +45,20 @@ namespace PhoneViewer
 
         public void Treat(string cmd)
         {
-            if (tab.ContainsKey(cmd.Substring(0, 3)))
+            if (cmd.CompareTo("BIENVENUE") == 0)
+            {
+                parent.Server.SendDatas("GRAPHIC\n");
+            }
+            else
             {
                 try
                 {
-                    tab[cmd.Substring(0, 3)](cmd.Substring(4).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+                    if (tab.ContainsKey(cmd.Substring(0, 3)))
+                    {
+                        tab[cmd.Substring(0, 3)](cmd.Substring(4).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+                    }
                 }
-                catch
-                {
-                }
+                catch { }
             }
         }
 

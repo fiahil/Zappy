@@ -24,7 +24,7 @@ let main () =
              ("-p", Arg.Int select_port, "Port");
              ("-h", Arg.String select_host, "Host");
 	     ("-s", Arg.Unit is_soldier, "Soldier")]
-            (select_unkn) "usage: -n Team [-p Port] [-h Host]"
+            (select_unkn) "usage: -n Team [-p Port] [-h Host] [-s]"
   and
       check_all =
     if !Param.team = "" then

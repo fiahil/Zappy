@@ -16,6 +16,10 @@ namespace Viewer.Sources
     /// </summary>
     public class Main : Microsoft.Xna.Framework.Game
     {
+        String teams;
+        String scroll;
+        TimeSpan time;
+
         bool end;
         MusicManager mm;
         SoundManager sounds;
@@ -38,7 +42,7 @@ namespace Viewer.Sources
         Sprite inventory_page;
         Sprite team_detail;
         Sprite bc_box;
-        Sprite team_banner;
+        Sprite tm_box;
         Queue<string> lbc;
         KeyboardState oldState;
 
@@ -61,6 +65,7 @@ namespace Viewer.Sources
         }
         public Main()
         {
+            this.time = TimeSpan.Zero;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.map = new Map(this);
@@ -188,7 +193,7 @@ namespace Viewer.Sources
             this.inventory_page = sm.GetSprite("Tiles/map_inventory");
             this.team_detail = sm.GetSprite("Tiles/team_detail");
             this.bc_box = sm.GetSprite("Tiles/bc_box");
-            this.team_banner = sm.GetSprite("Tiles/bc_box"); // Temporary
+            this.tm_box = sm.GetSprite("Tiles/tm_box");
             this.sf = this.Content.Load<SpriteFont>("Font/Classic");
             this.sf_bc = this.Content.Load<SpriteFont>("Font/Broadcast");
             this.vic = this.Content.Load<SpriteFont>("Font/victory");
@@ -205,6 +210,30 @@ namespace Viewer.Sources
         {
         }
 
+        private void InitTeamString()
+        {
+            foreach (String team in this.Teams)
+                this.teams += team + " - ";
+            this.teams = this.teams.Remove(this.teams.Length - 3, 3);
+            this.teams = this.teams.Insert(this.teams.Length, "                    ");
+            this.scroll = this.teams.Substring(0, 20);
+        }
+
+        private void DisplayTeams(GameTime gameTime)
+        {
+            if (this.time == TimeSpan.Zero || this.time <= gameTime.TotalGameTime)
+            {
+                char tmp;
+
+                this.scroll = this.scroll.Remove(0, 1);
+                this.scroll = this.scroll + this.teams[20];
+                tmp = this.teams[0];
+                this.teams = this.teams.Remove(0, 1);
+                this.teams = this.teams + tmp;
+                this.time = gameTime.TotalGameTime + TimeSpan.FromMilliseconds(75);
+            }
+        }
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -213,7 +242,11 @@ namespace Viewer.Sources
         protected override void Update(GameTime gameTime)
         {
             if (server.IsConnected())
+            {
                 server.Update();
+                if (this.Teams.Count > 0 && this.teams == null)
+                    this.InitTeamString();
+            }
 
             base.Update(gameTime);
 
@@ -323,8 +356,12 @@ namespace Viewer.Sources
             this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             if (this.end == false)
             {
-                this.team_banner.Draw(this.spriteBatch, new Rectangle(0, 0, this.team_banner.getBounds().Width, this.team_banner.getBounds().Height));
-
+                this.tm_box.Draw(this.spriteBatch, new Rectangle(0, 0, this.tm_box.getBounds().Width, this.tm_box.getBounds().Height));
+                if (this.scroll != null)
+                {
+                    this.DisplayTeams(gameTime);
+                    this.spriteBatch.DrawString(this.sf, this.scroll, new Vector2(12, 12), Color.White);
+                }
                 foreach (Egg eelt in elist)
                 {
                     eelt.Draw(gameTime, this.map.getSquare(), this.screen, this.spriteBatch, this.map);

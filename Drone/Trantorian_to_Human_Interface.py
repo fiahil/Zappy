@@ -132,6 +132,8 @@ class Bridge:
 
     if st == "0":
       return " "
+    elif int(st) > 9:
+      return "+"
     else:
       return st
 

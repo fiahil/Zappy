@@ -5,19 +5,26 @@
 ## Fri Mar 16 2012
 ##
 
-NAME	=	drone
+NAME	=	ai_client
 
-ML	=	socket.ml		\
+ML	=	param.ml		\
+		socket.ml		\
 		inventory.ml		\
 		playerInventory.ml	\
 		bridge.ml		\
+		utils.ml		\
 		broadcast.ml		\
+		incantManager.ml	\
+		resourcesManager.ml	\
 		mapSize.ml		\
-		fsmLaunch.ml		\
 		fsmBase.ml		\
 		fsmIncant.ml		\
+		exchange_ic.ml		\
+		broadcast_ic.ml		\
 		fsmSurvival.ml		\
 		fsmGather.ml		\
+		mother.ml		\
+		fsmLaunch.ml		\
 		main.ml
 
 MLI	=	socket.mli		\
@@ -25,9 +32,13 @@ MLI	=	socket.mli		\
 		playerInventory.mli	\
 		bridge.mli		\
 		broadcast.mli		\
-		fsmLaunch.mli		\
 		fsmBase.mli		\
-		fsmIncant.mli
+		fsmIncant.mli		\
+		exchange_ic.mli		\
+		broadcast_ic.mli	\
+		fsmGather.mli		\
+		mother.mli		\
+		fsmLaunch.mli
 
 CMO	=	$(ML:.ml=.cmo)
 

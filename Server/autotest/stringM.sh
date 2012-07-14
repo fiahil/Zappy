@@ -1,4 +1,4 @@
 #!/bin/bash
 
 echo "GRAPHIC"
-sleep 240
+sleep 1

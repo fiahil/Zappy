@@ -1,5 +1,6 @@
 #!/bin/sh
 
 for i in {0..100} ;do
-  ./stringM.sh | nc 127.0.0.1 4242 &
+  ./stringM.sh | nc 10.19.253.175 4444 > /dev/null &
 done
+killall nc

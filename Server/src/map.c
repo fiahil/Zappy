@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:31 2012 ulric lefevre
-** Last update Sun Jun 24 21:41:00 2012 ulric lefevre
+** Last update Wed Jul 11 18:56:57 2012 ulric lefevre
 */
 
 #include	<time.h>
@@ -52,7 +52,7 @@ static void	alloc_map(t_map this, void *pool)
     }
 }
 
-void		init_map(int szx, int szy, int nb_play)
+void		init_map(int szx, int szy, int nb_team)
 {
   t_map		this;
   void		*pool;
@@ -66,6 +66,6 @@ void		init_map(int szx, int szy, int nb_play)
   if (!(this->map = malloc(sizeof(**(this->map)) * szy)))
     crash_error("malloc", "out_of_memory");
   alloc_map(this, pool);
-  fill_map(this, (this->size_x * this->size_y), nb_play);
+  fill_map(this, (this->size_x * this->size_y), nb_team);
   get_map(this);
 }

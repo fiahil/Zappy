@@ -1,8 +1,9 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Viewer.Sources
 {
@@ -47,13 +48,13 @@ namespace Viewer.Sources
         {
             if (tab.ContainsKey(cmd.Substring(0, 3)))
             {
-                //try
-                //{
+                try
+                {
                     tab[cmd.Substring(0, 3)](cmd.Substring(4).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
-                //}
-                //catch
-                //{
-                //}
+                }
+                catch
+                {
+                }
             }
         }
 
@@ -91,13 +92,24 @@ namespace Viewer.Sources
             {
                 P.setPos(int.Parse(a[1]), int.Parse(a[2])).Dir = Player.convertDir(int.Parse(a[3]));
                 P.State = Player.States.IDLE;
+                if (this.parent.Followed != null && this.parent.Followed.Id == P.Id)
+                {
+                    Rectangle r = new Rectangle();
+                    r.X = -(-P.Pos.Y * (this.parent.Map.getSquare().Width / 2) + (P.getPos().X + 1) * (this.parent.Map.getSquare().Width / 2) + ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Width / 2) - 620);
+                    r.Y = -(P.Pos.Y * (this.parent.Map.getSquare().Height / 2) + (P.getPos().X) * (this.parent.Map.getSquare().Height / 2) - ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Height / 2) - 360);
+                    this.parent.Map.Square = r;
+                }
+                if (parent.Followed != null && P == parent.Followed)
+                    this.parent.Sounds.PlaySound("ppo");
             }
         }
 
         private void plv(string[] a)
         {
-            parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); })
-                .Level = int.Parse(a[1]);
+            Player pl = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
+            pl.Level = int.Parse(a[1]);
+            if (parent.Followed != null && pl != null && pl == parent.Followed)
+                this.parent.Sounds.PlaySound("plv");
         }
 
         private void pin(string[] a)
@@ -122,6 +134,8 @@ namespace Viewer.Sources
             if (P != null)
             {
                 P.State = Player.States.EXPULSE;
+                if (parent.Followed != null && P == parent.Followed)
+                    this.parent.Sounds.PlaySound("pex");
             }
         }
 
@@ -130,7 +144,11 @@ namespace Viewer.Sources
             Player P = parent.Players.Find(delegate(Player p) { return p.Id == int.Parse(a[0]); });
             if (P != null)
             {
-                P.setBroadcast(a[1]);
+                string b = a.Skip(1).Aggregate(delegate(string one, string two) { return one + " " + two; });
+                P.setBroadcast(b);
+                parent.addBroadcast(P.Team, b);
+                if (parent.Followed != null && P == parent.Followed)
+                    this.parent.Sounds.PlaySound("pbc");
             }
         }
 
@@ -142,6 +160,8 @@ namespace Viewer.Sources
                 if (P != null)
                 {
                     P.State = Player.States.INCANT;
+                    if (parent.Followed != null && P == parent.Followed)
+                        this.parent.Sounds.PlaySound("pic");
                 }
             }
         }
@@ -159,6 +179,8 @@ namespace Viewer.Sources
             if (P != null)
             {
                 P.State = Player.States.FORK;
+                if (parent.Followed != null && P == parent.Followed)
+                    this.parent.Sounds.PlaySound("pfk");
             }
         }
 
@@ -168,6 +190,8 @@ namespace Viewer.Sources
             if (parent != null)
             {
                 P.State = Player.States.DROP;
+                if (parent.Followed != null && P == parent.Followed)
+                    this.parent.Sounds.PlaySound("pdr");
             }
         }
 
@@ -177,6 +201,8 @@ namespace Viewer.Sources
             if (P != null)
             {
                 P.State = Player.States.TAKE;
+                if (parent.Followed != null && P == parent.Followed)
+                    this.parent.Sounds.PlaySound("pgt");
             }
         }
 
@@ -186,6 +212,8 @@ namespace Viewer.Sources
             if (P != null)
             {
                 P.State = Player.States.DEAD;
+                if (parent.Followed != null && P == parent.Followed)
+                    this.parent.Sounds.PlaySound("pdi");
             }
         }
 
@@ -228,6 +256,8 @@ namespace Viewer.Sources
 
         private void seg(string[] a)
         {
+            parent.End = true;
+            parent.Winner = a[0];
         }
         private void smg(string[] a)
         {

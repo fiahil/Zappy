@@ -5,7 +5,7 @@
 ## Login   <lefevr_u@epitech.net>
 ## 
 ## Started on  Tue Jul  3 13:29:53 2012 ulric lefevre
-## Last update Tue Jul 10 14:48:59 2012 ulric lefevre
+## Last update Sat Jul 14 13:43:31 2012 ulric lefevre
 ##
 
 NAME	=	zappy
@@ -88,24 +88,40 @@ CC	=	gcc
 
 RM	=	rm -f
 
-CFLAGS	=	-Wall -Wextra -g -O3 $(INCLUDES)
+CFLAGS	=	-Wall -Wextra -Werror -O3 $(INCLUDES)
 
 LDFLAGS	=	-L./lists/ -lclists -lm
 
 all:		$(NAME)
 
-$(NAME):	$(OBJ)
+all_list:
+		@$(MAKE) all -C ./lists
+
+$(NAME):	all_list $(OBJ)
 		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
-liblist:
-		@$(MAKE) all -C ./lists
-		@$(MAKE) clean -C ./lists
+
+install:
+		strip $(NAME)
+		mkdir -p $(DESTDIR)/usr/bin/
+		@cp $(NAME) $(DESTDIR)/usr/bin/
+		mkdir -p $(DESTDIR)/usr/share/zappy/
+		@cp logo $(DESTDIR)/usr/share/zappy/
+		mkdir -p $(DESTDIR)/usr/share/man/man1/
+		@cp Documents/zappy.1.gz $(DESTDIR)/usr/share/man/man1/
+
+uninstall:
+		@$(RM) $(DESTDIR)/usr/bin/$(NAME)
+		@$(RM) $(DESTDIR)/usr/share/zappy/logo
+		@$(RM) $(DESTDIR)/usr/share/man/man1/zappy.1.gz
+		rmdir -p $(DESTDIR)
 
 clean:
 		@$(RM) $(OBJ)
+		@$(MAKE) clean -C ./lists
 
 fclean:		clean
 		@$(RM) $(NAME)
+		@$(MAKE) fclean -C ./lists
 
 re:		fclean all
-

@@ -3,7 +3,9 @@
   * 08.07.2012
   *)
 
+let _ = Random.self_init ()
 let piv = ref (Inventory.empty ())
+let pid = ref (Random.int 100000)
 
 let valid iv =
   piv := (Inventory.set !piv iv.Inventory.nourriture Inventory.Nourriture);

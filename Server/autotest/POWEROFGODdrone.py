@@ -20,8 +20,8 @@ def getcmd(data, cmds, cmdr):
     if elt[0] == data:
       return (elt[1], "")
 
-host = '127.0.0.1'
-port = 4242
+host = '10.19.253.175'
+port = 4444
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
   s.connect((host, port))

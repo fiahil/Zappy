@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sat Jun 23 20:15:41 2012 ulric lefevre
-** Last update Fri Jul  6 13:07:06 2012 ulric lefevre
+** Last update Wed Jul 11 19:01:42 2012 ulric lefevre
 */
 
 #include	<errno.h>
@@ -17,7 +17,9 @@
 #include	"clock.h"
 #include	"player.h"
 #include	"cmd_parse.h"
+#include	"iter_tools.h"
 #include	"msgout_cmd.h"
+#include	"res_manager.h"
 #include	"var_manager.h"
 #include	"handle_error.h"
 #include	"iter_function.h"
@@ -43,6 +45,14 @@ int		sort_player_life(void *ptr1, size_t sz1, void *ptr2, size_t sz2)
   if (val1 < val2)
     return (-1);
   return (0);
+}
+
+void		call_feeder()
+{
+  int		val;
+
+  val = get_dmg();
+  put_food(val);
 }
 
 void			push_new_action(t_player_action pa)

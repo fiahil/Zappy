@@ -2,7 +2,7 @@
  * Fiahil
  * 25.06.2012
  *)
-
+ 
 type command =
   | Connect_nbr
   | Voir
@@ -77,6 +77,8 @@ let voir_cmd str =
             aux ((Inventory.inc (List.hd bat) Inventory.Phiras)::(List.tl bat)) tail
         | (Str.Text "thystame")::tail       ->
             aux ((Inventory.inc (List.hd bat) Inventory.Thystame)::(List.tl bat)) tail
+        | (Str.Text "joueur")::tail         ->
+            aux ((Inventory.inc (List.hd bat) Inventory.Joueur)::(List.tl bat)) tail
         | (Str.Text _)::tail                -> aux bat tail
         | _::tail                           -> aux bat tail
   in
@@ -139,11 +141,10 @@ let broadcast_cmd str =
   let rec re = Str.regexp ","
   and
       extract_dir str =
-        print_endline str;
-    try
-      int_of_string (String.sub str (String.length str - 1) 1)
-            with
-      | _       -> 0
+        try
+          int_of_string (String.sub str (String.length str - 1) 1)
+        with
+          | _       -> 0
     and
       aux l = (extract_dir (List.hd l)), (List.hd (List.tl l))
   in
@@ -155,14 +156,14 @@ let map_cmd str =
       aux l =
         try
           (int_of_string (List.hd l)), (int_of_string (List.hd (List.tl l)))
-    with
-      | _       -> (0, 0)
+        with
+          | _       -> (0, 0)
   in
     aux (Str.bounded_split re str 2)
 
 let connect_cmd str =
   try
-    int_of_string str
+    int_of_string (String.sub str 0 ((String.length str) - 1))
         with
     | _         -> 0
 
@@ -344,15 +345,28 @@ let pull = function
   | Pose t              -> gather (Pose t)
   | Team t              -> gather (Team t)
 
+let put_out = function
+  | Broadcast _         ->
+      begin
+        match_me (Socket.recv ());
+        if Queue.is_empty broadcast_q then
+          R_broadcast (RP_broadcast (0, ""))
+        else
+          Queue.pop broadcast_q
+      end
+  | _                   -> R_ok RP_empty
+
+let take = function
+  | Broadcast t         -> put_out (Broadcast t)
+  | _                   -> R_ok RP_empty
+
 let init () =
   let aux = Unix.gettimeofday ()
   in
     begin
       Socket.send "inventaire\n";
       PlayerInventory.valid (inventaire (pull Inventaire));
-      timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0 *. 0.95;
-      Printf.printf "--> %f\n" !timeout_t;
-      flush stdout
+      timeout_t := ((Unix.gettimeofday ()) -. aux) /. 1.0
     end
 
 let push v =
@@ -386,6 +400,8 @@ let push v =
     | Pose Inventory.Phiras         -> Socket.send "pose phiras\n"; 7.0
     | Pose Inventory.Thystame       -> Socket.send "pose thystame\n"; 7.0
     | Team value          -> Socket.send (value ^ "\n"); 0.0
+    | Pose _                        -> 0.0
+    | Prend _                       -> 0.0
   in
     begin
       (if !timeout_t = 0.0 && is_not_team v then
@@ -395,7 +411,7 @@ let push v =
 
     (*
      * Unitest
- *)
+     *)
 let unitest () =
   let rec see bat=
     let rec print_iv bat =

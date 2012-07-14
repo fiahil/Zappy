@@ -24,6 +24,7 @@ namespace Viewer.Sources
             this.db["Background/wall"] = new Sprite(cm.Load<Texture2D>("Background/wall"));
             this.db["Background/wall2"] = new Sprite(cm.Load<Texture2D>("Background/wall2"));
             this.db["Background/wall3"] = new Sprite(cm.Load<Texture2D>("Background/wall3"));
+            this.db["Background/Victory"] = new Sprite(cm.Load<Texture2D>("Background/Victory"));
 
             this.db["Level/level_1"] = new Sprite(cm.Load<Texture2D>("Level/level_1"));
             this.db["Level/level_2"] = new Sprite(cm.Load<Texture2D>("Level/level_2"));
@@ -62,6 +63,9 @@ namespace Viewer.Sources
             this.db["Tiles/map_inventory"] = new Sprite(cm.Load<Texture2D>("Tiles/map_inventory"));
             this.db["Tiles/map_resources"] = new Sprite(cm.Load<Texture2D>("Tiles/map_resources"));
             this.db["Tiles/team_detail"] = new Sprite(cm.Load<Texture2D>("Tiles/team_detail"));
+            this.db["Tiles/bc_box"] = new Sprite(cm.Load<Texture2D>("Tiles/bc_box"));
+            this.db["Tiles/cursor"] = new Sprite(cm.Load<Texture2D>("Tiles/cursor"));
+            this.db["Tiles/tm_box"] = new Sprite(cm.Load<Texture2D>("Tiles/tm_box"));
 
             this.db["Players/BL"] = new Sprite(cm.Load<Texture2D>("Players/BL"));
             this.db["Players/BL_2"] = new Sprite(cm.Load<Texture2D>("Players/BL_2"));

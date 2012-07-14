@@ -37,7 +37,6 @@ namespace Viewer.Sources
             IDLE
         }
 
-        Point pos;
         Sprite[] player;
         Sprite[] stake;
         Sprite sincant;
@@ -50,6 +49,11 @@ namespace Viewer.Sources
         bool     dead;
         Sprite   sdead;
 
+        Point pos;
+        public Point Pos
+        {
+            get { return this.pos; } 
+        }
         Direction dir;
         public Direction Dir
         {

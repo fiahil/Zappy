@@ -5,7 +5,7 @@
 ** Login   <lefevr_u@epitech.net>
 ** 
 ** Started on  Sun Jul  1 19:48:45 2012 ulric lefevre
-** Last update Mon Jul  9 16:19:06 2012 ulric lefevre
+** Last update Sat Jul 14 12:07:43 2012 ulric lefevre
 */
 
 #include	<stdio.h>
@@ -16,26 +16,59 @@
 #include	"graphic.h"
 #include	"var_manager.h"
 
-void		put_res(int val)
+void		put_food(int val)
 {
+  t_data_serv	ds;
   static int	last_val = 0;
   int		i;
   t_u_pos	pos;
   t_map		map;
-  t_data_serv	ds;
+  int		div;
 
-  last_val += val;
-  i = last_val / 100;
-  last_val %= 100;
-  map = get_map(NULL);
   ds = get_data_serv(NULL);
+  i = 0;
+  if (ds->player->size)
+    {
+      last_val += val;
+      div = (ds->player->size > 100) ? (100) : (ds->player->size);
+      i = last_val / (100 / div);
+      last_val %= (100 / div);
+    }
+  map = get_map(NULL);
   while (i)
     {
       pos.x = random() % map->size_x;
       pos.y = random() % map->size_y;
-      map->map[pos.y][pos.x]->inv.resources[FOOD] += random() % 2 + 1;
-      map->map[pos.y][pos.x]->inv.resources[random() % (LAST - 1) + 1]
-	+= random() % 1;
+      map->map[pos.y][pos.x]->inv.resources[FOOD] += 1;
+      bct_general(ds->monitor, map->map[pos.y][pos.x], &pos);
+      --i;
+    }
+}
+
+void		put_rock(int val)
+{
+  t_data_serv	ds;
+  static int	last_val = 0;
+  int		i;
+  t_u_pos	pos;
+  t_map		map;
+  int		div;
+
+  ds = get_data_serv(NULL);
+  i = 0;
+  if (ds->player->size)
+    {
+      last_val += val;
+      div = (ds->player->size > 100) ? (100) : (ds->player->size);
+      i = last_val / (1000 / div);
+      last_val %= (1000 / div);
+    }
+  map = get_map(NULL);
+  while (i)
+    {
+      pos.x = random() % map->size_x;
+      pos.y = random() % map->size_y;
+      map->map[pos.y][pos.x]->inv.resources[random() % (LAST - 1) + 1] += 1;
       bct_general(ds->monitor, map->map[pos.y][pos.x], &pos);
       --i;
     }
@@ -67,12 +100,12 @@ void		put_inv(t_inventory inv)
 
 static void	init_res_tab(int (*new)[])
 {
-  (*new)[FOOD] = 30;
-  (*new)[LINEMATE] = 6;
-  (*new)[DERAUMERE] = 5;
-  (*new)[SIBUR] = 7;
-  (*new)[MENDIANE] = 3;
-  (*new)[PHIRAS] = 4;
+  (*new)[FOOD] = 40;
+  (*new)[LINEMATE] = 0;
+  (*new)[DERAUMERE] = 0;
+  (*new)[SIBUR] = 0;
+  (*new)[MENDIANE] = 0;
+  (*new)[PHIRAS] = 0;
   (*new)[THYSTAME] = 0;
 }
 

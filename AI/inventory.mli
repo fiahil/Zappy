@@ -4,6 +4,7 @@
  *)
 
 type resources =
+  | Joueur
   | Nourriture
   | Linemate
   | Deraumere
@@ -14,6 +15,7 @@ type resources =
 
 type t =
     {
+      joueur : int;
       nourriture : int;
       linemate : int;
       deraumere : int;
@@ -37,7 +39,6 @@ val inc : t -> resources -> t
  * Decrease a resource
  *)
 val dec : t -> resources -> t
-
 
 (*
  * Set a value to a resource

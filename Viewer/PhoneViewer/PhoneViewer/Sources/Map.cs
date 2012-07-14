@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 
 namespace PhoneViewer
@@ -91,9 +92,6 @@ namespace PhoneViewer
             this.Game = game;
         }
 
-        //TODO REMOVE THIS
-        static Random p = new Random();
-
         public void resizeMap(int size_x, int size_y)
         {
             this.map = new Elt[size_x, size_y];
@@ -153,14 +151,8 @@ namespace PhoneViewer
                     this.map[i, j] = new Elt(sb, new Point(i, j));
                     this.map[i, j].Load(cm);
                 }
-        }
 
-        bool getPadCap(Vector2 t)
-        {
-            GamePadCapabilities p = GamePad.GetCapabilities(PlayerIndex.One);
-            if (p.HasLeftXThumbStick && p.HasLeftYThumbStick)
-                return (GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X >= t.X && GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y >= t.Y);
-            return false;
+            TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Hold | GestureType.Tap | GestureType.DoubleTap;
         }
         
         public void Update(GameTimerEventArgs gameTime)
@@ -176,52 +168,89 @@ namespace PhoneViewer
                     this.clouds[i].X += 1;
             }
 
-            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadUp)) && (this.view > 50 || this.edge[1]) && this.Vrep <= gameTime.TotalTime)
+            while (TouchPanel.IsGestureAvailable)
             {
-                this.square.Y += 20;
-                this.Vrep = gameTime.TotalTime + TimeSpan.FromMilliseconds(30);
-                this.edge[1] = false;
-                this.edge[2] = true;
-            }
-            if ((Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadDown)) && (this.view > 50 || this.edge[2]) && this.Vrep <= gameTime.TotalTime)
-            {
-                this.square.Y -= 20;
-                this.Vrep = gameTime.TotalTime + TimeSpan.FromMilliseconds(30);
-                this.edge[1] = true;
-                this.edge[2] = false;
-            }
-            if ((Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadLeft)) && (this.view > 50 || this.edge[0]) && this.Hrep <= gameTime.TotalTime)
-            {
-                this.square.X += 20;
-                this.Hrep = gameTime.TotalTime + TimeSpan.FromMilliseconds(30);
-                this.edge[3] = true;
-                this.edge[0] = false;
-            }
-            if ((Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.DPadRight)) && (this.view > 50 || this.edge[3]) && this.Hrep <= gameTime.TotalTime)
-            {
-                this.square.X -= 20;
-                this.Hrep = gameTime.TotalTime + TimeSpan.FromMilliseconds(30);
-                this.edge[3] = false;
-                this.edge[0] = true;
-            }
+                GestureSample gl = TouchPanel.ReadGesture();
+                List<Player> plist = this.Game.Players;
 
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A))
-            {
-                if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-                    this.Game.Dot = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
-                for (int i = 0; i < this.dim.X; ++i)
+                switch (gl.GestureType)
                 {
-                    for (int j = 0; j < this.dim.Y; ++j)
-                    {
-                        if (this.map[i, j].isInPolygon(new Vector2(this.Game.Dot.X, this.Game.Dot.Y), this.square, this))
+                    case GestureType.DoubleTap:
+                        // Player infos
+                        this.Game.Followed = null;
+                        foreach (Player elt in this.Game.Players)
                         {
-                            this.square_details_on = true;
-                            this.square_setails_timer = gameTime.TotalTime + TimeSpan.FromSeconds(10);
-                            this.map[this.square_details_pos.X, this.square_details_pos.Y].Selected = false;
-                            this.map[i, j].Selected = true;
-                            this.square_details_pos = new Point(i, j);
+                            Point p;
+                            Point off;
+
+                            off.X = (elt.getPos().X + 1) * (this.getSquare().Width / 2);
+                            off.Y = (elt.getPos().X) * (this.getSquare().Height / 2);
+
+                            p.X = ((int)this.getSize().Y - elt.getPos().Y - 1) * (this.getSquare().Width / 2) + off.X + this.getSquare().X;
+                            p.Y = -((int)this.getSize().Y - elt.getPos().Y - 1) * (this.getSquare().Height / 2) + off.Y + this.getSquare().Y;
+
+                            Rectangle bound = new Rectangle((int)(p.X + (int)(42 * (this.getSquare().Width / 155.0))),
+                                (int)(p.Y - (int)(19 * (this.getSquare().Height / 58.0))),
+                                (int)(elt.getBounds().Width * (this.getSquare().Width / 155.0)),
+                                (int)(elt.getBounds().Height * (this.getSquare().Height / 58.0)));
+                            if (bound.Contains(new Point((int)gl.Position.X, (int)gl.Position.Y)))
+                            {
+                                Game.Server.SendDatas("pin " + elt.Id + "\n");
+                                this.Game.Inventory = elt;
+                                this.Game.InventoryTimer = gameTime.TotalTime + TimeSpan.FromSeconds(10);
+                            }
                         }
-                    }
+                        break;
+                    case GestureType.Hold:
+                        // Player locked
+                        foreach (Player elt in this.Game.Players)
+                        {
+                            Point p;
+                            Point off;
+
+                            off.X = (elt.getPos().X + 1) * (this.getSquare().Width / 2);
+                            off.Y = (elt.getPos().X) * (this.getSquare().Height / 2);
+
+                            p.X = ((int)this.getSize().Y - elt.getPos().Y - 1) * (this.getSquare().Width / 2) + off.X + this.getSquare().X;
+                            p.Y = -((int)this.getSize().Y - elt.getPos().Y - 1) * (this.getSquare().Height / 2) + off.Y + this.getSquare().Y;
+
+                            Rectangle bound = new Rectangle((int)(p.X + (int)(42 * (this.getSquare().Width / 155.0))),
+                                (int)(p.Y - (int)(19 * (this.getSquare().Height / 58.0))),
+                                (int)(elt.getBounds().Width * (this.getSquare().Width / 155.0)),
+                                (int)(elt.getBounds().Height * (this.getSquare().Height / 58.0)));
+
+                            if (bound.Contains(new Point((int)gl.Position.X, (int)gl.Position.Y)))
+                            {
+                                Game.Server.SendDatas("pin " + elt.Id + "\n");
+                                this.Game.Inventory = elt;
+                                this.Game.InventoryTimer = gameTime.TotalTime + TimeSpan.FromSeconds(10);
+                                this.Game.Followed = elt;
+                                this.square.X = -(-elt.Pos.Y * (this.getSquare().Width / 2) + (elt.getPos().X + 1) * (this.getSquare().Width / 2) + ((int)getSize().Y - 1) * (this.getSquare().Width / 2) - 620);
+                                this.square.Y = -(elt.Pos.Y * (this.getSquare().Height / 2) + (elt.getPos().X) * (this.getSquare().Height / 2) - ((int)getSize().Y - 1) * (this.getSquare().Height / 2) - 360);
+                            }
+                        }
+                        break;
+                    case GestureType.Tap:
+                        this.Game.Dot = new Vector2(gl.Position.X, gl.Position.Y);
+                        for (int i = 0; i < this.dim.X; ++i)
+                        {
+                            for (int j = 0; j < this.dim.Y; ++j)
+                            {
+                                if (this.map[i, j].isInPolygon(new Vector2(this.Game.Dot.X, this.Game.Dot.Y), this.square, this))
+                                {
+                                    this.square_details_on = true;
+                                    this.square_setails_timer = gameTime.TotalTime + TimeSpan.FromSeconds(10);
+                                    this.map[this.square_details_pos.X, this.square_details_pos.Y].Selected = false;
+                                    this.map[i, j].Selected = true;
+                                    this.square_details_pos = new Point(i, j);
+                                }
+                            }
+                        }
+                        break;
+                    case GestureType.FreeDrag:
+                        this.square.Y += (int)(gl.Delta.Y * 1);
+                        this.square.X += (int)(gl.Delta.X * 1);
+                        break;
                 }
             }
 

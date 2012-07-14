@@ -126,7 +126,7 @@ let rec gather par =
         FsmBase.gather_all ()
       end
   in
-  if (!fls_round > 50) then
+  if (!fls_round > 30) then
     begin
       ignore (call_rsc par);
       fls_round := 0

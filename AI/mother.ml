@@ -74,7 +74,7 @@ let rec run () =
       Bridge.push Bridge.Connect_nbr;
       test_connect (List.length !child) (Bridge.connect (Bridge.pull Bridge.Connect_nbr));
       test_rcp (Broadcast.pp Bridge.take);
-      if (!PlayerInventory.piv.Inventory.nourriture < 50) then
+      if (!PlayerInventory.piv.Inventory.nourriture < 100) then
 	FsmSurvival.min_survival []
       else
 	Bridge.push (Bridge.Avance)

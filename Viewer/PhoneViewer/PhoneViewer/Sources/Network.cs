@@ -8,88 +8,139 @@ using System.Threading;
 
 namespace PhoneViewer
 {
-    class SocketClient
+    public class SocketClient
     {
         Socket _socket;
-        ManualResetEvent _sync;
+        bool isConnected;
+
+        Queue<string> _in;
+        bool isReceiving;
+        SocketAsyncEventArgs recvEvents;
+        
+        Queue<string> _out;
+        bool isSending;
+        SocketAsyncEventArgs sendEvents;
 
         public SocketClient()
         {
-            _sync = new ManualResetEvent(false);
+            isConnected = false;
+            isReceiving = false;
+            isSending = false;
+
+            _in = new Queue<string>();
+            _out = new Queue<string>();
+
+            recvEvents = new SocketAsyncEventArgs();
+            recvEvents.UserToken = this;
+            recvEvents.Completed += ProcessRecv;
+            recvEvents.SetBuffer(new byte[4096], 0, 4096);
+
+            sendEvents = new SocketAsyncEventArgs();
+            sendEvents.UserToken = this;
+            sendEvents.Completed += ProcessSend;
         }
 
-        public bool Connect(string host, int port)
+        static void ProcessRecv(object o, SocketAsyncEventArgs e)
         {
-            DnsEndPoint hostEntry = new DnsEndPoint(host, port);
+            SocketClient _this = e.UserToken as SocketClient;
 
+            _this._in.Enqueue(Encoding.UTF8.GetString(e.Buffer, 0, e.Buffer.Length));
+            _this.isReceiving = false;
+        }
+
+        static void ProcessSend(object o, SocketAsyncEventArgs e)
+        {
+            SocketClient _this = e.UserToken as SocketClient;
+
+            if (_this._out.Count > 0)
+            {
+                byte[] s = Encoding.UTF8.GetBytes(_this._out.Dequeue());
+                e.SetBuffer(s, 0, s.Length);
+                while (!_this._socket.SendAsync(e))
+                {
+                    if (_this._out.Count == 0)
+                    {
+                        _this.isSending = false;
+                        return;
+                    }
+                    s = Encoding.UTF8.GetBytes(_this._out.Dequeue());
+                }
+                return;
+            }
+            _this.isSending = false;
+        }
+
+        public bool Connect(string hostname, int port)
+        {
+            DnsEndPoint host = null;
+            try
+            {
+                host = new DnsEndPoint(hostname, port);
+            }
+            catch
+            {
+                return false;
+            }
+            
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            SocketAsyncEventArgs socketEvents = new SocketAsyncEventArgs();
-            socketEvents.RemoteEndPoint = hostEntry;
+            ManualResetEvent sync = new ManualResetEvent(false);
 
-            socketEvents.Completed += new EventHandler<SocketAsyncEventArgs>(delegate(object o, SocketAsyncEventArgs e)
+            SocketAsyncEventArgs co = new SocketAsyncEventArgs();
+            co.Completed += new EventHandler<SocketAsyncEventArgs>(delegate(object o, SocketAsyncEventArgs e)
                 {
-                    _sync.Set();
+                    sync.Set();
+                    if (e.SocketError == SocketError.Success)
+                        isConnected = true;
                 });
-            _sync.Reset();
 
-            _socket.ConnectAsync(socketEvents);
+            co.RemoteEndPoint = host;
+            recvEvents.RemoteEndPoint = host;
+            sendEvents.RemoteEndPoint = host;
 
-            _sync.WaitOne(1000);
+            sync.Reset();
+            if (_socket.ConnectAsync(co))
+                sync.WaitOne(10000);
+            else
+            {
+                sync.Set();
+            }
+            return isConnected;
+        }
 
-            if (socketEvents.SocketError == SocketError.Success)
-                return true;
-            return false;
+        public string Receive()
+        {
+            string ret = String.Empty;
+
+            if (!isReceiving)
+            {
+                isReceiving = true;
+                _socket.ReceiveAsync(recvEvents);
+            }
+            if (_in.Count > 0)
+            {
+                ret = _in.Aggregate((a, b) => a + b);
+                _in.Clear();
+            }
+            return ret;
         }
 
         public void Send(string msg)
         {
             if (_socket != null)
             {
-                SocketAsyncEventArgs socketEvent = new SocketAsyncEventArgs();
-                socketEvent.RemoteEndPoint = _socket.RemoteEndPoint;
-                socketEvent.Completed += new EventHandler<SocketAsyncEventArgs>(delegate(object o, SocketAsyncEventArgs e)
-                    {
-                        _sync.Set();
-                    });
-                byte[] tmp = Encoding.UTF8.GetBytes(msg);
-                socketEvent.SetBuffer(tmp, 0, tmp.Length);
-
-                _sync.Reset();
-
-                if (_socket.SendAsync(socketEvent))
-                    _sync.WaitOne(100);
-            }
-        }
-
-        public string Receive()
-        {
-            string ret = String.Empty;
-            if (_socket != null)
-            {
-                SocketAsyncEventArgs socketEvent = new SocketAsyncEventArgs();
-                socketEvent.RemoteEndPoint = _socket.RemoteEndPoint;
-
-                socketEvent.SetBuffer(new byte[4096], 0, 4096); 
-
-                socketEvent.Completed += new EventHandler<SocketAsyncEventArgs>(delegate(object o, SocketAsyncEventArgs e)
-                    {
-                        _sync.Set();
-                    });
-                _sync.Reset();
-
-                if (_socket.ReceiveAsync(socketEvent))
-                    _sync.WaitOne(100);
-                if (socketEvent.SocketError == SocketError.Success)
+                _out.Enqueue(msg);
+                if (!isSending)
                 {
-                    ret = Encoding.UTF8.GetString(socketEvent.Buffer, socketEvent.Offset, socketEvent.BytesTransferred);
+                    byte[] s = Encoding.UTF8.GetBytes(_out.Dequeue());
+                    sendEvents.SetBuffer(s, 0, s.Length);
+                    _socket.SendAsync(sendEvents);
                 }
             }
-            return ret;
         }
     }
 
-    class Network
+    public class Network
     {
         SocketClient s;
         Treatment t;
@@ -98,33 +149,19 @@ namespace PhoneViewer
 
         bool connected;
 
+        public SocketClient Socket
+        {
+            get { return s; }
+        }
+
         public void Initialize(GamePage p)
         {
-            Byte[] buff = new byte[128];
-            _in = new Queue<string>();
             t = new Treatment();
             s = new SocketClient();
+            _in = new Queue<string>();
 
             t.Initialize(p);
-            try
-            {
-                if (s.Connect(Infos.GetInstance().host, Int32.Parse(Infos.GetInstance().port)))
-                {
-                    connected = true;
-                    if (s.Receive().CompareTo("BIENVENUE\n") == 0)
-                    {
-                        s.Send("GRAPHIC\n");
-                    }
-                }
-                else
-                {
-                    connected = false;
-                }
-            }
-            catch
-            {
-                connected = false;
-            }
+            s.Connect(Infos.GetInstance().host, Int32.Parse(Infos.GetInstance().port));
         }
 
         public void Update()
@@ -144,7 +181,7 @@ namespace PhoneViewer
                 {
                     tmp = String.Empty;
                 }
-                _in = new Queue<string>(_in.Concat(res.ToList()));
+                _in = new Queue<string>(_in.Concat(res));
             }
 
             while (_in.Count > 0)

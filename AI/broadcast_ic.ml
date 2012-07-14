@@ -15,6 +15,7 @@ let rec garbage = function
 let rec moving = function
   | Broadcast.Icz id    ->
       Bridge.init ();
+    if (FsmIncant.test_crit_food ())then
       if id = !ic_fp then
         if Utils.move_to (Broadcast.gd ()) then
           Broadcast.bc (Broadcast.Icr (!ic_fp, !PlayerInventory.pid, true))
@@ -22,18 +23,23 @@ let rec moving = function
           moving ((Broadcast.pp Bridge.pull))
       else
         moving ((Broadcast.pp Bridge.pull))
+    else
+      ()
   | Broadcast.Ica fp    ->
-      Bridge.init ();
+    Bridge.init ();
+    if (FsmIncant.test_crit_food ())then
       if (fp = !ic_fp) then
-        ()
+	()
       else
-        moving ((Broadcast.pp Bridge.pull))
+	moving ((Broadcast.pp Bridge.pull))
+    else
+      ()
   | _                   -> moving ((Broadcast.pp Bridge.pull))
 
 let rec test_ici = function
-    | Broadcast.Ici (fp, l)     ->
-        if fp = !ic_fp && List.exists (fun v -> v = !PlayerInventory.pid) l then
-          true
+  | Broadcast.Ici (fp, l)     ->
+    if fp = !ic_fp && List.exists (fun v -> v = !PlayerInventory.pid) l then
+      true
         else if fp = !ic_fp then
           false
         else
@@ -85,6 +91,9 @@ let engage () =
     if test_ici (Broadcast.pp Bridge.pull) then
       begin
         moving ((Broadcast.pp Bridge.pull));
-        test_launch (Broadcast.pp Bridge.pull)
+	if (FsmIncant.test_crit_food ())then
+	  test_launch (Broadcast.pp Bridge.pull)
+	else
+	  ()
       end
   end

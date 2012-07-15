@@ -5,7 +5,7 @@
 ## Fri Mar 16 2012
 ##
 
-NAME	=	ai_client
+NAME	=	../Bin/ai_client
 
 ML	=	param.ml		\
 		socket.ml		\

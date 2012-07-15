@@ -5,10 +5,10 @@
 ## Login   <lefevr_u@epitech.net>
 ## 
 ## Started on  Tue Jul  3 13:29:53 2012 ulric lefevre
-## Last update Sat Jul 14 13:43:31 2012 ulric lefevre
+## Last update Sun Jul 15 02:25:57 2012 ulric lefevre
 ##
 
-NAME	=	zappy
+NAME	=	../Bin/zappy
 
 MAKE	=       make --no-print-directory
 

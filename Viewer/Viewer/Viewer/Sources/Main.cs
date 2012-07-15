@@ -323,11 +323,17 @@ namespace Viewer.Sources
                 {
                     try
                     {
+                        Rectangle r = new Rectangle();
                         this.followed = this.plist[(++this.followedId) % this.plist.Count];
+                        this.inventory_details = this.followed;
+                        r.X = -(-this.followed.Pos.Y * (this.Map.getSquare().Width / 2) + (this.followed.getPos().X + 1) * (this.Map.getSquare().Width / 2) + ((int)this.Map.getSize().Y - 1) * (this.Map.getSquare().Width / 2) - 620);
+                        r.Y = -(this.followed.Pos.Y * (this.Map.getSquare().Height / 2) + (this.followed.getPos().X) * (this.Map.getSquare().Height / 2) - ((int)this.Map.getSize().Y - 1) * (this.Map.getSquare().Height / 2) - 360);
+                        this.Map.Square = r;
                     }
                     catch
                     {
                         this.followed = null;
+                        this.inventory_details = null;
                         this.followedId = 0;
                     }
                 }
@@ -336,12 +342,18 @@ namespace Viewer.Sources
                 {
                     try
                     {
-                        this.followedId = (this.followedId - 1) >= 0 ? this.followedId : this.plist.Count - 1;
+                        Rectangle r = new Rectangle();
+                        this.followedId = (this.followedId - 1) >= 0 ? (this.followedId - 1) : this.plist.Count - 1;
                         this.followed = this.plist[this.followedId];
+                        this.inventory_details = this.followed;
+                        r.X = -(-this.followed.Pos.Y * (this.Map.getSquare().Width / 2) + (this.followed.getPos().X + 1) * (this.Map.getSquare().Width / 2) + ((int)this.Map.getSize().Y - 1) * (this.Map.getSquare().Width / 2) - 620);
+                        r.Y = -(this.followed.Pos.Y * (this.Map.getSquare().Height / 2) + (this.followed.getPos().X) * (this.Map.getSquare().Height / 2) - ((int)this.Map.getSize().Y - 1) * (this.Map.getSquare().Height / 2) - 340);
+                        this.Map.Square = r;
                     }
                     catch
                     {
                         this.followed = null;
+                        this.inventory_details = null;
                         this.followedId = 0;
                     }
                 }

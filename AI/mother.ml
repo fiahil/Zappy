@@ -55,13 +55,13 @@ let rec run () =
   in
 
   let rec test_rcp = function
-     | Broadcast.Err ""  -> ()
+     | Broadcast.Err ""   -> ()
      | Broadcast.Err msg  ->
        if (!PlayerInventory.piv.Inventory.nourriture < 10) then
 	 ()
        else
 	 Bridge.push (Bridge.Broadcast msg)
-     | _                 -> test_rcp (Broadcast.pp Bridge.take)
+     | _                  -> test_rcp (Broadcast.pp Bridge.take)
   in
 
   let rec cycle = function
@@ -75,7 +75,7 @@ let rec run () =
       test_connect (List.length !child) (Bridge.connect (Bridge.pull Bridge.Connect_nbr));
       test_rcp (Broadcast.pp Bridge.take);
       if (!PlayerInventory.piv.Inventory.nourriture < 100) then
-	FsmSurvival.min_survival []
+	FsmSurvival.min_survival ()
       else
 	Bridge.push (Bridge.Avance)
       ;

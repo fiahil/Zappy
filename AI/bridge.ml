@@ -105,7 +105,7 @@ let inventaire_cmd str =
               aux target (Inventory.set iv (int_of_string value) target) tail
             with
              | Failure "int_of_string"     -> aux target iv tail)
-            | _::tail                            -> aux target iv tail
+        | _::tail                            -> aux target iv tail
   in
   aux Inventory.Nourriture (Inventory.empty ()) (Str.full_split re str)
 
@@ -119,7 +119,7 @@ let incantation_cmd str =
               int_of_string v
             with
               | Failure "int_of_string" -> 0)
-            | _::tail               -> aux tail
+        | _::tail               -> aux tail
   in
     aux (Str.full_split re str)
 
@@ -133,7 +133,7 @@ let expulse_cmd str =
               int_of_string v
             with
                | Failure "int_of_string" -> 0)
-            | _::tail               -> aux tail
+        | _::tail               -> aux tail
   in
     aux (Str.full_split re str)
 
@@ -164,7 +164,7 @@ let map_cmd str =
 let connect_cmd str =
   try
     int_of_string (String.sub str 0 ((String.length str) - 1))
-        with
+  with
     | _         -> 0
 
 let fill raw = function
@@ -479,4 +479,4 @@ and
       mapSize (map_size (pull (Team "")));
       pok (pull Avance);
       connection (connect (pull Connect_nbr))
-                  end
+    end

@@ -3,7 +3,7 @@
  * 07.07.2012
  *)
 
-let rec survival iv =
+let rec survival () =
   let default = function
     | 0 -> Bridge.push Bridge.Avance
     | 1 -> Bridge.push Bridge.Droite
@@ -23,7 +23,7 @@ let rec survival iv =
   in
   action (FsmBase.find Inventory.Nourriture)
 
-let rec min_survival iv =
+let rec min_survival () =
   let default = function
     | 0 -> Bridge.push Bridge.Avance
     | 1 -> Bridge.push Bridge.Droite

@@ -29,7 +29,7 @@ let run () =
 	     !PlayerInventory.piv.Inventory.nourriture > (8 + !MapSize.size_coef) then
         Exchange_ic.engage ()
       else if (FsmIncant.test_food () = false) then
-	FsmSurvival.survival []
+	FsmSurvival.survival ()
       else if ((treat_mineral (FsmIncant.test_mineral ())) = false) then
 	()
       else if (!count <= 0) then

@@ -50,7 +50,7 @@ let drop_all l =
 
 let rec test_rsc = function
   | Broadcast.Rsc (fp, id)      ->
-    if (FsmIncant.test_crit_food ())then
+    if (FsmIncant.test_crit_food ()) then
       (if fp = !ex_fp && !PlayerInventory.pid = id then
           true
        else if fp = !ex_fp then
@@ -61,7 +61,7 @@ let rec test_rsc = function
       false
 
   | Broadcast.Rsa fp            ->
-    if (FsmIncant.test_crit_food ())then
+    if (FsmIncant.test_crit_food ()) then
       (if fp = !ex_fp then
           false
        else
@@ -69,7 +69,7 @@ let rec test_rsc = function
     else
       false
   | _                           ->
-    if (FsmIncant.test_crit_food ())then
+    if (FsmIncant.test_crit_food ()) then
       test_rsc (Broadcast.pp Bridge.pull)
     else
       false
@@ -124,7 +124,7 @@ let engage () =
       if test_rsc (Broadcast.pp Bridge.pull) then
         begin
           moving (Broadcast.pp Bridge.pull);
-	  if (FsmIncant.test_crit_food ())then
+	  if (FsmIncant.test_crit_food ()) then
 	    begin
 	      drop_all !ex_ll;
 	      Broadcast.bc (Broadcast.Rse !ex_fp)

@@ -3,8 +3,6 @@
   * 05.07.2012
   *)
 
-(* type pattern = int;; *)
-
 let view_lvl = [| 0; 2; 6; 12; 20; 30; 42; 56; 72 ; 1000 |]
 
 let plvl = ref 1

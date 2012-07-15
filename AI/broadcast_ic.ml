@@ -15,7 +15,7 @@ let rec garbage = function
 let rec moving = function
   | Broadcast.Icz id    ->
       Bridge.init ();
-    if (FsmIncant.test_crit_food ())then
+    if (FsmIncant.test_crit_food ()) then
       if id = !ic_fp then
         if Utils.move_to (Broadcast.gd ()) then
           Broadcast.bc (Broadcast.Icr (!ic_fp, !PlayerInventory.pid, true))
@@ -27,7 +27,7 @@ let rec moving = function
       ()
   | Broadcast.Ica fp    ->
     Bridge.init ();
-    if (FsmIncant.test_crit_food ())then
+    if (FsmIncant.test_crit_food ()) then
       if (fp = !ic_fp) then
 	()
       else
@@ -38,7 +38,7 @@ let rec moving = function
 
 let rec test_ici = function
   | Broadcast.Ici (fp, l)     ->
-    if (FsmIncant.test_crit_food ())then
+    if (FsmIncant.test_crit_food ()) then
       (if fp = !ic_fp && List.exists (fun v -> v = !PlayerInventory.pid) l then
 	  true
        else if fp = !ic_fp then
@@ -48,7 +48,7 @@ let rec test_ici = function
     else
       false
     | Broadcast.Ica fp  ->
-      if (FsmIncant.test_crit_food ())then
+      if (FsmIncant.test_crit_food ()) then
 	(if (fp = !ic_fp) then
             false
           else
@@ -56,7 +56,7 @@ let rec test_ici = function
       else
 	false
     | _                 ->
-      if (FsmIncant.test_crit_food ())then
+      if (FsmIncant.test_crit_food ()) then
         test_ici (Broadcast.pp Bridge.pull)
       else
 	false
@@ -80,7 +80,7 @@ let rec test_rcp = function
 let test_launch v =
   let rec aux n = function
     | Broadcast.Icl id  ->
-      if (FsmIncant.test_crit_food ())then
+      if (FsmIncant.test_crit_food ()) then
         (if id = !ic_fp && n = 1 then
             ()
          else if (id = !ic_fp) then
@@ -90,7 +90,7 @@ let test_launch v =
       else
 	()
     | Broadcast.Ica id  ->
-      if (FsmIncant.test_crit_food ())then
+      if (FsmIncant.test_crit_food ()) then
 	if id = !ic_fp then
           ()
 	else
@@ -98,7 +98,7 @@ let test_launch v =
       else
 	()
     | _                 ->
-      if (FsmIncant.test_crit_food ())then
+      if (FsmIncant.test_crit_food ()) then
 	aux n (Broadcast.pp Bridge.pull)
       else
 	()
@@ -111,7 +111,7 @@ let engage () =
     if test_ici (Broadcast.pp Bridge.pull) then
       begin
         moving ((Broadcast.pp Bridge.pull));
-	if (FsmIncant.test_crit_food ())then
+	if (FsmIncant.test_crit_food ()) then
 	  test_launch (Broadcast.pp Bridge.pull)
 	else
 	  ()

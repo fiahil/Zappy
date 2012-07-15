@@ -39,6 +39,7 @@ namespace Viewer.Sources
             pos = new Point(x, y);
             this.id = id;
             this.egg = cm.GetSprite("Players/Egg");
+            this.st = States.IDLE;
         }
 
         public void Draw(GameTime gameTime, Rectangle square, Rectangle screen, SpriteBatch sb, Map map)

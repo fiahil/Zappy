@@ -49,6 +49,7 @@ namespace Viewer.Sources
         Sprite tm_box;
         Queue<string> lbc;
         KeyboardState oldState;
+        GamePadState oldStick;
 
         int followedId;
         Player followed;
@@ -104,6 +105,7 @@ namespace Viewer.Sources
             this.followed = null;
             this.followedId = 0;
             this.oldState = Keyboard.GetState();
+            this.oldStick = GamePad.GetState(PlayerIndex.One);
             this.end = false;
         }
 
@@ -283,7 +285,7 @@ namespace Viewer.Sources
 #if WINDOWS
             mm.Update();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || !server.IsConnected() || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Y))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || !server.IsConnected() || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Start))
                 this.Exit();
 #endif
 #if XBOX
@@ -298,8 +300,9 @@ namespace Viewer.Sources
 
 #if WINDOWS
             this.plist.RemoveAll(delegate(Player p) { return p.State == Player.States.FINISHED; });
+            this.elist.RemoveAll(delegate(Egg e) { return e.State == Egg.States.BROKE; });
 
-            if (oldState.IsKeyUp(Keys.C) && Keyboard.GetState().IsKeyDown(Keys.C))
+            if ((oldState.IsKeyUp(Keys.C) && Keyboard.GetState().IsKeyDown(Keys.C)) || (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Y) && oldStick.IsButtonUp(Buttons.Y)))
             {
                 mm.Mute();
                 sounds.Mute();
@@ -410,6 +413,7 @@ namespace Viewer.Sources
                 this.mm.PlayEnd();
 #endif
             this.oldState = Keyboard.GetState();
+            this.oldStick = GamePad.GetState(PlayerIndex.One);
         }
 
         /// <summary>

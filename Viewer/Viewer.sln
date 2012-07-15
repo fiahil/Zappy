@@ -32,6 +32,7 @@ Global
 		{8883F556-BFF7-425B-91D2-F87EA73FC030}.Debug|Xbox 360.ActiveCfg = Debug|x86
 		{8883F556-BFF7-425B-91D2-F87EA73FC030}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{8883F556-BFF7-425B-91D2-F87EA73FC030}.Release|x86.ActiveCfg = Release|x86
+		{8883F556-BFF7-425B-91D2-F87EA73FC030}.Release|x86.Build.0 = Release|x86
 		{8883F556-BFF7-425B-91D2-F87EA73FC030}.Release|Xbox 360.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

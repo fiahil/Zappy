@@ -212,11 +212,6 @@ namespace Viewer.Sources
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-#if WINDOWS
-            this.mm = new MusicManager(this.Content);
-            this.sounds = new SoundManager(this.Content);
-#endif
             this.sm = new SpriteManager(this.Content);
             this.inventory_page = sm.GetSprite("Tiles/map_inventory");
             this.team_detail = sm.GetSprite("Tiles/team_detail");
@@ -229,6 +224,12 @@ namespace Viewer.Sources
             this.map.resizeMap(10, 10);
 #if WINDOWS
             server.Initialize(this);
+
+            if (this.server.IsConnected())
+            {
+                this.mm = new MusicManager(this.Content);
+                this.sounds = new SoundManager(this.Content);
+            }
 #endif
         }
 
@@ -370,7 +371,8 @@ namespace Viewer.Sources
                         Point off;
 
 #if WINDOWS
-                        server.SendDatas("pin " + elt.Id + "\n");
+                        if (this.server.IsConnected())
+                            server.SendDatas("pin " + elt.Id + "\n");
 #endif
                         off.X = (elt.getPos().X + 1) * (this.map.getSquare().Width / 2);
                         off.Y = (elt.getPos().X) * (this.map.getSquare().Height / 2);

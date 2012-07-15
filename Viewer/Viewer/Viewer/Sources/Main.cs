@@ -322,7 +322,7 @@ namespace Viewer.Sources
             if (this.end == false)
             {
                 if ((oldState.IsKeyUp(Keys.PageDown) && Keyboard.GetState().IsKeyDown(Keys.PageDown)) ||
-                    GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.RightTrigger))
+                    (oldStick.IsButtonUp(Buttons.RightTrigger) && GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.RightTrigger)))
                 {
                     try
                     {
@@ -341,7 +341,7 @@ namespace Viewer.Sources
                     }
                 }
                 if ((oldState.IsKeyUp(Keys.PageUp) && Keyboard.GetState().IsKeyDown(Keys.PageUp)) ||
-                    GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftTrigger))
+                    (oldStick.IsButtonUp(Buttons.LeftTrigger) &&  GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftTrigger)))
                 {
                     try
                     {

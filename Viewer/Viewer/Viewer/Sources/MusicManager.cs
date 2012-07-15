@@ -29,7 +29,7 @@ namespace Viewer.Sources
             this.ending = cm.Load<Song>("Music/Cantina");
             this.active = true;
             this.play = true;
-            MediaPlayer.Volume = 0.05f;
+            MediaPlayer.Volume = 0.5f;
             curr = rand.Next(0, 6);
         }
 

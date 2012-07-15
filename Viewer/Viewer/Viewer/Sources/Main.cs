@@ -21,8 +21,10 @@ namespace Viewer.Sources
         TimeSpan time;
 
         bool end;
+#if WINDOWS
         MusicManager mm;
         SoundManager sounds;
+#endif
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Map map;
@@ -33,7 +35,9 @@ namespace Viewer.Sources
         SpriteFont sf_bc;
         SpriteFont vic;
         int t;
+#if WINDOWS
         Network server;
+#endif
         String winner;
 
         Rectangle screen;
@@ -54,8 +58,24 @@ namespace Viewer.Sources
             set
             {
                 this.followed = value;
+#if WINDOWS
                 if (value != null)
                     this.followedId = this.plist.FindIndex(p => value.Id == p.Id);
+#endif
+#if XBOX
+                if (value != null)
+                {
+                    int i = 0;
+                    int j = 0;
+                    foreach (var item in this.plist)
+                    {
+                        if (item.Id == value.Id)
+                            i = j;
+                        j++;
+                    }
+                    this.followedId = i;
+                }
+#endif
             }
         }
         SpriteManager sm;
@@ -70,7 +90,9 @@ namespace Viewer.Sources
             Content.RootDirectory = "Content";
             this.map = new Map(this);
             this.Components.Add(this.map);
+#if WINDOWS
             server = new Network();
+#endif
             this.plist = new List<Player>();
             this.elist = new List<Egg>();
             this.tlist = new List<string>();
@@ -142,10 +164,12 @@ namespace Viewer.Sources
             set { this.winner = value; }
         }
 
+#if WINDOWS
         public SoundManager Sounds
         {
             get { return this.sounds; }
         }
+#endif
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -187,8 +211,10 @@ namespace Viewer.Sources
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+#if WINDOWS
             this.mm = new MusicManager(this.Content);
             this.sounds = new SoundManager(this.Content);
+#endif
             this.sm = new SpriteManager(this.Content);
             this.inventory_page = sm.GetSprite("Tiles/map_inventory");
             this.team_detail = sm.GetSprite("Tiles/team_detail");
@@ -198,8 +224,10 @@ namespace Viewer.Sources
             this.sf_bc = this.Content.Load<SpriteFont>("Font/Broadcast");
             this.vic = this.Content.Load<SpriteFont>("Font/victory");
 
-            this.map.resizeMap(10, 7);
+            this.map.resizeMap(10, 10);
+#if WINDOWS
             server.Initialize(this);
+#endif
         }
 
         /// <summary>
@@ -241,25 +269,34 @@ namespace Viewer.Sources
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+#if WINDOWS
             if (server.IsConnected())
             {
                 server.Update();
                 if (this.Teams.Count > 0 && this.teams == null)
                     this.InitTeamString();
             }
+#endif
 
             base.Update(gameTime);
 
+#if WINDOWS
             mm.Update();
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) || !server.IsConnected() || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Y))
                 this.Exit();
+#endif
+#if XBOX
+            if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Y))
+                this.Exit();
+#endif
 
             Vector2 test = GamePad.GetState(PlayerIndex.One).ThumbSticks.Left * 5;
 
             this.dot.X += test.X;
             this.dot.Y -= test.Y;
 
+#if WINDOWS
             this.plist.RemoveAll(delegate(Player p) { return p.State == Player.States.FINISHED; });
 
             if (oldState.IsKeyUp(Keys.C) && Keyboard.GetState().IsKeyDown(Keys.C))
@@ -267,6 +304,17 @@ namespace Viewer.Sources
                 mm.Mute();
                 sounds.Mute();
             }
+#endif
+#if XBOX
+            try
+            {
+                for (Player P = null; (P = this.plist.First(p => p.State == Player.States.FINISHED)) != null; )
+                {
+                    this.plist.Remove(P);
+                }
+            }
+            catch { }
+#endif
 
             if (this.end == false)
             {
@@ -303,7 +351,9 @@ namespace Viewer.Sources
                         Point p;
                         Point off;
 
+#if WINDOWS
                         server.SendDatas("pin " + elt.Id + "\n");
+#endif
                         off.X = (elt.getPos().X + 1) * (this.map.getSquare().Width / 2);
                         off.Y = (elt.getPos().X) * (this.map.getSquare().Height / 2);
 
@@ -340,8 +390,10 @@ namespace Viewer.Sources
                     this.inventory_details = null;
                 }
             }
+#if WINDOWS
             else
                 this.mm.PlayEnd();
+#endif
             this.oldState = Keyboard.GetState();
         }
 

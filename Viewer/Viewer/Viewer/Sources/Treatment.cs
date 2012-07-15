@@ -95,8 +95,8 @@ namespace Viewer.Sources
                 if (this.parent.Followed != null && this.parent.Followed.Id == P.Id)
                 {
                     Rectangle r = new Rectangle();
-                    r.X = -(-P.Pos.Y * (this.parent.Map.getSquare().Width / 2) + (P.getPos().X + 1) * (this.parent.Map.getSquare().Width / 2) + ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Width / 2) - 620);
-                    r.Y = -(P.Pos.Y * (this.parent.Map.getSquare().Height / 2) + (P.getPos().X) * (this.parent.Map.getSquare().Height / 2) - ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Height / 2) - 360);
+                    r.X = -(-P.Pos.Y * (this.parent.Map.getSquare().Width / 2) + (P.getPos().X + 1) * (this.parent.Map.getSquare().Width / 2) + ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Width / 2) - 550);
+                    r.Y = -(P.Pos.Y * (this.parent.Map.getSquare().Height / 2) + (P.getPos().X) * (this.parent.Map.getSquare().Height / 2) - ((int)this.parent.Map.getSize().Y - 1) * (this.parent.Map.getSquare().Height / 2) - 340);
                     this.parent.Map.Square = r;
                 }
                 if (parent.Followed != null && P == parent.Followed)

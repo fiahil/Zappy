@@ -73,7 +73,7 @@ namespace Viewer.Sources
             }
             else
             {
-                connected = true;
+                connected = false;
             }
         }
 

@@ -12,7 +12,11 @@ namespace Viewer.Sources
         {
             using (Main game = new Main())
             {
-                game.Run();
+                try
+                {
+                    game.Run();
+                }
+                catch { }
             }
         }
     }

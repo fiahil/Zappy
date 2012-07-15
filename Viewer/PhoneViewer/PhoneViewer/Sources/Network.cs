@@ -127,6 +127,7 @@ namespace PhoneViewer
         public void Close()
         {
             _socket.Close();
+            _socket = null;
         }
 
         public string Receive()

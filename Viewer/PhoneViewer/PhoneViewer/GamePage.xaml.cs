@@ -253,6 +253,15 @@ namespace PhoneViewer
             }
             catch { }
 
+            try
+            {
+                for (Egg P = null; (P = this.elist.First(p => p.State == Egg.States.BROKE)) != null; )
+                {
+                    this.elist.Remove(P);
+                }
+            }
+            catch { }
+            
             if (this.inventory_timer <= e.TotalTime && this.inventory_details != null)
             {
                 this.inventory_details = null;
@@ -287,7 +296,7 @@ namespace PhoneViewer
                     this.inventory_page.Draw(this.spriteBatch, new Microsoft.Xna.Framework.Rectangle(0, this.screen.Height - (int)(this.inventory_page.getBounds().Height / 1.5), (int)(this.inventory_page.getBounds().Width / 1.5), (int)(this.inventory_page.getBounds().Height / 1.5)));
                     this.bc_box.Draw(this.spriteBatch, new Microsoft.Xna.Framework.Rectangle((int)((this.inventory_page.getBounds().Width - 54) / 1.5), this.screen.Height - (int)((this.bc_box.getBounds().Height - 10) / 1.5), (int)(this.bc_box.getBounds().Width / 1.20), (int)(this.bc_box.getBounds().Height / 1.5)));
                     this.team_detail.Draw(this.spriteBatch, new Microsoft.Xna.Framework.Rectangle(this.screen.Width - (int)(this.team_detail.getBounds().Width / 1.5), this.screen.Height - (int)(this.team_detail.getBounds().Height / 1.5), (int)(this.team_detail.getBounds().Width / 1.5), (int)(this.team_detail.getBounds().Height / 1.5)));
-                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.nourriture.ToString(), new Vector2((int)((365 - (this.inventory_details.Inventory.nourriture.ToString().Length * 5)) / 1.5), (int)(515 / 1.5)), Color.White);
+                    this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.nourriture.ToString(), new Vector2((int)((365 - (this.inventory_details.Inventory.nourriture.ToString().Length * 9)) / 1.5), (int)(515 / 1.5)), Color.White);
                     this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.linemate.ToString(), new Vector2((int)(205 / 1.5), 410), Color.Black);
                     this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.deraumere.ToString(), new Vector2((int)(205 / 1.5), 433), Color.Black);
                     this.spriteBatch.DrawString(this.sf, this.inventory_details.Inventory.sibur.ToString(), new Vector2((int)(205 / 1.5), 457), Color.Black);
@@ -351,7 +360,7 @@ namespace PhoneViewer
                 this.Sprites.GetSprite("Background/Victory").Draw(this.spriteBatch, new Microsoft.Xna.Framework.Rectangle(0, 0, 800, 480));
                 this.spriteBatch.DrawString(this.vic, "Team", new Vector2(400 - (this.vic.MeasureString("Team").X / 2), (int)(110 / 1.5)), Color.Black);
                 this.spriteBatch.DrawString(this.vic, this.winner, new Vector2(400 - (this.vic.MeasureString(this.winner).X / 2), (int)(190 / 1.5)), Color.Red);
-                this.spriteBatch.DrawString(this.vic, "is victorious", new Vector2((int)(415 / 1.5), (int)(270 / 1.5)), Color.Black);
+                this.spriteBatch.DrawString(this.vic, "is victorious", new Vector2(190, (int)(270 / 1.5)), Color.Black);
             }
             this.spriteBatch.End();
 

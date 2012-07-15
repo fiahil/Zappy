@@ -331,6 +331,7 @@ namespace Viewer.Sources
                     catch
                     {
                         this.followed = null;
+                        this.followedId = 0;
                     }
                 }
                 if ((oldState.IsKeyUp(Keys.PageUp) && Keyboard.GetState().IsKeyDown(Keys.PageUp)) ||
@@ -338,11 +339,13 @@ namespace Viewer.Sources
                 {
                     try
                     {
-                        this.followed = this.plist[(--this.followedId + this.plist.Count) % this.plist.Count];
+                        this.followedId = (this.followedId - 1) >= 0 ? this.followedId : this.plist.Count - 1;
+                        this.followed = this.plist[this.followedId];
                     }
                     catch
                     {
                         this.followed = null;
+                        this.followedId = 0;
                     }
                 }
                 if (Mouse.GetState().RightButton == ButtonState.Pressed || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.B))

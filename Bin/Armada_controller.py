@@ -163,6 +163,6 @@ if __name__ == "__main__":
     m.ioMode()
     m.spawnChild()
     m.loopAll()
-  except KeyboardInterrupt:
+  except:
     pass
 

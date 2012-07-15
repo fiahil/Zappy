@@ -244,6 +244,8 @@ namespace PhoneViewer
 
         private void seg(string[] a)
         {
+            parent.End = true;
+            parent.Winner = a[0];
         }
         private void smg(string[] a)
         {

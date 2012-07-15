@@ -8,6 +8,7 @@
 ** Last update Mon Jul  2 11:23:54 2012 ulric lefevre
 */
 
+#include	<stdio.h>
 #include	<stdlib.h>
 #include	<string.h>
 #include	<sys/types.h>

@@ -50,7 +50,7 @@ static void	lose_life_loop(t_player *this)
   int		i;
 
   i = 0;
-  dmg = get_dmg(g_last, g_current);
+  dmg = get_dmg();
   while (!i)
     {
       if (dmg < (*this)->inv.cur_life)

@@ -15,6 +15,10 @@
 
 #include	"handle_error.h"
 
+#ifndef MSG_NOSIGNAL
+#define MSG_NOSIGNAL SO_NOSIGPIPE
+#endif
+
 int		my_send(int fd, char *msg)
 {
   if (send(fd, msg, strlen(msg), MSG_NOSIGNAL) == -1)
